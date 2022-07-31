@@ -22,6 +22,7 @@ public class PartyManager : MonoBehaviour
     private float partyDuration;
     private float partyTimer;
 
+    [Header("Interface")]
     [SerializeField] private GameObject endOfParty;
     [SerializeField] private ScoreArea[] scoreAreas;
     [SerializeField] private Button backToMainMenu;

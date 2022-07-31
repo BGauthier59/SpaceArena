@@ -188,8 +188,8 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
-    public void OnOptions(int index)
+    public void OnOptions()
     {
-        SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(GameManager.instance.optionMenuIndex, LoadSceneMode.Additive);
     }
 }

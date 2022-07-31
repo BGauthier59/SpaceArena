@@ -48,10 +48,10 @@ public class MenuOptionsManager : MonoBehaviour
         sliderGUI.value.text = sliderGUI.slider.value.ToString();
     }
 
-    public void OnQuit(int index)
+    public void OnQuit()
     {
         eventSystem.SetSelectedGameObject(lastSelected);
-        SceneManager.UnloadSceneAsync(index);
+        SceneManager.UnloadSceneAsync(GameManager.instance.optionMenuIndex);
     }
 
     public void OnLanguageChanged(int index)

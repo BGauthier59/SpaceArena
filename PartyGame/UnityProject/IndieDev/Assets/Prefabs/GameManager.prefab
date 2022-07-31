@@ -136,7 +136,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 8591720794918883700}
   feedbacks: {fileID: 5419757356267785862}
+  mainGamepadInfo:
+    linked: 0
+    name: 
+  mainGamepadOnly: 0
   playersNumber: 0
   playerInputManager: {fileID: 0}
   allPlayers: []
   allTranslatableTexts: []
+  pauseMenuIndex: 4
+  optionMenuIndex: 3

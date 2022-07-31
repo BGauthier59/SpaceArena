@@ -2,6 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -48,13 +49,30 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Rotating();
-        Debug.DrawRay(transform.position, transform.forward * 2, Color.blue);
     }
 
     private void FixedUpdate()
     {
         Moving();
     }
+
+    #region Input Event
+
+    public void OnMove(InputAction.CallbackContext ctx)
+    {
+        joystickInput = ctx.ReadValue<Vector2>();
+    }
+
+    public void OnPause(InputAction.CallbackContext ctx)
+    {
+        if (GameManager.instance.isPaused) return;
+        SceneManager.LoadSceneAsync(GameManager.instance.pauseMenuIndex, LoadSceneMode.Additive);
+        GameManager.instance.SetTimeScale();
+    }
+
+    #endregion
+
+    #region Actions
 
     private void Moving()
     {
@@ -70,10 +88,8 @@ public class PlayerController : MonoBehaviour
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
-    public void OnMove(InputAction.CallbackContext ctx)
-    {
-        joystickInput = ctx.ReadValue<Vector2>();
-    }
+    #endregion
+    
 }
 
 [Serializable]

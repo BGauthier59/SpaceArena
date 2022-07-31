@@ -44,6 +44,12 @@ public class GameManager : MonoBehaviour
 
     public List<TranslatableText> allTranslatableTexts;
 
+    [Header("Scenes Index")] 
+    public int pauseMenuIndex;
+    public int optionMenuIndex;
+    
+    public bool isPaused;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -91,6 +97,27 @@ public class GameManager : MonoBehaviour
         foreach (var tmp in textsToDelete)
         {
             allTranslatableTexts.Remove(tmp);
+        }
+    }
+
+    public void SetTimeScale()
+    {
+        var indexes = new List<int>();
+
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            var index = SceneManager.GetSceneAt(i).buildIndex;
+            indexes.Add(index);
+        }
+
+        if (indexes.Contains(pauseMenuIndex))
+        {
+            Debug.Log("Pause is active");
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
         }
     }
 
