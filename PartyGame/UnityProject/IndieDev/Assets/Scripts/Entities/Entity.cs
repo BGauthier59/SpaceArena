@@ -7,6 +7,8 @@ public class Entity : MonoBehaviour
     public int totalLife;
     public int currenLife;
 
+    public bool isDead;
+
     public virtual void TakeDamage(int damage)
     {
         currenLife -= damage;
@@ -19,7 +21,7 @@ public class Entity : MonoBehaviour
 
     public virtual void Death()
     {
-        
+        isDead = true;
     }
 
     public virtual void Heal(int heal)

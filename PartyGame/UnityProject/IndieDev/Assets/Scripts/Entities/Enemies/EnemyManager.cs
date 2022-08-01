@@ -26,4 +26,13 @@ public class EnemyManager : Entity
     }
 
     #endregion
+    
+    #region Trigger & Collision
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+
+    #endregion
 }

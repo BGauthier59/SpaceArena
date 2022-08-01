@@ -28,4 +28,18 @@ public class BaseElementManager : Entity
     {
         
     }
+
+    public virtual void TryToRepair()
+    {
+        // Check les conditions de réparations
+        
+        // Par exemple : check si deux joueurs réparent au même moment, pendant un certain temps
+        
+        // Si toutes les conditions sont là, alors OnFixed()
+    }
+
+    public virtual void OnFixed()
+    {
+        isDead = false;
+    }
 }

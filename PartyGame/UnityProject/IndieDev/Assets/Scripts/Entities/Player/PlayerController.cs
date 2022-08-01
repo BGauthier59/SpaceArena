@@ -1,35 +1,51 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Variables
+
+    [Header("Input, Gamepad & Data")]
+    public string playerName;
     public PlayerInput playerInput;
     private int playerIndex;
-    public string playerName;
+    
+    public GamepadData dataGamepad;
+    
+    [SerializeField] private PlayerManager manager;
+
+    [Header("Party Data")]
     public int points;
+    
+    [Header("Components")]
     public Renderer rd;
     [SerializeField] private Rigidbody rb;
     
+    [Header("Controller & Parameters")]
     [SerializeField] private Vector2 joystickInput;
     [SerializeField] private float speed;
     [SerializeField] private float rotateSpeed;
 
-    [SerializeField] private PlayerManager manager;
-
-    public GamepadData dataGamepad;
+    #endregion
     
+    #region Connection
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        Initialization();
+    }
+
+    private void Initialization()
+    {
         GameManager.instance.allPlayers.Add(this);
+        
         playerIndex = GameManager.instance.playerInputManager.playerCount;
         playerName = $"Player {playerIndex}";
         manager = GetComponent<PlayerManager>();
         playerInput = GetComponent<PlayerInput>();
-
         dataGamepad = new GamepadData()
         {
             gamepad = playerInput.GetDevice<Gamepad>(),
@@ -38,13 +54,18 @@ public class PlayerController : MonoBehaviour
         
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         rb.isKinematic = true;
-        
     }
 
+    #endregion
+    
+    #region Party Initialization
+    
     public void PartyBegins()
     {
         rb.isKinematic = false;
     }
+    
+    #endregion
 
     private void Update()
     {

@@ -11,4 +11,9 @@ public class BaseHeart : BaseElementManager
         
         Debug.Log("End of party");
     }
+
+    public override void OnFixed()
+    {
+        // Can't be fixed...
+    }
 }
