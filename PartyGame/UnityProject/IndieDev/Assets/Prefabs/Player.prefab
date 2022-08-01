@@ -52,6 +52,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalLife: 10
   currenLife: 10
+  isDead: 0
+  controller: {fileID: 0}
 --- !u!114 &7167191028575041455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,15 +66,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173c70244d6066e419768aac466d5b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
+  playerIndex: 0
   playerName: 
-  points: 0
-  rd: {fileID: 3339070274848959740}
-  rb: {fileID: 8476079156389380369}
-  joystickInput: {x: 0, y: 0}
-  speed: 500
-  rotateSpeed: 20
-  manager: {fileID: 0}
+  playerInput: {fileID: 0}
   dataGamepad:
     isRumbling: 0
     activeRumblePattern: 0
@@ -82,6 +78,14 @@ MonoBehaviour:
     highA: 0
     rumbleStep: 0
     isMotorActive: 0
+  manager: {fileID: 0}
+  points: 0
+  rd: {fileID: 3339070274848959740}
+  rb: {fileID: 8476079156389380369}
+  joystickInput: {x: 0, y: 0}
+  moveTolerance: 0.15
+  speed: 500
+  rotateSpeed: 20
 --- !u!114 &1905726322714944486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +215,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5381cf80a4cd165419d15390ee7739d2, type: 2}
+  - {fileID: 2100000, guid: 8e4f32dbcc47c1d468ff751b67eb8464, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

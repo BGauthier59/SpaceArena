@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class MainMenuManager : MonoBehaviour
 {
     private EventSystem eventSystem;
+    [SerializeField] private GameObject firstSelected;
+
     [SerializeField] private PlayerInputManager playerInputManager;
     [SerializeField] private GameObject startButton;
     [SerializeField] private GameObject playerNumberSelection;
@@ -26,12 +28,18 @@ public class MainMenuManager : MonoBehaviour
     {
         public GameObject area;
         public TextMeshProUGUI textArea;
+        public Image[] coloredImages;
     }
 
     private void Start()
     {
-        eventSystem = EventSystem.current;
-        
+        Initialization();
+    }
+
+    private void Initialization()
+    {
+        eventSystem = GameManager.instance.eventSystem;
+        eventSystem.SetSelectedGameObject(firstSelected);
 
         arePlayersReady = false;
         canCheckPlayer = false;
@@ -61,6 +69,12 @@ public class MainMenuManager : MonoBehaviour
             if (GameManager.instance.playersNumber > i)
             {
                 playerLobbyAreas[i].area.SetActive(true);
+
+                foreach (var image in playerLobbyAreas[i].coloredImages)
+                {
+                    image.color = GameManager.instance.colors[i];
+                }
+                
                 string message;
 
                 switch (GameManager.instance.settings.currentLanguage)
@@ -156,9 +170,7 @@ public class MainMenuManager : MonoBehaviour
     public void OnPlayerJoin(PlayerInput input)
     {
         var gamepad = input.GetDevice<Gamepad>();
-
-        input.uiInputModule = gamepad != GameManager.instance.mainGamepad ? null : eventSystem.GetComponent<InputSystemUIInputModule>();
-
+        
         int playerIndex = GameManager.instance.playerInputManager.playerCount;
         string message;
 
@@ -178,7 +190,7 @@ public class MainMenuManager : MonoBehaviour
                 break;
         }
 
-        if (input.uiInputModule != null) message += " [Main]";
+        if (gamepad == GameManager.instance.mainGamepad) message += " [Main]";
 
         playerLobbyAreas[playerIndex - 1].textArea.text = message;
     }

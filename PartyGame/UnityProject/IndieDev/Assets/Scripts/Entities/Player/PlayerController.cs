@@ -1,35 +1,35 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     #region Variables
 
-    [Header("Input, Gamepad & Data")]
+    [Header("Input, Gamepad & Data")] public int playerIndex;
     public string playerName;
     public PlayerInput playerInput;
-    private int playerIndex;
-    
+
     public GamepadData dataGamepad;
-    
+
     [SerializeField] private PlayerManager manager;
 
-    [Header("Party Data")]
-    public int points;
-    
-    [Header("Components")]
-    public Renderer rd;
+    [Header("Party Data")] public int points;
+
+    [Header("Components")] public Renderer rd;
     [SerializeField] private Rigidbody rb;
-    
-    [Header("Controller & Parameters")]
-    [SerializeField] private Vector2 joystickInput;
+
+    [Header("Controller & Parameters")] [SerializeField]
+    private Vector2 joystickInput;
+
+    [Range(0f, 1f)] [SerializeField] private float moveTolerance;
     [SerializeField] private float speed;
     [SerializeField] private float rotateSpeed;
 
     #endregion
-    
+
     #region Connection
 
     private void Awake()
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private void Initialization()
     {
         GameManager.instance.allPlayers.Add(this);
-        
+
         playerIndex = GameManager.instance.playerInputManager.playerCount;
         playerName = $"Player {playerIndex}";
         manager = GetComponent<PlayerManager>();
@@ -51,20 +51,20 @@ public class PlayerController : MonoBehaviour
             gamepad = playerInput.GetDevice<Gamepad>(),
             isMotorActive = false
         };
-        
+
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         rb.isKinematic = true;
     }
 
     #endregion
-    
+
     #region Party Initialization
-    
+
     public void PartyBegins()
     {
         rb.isKinematic = false;
     }
-    
+
     #endregion
 
     private void Update()
@@ -87,8 +87,13 @@ public class PlayerController : MonoBehaviour
     public void OnPause(InputAction.CallbackContext ctx)
     {
         if (GameManager.instance.isPaused) return;
+        GameManager.instance.isPaused = true;
+
+        GameManager.instance.SetMainGamepad(dataGamepad.gamepad);
+
+        GameManager.instance.eventSystem.GetComponent<InputSystemUIInputModule>().actionsAsset = playerInput.actions;
+
         SceneManager.LoadSceneAsync(GameManager.instance.pauseMenuIndex, LoadSceneMode.Additive);
-        GameManager.instance.SetTimeScale();
     }
 
     #endregion
@@ -98,6 +103,8 @@ public class PlayerController : MonoBehaviour
     private void Moving()
     {
         var moveVector = new Vector3(joystickInput.x, 0, joystickInput.y);
+        if (Mathf.Abs(moveVector.x) < moveTolerance && Mathf.Abs(moveVector.z) < moveTolerance) moveVector = Vector3.zero;
+
         rb.velocity = moveVector * speed * Time.fixedDeltaTime;
     }
 
@@ -105,12 +112,12 @@ public class PlayerController : MonoBehaviour
     {
         var forward = new Vector3(joystickInput.x, 0, joystickInput.y);
         if (forward == Vector3.zero) return;
-        transform.rotation = Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(forward), Time.deltaTime * rotateSpeed);
+        transform.rotation =
+            Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(forward), Time.deltaTime * rotateSpeed);
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
     #endregion
-    
 }
 
 [Serializable]
@@ -118,7 +125,7 @@ public class GamepadData
 {
     public Gamepad gamepad;
     public bool isRumbling;
-    
+
     public RumblePattern activeRumblePattern;
     public float rumbleDuration;
     public float pulseDuration;

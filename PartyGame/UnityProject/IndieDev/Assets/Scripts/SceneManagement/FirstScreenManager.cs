@@ -1,13 +1,23 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class FirstScreenManager : MonoBehaviour
 {
+    private EventSystem eventSystem;
+
+    [SerializeField] private GameObject firstSelected;
     public int mainMenuIndex;
-    
+
+    private void Start()
+    {
+        eventSystem = GameManager.instance.eventSystem;
+        eventSystem.SetSelectedGameObject(firstSelected);
+    }
+
     public void OnStartGame()
     {
         GameManager.instance.SetMainGamepad(Gamepad.current);
@@ -23,13 +33,13 @@ public class FirstScreenManager : MonoBehaviour
         var low = GameManager.instance.feedbacks.mainVibration.low;
         var high = GameManager.instance.feedbacks.mainVibration.high;
         var duration = GameManager.instance.feedbacks.mainVibration.rumbleDuration;
-        
+
         g.SetMotorSpeeds(low, high);
         yield return new WaitForSeconds(duration);
         g.SetMotorSpeeds(0, 0);
-        
+
         // Load scene
-        
+
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(mainMenuIndex);
     }

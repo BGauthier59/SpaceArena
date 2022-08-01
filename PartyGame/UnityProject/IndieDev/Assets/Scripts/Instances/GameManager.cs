@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.InputSystem.XInput;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public SettingsManager settings;
     public FeedbacksManager feedbacks;
 
+    public EventSystem eventSystem;
     private Gamepad _mainGamepad;
     public Gamepad mainGamepad
     {
@@ -44,7 +46,11 @@ public class GameManager : MonoBehaviour
 
     public List<TranslatableText> allTranslatableTexts;
 
+    [Header("Players Parameters")] 
+    public Color[] colors = new Color[4];
+
     [Header("Scenes Index")] 
+    public int mainMenuIndex;
     public int pauseMenuIndex;
     public int optionMenuIndex;
     
@@ -99,28 +105,7 @@ public class GameManager : MonoBehaviour
             allTranslatableTexts.Remove(tmp);
         }
     }
-
-    public void SetTimeScale()
-    {
-        var indexes = new List<int>();
-
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            var index = SceneManager.GetSceneAt(i).buildIndex;
-            indexes.Add(index);
-        }
-
-        if (indexes.Contains(pauseMenuIndex))
-        {
-            Debug.Log("Pause is active");
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
-    }
-
+    
     #region Gamepads Management
 
     private void OnDeviceChange(InputDevice device, InputDeviceChange deviceChange)
@@ -178,6 +163,7 @@ public class GameManager : MonoBehaviour
     public void SetMainGamepad(Gamepad gamepad)
     {
         mainGamepad = gamepad;
+        Debug.Log($"{mainGamepad.name} is now the main!");
     }
 
     public void EnableMainControllerOnly()
@@ -194,6 +180,8 @@ public class GameManager : MonoBehaviour
 
             InputSystem.DisableDevice(gamepad);
         }
+        
+        Debug.Log("Main gamepad only! : " + mainGamepad.enabled);
     }
 
     public void EnableAllControllers()
@@ -204,6 +192,8 @@ public class GameManager : MonoBehaviour
         {
             InputSystem.EnableDevice(gamepad);
         }
+        
+        Debug.Log($"Every gamepad!");
     }
 
     #endregion

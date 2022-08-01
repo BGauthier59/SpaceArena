@@ -13,8 +13,6 @@ public class PartyManager : MonoBehaviour
 {
     private EventSystem eventSystem;
 
-    [SerializeField] private PlayerController playerPrefab;
-    [SerializeField] private Material[] playerMaterials;
     [SerializeField] private Transform[] allSpawningPoints;
     [SerializeField] private TextMeshProUGUI timerText;
 
@@ -36,7 +34,7 @@ public class PartyManager : MonoBehaviour
 
     private void Start()
     {
-        eventSystem = EventSystem.current;
+        eventSystem = GameManager.instance.eventSystem;
         InitializePlayers();
     }
 
@@ -53,11 +51,10 @@ public class PartyManager : MonoBehaviour
         {
             var player = GameManager.instance.allPlayers[i];
             
-            player.playerInput.uiInputModule = player.dataGamepad.gamepad != Gamepad.all[0] ? 
-                null : eventSystem.GetComponent<InputSystemUIInputModule>();
+            player.playerInput.uiInputModule = eventSystem.GetComponent<InputSystemUIInputModule>();
             
             player.transform.position = allSpawningPoints[i].position;
-            player.rd.sharedMaterial = playerMaterials[i];
+            player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
             player.PartyBegins();
         }
 
@@ -99,11 +96,14 @@ public class PartyManager : MonoBehaviour
     {
         endOfParty.SetActive(false);
         
-        OnQuit(1);
+        OnQuit();
     }
 
-    public void OnQuit(int index)
+    public void OnQuit()
     {
+        GameManager.instance.SetMainGamepad(Gamepad.all[0]);
+        GameManager.instance.EnableMainControllerOnly();
+        
         for (int i = GameManager.instance.allPlayers.Count - 1; i >= 0; i--)
         {
             var player = GameManager.instance.allPlayers[i];
@@ -112,6 +112,6 @@ public class PartyManager : MonoBehaviour
 
         GameManager.instance.allPlayers.Clear();
         GameManager.instance.playersNumber = 0;
-        SceneManager.LoadScene(index);
+        SceneManager.LoadScene(GameManager.instance.mainMenuIndex);
     }
 }

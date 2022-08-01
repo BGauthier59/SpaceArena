@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
@@ -9,16 +10,23 @@ public class PauseMenuManager : MonoBehaviour
     
     void Start()
     {
-        GameManager.instance.isPaused = true;
-        eventSystem = EventSystem.current;
+        eventSystem = GameManager.instance.eventSystem;
+        
+        GameManager.instance.EnableMainControllerOnly();
+
+        Time.timeScale = 0f;
+        
         eventSystem.SetSelectedGameObject(firstSelected);
     }
 
     public void OnQuit()
     {
-        SceneManager.UnloadSceneAsync(GameManager.instance.pauseMenuIndex);
-        GameManager.instance.SetTimeScale();
         GameManager.instance.isPaused = false;
+
+        GameManager.instance.EnableAllControllers();
+        Time.timeScale = 1f;
+        SceneManager.UnloadSceneAsync(GameManager.instance.pauseMenuIndex);
+        
     }
 
     
