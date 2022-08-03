@@ -207,6 +207,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5f812b88ba8ce478cc5f6e2f4dc065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pools:
+  - tag: Bullet
+    prefab: {fileID: 6393692887041716744, guid: 9061718f3d3384645adc263d51f31739, type: 3}
+    size: 50
 --- !u!1 &4576669941368348805
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 8591720794918883700}
   feedbacks: {fileID: 5419757356267785862}
+  mainCanvas: {fileID: 0}
+  cameraShake: {fileID: 0}
   eventSystem: {fileID: 1344524508}
   mainGamepadInfo:
     linked: 0
