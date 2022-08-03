@@ -26,6 +26,7 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private ScoreArea[] scoreAreas;
     [SerializeField] private Button backToMainMenu;
     [SerializeField] private GameObject mainCanvas;
+    [SerializeField] private CameraShake cameraShake;
 
     [Serializable]
     public struct ScoreArea
@@ -50,6 +51,7 @@ public class PartyManager : MonoBehaviour
         eventSystem = GameManager.instance.eventSystem;
         GameManager.instance.playerInputManager = null;
         GameManager.instance.mainCanvas = mainCanvas;
+        GameManager.instance.cameraShake = cameraShake;
 
         // Initializing players
 

@@ -2071,7 +2071,8 @@ MonoBehaviour:
   - area: {fileID: 76804290}
     scoreText: {fileID: 71718011}
   backToMainMenu: {fileID: 1221676798}
-  mainCanvas: {fileID: 0}
+  mainCanvas: {fileID: 1642036399}
+  cameraShake: {fileID: 60307958}
 --- !u!1 &595385098
 GameObject:
   m_ObjectHideFlags: 0
