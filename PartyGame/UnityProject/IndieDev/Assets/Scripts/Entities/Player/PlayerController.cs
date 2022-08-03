@@ -16,18 +16,21 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private PlayerManager manager;
 
-    [Header("Party Data")] 
-    public int points;
+    [Header("Party Data")] public int points;
 
     [Header("Components")] public Renderer rd;
     [SerializeField] private Rigidbody rb;
 
-    [Header("Controller & Parameters")] 
-    [SerializeField] private Vector2 joystickInput;
+    [Header("Controller & Parameters")] [SerializeField]
+    private Vector2 leftJoystickInput;
+
+    [SerializeField] private Vector2 rightJoystickInput;
 
     [Range(0f, 1f)] [SerializeField] private float moveTolerance;
+    [Range(0f, 1f)] [SerializeField] private float aimTolerance;
     [SerializeField] private float speed;
     [SerializeField] private float rotateSpeed;
+    private bool aiming;
 
     #endregion
 
@@ -71,6 +74,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Rotating();
+        Aiming();
     }
 
     private void FixedUpdate()
@@ -82,17 +86,18 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
-        joystickInput = ctx.ReadValue<Vector2>();
-        
+        leftJoystickInput = ctx.ReadValue<Vector2>();
+
         // Checking conditions
-        if (Mathf.Abs(joystickInput.x) < moveTolerance && Mathf.Abs(joystickInput.y) < moveTolerance) joystickInput = Vector2.zero;
+        if (Mathf.Abs(leftJoystickInput.x) < moveTolerance && Mathf.Abs(leftJoystickInput.y) < moveTolerance)
+            leftJoystickInput = Vector2.zero;
     }
 
     public void OnPause(InputAction.CallbackContext ctx)
     {
         // Checking conditions
         if (GameManager.instance.isPaused) return;
-        
+
         // Pausing the game
         GameManager.instance.isPaused = true;
         GameManager.instance.SetMainGamepad(dataGamepad.gamepad);
@@ -100,17 +105,32 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadSceneAsync(GameManager.instance.pauseMenuIndex, LoadSceneMode.Additive);
     }
 
+    public void OnAim(InputAction.CallbackContext ctx)
+    {
+        rightJoystickInput = ctx.ReadValue<Vector2>();
+
+        if (Mathf.Abs(leftJoystickInput.x) < aimTolerance && Mathf.Abs(leftJoystickInput.y) < aimTolerance)
+        {
+            aiming = false;
+            leftJoystickInput = Vector2.zero;
+        }
+        else
+        {
+            aiming = true;
+        }
+    }
+
     public void OnAttack(InputAction.CallbackContext ctx)
     {
         // Checking conditions
-        
+
         // If true, attacks
     }
 
     public void OnRepairing(InputAction.CallbackContext ctx)
     {
         // Checking conditions
-        
+
         // If true, repairs damages buildings
     }
 
@@ -120,17 +140,26 @@ public class PlayerController : MonoBehaviour
 
     private void Moving()
     {
-        var moveVector = new Vector3(joystickInput.x, 0, joystickInput.y);
+        var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         rb.velocity = moveVector * speed * Time.fixedDeltaTime;
     }
 
     private void Rotating()
     {
-        var forward = new Vector3(joystickInput.x, 0, joystickInput.y);
-        if (forward == Vector3.zero) return;
-        transform.rotation =
-            Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(forward), Time.deltaTime * rotateSpeed);
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        if (!aiming)
+        {
+            var forward = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
+            if (forward == Vector3.zero) return;
+            transform.rotation =
+                Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(forward), Time.deltaTime * rotateSpeed);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        }
+    }
+
+    private void Aiming()
+    {
+        float angle = Mathf.Atan2(rightJoystickInput.y, rightJoystickInput.x) * Mathf.Rad2Deg;
+        transform.eulerAngles = new Vector3(0, -angle + 90, 0);
     }
 
     #endregion
