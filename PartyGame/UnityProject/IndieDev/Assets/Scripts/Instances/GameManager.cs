@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public SettingsManager settings;
     public FeedbacksManager feedbacks;
+    public GameObject mainCanvas;
 
     public EventSystem eventSystem;
     private Gamepad _mainGamepad;

@@ -6,6 +6,8 @@ public class Entity : MonoBehaviour
 {
     public int totalLife;
     public int currenLife;
+    public Animator animator;
+    public Rigidbody rb;
 
     public bool isDead;
 

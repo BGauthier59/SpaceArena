@@ -25,6 +25,7 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private GameObject endOfParty;
     [SerializeField] private ScoreArea[] scoreAreas;
     [SerializeField] private Button backToMainMenu;
+    [SerializeField] private GameObject mainCanvas;
 
     [Serializable]
     public struct ScoreArea
@@ -48,6 +49,7 @@ public class PartyManager : MonoBehaviour
         hasPartyBegun = false;
         eventSystem = GameManager.instance.eventSystem;
         GameManager.instance.playerInputManager = null;
+        GameManager.instance.mainCanvas = mainCanvas;
 
         // Initializing players
 
