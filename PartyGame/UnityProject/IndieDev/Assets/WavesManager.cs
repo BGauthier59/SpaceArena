@@ -28,6 +28,7 @@ public class WavesManager : MonoBehaviour
     {
         public Enemy enemyType;
         public int enemyCount;
+        public PoolType enemyPoolType;
     }
 
     private class Waves
@@ -45,9 +46,8 @@ public class WavesManager : MonoBehaviour
 
     private void EnemyRandomizer()
     {
-        List<EnemyGroup> enemyGroupList = new List<EnemyGroup>();
-        //int enemyGroupCount = waveDifficultyIndex / 3;
-        int enemyGroupCount = 2;
+        var enemyGroupList = new List<EnemyGroup>();
+        var enemyGroupCount = 2;
         for (int i = 0; i < enemyGroupCount; i++)
         {
             var enemyGroup = new EnemyGroup();
@@ -91,11 +91,11 @@ public class WavesManager : MonoBehaviour
         {
             foreach (var enemyGroup in wave.enemies)
             {
-                EnemyGroup enemyToSpawn = enemyGroup;
+                var enemyToSpawn = enemyGroup;
                 for (int i = 0; i < enemyToSpawn.enemyCount; i++)
                 {
                     Debug.Log(enemyToSpawn.enemyType.enemyName);
-                    PoolOfObject.Instance.SpawnFromPool(enemyToSpawn.enemyType.enemyName, entrances[wave.entrance].position, Quaternion.identity);
+                    PoolOfObject.Instance.SpawnFromPool(enemyToSpawn.enemyPoolType, entrances[wave.entrance].position, Quaternion.identity);
                     yield return new WaitForSeconds(enemySpawnDelay);
                 }
             }

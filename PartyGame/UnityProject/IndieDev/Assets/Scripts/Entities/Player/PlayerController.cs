@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.isKinematic = false;
         bulletAmount = maxBulletAmount;
-        reloadBar.transform.parent = GameManager.instance.mainCanvas.transform;
+        reloadBar.transform.parent.SetParent(GameManager.instance.mainCanvas.transform);
     }
 
     #endregion
@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Rotating();
-        Aiming();
         Reloading();
     }
 
@@ -145,15 +144,11 @@ public class PlayerController : MonoBehaviour
         if (Time.time >= lastFire + fireRate && !reloading)
         {
             bulletAmount--;
-            if (bulletAmount == 0)
-            {
-                reloadTimer = 0;
-                reloading = true;
-            }
+            if (bulletAmount <= 0) reloading = true;
 
             shootingParticles.Play();
             lastFire = Time.time;
-            var newBullet = PoolOfObject.Instance.SpawnFromPool("Bullets", transform.position, Quaternion.identity);
+            var newBullet = PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
             newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed);
             GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
             rb.AddForce(-transform.forward * recoil);
@@ -206,12 +201,12 @@ public class PlayerController : MonoBehaviour
         {
             reloadBar.transform.parent.gameObject.SetActive(true);
             reloadTimer += Time.deltaTime;
-            reloadBar.transform.parent.position =
-                Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0, -20);
+            reloadBar.transform.parent.position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0, -20);
             reloadBar.fillAmount = reloadTimer / reloadDuration;
             if (reloadTimer > reloadDuration)
             {
                 reloading = false;
+                reloadTimer = 0;
                 bulletAmount = maxBulletAmount;
                 reloadBar.transform.parent.gameObject.SetActive(false);
             }

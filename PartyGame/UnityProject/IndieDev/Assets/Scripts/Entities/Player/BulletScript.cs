@@ -12,18 +12,17 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private int minDamage;
     private void OnTriggerEnter(Collider collision)
     {
-        if (!collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")) return;
+        
+        if (collision.CompareTag("Enemy"))
         {
-            if (collision.CompareTag("Enemy"))
-            {
-                var script = collision.GetComponent<EnemyManager>();
-                script.rb.AddForce(recoil * rb.velocity);
-                var damage = Range(minDamage, maxDamage);
-                script.TakeDamage(damage);
-            }
-            gameObject.SetActive(false);
-            PoolOfObject.Instance.SpawnFromPool("Impacts", transform.position, Quaternion.identity);
+            var script = collision.GetComponent<EnemyManager>();
+            script.rb.AddForce(recoil * rb.velocity);
+            var damage = Range(minDamage, maxDamage);
+            script.TakeDamage(damage);
         }
+        gameObject.SetActive(false);
+        PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
     }
 
     private void Start()

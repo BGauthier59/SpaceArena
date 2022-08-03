@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PoolOfObject : MonoBehaviour
 {
-    [System.Serializable]
+    [Serializable]
     public class Pool
     {
-        public string tag;
+        public PoolType type;
         public GameObject prefab;
         public int size;
     }
@@ -16,41 +16,53 @@ public class PoolOfObject : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+
+        Instance = this;
+        
         Initialization();
     }
 
     public List<Pool> pools;
-    public Dictionary<string, Queue<GameObject>> poolDictionary;
+    public Dictionary<PoolType, Queue<GameObject>> poolDictionary;
 
     private void Initialization()
     {
-        Instance = this;
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        poolDictionary = new Dictionary<PoolType, Queue<GameObject>>();
 
         foreach (var pool in pools)
         {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
+            var objectPool = new Queue<GameObject>();
 
             for (int i = 0; i < pool.size; i++)
             {
-                GameObject obj = Instantiate(pool.prefab, transform);
+                var obj = Instantiate(pool.prefab, transform);
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
 
-            poolDictionary.Add(pool.tag, objectPool);
+            poolDictionary.Add(pool.type, objectPool);
         }
     }
 
-    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+    public GameObject SpawnFromPool(PoolType type, Vector3 position, Quaternion rotation)
     {
-        GameObject objToSpawn = poolDictionary[tag].Dequeue();
+        var objToSpawn = poolDictionary[type].Dequeue();
         objToSpawn.SetActive(true);
         objToSpawn.transform.position = position;
         objToSpawn.transform.rotation = rotation;
         
-        poolDictionary[tag].Enqueue(objToSpawn);
+        poolDictionary[type].Enqueue(objToSpawn);
 
         return objToSpawn;
     }
+}
+
+public enum PoolType
+{
+    Bullet, Bullet_Impact, Damage, EnemyDeath
 }

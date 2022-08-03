@@ -9,7 +9,7 @@ public class EnemyManager : Entity
 
     public override void TakeDamage(int damage)
     {
-        var damageIndicator = PoolOfObject.Instance.SpawnFromPool("Damage", transform.position, Quaternion.identity)
+        var damageIndicator = PoolOfObject.Instance.SpawnFromPool(PoolType.Damage, transform.position, Quaternion.identity)
             .GetComponent<TextMeshProUGUI>();
         damageIndicator.rectTransform.SetParent(GameManager.instance.mainCanvas.transform);
         damageIndicator.transform.position = Camera.main.WorldToScreenPoint(transform.position);
@@ -22,7 +22,7 @@ public class EnemyManager : Entity
     {
         base.Death();
         gameObject.SetActive(false);
-        PoolOfObject.Instance.SpawnFromPool("EnemyDeath", transform.position, Quaternion.identity);
+        PoolOfObject.Instance.SpawnFromPool(PoolType.EnemyDeath, transform.position, Quaternion.identity);
     }
 
     public override void Heal(int heal)
