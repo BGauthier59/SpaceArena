@@ -31,6 +31,8 @@ public class MainMenuManager : MonoBehaviour
         public Image[] coloredImages;
     }
 
+    #region Initialization
+    
     private void Start()
     {
         Initialization();
@@ -46,19 +48,32 @@ public class MainMenuManager : MonoBehaviour
         GameManager.instance.playerInputManager = playerInputManager;
         GameManager.instance.playerInputManager.DisableJoining();
     }
+    
+    #endregion
+
+    #region Main State
 
     public void OnStart()
     {
         playerNumberSelection.SetActive(true);
         playerSlider.value = playerSlider.minValue;
         eventSystem.SetSelectedGameObject(playerSlider.gameObject);
-    }
+    } // Button Start on main state
+    
+    public void OnOptions()
+    {
+        SceneManager.LoadSceneAsync(GameManager.instance.optionMenuIndex, LoadSceneMode.Additive);
+    } // Button Options on main state
+    
+    #endregion
+    
+    #region Player Number Selection
 
     public void OnCancel()
     {
         eventSystem.SetSelectedGameObject(startButton);
         playerNumberSelection.SetActive(false);
-    }
+    } // Button Return on player number selection
 
     public void OnPlay()
     {
@@ -105,7 +120,11 @@ public class MainMenuManager : MonoBehaviour
         eventSystem.SetSelectedGameObject(returnFromLobby.gameObject);
 
         canCheckPlayer = true;
-    }
+    } // Button Go on player number selection
+
+    #endregion
+    
+    #region Lobby
 
     private void Update()
     {
@@ -119,13 +138,14 @@ public class MainMenuManager : MonoBehaviour
     {
         if (GameManager.instance.playerInputManager.playerCount != GameManager.instance.playersNumber) return;
         arePlayersReady = true;
-    } // Si tous les joueurs sont là
+    } // Check if every player is connected
 
     private void FinaleSetup()
     {
         arePlayersReady = false;
         canCheckPlayer = false;
         GameManager.instance.playerInputManager.DisableJoining();
+        GameManager.instance.EnableMainControllerOnly();
 
         eventSystem.SetSelectedGameObject(launchParty.gameObject);
 
@@ -146,7 +166,7 @@ public class MainMenuManager : MonoBehaviour
         returnFromLobby.navigation = returnFromLobbyNavigation;
 
         launchParty.interactable = true;
-    }
+    } // When every player is connected
 
     public void OnCancelParty()
     {
@@ -165,7 +185,7 @@ public class MainMenuManager : MonoBehaviour
         GameManager.instance.allPlayers.Clear();
 
         eventSystem.SetSelectedGameObject(startButton.gameObject);
-    }
+    } // Button Cancel on lobby
 
     public void OnPlayerJoin(PlayerInput input)
     {
@@ -193,15 +213,12 @@ public class MainMenuManager : MonoBehaviour
         if (gamepad == GameManager.instance.mainGamepad) message += " [Main]";
 
         playerLobbyAreas[playerIndex - 1].textArea.text = message;
-    }
+    } // When a player joins
 
     public void OnBeginParty(int index)
     {
         SceneManager.LoadScene(index);
-    }
+    } // Button Play on lobby
 
-    public void OnOptions()
-    {
-        SceneManager.LoadSceneAsync(GameManager.instance.optionMenuIndex, LoadSceneMode.Additive);
-    }
+    #endregion
 }

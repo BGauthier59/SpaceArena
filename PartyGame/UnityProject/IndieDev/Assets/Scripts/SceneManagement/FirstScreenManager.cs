@@ -14,10 +14,15 @@ public class FirstScreenManager : MonoBehaviour
 
     private void Start()
     {
+        Initialization();
+    }
+
+    private void Initialization()
+    {
         eventSystem = GameManager.instance.eventSystem;
         eventSystem.SetSelectedGameObject(firstSelected);
     }
-
+    
     public void OnStartGame()
     {
         GameManager.instance.SetMainGamepad(Gamepad.current);
@@ -25,7 +30,7 @@ public class FirstScreenManager : MonoBehaviour
         StartCoroutine(LoadMainMenu());
     }
 
-    IEnumerator LoadMainMenu()
+    private IEnumerator LoadMainMenu()
     {
         // Initial Feedback
 

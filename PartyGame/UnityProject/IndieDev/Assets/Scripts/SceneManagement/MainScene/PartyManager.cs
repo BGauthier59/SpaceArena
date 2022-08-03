@@ -16,8 +16,9 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private Transform[] allSpawningPoints;
     [SerializeField] private TextMeshProUGUI timerText;
 
-    [Tooltip("Duration in seconds")] [SerializeField]
-    private float partyDuration;
+    [Header("Party Parameters")] [Tooltip("Duration in seconds")] 
+    [SerializeField] private bool hasPartyBegun;
+    [SerializeField] private float partyDuration;
     private float partyTimer;
 
     [Header("Interface")]
@@ -34,8 +35,7 @@ public class PartyManager : MonoBehaviour
 
     private void Start()
     {
-        eventSystem = GameManager.instance.eventSystem;
-        InitializePlayers();
+        Initialization();
     }
 
     private void Update()
@@ -43,26 +43,39 @@ public class PartyManager : MonoBehaviour
         CheckTimer();
     }
 
-    public void InitializePlayers()
+    private void Initialization()
     {
+        hasPartyBegun = false;
+        eventSystem = GameManager.instance.eventSystem;
         GameManager.instance.playerInputManager = null;
+
+        // Initializing players
 
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
             
-            player.playerInput.uiInputModule = eventSystem.GetComponent<InputSystemUIInputModule>();
+            //player.playerInput.uiInputModule = eventSystem.GetComponent<InputSystemUIInputModule>();
             
             player.transform.position = allSpawningPoints[i].position;
             player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
             player.PartyBegins();
         }
+        
+        // Initializing timer
 
         partyTimer = partyDuration;
+        
+        // Starts timer
+
+        GameManager.instance.EnableAllControllers();
+        hasPartyBegun = true;
     }
 
     public void CheckTimer()
     {
+        if (!hasPartyBegun) return;
+        
         if (partyTimer <= 0)
         {
             partyTimer = 0;
@@ -77,7 +90,7 @@ public class PartyManager : MonoBehaviour
         timerText.text = ((int) partyTimer).ToString();
     }
 
-    public void DisplayScore()
+    private void DisplayScore()
     {
         endOfParty.SetActive(true);
         for (int i = 0; i < scoreAreas.Length; i++)

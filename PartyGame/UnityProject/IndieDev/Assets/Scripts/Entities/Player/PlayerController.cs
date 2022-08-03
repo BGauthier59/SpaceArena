@@ -16,13 +16,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private PlayerManager manager;
 
-    [Header("Party Data")] public int points;
+    [Header("Party Data")] 
+    public int points;
 
     [Header("Components")] public Renderer rd;
     [SerializeField] private Rigidbody rb;
 
-    [Header("Controller & Parameters")] [SerializeField]
-    private Vector2 joystickInput;
+    [Header("Controller & Parameters")] 
+    [SerializeField] private Vector2 joystickInput;
 
     [Range(0f, 1f)] [SerializeField] private float moveTolerance;
     [SerializeField] private float speed;
@@ -82,18 +83,35 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         joystickInput = ctx.ReadValue<Vector2>();
+        
+        // Checking conditions
+        if (Mathf.Abs(joystickInput.x) < moveTolerance && Mathf.Abs(joystickInput.y) < moveTolerance) joystickInput = Vector2.zero;
     }
 
     public void OnPause(InputAction.CallbackContext ctx)
     {
+        // Checking conditions
         if (GameManager.instance.isPaused) return;
+        
+        // Pausing the game
         GameManager.instance.isPaused = true;
-
         GameManager.instance.SetMainGamepad(dataGamepad.gamepad);
-
         GameManager.instance.eventSystem.GetComponent<InputSystemUIInputModule>().actionsAsset = playerInput.actions;
-
         SceneManager.LoadSceneAsync(GameManager.instance.pauseMenuIndex, LoadSceneMode.Additive);
+    }
+
+    public void OnAttack(InputAction.CallbackContext ctx)
+    {
+        // Checking conditions
+        
+        // If true, attacks
+    }
+
+    public void OnRepairing(InputAction.CallbackContext ctx)
+    {
+        // Checking conditions
+        
+        // If true, repairs damages buildings
     }
 
     #endregion
@@ -103,8 +121,6 @@ public class PlayerController : MonoBehaviour
     private void Moving()
     {
         var moveVector = new Vector3(joystickInput.x, 0, joystickInput.y);
-        if (Mathf.Abs(moveVector.x) < moveTolerance && Mathf.Abs(moveVector.z) < moveTolerance) moveVector = Vector3.zero;
-
         rb.velocity = moveVector * speed * Time.fixedDeltaTime;
     }
 

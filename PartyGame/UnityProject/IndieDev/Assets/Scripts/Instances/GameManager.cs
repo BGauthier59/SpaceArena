@@ -175,13 +175,12 @@ public class GameManager : MonoBehaviour
             if (gamepad == mainGamepad)
             {
                 InputSystem.EnableDevice(gamepad);
+                Debug.Log($"Enabled {gamepad.name}!");
                 continue;
             }
-
             InputSystem.DisableDevice(gamepad);
+            Debug.Log($"Disabled {gamepad.name}!");
         }
-        
-        Debug.Log("Main gamepad only! : " + mainGamepad.enabled);
     }
 
     public void EnableAllControllers()
@@ -191,9 +190,8 @@ public class GameManager : MonoBehaviour
         foreach (var gamepad in Gamepad.all)
         {
             InputSystem.EnableDevice(gamepad);
+            Debug.Log($"Enabled {gamepad.name}!");
         }
-        
-        Debug.Log($"Every gamepad!");
     }
 
     #endregion
