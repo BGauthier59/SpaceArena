@@ -74,7 +74,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Rotating();
-        Aiming();
     }
 
     private void FixedUpdate()
@@ -109,10 +108,10 @@ public class PlayerController : MonoBehaviour
     {
         rightJoystickInput = ctx.ReadValue<Vector2>();
 
-        if (Mathf.Abs(leftJoystickInput.x) < aimTolerance && Mathf.Abs(leftJoystickInput.y) < aimTolerance)
+        if (Mathf.Abs(rightJoystickInput.x) < aimTolerance && Mathf.Abs(rightJoystickInput.y) < aimTolerance)
         {
             aiming = false;
-            leftJoystickInput = Vector2.zero;
+            rightJoystickInput = Vector2.zero;
         }
         else
         {
@@ -154,12 +153,12 @@ public class PlayerController : MonoBehaviour
                 Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(forward), Time.deltaTime * rotateSpeed);
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
-    }
-
-    private void Aiming()
-    {
-        float angle = Mathf.Atan2(rightJoystickInput.y, rightJoystickInput.x) * Mathf.Rad2Deg;
-        transform.eulerAngles = new Vector3(0, -angle + 90, 0);
+        else
+        {
+            var angle = Mathf.Atan2(rightJoystickInput.y, rightJoystickInput.x) * Mathf.Rad2Deg;
+            transform.eulerAngles = new Vector3(0, -angle + 90, 0);
+        }
+        
     }
 
     #endregion

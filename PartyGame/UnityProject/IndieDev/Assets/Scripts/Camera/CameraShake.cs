@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using static UnityEngine.Random;
 
-public class CameraShakeEvent : MonoBehaviour
+public class CameraShake : MonoBehaviour
 {
     public class ShakeEvent
     {
