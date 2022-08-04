@@ -34,11 +34,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotateSpeed;
     private bool aiming;
 
-    [Header("Attack")] [SerializeField] private int maxBulletAmount;
+    [Header("Attack")] [SerializeField] private bool isAttacking;
+    [SerializeField] private int maxBulletAmount;
     [SerializeField] private int bulletAmount;
     [SerializeField] private float bulletSpeed;
-    [SerializeField] private float fireRate;
-    private float lastFire;
+    private float timerBeforeNextShoot;
+    [SerializeField] private float durationBeforeNextShoot;
+    
     private float reloadTimer;
     private bool reloading;
     [SerializeField] private float reloadDuration;
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Initialization();
     }
+
 
     private void Initialization()
     {
@@ -93,6 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         Rotating();
         Reloading();
+        Firing();
     }
 
     private void FixedUpdate()
@@ -138,21 +142,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnAttack(InputAction.CallbackContext ctx)
+    public void OnFire(InputAction.CallbackContext ctx)
     {
-        // Checking conditions
-        if (Time.time >= lastFire + fireRate && !reloading)
-        {
-            bulletAmount--;
-            if (bulletAmount <= 0) reloading = true;
+        isAttacking = ctx.performed;
+        Debug.Log(isAttacking);
 
-            shootingParticles.Play();
-            lastFire = Time.time;
-            var newBullet = PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
-            newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed);
-            GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
-            rb.AddForce(-transform.forward * recoil);
-        }
+        // Checking conditions
     }
 
     public void OnReload(InputAction.CallbackContext ctx)
@@ -192,7 +187,29 @@ public class PlayerController : MonoBehaviour
             var angle = Mathf.Atan2(rightJoystickInput.y, rightJoystickInput.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, -angle + 90, 0);
         }
-        
+    }
+
+    private void Firing()
+    {
+        if (!isAttacking || reloading) return;
+
+        if (timerBeforeNextShoot >= durationBeforeNextShoot)
+        {
+            bulletAmount--;
+            if (bulletAmount <= 0) reloading = true;
+
+            shootingParticles.Play();
+            var newBullet =
+                PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
+            newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed);
+            GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
+            rb.AddForce(-transform.forward * recoil);
+            timerBeforeNextShoot = 0f;
+        }
+        else
+        {
+            timerBeforeNextShoot += Time.deltaTime;
+        }
     }
 
     private void Reloading()
@@ -201,7 +218,8 @@ public class PlayerController : MonoBehaviour
         {
             reloadBar.transform.parent.gameObject.SetActive(true);
             reloadTimer += Time.deltaTime;
-            reloadBar.transform.parent.position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0, -20);
+            reloadBar.transform.parent.position =
+                Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0, -20);
             reloadBar.fillAmount = reloadTimer / reloadDuration;
             if (reloadTimer > reloadDuration)
             {
