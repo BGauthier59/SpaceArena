@@ -84,6 +84,8 @@ public class PlayerController : MonoBehaviour
         rb.isKinematic = false;
         bulletAmount = maxBulletAmount;
         reloadBar.transform.parent.SetParent(GameManager.instance.mainCanvas.transform);
+        rd.material.color = GameManager.instance.colors[playerIndex - 1];
+        rd.material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
     }
 
     #endregion
