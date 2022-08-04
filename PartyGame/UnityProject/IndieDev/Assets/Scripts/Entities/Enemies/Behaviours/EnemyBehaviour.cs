@@ -9,7 +9,6 @@ public class EnemyBehaviour : MonoBehaviour
     public bool isMoving;
     public bool isAttacking;
     
-
     public virtual void Target()
     {
         

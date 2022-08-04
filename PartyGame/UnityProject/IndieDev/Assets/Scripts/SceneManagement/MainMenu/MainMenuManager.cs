@@ -112,7 +112,7 @@ public class MainMenuManager : MonoBehaviour
             }
             else playerLobbyAreas[i].area.SetActive(false);
         }
-        launchParty.interactable = false;
+        //launchParty.interactable = false;
 
         GameManager.instance.EnableAllControllers();
         GameManager.instance.playerInputManager.EnableJoining();
