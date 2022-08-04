@@ -93,10 +93,11 @@ MonoBehaviour:
   aimTolerance: 0
   speed: 500
   rotateSpeed: 20
+  isAttacking: 0
   maxBulletAmount: 18
   bulletAmount: 0
   bulletSpeed: 1600
-  fireRate: 0.1
+  durationBeforeNextShoot: 0.1
   reloadDuration: 1.5
   shootingParticles: {fileID: 5832360938257547889}
   shootingShake: {fileID: 11400000, guid: 78299d7eea4932140bd83a79ab14abc9, type: 2}
@@ -203,7 +204,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7167191028575041455}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnAttack
+        m_MethodName: OnFire
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
