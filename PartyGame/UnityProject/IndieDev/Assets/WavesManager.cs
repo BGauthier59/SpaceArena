@@ -55,16 +55,7 @@ public class WavesManager : MonoBehaviour
 
         StartCoroutine(SpawnRound());
     }
-    private EnemyGroup EnemyRandomizer()
-    {
-        var enemyGroup = new EnemyGroup
-        {
-            enemyType = enemies[Range(0, enemies.Length)]
-        };
-        int numberOfEnemies = roundDifficultyIndex / enemyGroup.enemyType.enemyDifficulty;
-        enemyGroup.enemyCount = Range(numberOfEnemies - 1, numberOfEnemies + 2);
-        return enemyGroup;
-    }
+    
 
     private void WaveRandomizer()
     {
@@ -77,6 +68,16 @@ public class WavesManager : MonoBehaviour
         }
         SetEntrance(wave);
         waves.Add(wave);
+    }
+    private EnemyGroup EnemyRandomizer()
+    {
+        var enemyGroup = new EnemyGroup
+        {
+            enemyType = enemies[Range(0, enemies.Length)]
+        };
+        int numberOfEnemies = roundDifficultyIndex / enemyGroup.enemyType.enemyDifficulty;
+        enemyGroup.enemyCount = Range(numberOfEnemies - 1, numberOfEnemies + 2);
+        return enemyGroup;
     }
 
     private void SetEntrance(Waves wave)

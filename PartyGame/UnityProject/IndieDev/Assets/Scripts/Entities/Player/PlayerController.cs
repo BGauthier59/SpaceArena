@@ -33,14 +33,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float rotateSpeed;
     private bool aiming;
+    [SerializeField] private float dashForce;
+    [SerializeField] private float dashDuration;
+    private bool isDashing;
 
-    [Header("Attack")] [SerializeField] private bool isAttacking;
+    [Header("Attack")] 
+    [SerializeField] private bool isAttacking;
     [SerializeField] private int maxBulletAmount;
     [SerializeField] private int bulletAmount;
     [SerializeField] private float bulletSpeed;
     private float timerBeforeNextShoot;
     [SerializeField] private float durationBeforeNextShoot;
-    
+
     private float reloadTimer;
     private bool reloading;
     [SerializeField] private float reloadDuration;
@@ -158,12 +162,24 @@ public class PlayerController : MonoBehaviour
         // If true, repairs damages buildings
     }
 
+    public void OnDash(InputAction.CallbackContext ctx)
+    {
+        if (isDashing) return;
+        Debug.Log("Je dash");
+        isDashing = true;
+        var dashVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
+        dashVector.Normalize();
+        rb.AddForce(dashVector * dashForce);
+        StartCoroutine(DashCooldown());
+    }
+
     #endregion
 
     #region Actions
 
     private void Moving()
     {
+        if (isDashing) return;
         var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         rb.velocity = moveVector * speed * Time.fixedDeltaTime;
     }
@@ -225,6 +241,12 @@ public class PlayerController : MonoBehaviour
                 reloadBar.transform.parent.gameObject.SetActive(false);
             }
         }
+    }
+
+    private System.Collections.IEnumerator DashCooldown()
+    {
+        yield return new WaitForSeconds(dashDuration);
+        isDashing = false;
     }
 
     #endregion
