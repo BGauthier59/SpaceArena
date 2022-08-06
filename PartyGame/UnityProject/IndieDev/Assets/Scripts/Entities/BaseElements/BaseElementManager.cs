@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,11 @@ public class BaseElementManager : Entity
     }
 
     #endregion
+
+    private void Start()
+    {
+        BaseManager.instance.allBaseElements.Add(this);
+    }
 
     public virtual void OnDestroyed()
     {

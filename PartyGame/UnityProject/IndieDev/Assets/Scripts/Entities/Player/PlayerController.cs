@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     public GamepadData dataGamepad;
 
-    [SerializeField] private PlayerManager manager;
+    public PlayerManager manager;
 
     [Header("Party Data")] public int points;
 
@@ -138,18 +138,12 @@ public class PlayerController : MonoBehaviour
             aiming = false;
             rightJoystickInput = Vector2.zero;
         }
-        else
-        {
-            aiming = true;
-        }
+        else aiming = true;
     }
 
     public void OnFire(InputAction.CallbackContext ctx)
     {
         isAttacking = ctx.performed;
-        Debug.Log(isAttacking);
-
-        // Checking conditions
     }
 
     public void OnReload(InputAction.CallbackContext ctx)

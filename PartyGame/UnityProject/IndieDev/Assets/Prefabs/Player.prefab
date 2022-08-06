@@ -90,7 +90,7 @@ MonoBehaviour:
   leftJoystickInput: {x: 0, y: 0}
   rightJoystickInput: {x: 0, y: 0}
   moveTolerance: 0.15
-  aimTolerance: 0
+  aimTolerance: 0.15
   speed: 500
   rotateSpeed: 20
   isAttacking: 0

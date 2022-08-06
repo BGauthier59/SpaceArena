@@ -16,10 +16,10 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private Transform[] allSpawningPoints;
     [SerializeField] private TextMeshProUGUI timerText;
 
-    [Header("Party Parameters")] [Tooltip("Duration in seconds")] 
-    [SerializeField] private bool hasPartyBegun;
-    [SerializeField] private float partyDuration;
+    [Header("Party Parameters")] 
+    [Tooltip("Duration in seconds")] [SerializeField] private float partyDuration;
     private float partyTimer;
+    [SerializeField] private bool hasPartyBegun;
 
     [Header("Interface")]
     [SerializeField] private GameObject endOfParty;
@@ -58,8 +58,6 @@ public class PartyManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
-            
-            //player.playerInput.uiInputModule = eventSystem.GetComponent<InputSystemUIInputModule>();
             
             player.transform.position = allSpawningPoints[i].position;
             player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
