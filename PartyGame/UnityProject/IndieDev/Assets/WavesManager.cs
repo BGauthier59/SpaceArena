@@ -106,7 +106,7 @@ public class WavesManager : MonoBehaviour
                 for (int i = 0; i < enemyToSpawn.enemyCount - 1; i++)
                 {
                     Debug.Log(enemyToSpawn.enemyType.enemyName);
-                    PoolOfObject.Instance.SpawnFromPool(enemyToSpawn.enemyPoolType, entrances[wave.entrance].position, Quaternion.identity);
+                    PoolOfObject.Instance.SpawnFromPool(enemyToSpawn.enemyType.enemyName, entrances[wave.entrance].position, Quaternion.identity);
                     yield return new WaitForSeconds(enemySpawnDelay);
                 }
             }
