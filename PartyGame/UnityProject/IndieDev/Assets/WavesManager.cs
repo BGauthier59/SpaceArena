@@ -8,7 +8,9 @@ using Random = UnityEngine.Random;
 
 public class WavesManager : MonoBehaviour
 {
-    private int waveDifficultyIndex = 80;
+    private int roundDifficultyIndex = 80;
+    [SerializeField] private int waveDifficulty = 40;
+    [SerializeField] private int enemyGroupDifficulty = 30;
     [SerializeField] private Enemy[] enemies;
     [SerializeField] private Transform[] entrances;
     [SerializeField] private Transform enemiesParent;
@@ -20,7 +22,7 @@ public class WavesManager : MonoBehaviour
     [Serializable]
     public class Enemy
     {
-        public string enemyName;
+        public PoolType enemyName;
         public int enemyDifficulty;
     }
 
@@ -37,34 +39,42 @@ public class WavesManager : MonoBehaviour
         public List<EnemyGroup> enemies;
     }
 
-    private void Start()
+    private void Awake()
     {
         waves = new List<Waves>();
         entrancesUsed = new List<int>();
-        EnemyRandomizer();
     }
 
-    private void EnemyRandomizer()
+    public void NewRound()
     {
-        var enemyGroupList = new List<EnemyGroup>();
-        var enemyGroupCount = 2;
-        for (int i = 0; i < enemyGroupCount; i++)
+        var smallWaves = roundDifficultyIndex / waveDifficulty;
+        for (int i = 0; i < smallWaves; i++)
         {
-            var enemyGroup = new EnemyGroup();
-            
-            enemyGroup.enemyType = enemies[Range(0, enemies.Length)];
-            int numberOfEnemies = waveDifficultyIndex / enemyGroup.enemyType.enemyDifficulty;
-            enemyGroup.enemyCount = Range(numberOfEnemies - 1, numberOfEnemies + 2);
-            enemyGroupList.Add(enemyGroup);
+            WaveRandomizer();
         }
-        WaveRandomizer(enemyGroupList);
-        StartCoroutine(SpawnWave());
+
+        StartCoroutine(SpawnRound());
+    }
+    private EnemyGroup EnemyRandomizer()
+    {
+        var enemyGroup = new EnemyGroup
+        {
+            enemyType = enemies[Range(0, enemies.Length)]
+        };
+        int numberOfEnemies = roundDifficultyIndex / enemyGroup.enemyType.enemyDifficulty;
+        enemyGroup.enemyCount = Range(numberOfEnemies - 1, numberOfEnemies + 2);
+        return enemyGroup;
     }
 
-    private void WaveRandomizer(List<EnemyGroup> enemyGroups)
+    private void WaveRandomizer()
     {
         var wave = new Waves();
-        wave.enemies = enemyGroups;
+        wave.enemies = new List<EnemyGroup>();
+        var groupsCount = roundDifficultyIndex / enemyGroupDifficulty;
+        for (int i = 0; i < groupsCount - 1; i++)
+        {
+            wave.enemies.Add(EnemyRandomizer());
+        }
         SetEntrance(wave);
         waves.Add(wave);
     }
@@ -85,14 +95,15 @@ public class WavesManager : MonoBehaviour
         entrancesUsed.Add( wave.entrance);
     }
 
-    private IEnumerator SpawnWave()
+    private IEnumerator SpawnRound()
     {
         foreach (var wave in waves)
         {
             foreach (var enemyGroup in wave.enemies)
             {
+                Debug.Log("Je spawn");
                 var enemyToSpawn = enemyGroup;
-                for (int i = 0; i < enemyToSpawn.enemyCount; i++)
+                for (int i = 0; i < enemyToSpawn.enemyCount - 1; i++)
                 {
                     Debug.Log(enemyToSpawn.enemyType.enemyName);
                     PoolOfObject.Instance.SpawnFromPool(enemyToSpawn.enemyPoolType, entrances[wave.entrance].position, Quaternion.identity);
