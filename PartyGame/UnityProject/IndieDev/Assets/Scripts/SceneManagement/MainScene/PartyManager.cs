@@ -15,6 +15,7 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private Transform[] allSpawningPoints;
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private WavesManager wavesManager;
 
     [Header("Party Parameters")] 
     [Tooltip("Duration in seconds")] [SerializeField] private float partyDuration;
@@ -72,6 +73,7 @@ public class PartyManager : MonoBehaviour
 
         GameManager.instance.EnableAllControllers();
         hasPartyBegun = true;
+        wavesManager.NewRound();
     }
 
     public void CheckTimer()
