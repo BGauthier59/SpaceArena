@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class EnemyBreakerBehaviour : EnemyBehaviour
 {
-    [SerializeField] private Entity detectedEntity;
     private EnemyBreakerState currentState;
 
     public enum EnemyBreakerState
@@ -64,13 +63,13 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
                 if (timerBeforeTarget > durationBeforeTarget)
                 {
                     Target();
-                    SwitchState(detectedEntity == null ? EnemyBreakerState.Idle : EnemyBreakerState.Follow);
+                    SwitchState(target == null ? EnemyBreakerState.Idle : EnemyBreakerState.Follow);
                 }
                 else timerBeforeTarget += Time.deltaTime;
                 break;
 
             case EnemyBreakerState.Follow:
-                if (detectedEntity == null)
+                if (target == null)
                 {
                     Debug.Log("Current target has been disabled ? Targeting new one");
                     SwitchState(EnemyBreakerState.Target);
@@ -79,10 +78,11 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
 
                 if (timerBeforeFollow > durationBeforeFollow)
                 {
-                    var targetPos = detectedEntity.transform.position;
+                    var targetPos = target.transform.position;
                     agent.SetDestination(targetPos);
                     var distance = Vector3.Distance(targetPos, transform.position);
-                    if (distance >= minDistance)
+                    Debug.Log(distance);
+                    if (distance <= minDistance)
                     {
                         SwitchState(EnemyBreakerState.Attack);
                     }
@@ -106,16 +106,16 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
             case EnemyBreakerState.Cooldown:
                 if (timerCooldown >= durationCooldown)
                 {
-                    if (detectedEntity == null)
+                    if (target == null || target.isDead)
                     {
                         Debug.Log("Current target has been defeated ? Targeting new one");
                         SwitchState(EnemyBreakerState.Target);
                     }
                     else
                     {
-                        var targetPos = detectedEntity.transform.position;
+                        var targetPos = target.transform.position;
                         var distance = Vector3.Distance(targetPos, transform.position);
-                        SwitchState(distance >= minDistance ? EnemyBreakerState.Attack : EnemyBreakerState.Follow);
+                        SwitchState(distance <= minDistance ? EnemyBreakerState.Attack : EnemyBreakerState.Follow);
                     }
                 }
                 else timerCooldown += Time.deltaTime;
@@ -132,26 +132,30 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
         switch (state)
         {
             case EnemyBreakerState.Target:
+                agent.isStopped = true;
                 timerBeforeTarget = 0f;
                 break;
 
             case EnemyBreakerState.Follow:
+                agent.isStopped = false;
                 timerBeforeFollow = 0f;
                 break;
 
             case EnemyBreakerState.Attack:
                 timerBeforeAttack = 0f;
+                agent.isStopped = true;
                 break;
 
             case EnemyBreakerState.Idle:
 
                 manager.rb.velocity = Vector3.zero;
-                agent.enabled = false;
+                agent.isStopped = true;
                 Debug.LogWarning("Neither base element nor player has been found!");
                 break;
 
             case EnemyBreakerState.Cooldown:
                 timerCooldown = 0f;
+                agent.isStopped = true;
                 break;
             
             default:
@@ -164,15 +168,15 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
 
     public override void Target()
     {
-        detectedEntity = BaseElementDetected();
-        if (detectedEntity == null) detectedEntity = PlayerDetected();
-
+        target = BaseElementDetected();
+        if (target == null) target = PlayerDetected();
+        Debug.Log(target.name);
     }
 
     public override void Attack()
     {
         Debug.Log("Attack !");
-        detectedEntity.TakeDamage(damage);
+        target.TakeDamage(damage);
     }
 
     private BaseElementManager BaseElementDetected()

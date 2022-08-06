@@ -714,8 +714,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912f84eb7b13c1642813c536a922a30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalLife: 0
-  currenLife: 0
+  totalLife: 5
+  currenLife: 5
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  isDead: 0
 --- !u!1 &7093468804151769184
 GameObject:
   m_ObjectHideFlags: 0

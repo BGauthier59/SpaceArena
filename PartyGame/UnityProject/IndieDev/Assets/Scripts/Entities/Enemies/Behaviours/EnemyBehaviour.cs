@@ -5,9 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-    public Transform target;
+    public Entity target;
     public EnemyManager manager;
-    public float moveSpeed;
     public bool isMoving;
     public bool isAttacking;
 

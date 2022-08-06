@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class BaseHeart : BaseElementManager
 {
-    
+    public override void TakeDamage(int damage)
+    {
+        Debug.Log("Base heart is hurt");
+        base.TakeDamage(damage);
+    }
+
     public override void OnDestroyed()
     {
         base.OnDestroyed();
