@@ -11,6 +11,8 @@ public class EnemyBehaviour : MonoBehaviour
     public bool isMoving;
     public bool isAttacking;
 
+    public int damage;
+
     public NavMeshAgent agent;
     
     public virtual void Target()

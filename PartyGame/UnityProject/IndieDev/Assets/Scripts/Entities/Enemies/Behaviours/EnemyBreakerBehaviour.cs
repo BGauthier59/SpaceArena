@@ -13,23 +13,24 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
         Target,
         Follow,
         Attack,
-        Destroyed,
-        Stopped
+        Cooldown,
+        Idle,
     }
 
     [SerializeField] private float minDistance;
 
-    [Header("Timers")] 
-    [SerializeField] private float durationBeforeTarget;
+    [Header("Timers")] [SerializeField] private float durationBeforeTarget;
     private float timerBeforeTarget;
-    
+
     [SerializeField] private float durationBeforeFollow;
     private float timerBeforeFollow;
-    
+
     [SerializeField] private float durationBeforeAttack;
     private float timerBeforeAttack;
-
-
+    
+    [SerializeField] private float durationCooldown;
+    private float timerCooldown;
+    
     private void Start()
     {
         // Quand est initialisé
@@ -60,11 +61,22 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
         switch (currentState)
         {
             case EnemyBreakerState.Target:
-                if (timerBeforeTarget > durationBeforeTarget) Target();
+                if (timerBeforeTarget > durationBeforeTarget)
+                {
+                    Target();
+                    SwitchState(detectedEntity == null ? EnemyBreakerState.Idle : EnemyBreakerState.Follow);
+                }
                 else timerBeforeTarget += Time.deltaTime;
                 break;
 
             case EnemyBreakerState.Follow:
+                if (detectedEntity == null)
+                {
+                    Debug.Log("Current target has been disabled ? Targeting new one");
+                    SwitchState(EnemyBreakerState.Target);
+                    return;
+                }
+
                 if (timerBeforeFollow > durationBeforeFollow)
                 {
                     var targetPos = detectedEntity.transform.position;
@@ -76,16 +88,39 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
                     }
                 }
                 else timerBeforeFollow += Time.deltaTime;
+
                 break;
 
             case EnemyBreakerState.Attack:
+                if (timerBeforeAttack > durationBeforeAttack)
+                {
+                    Attack();
+                    SwitchState(EnemyBreakerState.Cooldown);
+                }
+                else timerBeforeAttack += Time.deltaTime;
                 break;
 
-            case EnemyBreakerState.Destroyed:
+            case EnemyBreakerState.Idle:
                 break;
 
-            case EnemyBreakerState.Stopped:
+            case EnemyBreakerState.Cooldown:
+                if (timerCooldown >= durationCooldown)
+                {
+                    if (detectedEntity == null)
+                    {
+                        Debug.Log("Current target has been defeated ? Targeting new one");
+                        SwitchState(EnemyBreakerState.Target);
+                    }
+                    else
+                    {
+                        var targetPos = detectedEntity.transform.position;
+                        var distance = Vector3.Distance(targetPos, transform.position);
+                        SwitchState(distance >= minDistance ? EnemyBreakerState.Attack : EnemyBreakerState.Follow);
+                    }
+                }
+                else timerCooldown += Time.deltaTime;
                 break;
+            
             default:
                 Debug.LogError("State is not valid");
                 break;
@@ -99,19 +134,24 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
             case EnemyBreakerState.Target:
                 timerBeforeTarget = 0f;
                 break;
-            
+
             case EnemyBreakerState.Follow:
                 timerBeforeFollow = 0f;
                 break;
-            
+
             case EnemyBreakerState.Attack:
                 timerBeforeAttack = 0f;
                 break;
-            
-            case EnemyBreakerState.Destroyed:
+
+            case EnemyBreakerState.Idle:
+
+                manager.rb.velocity = Vector3.zero;
+                agent.enabled = false;
+                Debug.LogWarning("Neither base element nor player has been found!");
                 break;
-            
-            case EnemyBreakerState.Stopped:
+
+            case EnemyBreakerState.Cooldown:
+                timerCooldown = 0f;
                 break;
             
             default:
@@ -125,24 +165,14 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
     public override void Target()
     {
         detectedEntity = BaseElementDetected();
-
         if (detectedEntity == null) detectedEntity = PlayerDetected();
 
-        if (detectedEntity == null)
-        {
-            manager.rb.velocity = Vector3.zero;
-            agent.enabled = false;
-            Debug.LogWarning("Neither base element nor player has been found!");
-            SwitchState(EnemyBreakerState.Stopped);
-        }
-        else
-        {
-            SwitchState(EnemyBreakerState.Follow);
-        }
     }
 
     public override void Attack()
     {
+        Debug.Log("Attack !");
+        detectedEntity.TakeDamage(damage);
     }
 
     private BaseElementManager BaseElementDetected()
