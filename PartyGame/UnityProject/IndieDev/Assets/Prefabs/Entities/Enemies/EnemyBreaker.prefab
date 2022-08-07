@@ -206,8 +206,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2
-  m_fontSizeBase: 2
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -371,7 +371,7 @@ MonoBehaviour:
   isAttacking: 0
   damage: 1
   agent: {fileID: -4426738225324329689}
-  minDistance: 2
+  minDistanceToAttack: 0
   durationBeforeTarget: 1
   durationBeforeFollow: 1
   durationBeforeAttack: 1
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e2ecdaa39fd2b4db67c672b41a3f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalLife: 10
+  totalLife: 75
   animator: {fileID: 0}
   rb: {fileID: -8318030274499121629}
   isDead: 0
@@ -406,8 +406,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!195 &-4426738225324329689
 NavMeshAgent:
   m_ObjectHideFlags: 0

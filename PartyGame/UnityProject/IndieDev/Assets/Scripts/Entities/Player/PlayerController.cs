@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private bool aiming;
     [SerializeField] private float dashForce;
     [SerializeField] private float dashDuration;
+    private float dashTimer;
     private bool isDashing;
 
     [Header("Attack")] 
@@ -103,6 +104,7 @@ public class PlayerController : MonoBehaviour
         Rotating();
         Reloading();
         Firing();
+        Dashing();
     }
 
     private void FixedUpdate()
@@ -170,7 +172,7 @@ public class PlayerController : MonoBehaviour
         var dashVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         dashVector.Normalize();
         rb.AddForce(dashVector * dashForce);
-        StartCoroutine(DashCooldown());
+        //StartCoroutine(DashCooldown());
     }
 
     #endregion
@@ -243,11 +245,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Dashing()
+    {
+        if (dashTimer >= dashDuration)
+        {
+            isDashing = false;
+            dashTimer = 0f;
+        }
+        else dashTimer += Time.deltaTime;
+    }
+
+    /*
     private System.Collections.IEnumerator DashCooldown()
     {
         yield return new WaitForSeconds(dashDuration);
         isDashing = false;
     }
+    */
 
     #endregion
 }

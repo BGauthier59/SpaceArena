@@ -1304,7 +1304,7 @@ MonoBehaviour:
     prefab: {fileID: 2168510512892706134, guid: bd94b150838481143a5e53f9c18b497a, type: 3}
     size: 50
   - type: 4
-    prefab: {fileID: 3279746616174624073, guid: 7ea1a400ea906b4458d9e231a944e21d, type: 3}
+    prefab: {fileID: 3279746616174624073, guid: 8cbd9dc1f07f1584fbb791efbd7a75cf, type: 3}
     size: 50
 --- !u!1 &331491677
 GameObject:

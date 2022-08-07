@@ -11,7 +11,7 @@ public class CameraBehaviour : MonoBehaviour
 
     private Vector3 nextPos;
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         if (GameManager.instance.allPlayers.Count == 0) return;
         
@@ -30,9 +30,9 @@ public class CameraBehaviour : MonoBehaviour
 
         nextPos = new Vector3(posX + offset.x, offset.y, posZ + offset.z);
         
-        //transform.position = nextPos;
+        transform.position = nextPos;
         //transform.position = Vector3.SmoothDamp(transform.position, nextPos, ref _v, lerpSpeed);
-        transform.position = Vector3.Lerp(transform.position, nextPos, lerpSpeed * Time.deltaTime);
+        //transform.position = Vector3.Lerp(transform.position, nextPos, lerpSpeed * Time.deltaTime);
         //transform.position = Vector3.Lerp(transform.position, nextPos, Time.deltaTime);
     }
     

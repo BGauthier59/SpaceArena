@@ -9,12 +9,16 @@ public class EnemyManager : Entity
 
     public override void TakeDamage(int damage)
     {
+        /* Pour l'instant : non
         var damageIndicator = PoolOfObject.Instance.SpawnFromPool(PoolType.Damage, transform.position, Quaternion.identity)
             .GetComponent<TextMeshProUGUI>();
         damageIndicator.rectTransform.SetParent(GameManager.instance.mainCanvas.transform);
         damageIndicator.transform.position = Camera.main.WorldToScreenPoint(transform.position);
         damageIndicator.text = damage.ToString();
         animator.Play("EnemyHit");
+        */
+        
+        Debug.Log("Enemy hit");
         base.TakeDamage(damage);
     }
 
@@ -22,7 +26,9 @@ public class EnemyManager : Entity
     {
         base.Death();
         gameObject.SetActive(false);
-        PoolOfObject.Instance.SpawnFromPool(PoolType.EnemyDeath, transform.position, Quaternion.identity);
+        
+        // Pour l'instant : non
+        //PoolOfObject.Instance.SpawnFromPool(PoolType.EnemyDeath, transform.position, Quaternion.identity);
     }
 
     public override void Heal(int heal)
