@@ -16,22 +16,14 @@ public class EnemyBehaviour : MonoBehaviour
     
     public float minDistanceToAttack;
 
+    #region Common Methods
+
     public virtual void Target()
     {
-        
+        target = PlayerDetected();
+        if(target == null) Debug.LogError("No player found!");
     }
     
-    public virtual void OnEnable()
-    {
-        // Quand est activé (parce que les ennemis ne sont pas destroy)
-        agent.enabled = true;
-    }
-
-    public virtual void OnDisable()
-    {
-        agent.enabled = false;
-    }
-
     public virtual void Attack()
     {
         target.TakeDamage(damage);
@@ -73,5 +65,27 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
         return nearest;
+    }
+    
+    public bool IsTargetAvailable()
+    {
+        if (target == null || target.isDead) return false;
+
+        var path = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path);
+        return path.status == NavMeshPathStatus.PathComplete;
+    }
+
+    #endregion
+    
+    public virtual void OnEnable()
+    {
+        // Quand est activé (parce que les ennemis ne sont pas destroy)
+        agent.enabled = true;
+    }
+
+    public virtual void OnDisable()
+    {
+        agent.enabled = false;
     }
 }

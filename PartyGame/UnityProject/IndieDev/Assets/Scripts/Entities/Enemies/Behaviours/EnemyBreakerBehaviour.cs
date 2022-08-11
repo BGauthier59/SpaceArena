@@ -16,10 +16,8 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
         Cooldown,
         Idle,
     }
-
-
-    [Header("Timers")] 
-    [SerializeField] private float durationBeforeTarget;
+    
+    [Header("Timers")] [SerializeField] private float durationBeforeTarget;
     private float timerBeforeTarget;
 
     [SerializeField] private float durationBeforeFollow;
@@ -27,10 +25,10 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
 
     [SerializeField] private float durationBeforeAttack;
     private float timerBeforeAttack;
-    
+
     [SerializeField] private float durationCooldown;
     private float timerCooldown;
-    
+
     private void Start()
     {
         // Quand est initialisé
@@ -64,82 +62,73 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
         switch (currentState)
         {
             case EnemyBreakerState.Target:
-                if (timerBeforeTarget > durationBeforeTarget)
+
+                if (timerBeforeTarget >= durationBeforeTarget)
                 {
-                    Target();
-                    var path = new NavMeshPath();
-                    if (target == null || target.isDead)
+                    if (IsTargetAvailable())
                     {
-                        SwitchState(EnemyBreakerState.Target);
-                        return;
+                        SwitchState(EnemyBreakerState.Follow);
                     }
-                    
-                    NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path);
-                    SwitchState(path.status != NavMeshPathStatus.PathComplete ? EnemyBreakerState.Target : EnemyBreakerState.Follow);
+                    else Target();
                 }
                 else timerBeforeTarget += Time.deltaTime;
+                
                 break;
 
             case EnemyBreakerState.Follow:
-                if (target == null || target.isDead || agent.path.status != NavMeshPathStatus.PathComplete)
+                
+                if (timerBeforeFollow >= durationBeforeFollow)
                 {
-                    SwitchState(EnemyBreakerState.Target);
-                    return;
-                }
-
-                if (timerBeforeFollow > durationBeforeFollow)
-                {
-                    var targetPos = target.transform.position;
-                    agent.SetDestination(targetPos);
-                    var distance = Vector3.Distance(targetPos, transform.position);
-                    if (distance <= minDistanceToAttack)
+                    if (IsTargetAvailable())
                     {
-                        SwitchState(EnemyBreakerState.Attack);
+                        agent.SetDestination(target.transform.position);
+
+                        var distance = Vector3.Distance(transform.position, target.transform.position);
+                        if (distance <= minDistanceToAttack)
+                        {
+                            SwitchState(EnemyBreakerState.Attack);
+                        }
                     }
+                    else SwitchState(EnemyBreakerState.Target);
                 }
                 else timerBeforeFollow += Time.deltaTime;
-
+                
                 break;
 
             case EnemyBreakerState.Attack:
-                if (timerBeforeAttack > durationBeforeAttack)
+
+                if (timerBeforeAttack >= durationBeforeAttack)
                 {
-                    Attack();
-                    SwitchState(EnemyBreakerState.Cooldown);
+                    if (IsTargetAvailable())
+                    {
+                        Attack();
+                        SwitchState(EnemyBreakerState.Cooldown);
+                    }
+                    else SwitchState(EnemyBreakerState.Target);
                 }
                 else timerBeforeAttack += Time.deltaTime;
-                break;
 
-            case EnemyBreakerState.Idle:
                 break;
 
             case EnemyBreakerState.Cooldown:
+
                 if (timerCooldown >= durationCooldown)
                 {
-                    if (target == null || target.isDead)
-                    {
-                        Debug.Log("Current target has been defeated ? Targeting new one");
-                        SwitchState(EnemyBreakerState.Target);
-                    }
-                    else
-                    {
-                        var targetPos = target.transform.position;
-                        var distance = Vector3.Distance(targetPos, transform.position);
-                        SwitchState(distance <= minDistanceToAttack ? EnemyBreakerState.Attack : EnemyBreakerState.Follow);
-                    }
+                    SwitchState(EnemyBreakerState.Target);
                 }
                 else timerCooldown += Time.deltaTime;
+
                 break;
-            
-            default:
-                Debug.LogError("State is not valid");
+
+            case EnemyBreakerState.Idle:
+
+                Debug.LogError("Not valid");
                 break;
         }
     }
 
     private void SwitchState(EnemyBreakerState state)
     {
-        Debug.Log("Switch state");
         switch (state)
         {
             case EnemyBreakerState.Target:
@@ -168,7 +157,7 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
                 timerCooldown = 0f;
                 agent.isStopped = true;
                 break;
-            
+
             default:
                 Debug.LogError("State is not valid");
                 break;
@@ -180,12 +169,11 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
     public override void Target()
     {
         target = BaseElementDetected();
-        if (target == null) target = PlayerDetected();
+        if (target == null) base.Target();
     }
 
     public override void Attack()
     {
-        Debug.Log("Attack !");
         base.Attack();
     }
 
@@ -213,16 +201,15 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
             var path = new NavMeshPath();
             NavMesh.CalculatePath(transform.position, reachable.transform.position, NavMesh.AllAreas, path);
             if (path.status != NavMeshPathStatus.PathComplete) continue;
-            
+
             // Est-ce que l'élément est plus proche que le précédent sélectionné ?
             var distance = Vector3.Distance(reachable.transform.position, transform.position);
             if (distance > nearestDistance) continue;
-            
+
             nearestDistance = distance;
             nearest = reachable;
         }
 
         return nearest;
     }
-
 }

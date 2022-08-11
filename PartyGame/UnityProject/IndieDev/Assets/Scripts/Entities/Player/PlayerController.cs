@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float recoil;
     [SerializeField] private Image reloadBar;
 
+    [Header("Reparation")] 
+    public ReparationArea reparationArea;
+
     #endregion
 
     #region Connection
@@ -159,9 +162,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnRepairing(InputAction.CallbackContext ctx)
     {
-        // Checking conditions
-
-        // If true, repairs damages buildings
+        if (reparationArea == null) return;
+        if (!reparationArea.isWaitingForInput) return;
+        
+        reparationArea.associatedElement.SetCheckingArea();
     }
 
     public void OnDash(InputAction.CallbackContext ctx)
@@ -258,14 +262,6 @@ public class PlayerController : MonoBehaviour
         }
         else dashTimer += Time.deltaTime;
     }
-
-    /*
-    private System.Collections.IEnumerator DashCooldown()
-    {
-        yield return new WaitForSeconds(dashDuration);
-        isDashing = false;
-    }
-    */
 
     #endregion
 }

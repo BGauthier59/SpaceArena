@@ -47,68 +47,67 @@ public class EnemyAttackerBehaviour : EnemyBehaviour
         switch (currentState)
         {
             case EnemyAttackerState.Target:
-                if (timerBeforeTarget > durationBeforeTarget)
+
+                if (timerBeforeTarget >= durationBeforeTarget)
                 {
-                    Target();
-                    SwitchState(target == null ? EnemyAttackerState.Idle : EnemyAttackerState.Follow);
+                    if (IsTargetAvailable())
+                    {
+                        SwitchState(EnemyAttackerState.Follow);
+                    }
+                    else Target();
                 }
                 else timerBeforeTarget += Time.deltaTime;
-                break;
-            
-            case EnemyAttackerState.Follow:
-                if (target == null || target.isDead || agent.path.status != NavMeshPathStatus.PathComplete)
-                {
-                    Debug.Log("Current target has been disabled ? Targeting new one");
-                    SwitchState(EnemyAttackerState.Target);
-                    return;
-                }
-
-                if (timerBeforeFollow > durationBeforeFollow)
-                {
-                    var targetPos = target.transform.position;
-                    agent.SetDestination(targetPos);
-                    var distance = Vector3.Distance(targetPos, transform.position);
-                    if (distance <= minDistanceToAttack)
-                    {
-                        SwitchState(EnemyAttackerState.Attack);
-                    }
-                }
-                else timerBeforeFollow += Time.deltaTime;    
-                break;
-            
-            case EnemyAttackerState.Attack:
-                if (timerBeforeAttack > durationBeforeAttack)
-                {
-                    Attack();
-                    SwitchState(EnemyAttackerState.Cooldown);
-                }
-                else timerBeforeAttack += Time.deltaTime;
-                break;
-            
-            case EnemyAttackerState.Cooldown:
-                if (timerCooldown >= durationCooldown)
-                {
-                    if (target == null || target.isDead)
-                    {
-                        Debug.Log("Current target has been defeated ? Targeting new one");
-                        SwitchState(EnemyAttackerState.Target);
-                    }
-                    else
-                    {
-                        var targetPos = target.transform.position;
-                        var distance = Vector3.Distance(targetPos, transform.position);
-                        SwitchState(distance <= minDistanceToAttack ? EnemyAttackerState.Attack : EnemyAttackerState.Follow);
-                    }
-                }
-                else timerCooldown += Time.deltaTime;
-                break;
-            
-            case EnemyAttackerState.Idle:
                 
                 break;
-            
-            default:
-                Debug.LogError("State is not valid");
+
+            case EnemyAttackerState.Follow:
+                
+                if (timerBeforeFollow >= durationBeforeFollow)
+                {
+                    if (IsTargetAvailable())
+                    {
+                        agent.SetDestination(target.transform.position);
+
+                        var distance = Vector3.Distance(transform.position, target.transform.position);
+                        if (distance <= minDistanceToAttack)
+                        {
+                            SwitchState(EnemyAttackerState.Attack);
+                        }
+                    }
+                    else SwitchState(EnemyAttackerState.Target);
+                }
+                else timerBeforeFollow += Time.deltaTime;
+                
+                break;
+
+            case EnemyAttackerState.Attack:
+
+                if (timerBeforeAttack >= durationBeforeAttack)
+                {
+                    if (IsTargetAvailable())
+                    {
+                        Attack();
+                        SwitchState(EnemyAttackerState.Cooldown);
+                    }
+                    else SwitchState(EnemyAttackerState.Target);
+                }
+                else timerBeforeAttack += Time.deltaTime;
+
+                break;
+
+            case EnemyAttackerState.Cooldown:
+
+                if (timerCooldown >= durationCooldown)
+                {
+                    SwitchState(EnemyAttackerState.Target);
+                }
+                else timerCooldown += Time.deltaTime;
+
+                break;
+
+            case EnemyAttackerState.Idle:
+
+                Debug.LogError("Not valid");
                 break;
         }
     }
@@ -147,10 +146,5 @@ public class EnemyAttackerBehaviour : EnemyBehaviour
         }
 
         currentState = state;
-    }
-    
-    public override void Target()
-    {
-        target = PlayerDetected();
     }
 }

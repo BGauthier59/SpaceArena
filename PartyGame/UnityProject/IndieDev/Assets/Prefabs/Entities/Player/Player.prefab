@@ -104,6 +104,7 @@ MonoBehaviour:
   shootingShake: {fileID: 11400000, guid: 78299d7eea4932140bd83a79ab14abc9, type: 2}
   recoil: 200
   reloadBar: {fileID: 6098024310784610334}
+  reparationArea: {fileID: 0}
 --- !u!114 &1905726322714944486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +250,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: af640302-3190-4b35-8d4b-64cbbb09ed0e
     m_ActionName: Player/Dash[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7167191028575041455}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnRepairing
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5c954834-0e30-49a6-927a-754de7aaa0d0
+    m_ActionName: Player/Repair[/XInputControllerWindows/rightShoulder,/XInputControllerWindows1/rightShoulder]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player

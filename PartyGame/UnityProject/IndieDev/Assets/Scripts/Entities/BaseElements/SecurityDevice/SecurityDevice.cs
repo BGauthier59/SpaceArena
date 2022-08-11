@@ -79,10 +79,11 @@ public class SecurityDevice : BaseElementManager
         isMovingDoors = true;
     }
     
-    private void Update()
+    public override void Update()
     {
+        base.Update();
+        
         MovingDoors();
-        TryToRepair();
     }
 
     private void MovingDoors()
@@ -107,22 +108,8 @@ public class SecurityDevice : BaseElementManager
 
         isMovingDoors = false;
     }
-    
-    public override void TryToRepair()
-    {
-        if (!isDead) return;
 
-        if (!isInArea) return;
-        
-        OnFixed();
-
-        // Check les conditions de réparations
-
-        // Par exemple : check si deux joueurs réparent au même moment, pendant un certain temps
-
-        // Si toutes les conditions sont là, alors OnFixed()
-    }
-
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -151,4 +138,5 @@ public class SecurityDevice : BaseElementManager
             if (playersInArea.Count == 0) isInArea = false;
         }
     }
+    */
 }
