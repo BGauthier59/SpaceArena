@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyBreakerBehaviour : EnemyBehaviour
 {
@@ -35,17 +36,21 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
         // Quand est initialisé
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         // Quand est activé (parce que les ennemis ne sont pas destroy)
 
+        base.OnEnable();
         Initialization();
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
     }
 
     private void Initialization()
     {
-        agent.enabled = true;
-
         SwitchState(EnemyBreakerState.Target);
     }
 
@@ -62,15 +67,22 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
                 if (timerBeforeTarget > durationBeforeTarget)
                 {
                     Target();
-                    SwitchState(target == null ? EnemyBreakerState.Idle : EnemyBreakerState.Follow);
+                    var path = new NavMeshPath();
+                    if (target == null || target.isDead)
+                    {
+                        SwitchState(EnemyBreakerState.Target);
+                        return;
+                    }
+                    
+                    NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path);
+                    SwitchState(path.status != NavMeshPathStatus.PathComplete ? EnemyBreakerState.Target : EnemyBreakerState.Follow);
                 }
                 else timerBeforeTarget += Time.deltaTime;
                 break;
 
             case EnemyBreakerState.Follow:
-                if (target == null)
+                if (target == null || target.isDead || agent.path.status != NavMeshPathStatus.PathComplete)
                 {
-                    Debug.Log("Current target has been disabled ? Targeting new one");
                     SwitchState(EnemyBreakerState.Target);
                     return;
                 }
@@ -80,7 +92,6 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
                     var targetPos = target.transform.position;
                     agent.SetDestination(targetPos);
                     var distance = Vector3.Distance(targetPos, transform.position);
-                    Debug.Log(distance);
                     if (distance <= minDistanceToAttack)
                     {
                         SwitchState(EnemyBreakerState.Attack);
@@ -128,6 +139,7 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
 
     private void SwitchState(EnemyBreakerState state)
     {
+        Debug.Log("Switch state");
         switch (state)
         {
             case EnemyBreakerState.Target:
@@ -169,7 +181,6 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
     {
         target = BaseElementDetected();
         if (target == null) target = PlayerDetected();
-        Debug.Log(target.name);
     }
 
     public override void Attack()
@@ -183,7 +194,6 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
         var reachableElements = new List<BaseElementManager>();
 
         // Stocker tous les bâtiments sensibles
-
         foreach (var baseElement in BaseManager.instance.allBaseElements)
         {
             if (baseElement != null && !baseElement.isDead)
@@ -193,15 +203,21 @@ public class EnemyBreakerBehaviour : EnemyBehaviour
         }
 
         // Sélectionner le plus proche
-
         var nearestDistance = Mathf.Infinity;
         BaseElementManager nearest = null;
         for (int i = 0; i < reachableElements.Count; i++)
         {
             var reachable = reachableElements[i];
 
+            // Est-ce que le chemin est accessible ?
+            var path = new NavMeshPath();
+            NavMesh.CalculatePath(transform.position, reachable.transform.position, NavMesh.AllAreas, path);
+            if (path.status != NavMeshPathStatus.PathComplete) continue;
+            
+            // Est-ce que l'élément est plus proche que le précédent sélectionné ?
             var distance = Vector3.Distance(reachable.transform.position, transform.position);
             if (distance > nearestDistance) continue;
+            
             nearestDistance = distance;
             nearest = reachable;
         }

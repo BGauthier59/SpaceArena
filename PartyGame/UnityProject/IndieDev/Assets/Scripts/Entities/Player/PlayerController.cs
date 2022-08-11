@@ -232,9 +232,13 @@ public class PlayerController : MonoBehaviour
         {
             reloadBar.transform.parent.gameObject.SetActive(true);
             reloadTimer += Time.deltaTime;
-            reloadBar.transform.parent.position =
-                Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0, -20);
+            
+            var nextPos = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0, -20);
+
+            reloadBar.transform.parent.position = Vector3.Lerp(reloadBar.transform.parent.position, nextPos,
+                reloadTimer / reloadDuration);
             reloadBar.fillAmount = reloadTimer / reloadDuration;
+            
             if (reloadTimer > reloadDuration)
             {
                 reloading = false;

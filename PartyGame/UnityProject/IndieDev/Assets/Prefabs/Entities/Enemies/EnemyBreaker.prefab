@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 1283748006585085975}
   - component: {fileID: -8318030274499121629}
   - component: {fileID: -4426738225324329689}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyBreaker
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -371,11 +371,11 @@ MonoBehaviour:
   isAttacking: 0
   damage: 1
   agent: {fileID: -4426738225324329689}
-  minDistanceToAttack: 0
-  durationBeforeTarget: 1
-  durationBeforeFollow: 1
+  minDistanceToAttack: 2
+  durationBeforeTarget: 0.1
+  durationBeforeFollow: 0.5
   durationBeforeAttack: 1
-  durationCooldown: 1
+  durationCooldown: 0.2
 --- !u!114 &1283748006585085975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,9 +415,9 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3279746616174624073}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Speed: 6
   m_Acceleration: 20
   avoidancePriority: 50

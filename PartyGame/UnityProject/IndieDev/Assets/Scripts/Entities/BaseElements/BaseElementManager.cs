@@ -14,6 +14,7 @@ public class BaseElementManager : Entity
 
     public override void Death()
     {
+        if (isDead) return;
         OnDestroyed();
         base.Death();
     }
@@ -25,8 +26,9 @@ public class BaseElementManager : Entity
 
     #endregion
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         BaseManager.instance.allBaseElements.Add(this);
     }
 
@@ -46,6 +48,8 @@ public class BaseElementManager : Entity
 
     public virtual void OnFixed()
     {
+        Debug.Log("Fixing !");
         isDead = false;
+        Heal(totalLife);
     }
 }

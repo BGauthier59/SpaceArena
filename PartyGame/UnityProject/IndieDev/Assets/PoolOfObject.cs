@@ -52,10 +52,10 @@ public class PoolOfObject : MonoBehaviour
     public GameObject SpawnFromPool(PoolType type, Vector3 position, Quaternion rotation)
     {
         var objToSpawn = poolDictionary[type].Dequeue();
-        objToSpawn.SetActive(true);
         objToSpawn.transform.position = position;
         objToSpawn.transform.rotation = rotation;
-        
+        objToSpawn.SetActive(true);
+
         poolDictionary[type].Enqueue(objToSpawn);
 
         return objToSpawn;

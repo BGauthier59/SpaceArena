@@ -20,6 +20,17 @@ public class EnemyBehaviour : MonoBehaviour
     {
         
     }
+    
+    public virtual void OnEnable()
+    {
+        // Quand est activé (parce que les ennemis ne sont pas destroy)
+        agent.enabled = true;
+    }
+
+    public virtual void OnDisable()
+    {
+        agent.enabled = false;
+    }
 
     public virtual void Attack()
     {
@@ -48,8 +59,15 @@ public class EnemyBehaviour : MonoBehaviour
         {
             var reachable = reachablePlayers[i];
 
+            // Est-ce que le chemin est accessible ?
+            var path = new NavMeshPath();
+            NavMesh.CalculatePath(transform.position, reachable.transform.position, NavMesh.AllAreas, path);
+            if (path.status != NavMeshPathStatus.PathComplete) continue;
+            
+            // Est-ce que le joueur est plus proche que le précédent sélectionné ?
             var distance = Vector3.Distance(reachable.transform.position, transform.position);
             if (distance > nearestDistance) continue;
+            
             nearestDistance = distance;
             nearest = reachable;
         }

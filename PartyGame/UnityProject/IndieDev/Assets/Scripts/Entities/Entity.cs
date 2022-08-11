@@ -12,7 +12,7 @@ public class Entity : MonoBehaviour
 
     public bool isDead;
 
-    private void Start()
+    public virtual void Start()
     {
         Initialization();
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAttackerBehaviour : EnemyBehaviour
 {
@@ -25,15 +26,14 @@ public class EnemyAttackerBehaviour : EnemyBehaviour
     [SerializeField] private float durationCooldown;
     private float timerCooldown;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         Initialization();
     }
     
     private void Initialization()
     {
-        agent.enabled = true;
-
         SwitchState(EnemyAttackerState.Target);
     }
 
@@ -56,7 +56,7 @@ public class EnemyAttackerBehaviour : EnemyBehaviour
                 break;
             
             case EnemyAttackerState.Follow:
-                if (target == null)
+                if (target == null || target.isDead || agent.path.status != NavMeshPathStatus.PathComplete)
                 {
                     Debug.Log("Current target has been disabled ? Targeting new one");
                     SwitchState(EnemyAttackerState.Target);
