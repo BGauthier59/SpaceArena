@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ReparationArea : MonoBehaviour
 {
+    [Header("Reparation data")]
     public BaseElementManager associatedElement;
     public Transform iconPosition;
     private Collider areaCollider;
@@ -12,6 +13,14 @@ public class ReparationArea : MonoBehaviour
     public bool isWaitingForInput;
     public PlayerController currentPlayerOnArea;
     public List<PlayerController> playersOnArea;
+
+    [Header("Renderers")]
+    public Renderer reparationAreaRenderer;
+    public Renderer[] reparationAreaDevicesRenderer;
+    
+    public Material reparationAreaDisabled;
+    public Material reparationAreaEnabled;
+    public Material reparationAreaDeviceDisabled;
 
     private void Start()
     {
@@ -21,11 +30,25 @@ public class ReparationArea : MonoBehaviour
 
     public void ActivateArea()
     {
+        reparationAreaRenderer.material = reparationAreaEnabled;
+
+        foreach (var rd in reparationAreaDevicesRenderer)
+        {
+            rd.material = associatedElement.reparationAreaDeviceEnabled;
+        }
+        
         areaCollider.enabled = true;
     }
 
     public void DeactivateArea()
     {
+        reparationAreaRenderer.material = reparationAreaDisabled;
+        
+        foreach (var rd in reparationAreaDevicesRenderer)
+        {
+            rd.material = reparationAreaDeviceDisabled;
+        }
+        
         areaCollider.enabled = false;
     }
 

@@ -165,6 +165,8 @@ public class PlayerController : MonoBehaviour
         if (reparationArea == null) return;
         if (!reparationArea.isWaitingForInput) return;
         
+        GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Reparation);
+        
         reparationArea.associatedElement.SetCheckingArea();
     }
 

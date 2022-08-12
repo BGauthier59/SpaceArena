@@ -8,6 +8,7 @@ public class FeedbacksManager : MonoBehaviour
 {
     public Vibrations mainVibration;
     public Vibrations connectionVibration;
+    public Vibrations reparationVibration;
 
     public Vibrations GetVibrations(VibrationsType type)
     {
@@ -17,7 +18,8 @@ public class FeedbacksManager : MonoBehaviour
                 return mainVibration;
             case VibrationsType.Connection:
                 return connectionVibration;
-
+            case VibrationsType.Reparation:
+                return reparationVibration;
         }
 
         Debug.LogError("Hasn't found any vibrations");

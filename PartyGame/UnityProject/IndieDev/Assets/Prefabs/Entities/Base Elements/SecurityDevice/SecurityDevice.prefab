@@ -69,9 +69,11 @@ MonoBehaviour:
   rb: {fileID: 0}
   isDead: 0
   reparationInputs: 4
-  allReparationAreas: []
+  allReparationAreas:
+  - {fileID: 3193779455704855067}
   reparationIcon: {fileID: 2666536412172399646}
   iconMoveDuration: 0.7
+  reparationAreaDeviceEnabled: {fileID: 2100000, guid: a5370c5da6c36a8469ab272bf32b69ae, type: 2}
   associatedDoors:
   - tr: {fileID: 6287531850356629400}
     yPosOpened: 0
@@ -587,6 +589,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
   m_PrefabInstance: {fileID: 925658086197725540}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3193779455704855067 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2344700155467594623, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+  m_PrefabInstance: {fileID: 925658086197725540}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f3d1979b8a40d842a06cb0f6fcda478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1845454199697707135
 PrefabInstance:
   m_ObjectHideFlags: 0

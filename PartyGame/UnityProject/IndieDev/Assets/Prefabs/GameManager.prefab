@@ -164,6 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainVibration: {fileID: 11400000, guid: b0aea77c2136d494c8afea69f20aa109, type: 2}
   connectionVibration: {fileID: 11400000, guid: ddc5a5ca8c79ea0449036743d5ea6fe6, type: 2}
+  reparationVibration: {fileID: 11400000, guid: 1f14fe8e0ac26e442a81d94211288dfa, type: 2}
 --- !u!1 &4576669941368348805
 GameObject:
   m_ObjectHideFlags: 0
