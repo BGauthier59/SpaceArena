@@ -23,9 +23,11 @@ public class PlayerController : MonoBehaviour
     [Header("Components")] public Renderer rd;
     [SerializeField] private Rigidbody rb;
 
-    [Header("Controller & Parameters")] [SerializeField]
-    private Vector2 leftJoystickInput;
+    [Header("Controller & Parameters")]
 
+    private bool isActive;
+    
+    [SerializeField] private Vector2 leftJoystickInput;
     [SerializeField] private Vector2 rightJoystickInput;
 
     [Range(0f, 1f)] [SerializeField] private float moveTolerance;
@@ -84,6 +86,8 @@ public class PlayerController : MonoBehaviour
 
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         rb.isKinematic = true;
+        
+        isActive = false;
     }
 
     #endregion
@@ -97,6 +101,8 @@ public class PlayerController : MonoBehaviour
         reloadBar.transform.parent.SetParent(GameManager.instance.mainCanvas.transform);
         rd.material.color = GameManager.instance.colors[playerIndex - 1];
         rd.material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
+
+        isActive = true;
     }
 
     #endregion
@@ -119,6 +125,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
+        if (!isActive) return;
+        
         leftJoystickInput = ctx.ReadValue<Vector2>();
 
         // Checking conditions
@@ -128,6 +136,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnPause(InputAction.CallbackContext ctx)
     {
+        if (!isActive) return;
+
         // Checking conditions
         if (GameManager.instance.isPaused) return;
 
@@ -140,6 +150,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext ctx)
     {
+        if (!isActive) return;
+
         rightJoystickInput = ctx.ReadValue<Vector2>();
 
         if (Mathf.Abs(rightJoystickInput.x) < aimTolerance && Mathf.Abs(rightJoystickInput.y) < aimTolerance)
@@ -152,16 +164,22 @@ public class PlayerController : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext ctx)
     {
+        if (!isActive) return;
+
         isAttacking = ctx.performed;
     }
 
     public void OnReload(InputAction.CallbackContext ctx)
     {
+        if (!isActive) return;
+
         reloading = true;
     }
 
     public void OnRepairing(InputAction.CallbackContext ctx)
     {
+        if (!isActive) return;
+
         if (reparationArea == null) return;
         if (!reparationArea.isWaitingForInput) return;
         
@@ -172,6 +190,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext ctx)
     {
+        if (!isActive) return;
+
         if (isDashing) return;
         Debug.Log("Je dash");
         isDashing = true;

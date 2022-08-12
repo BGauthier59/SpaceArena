@@ -108,35 +108,4 @@ public class SecurityDevice : BaseElementManager
 
         isMovingDoors = false;
     }
-
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            var player = other.transform;
-            if (playersInArea.Contains(player)) return;
-            
-            playersInArea.Add(player);
-            isInArea = true;
-            
-            Debug.Log("A player is in the reparation area");
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            var player = other.transform;
-            if (!playersInArea.Contains(player)) return;
-            
-            playersInArea.Remove(player);
-            
-            Debug.Log("A player left the area");
-
-            if (playersInArea.Count == 0) isInArea = false;
-        }
-    }
-    */
 }
