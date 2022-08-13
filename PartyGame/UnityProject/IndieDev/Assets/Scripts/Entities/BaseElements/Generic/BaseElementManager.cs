@@ -7,6 +7,9 @@ using Random = UnityEngine.Random;
 
 public class BaseElementManager : Entity
 {
+    [Header("Destroy")] 
+    [SerializeField] private GameObject onDestroyText;
+    
     [Header("Reparation")] [SerializeField]
     private int reparationInputs;
 
@@ -57,6 +60,7 @@ public class BaseElementManager : Entity
 
     public virtual void OnDestroyed()
     {
+        onDestroyText.SetActive(true);
         foreach (var area in allReparationAreas)
         {
             area.ActivateArea();
@@ -70,6 +74,7 @@ public class BaseElementManager : Entity
 
     public virtual void OnFixed()
     {
+        onDestroyText.SetActive(false);
         CancelReparation();
         foreach (var area in allReparationAreas)
         {
