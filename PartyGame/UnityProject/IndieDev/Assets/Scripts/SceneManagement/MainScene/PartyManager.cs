@@ -17,9 +17,23 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private WavesManager wavesManager;
 
-    [Header("Party Parameters")] 
+    [Header("Game Parameters")] 
     [Tooltip("Duration in seconds")] [SerializeField] private float partyDuration;
     private float partyTimer;
+
+    [SerializeField] private float beforeGameStartsDuration;
+    private float beforeGameStartsTimer;
+
+    [SerializeField] private float whenGameEndsDuration;
+    private float whenGameEndsTimer;
+
+    public GameState gameState;
+
+    public enum GameState
+    {
+        Beginning, InGame, End, Finished
+    }
+
     [SerializeField] private bool hasPartyBegun;
 
     [Header("Interface")]
@@ -48,29 +62,51 @@ public class PartyManager : MonoBehaviour
 
     private void Update()
     {
-        CheckTimer();
+        switch (gameState)
+        {
+            case GameState.Beginning:
+                CheckTimerBeforeGameStarts();
+                break;
+            case GameState.InGame:
+                CheckTimerInGame();
+                break;
+            case GameState.End:
+                CheckTimerWhenGameEnds();
+                break;
+            case GameState.Finished:
+                break;
+        }
     }
 
     private void InitializationAwake()
     {
+        gameState = GameState.Beginning;
         hasPartyBegun = false;
         eventSystem = GameManager.instance.eventSystem;
         GameManager.instance.playerInputManager = null;
         GameManager.instance.mainCanvas = mainCanvas;
         GameManager.instance.cameraShake = cameraShake;
     }
-    
+
     private void InitializationStart()
+    {
+        for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
+        {
+            var player = GameManager.instance.allPlayers[i];
+            player.transform.position = allSpawningPoints[i].position;
+            player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
+            player.PartyBegins();
+        }
+    }
+    
+    private void StartingGame()
     {
         // Initializing players
 
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
-            
-            player.transform.position = allSpawningPoints[i].position;
-            player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
-            player.PartyBegins();
+            player.ActivatePlayer();
         }
         
         // Initializing timer
@@ -84,15 +120,36 @@ public class PartyManager : MonoBehaviour
         wavesManager.NewRound();
     }
 
-    public void CheckTimer()
+    #region Before Game Starts
+
+    private void CheckTimerBeforeGameStarts()
+    {
+        if (beforeGameStartsTimer >= beforeGameStartsDuration)
+        {
+            // When Game Starts
+            gameState = GameState.InGame;
+            StartingGame();
+        }
+        else beforeGameStartsTimer += Time.deltaTime;
+    }
+
+    #endregion
+
+    #region In Game
+
+    private void CheckTimerInGame()
     {
         if (!hasPartyBegun) return;
         
         if (partyTimer <= 0)
         {
-            partyTimer = 0;
-            DisplayScore();
-            // End of game
+            partyTimer = 0f;
+            for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
+            {
+                var player = GameManager.instance.allPlayers[i];
+                player.DeactivatePlayer();
+            }
+            gameState = GameState.End;
         }
         else
         {
@@ -102,6 +159,21 @@ public class PartyManager : MonoBehaviour
         timerText.text = ((int) partyTimer).ToString();
     }
 
+    #endregion
+
+    #region When Game Ends
+
+    private void CheckTimerWhenGameEnds()
+    {
+        if (whenGameEndsTimer >= whenGameEndsDuration)
+        {
+            // When Game Ends
+            gameState = GameState.Finished;
+            DisplayScore();
+        }
+        else whenGameEndsTimer += Time.deltaTime;
+    }
+    
     private void DisplayScore()
     {
         endOfParty.SetActive(true);
@@ -116,7 +188,7 @@ public class PartyManager : MonoBehaviour
         }
         eventSystem.SetSelectedGameObject(backToMainMenu.gameObject);
     }
-
+    
     public void OnFinishGame()
     {
         endOfParty.SetActive(false);
@@ -124,6 +196,9 @@ public class PartyManager : MonoBehaviour
         OnQuit();
     }
 
+    #endregion
+    
+    
     public void OnQuit()
     {
         GameManager.instance.SetMainGamepad(Gamepad.all[0]);

@@ -23,6 +23,10 @@ public class BaseManager : MonoBehaviour
     #endregion
 
     public List<BaseElementManager> allBaseElements = new List<BaseElementManager>();
+
+    [Header("GUI")] 
+    public Gradient baseLifeGradient;
+    public Vector3 baseElementInfoOffset;
     
     private void Start()
     {

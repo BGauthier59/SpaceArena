@@ -31,7 +31,9 @@ public class BaseElementManager : Entity
     [Header("GUI")] 
     [SerializeField] private GameObject baseElementInfo;
     [SerializeField] private Slider lifeSlider;
+    [SerializeField] private Image lifeSliderFill;
     [SerializeField] private TextMeshProUGUI baseElementNameText;
+    [SerializeField] private TextMeshProUGUI baseElementLifeText;
     [SerializeField] private BaseElementName baseElementName;
     
     [Serializable]
@@ -178,7 +180,7 @@ public class BaseElementManager : Entity
 
     #region Trigger & Collision
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -221,12 +223,14 @@ public class BaseElementManager : Entity
     public void SetBaseElementInfo(bool active)
     {
         baseElementInfo.SetActive(active);
-        baseElementInfo.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        baseElementInfo.transform.position = Camera.main.WorldToScreenPoint(transform.position + BaseManager.instance.baseElementInfoOffset);
     }
     
     public void SetLifeSlider()
     {
         lifeSlider.value = currentLife;
+        lifeSliderFill.color = BaseManager.instance.baseLifeGradient.Evaluate((float) currentLife / totalLife);
+        baseElementLifeText.text = $"{currentLife}/{totalLife}";
     }
 
     #endregion

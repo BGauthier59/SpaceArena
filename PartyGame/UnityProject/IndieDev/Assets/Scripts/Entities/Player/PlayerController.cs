@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         rb.isKinematic = true;
         
-        isActive = false;
+        DeactivatePlayer();
     }
 
     #endregion
@@ -101,8 +101,17 @@ public class PlayerController : MonoBehaviour
         reloadBar.transform.parent.SetParent(GameManager.instance.mainCanvas.transform);
         rd.material.color = GameManager.instance.colors[playerIndex - 1];
         rd.material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
+    }
 
+    public void ActivatePlayer()
+    {
         isActive = true;
+    }
+
+    public void DeactivatePlayer()
+    {
+        rb.velocity = Vector3.zero;
+        isActive = false;
     }
 
     #endregion

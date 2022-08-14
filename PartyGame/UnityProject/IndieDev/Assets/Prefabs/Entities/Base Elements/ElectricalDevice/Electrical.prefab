@@ -244,7 +244,9 @@ MonoBehaviour:
   reparationAreaDeviceEnabled: {fileID: 2100000, guid: 30de66accb600224d979425331feb2c5, type: 2}
   baseElementInfo: {fileID: 848025918589943421}
   lifeSlider: {fileID: 5622132576681451513}
+  lifeSliderFill: {fileID: 7785365194897179061}
   baseElementNameText: {fileID: 848025917306913260}
+  baseElementLifeText: {fileID: 2813131841528502739}
   baseElementName:
     frenchName: "G\xE9n\xE9rateur Electrique"
     englishName: Electric Generator
@@ -461,16 +463,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 288014e5a74a4f94d9c4458e0b9bc037, type: 3}
---- !u!1 &848025918589943421 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3028199545533311193, guid: 288014e5a74a4f94d9c4458e0b9bc037, type: 3}
-  m_PrefabInstance: {fileID: 2432674309255435940}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &848025918589943422 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3028199545533311194, guid: 288014e5a74a4f94d9c4458e0b9bc037, type: 3}
-  m_PrefabInstance: {fileID: 2432674309255435940}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5622132576681451513 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8054489676525619549, guid: 288014e5a74a4f94d9c4458e0b9bc037, type: 3}
@@ -480,6 +472,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7785365194897179061 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5605209124706637585, guid: 288014e5a74a4f94d9c4458e0b9bc037, type: 3}
+  m_PrefabInstance: {fileID: 2432674309255435940}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2813131841528502739 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 488879034974211959, guid: 288014e5a74a4f94d9c4458e0b9bc037, type: 3}
+  m_PrefabInstance: {fileID: 2432674309255435940}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &848025917306913260 stripped
@@ -493,6 +507,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &848025918589943421 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3028199545533311193, guid: 288014e5a74a4f94d9c4458e0b9bc037, type: 3}
+  m_PrefabInstance: {fileID: 2432674309255435940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &848025918589943422 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3028199545533311194, guid: 288014e5a74a4f94d9c4458e0b9bc037, type: 3}
+  m_PrefabInstance: {fileID: 2432674309255435940}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2708196124195777066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -801,14 +825,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c6c19c4b1c634d409cbe601073f7363, type: 3}
---- !u!4 &3009894498627795258 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5311638892232922754, guid: 9c6c19c4b1c634d409cbe601073f7363, type: 3}
-  m_PrefabInstance: {fileID: 6950163045208158136}
-  m_PrefabAsset: {fileID: 0}
 --- !u!108 &4617704382395628481 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 2334713834655798393, guid: 9c6c19c4b1c634d409cbe601073f7363, type: 3}
+  m_PrefabInstance: {fileID: 6950163045208158136}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3009894498627795258 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5311638892232922754, guid: 9c6c19c4b1c634d409cbe601073f7363, type: 3}
   m_PrefabInstance: {fileID: 6950163045208158136}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8134277426320520776

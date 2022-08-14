@@ -1530,14 +1530,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 264122801}
-  m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
+  m_LocalRotation: {x: 0.62592345, y: 0, z: 0, w: 0.7798845}
   m_LocalPosition: {x: 0, y: 22, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 60307956}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 65, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 77.5, y: 0, z: 0}
 --- !u!114 &264122803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3236,7 +3236,10 @@ MonoBehaviour:
   - {fileID: 59909613}
   timerText: {fileID: 135152996}
   wavesManager: {fileID: 737272730}
-  partyDuration: 1000
+  partyDuration: 9.73
+  beforeGameStartsDuration: 3
+  whenGameEndsDuration: 3
+  gameState: 0
   hasPartyBegun: 0
   endOfParty: {fileID: 358972067}
   scoreAreas:
@@ -3913,6 +3916,14 @@ PrefabInstance:
       propertyPath: allReparationAreas.Array.data[1]
       value: 
       objectReference: {fileID: 1889735333}
+    - target: {fileID: 7305300917238572891, guid: a3c371455df76cd429df2d812a67442f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305300917238572891, guid: a3c371455df76cd429df2d812a67442f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3c371455df76cd429df2d812a67442f, type: 3}
 --- !u!4 &775444143 stripped
@@ -4140,6 +4151,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allBaseElements: []
+  baseLifeGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.2686702, b: 0, a: 1}
+    key1: {r: 0, g: 0.36626983, b: 1, a: 1}
+    key2: {r: 0, g: 1, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 16384
+    ctime1: 64880
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 1
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
+  baseElementInfoOffset: {x: 0, y: 0, z: 1}
 --- !u!1 &875444314
 GameObject:
   m_ObjectHideFlags: 0
@@ -9464,6 +9505,14 @@ PrefabInstance:
       propertyPath: allReparationAreas.Array.data[2]
       value: 
       objectReference: {fileID: 708305365}
+    - target: {fileID: 572237998832813837, guid: 6aa1138d6c35d8e40ae5ef2592d33b3b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572237998832813837, guid: 6aa1138d6c35d8e40ae5ef2592d33b3b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1412037016068006900, guid: 6aa1138d6c35d8e40ae5ef2592d33b3b, type: 3}
       propertyPath: m_LocalPosition.z
       value: -5
@@ -9585,6 +9634,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3372585273364546695, guid: 1ca359db39a920b43bbf6edb917ac4ea, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3372585273364546695, guid: 1ca359db39a920b43bbf6edb917ac4ea, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7093468803843002880, guid: 1ca359db39a920b43bbf6edb917ac4ea, type: 3}
       propertyPath: m_Name
       value: BaseHeart
