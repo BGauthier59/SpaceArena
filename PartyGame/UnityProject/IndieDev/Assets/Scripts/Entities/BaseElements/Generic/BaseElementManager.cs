@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class BaseElementManager : Entity
@@ -10,8 +12,8 @@ public class BaseElementManager : Entity
     [Header("Destroy")] 
     [SerializeField] private GameObject onDestroyText;
     
-    [Header("Reparation")] [SerializeField]
-    private int reparationInputs;
+    [Header("Reparation")] 
+    [SerializeField] private int reparationInputs;
 
     private int reparationInputsCounter;
     [SerializeField] private ReparationArea[] allReparationAreas;
@@ -26,11 +28,25 @@ public class BaseElementManager : Entity
     
     public Material reparationAreaDeviceEnabled;
 
+    [Header("GUI")] 
+    [SerializeField] private GameObject baseElementInfo;
+    [SerializeField] private Slider lifeSlider;
+    [SerializeField] private TextMeshProUGUI baseElementNameText;
+    [SerializeField] private BaseElementName baseElementName;
+    
+    [Serializable]
+    private struct BaseElementName
+    {
+        public string frenchName;
+        public string englishName;
+    }
+    
     #region Entity
 
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
+        SetLifeSlider();
     }
 
     public override void Death()
@@ -43,6 +59,7 @@ public class BaseElementManager : Entity
     public override void Heal(int heal)
     {
         base.Heal(heal);
+        SetLifeSlider();
     }
 
     #endregion
@@ -51,6 +68,7 @@ public class BaseElementManager : Entity
     {
         base.Start();
 
+        InitializeBaseElementInfo();
         BaseManager.instance.allBaseElements.Add(this);
         foreach (var area in allReparationAreas)
         {
@@ -95,8 +113,7 @@ public class BaseElementManager : Entity
         // Tous les joueurs sont là et prêts pour la réparation !
         BeginsReparation();
     }
-
-
+    
     public void BeginsReparation()
     {
         // Faire apparaître l'icône de l'input   
@@ -158,4 +175,59 @@ public class BaseElementManager : Entity
             }
         }
     }
+
+    #region Trigger & Collision
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            SetBaseElementInfo(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            SetBaseElementInfo(false);
+        }
+    }
+
+    #endregion
+
+    #region GUI
+
+    public void InitializeBaseElementInfo()
+    {
+        switch (GameManager.instance.settings.currentLanguage)
+        {
+            case Language.French:
+                baseElementNameText.text = baseElementName.frenchName;
+                break;
+            
+            case Language.English:
+                baseElementNameText.text = baseElementName.englishName;
+                break;
+        }
+
+        lifeSlider.maxValue = totalLife;
+
+        baseElementInfo.transform.SetParent(GameManager.instance.mainCanvas.transform);
+        SetLifeSlider();
+        SetBaseElementInfo(false);
+    }
+
+    public void SetBaseElementInfo(bool active)
+    {
+        baseElementInfo.SetActive(active);
+        baseElementInfo.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+    }
+    
+    public void SetLifeSlider()
+    {
+        lifeSlider.value = currentLife;
+    }
+
+    #endregion
 }

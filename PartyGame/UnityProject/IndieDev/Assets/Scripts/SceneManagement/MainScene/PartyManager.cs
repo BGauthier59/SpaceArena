@@ -36,9 +36,14 @@ public class PartyManager : MonoBehaviour
         public TextMeshProUGUI scoreText;
     }
 
+    private void Awake()
+    {
+        InitializationAwake();
+    }
+
     private void Start()
     {
-        Initialization();
+        InitializationStart();
     }
 
     private void Update()
@@ -46,14 +51,17 @@ public class PartyManager : MonoBehaviour
         CheckTimer();
     }
 
-    private void Initialization()
+    private void InitializationAwake()
     {
         hasPartyBegun = false;
         eventSystem = GameManager.instance.eventSystem;
         GameManager.instance.playerInputManager = null;
         GameManager.instance.mainCanvas = mainCanvas;
         GameManager.instance.cameraShake = cameraShake;
-
+    }
+    
+    private void InitializationStart()
+    {
         // Initializing players
 
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)

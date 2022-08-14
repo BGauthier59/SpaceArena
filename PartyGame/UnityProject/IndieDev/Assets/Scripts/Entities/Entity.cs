@@ -6,7 +6,7 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     public int totalLife;
-    private int currentLife;
+    public int currentLife;
     public Animator animator;
     public Rigidbody rb;
 
