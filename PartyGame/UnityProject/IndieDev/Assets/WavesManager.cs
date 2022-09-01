@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static UnityEngine.Random;
 using Random = UnityEngine.Random;
 
@@ -18,6 +19,11 @@ public class WavesManager : MonoBehaviour
     [SerializeField] private float enemySpawnDelay;
     private List<Waves> waves;
     private List<int> entrancesUsed;
+
+    private bool waitingForNextWave;
+    [SerializeField] private float durationBeforeNextWave;
+    private float timerBeforeNextWave;
+    
 
     [Serializable]
     public class Enemy
@@ -45,20 +51,35 @@ public class WavesManager : MonoBehaviour
         entrancesUsed = new List<int>();
     }
 
+    private void Update()
+    {
+        if (!waitingForNextWave) return;
+
+        if (timerBeforeNextWave >= durationBeforeNextWave)
+        {
+            NewRound();
+        }
+        else timerBeforeNextWave += Time.deltaTime;
+    }
+
     public void NewRound()
     {
+        waitingForNextWave = false;
+        timerBeforeNextWave = 0f;
+        
         var smallWaves = roundDifficultyIndex / waveDifficulty;
         for (int i = 0; i < smallWaves; i++)
         {
             WaveRandomizer();
         }
-
+        
         StartCoroutine(SpawnRound());
     }
     
-
     private void WaveRandomizer()
     {
+        // Ajoute une vague
+        
         var wave = new Waves();
         wave.enemies = new List<EnemyGroup>();
         var groupsCount = roundDifficultyIndex / enemyGroupDifficulty;
@@ -69,8 +90,11 @@ public class WavesManager : MonoBehaviour
         SetEntrance(wave);
         waves.Add(wave);
     }
+    
     private EnemyGroup EnemyRandomizer()
     {
+        // Définie un ennemi aléatoire
+        
         var enemyGroup = new EnemyGroup
         {
             enemyType = enemies[Range(0, enemies.Length)]
@@ -112,8 +136,11 @@ public class WavesManager : MonoBehaviour
                 }
             }
         }
+
+        waitingForNextWave = true;
     }
 
+    // Ratio ta coroutine :
     private IEnumerator TimeBetweenWaves()
     {
         yield return new WaitForSeconds(waveTimer);

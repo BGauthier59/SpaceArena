@@ -3236,7 +3236,7 @@ MonoBehaviour:
   - {fileID: 59909613}
   timerText: {fileID: 135152996}
   wavesManager: {fileID: 737272730}
-  partyDuration: 9.73
+  partyDuration: 1000
   beforeGameStartsDuration: 3
   whenGameEndsDuration: 3
   gameState: 0
@@ -3801,6 +3801,7 @@ MonoBehaviour:
   enemiesParent: {fileID: 0}
   waveTimer: 0
   enemySpawnDelay: 0.5
+  durationBeforeNextWave: 20
 --- !u!1001 &775444142
 PrefabInstance:
   m_ObjectHideFlags: 0
