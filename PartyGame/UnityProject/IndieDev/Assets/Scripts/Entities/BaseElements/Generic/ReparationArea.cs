@@ -50,6 +50,11 @@ public class ReparationArea : MonoBehaviour
         }
         
         areaCollider.enabled = false;
+        
+        playersOnArea.Clear();
+        currentPlayerOnArea = null;
+        isPlayerOn = false;
+        
     }
 
     private void OnTriggerEnter(Collider other)

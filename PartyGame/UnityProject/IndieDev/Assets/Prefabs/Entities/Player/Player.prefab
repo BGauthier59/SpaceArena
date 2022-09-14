@@ -55,6 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalLife: 10
+  currentLife: 0
   animator: {fileID: 0}
   rb: {fileID: 0}
   isDead: 0

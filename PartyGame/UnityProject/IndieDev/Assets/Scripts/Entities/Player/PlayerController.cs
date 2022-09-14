@@ -115,8 +115,7 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
-
-
+    
     private void Update()
     {
         Rotating();
@@ -183,6 +182,9 @@ public class PlayerController : MonoBehaviour
         if (!isActive) return;
 
         reloading = true;
+        reloadBar.transform.parent.position = Camera.main.WorldToScreenPoint(transform.position) 
+                                              + new Vector3(0, -20);
+        reloadBar.transform.parent.gameObject.SetActive(true);
     }
 
     public void OnRepairing(InputAction.CallbackContext ctx)
@@ -207,7 +209,6 @@ public class PlayerController : MonoBehaviour
         var dashVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         dashVector.Normalize();
         rb.AddForce(dashVector * dashForce);
-        //StartCoroutine(DashCooldown());
     }
 
     #endregion
@@ -265,21 +266,23 @@ public class PlayerController : MonoBehaviour
     {
         if (reloading)
         {
-            reloadBar.transform.parent.gameObject.SetActive(true);
-            reloadTimer += Time.deltaTime;
-            
-            var nextPos = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0, -20);
-
-            reloadBar.transform.parent.position = Vector3.Lerp(reloadBar.transform.parent.position, nextPos,
-                reloadTimer / reloadDuration);
-            reloadBar.fillAmount = reloadTimer / reloadDuration;
-            
             if (reloadTimer > reloadDuration)
             {
                 reloading = false;
                 reloadTimer = 0;
                 bulletAmount = maxBulletAmount;
                 reloadBar.transform.parent.gameObject.SetActive(false);
+            }
+            else
+            {
+                var nextPos = Camera.main.WorldToScreenPoint(transform.position) 
+                              + new Vector3(0, -20);
+
+                reloadBar.transform.parent.position = Vector3.Lerp(reloadBar.transform.parent.position, nextPos,
+                    reloadTimer / reloadDuration);
+                reloadBar.fillAmount = reloadTimer / reloadDuration;
+                
+                reloadTimer += Time.deltaTime;
             }
         }
     }

@@ -151,11 +151,8 @@ public class PartyManager : MonoBehaviour
             }
             gameState = GameState.End;
         }
-        else
-        {
-            partyTimer -= Time.deltaTime;
-        }
-
+        else partyTimer -= Time.deltaTime;
+        
         timerText.text = ((int) partyTimer).ToString();
     }
 

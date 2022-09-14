@@ -26,11 +26,13 @@ public class ElectricalDevice : BaseElementManager
         
         public void LightingOn()
         {
-            light.intensity = Mathf.Lerp(0, lightOnIntensity, lightingOnTimer / lightingOnDuration);
+            light.intensity = Mathf.Lerp(0, lightOnIntensity, 
+                lightingOnTimer / lightingOnDuration);
             
             if (lightingOnTimer >= lightingOnDuration)
             {
                 light.intensity = lightOnIntensity;
+                lightingOnTimer = 0f;
                 isOn = true;
             }
             else lightingOnTimer += Time.deltaTime;
