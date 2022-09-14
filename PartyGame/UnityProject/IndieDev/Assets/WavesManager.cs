@@ -64,6 +64,9 @@ public class WavesManager : MonoBehaviour
 
     public void NewRound()
     {
+        waves.Clear();
+        entrancesUsed.Clear();
+        
         waitingForNextWave = false;
         timerBeforeNextWave = 0f;
         
