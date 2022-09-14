@@ -120,7 +120,6 @@ public class BaseElementManager : Entity
     {
         // Faire apparaître l'icône de l'input   
 
-        reparationInputsCounter = 0;
         reparationIcon.SetActive(true);
         currentCheckingArea = allReparationAreas[0];
         reparationIcon.transform.position = allReparationAreas[0].iconPosition.position;
@@ -134,6 +133,7 @@ public class BaseElementManager : Entity
         reparationIcon.SetActive(false);
         isIconMoving = false;
         currentCheckingArea = null;
+        reparationInputsCounter = 0;
     }
 
     public void SetCheckingArea()

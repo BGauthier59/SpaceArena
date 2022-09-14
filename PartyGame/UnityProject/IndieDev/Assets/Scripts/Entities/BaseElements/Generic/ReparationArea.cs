@@ -57,7 +57,7 @@ public class ReparationArea : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var player = other.GetComponent<PlayerController>();
-            playersOnArea.Add(player);
+            if(!playersOnArea.Contains(player)) playersOnArea.Add(player);
 
             if (playersOnArea.Count == 1)
             {
