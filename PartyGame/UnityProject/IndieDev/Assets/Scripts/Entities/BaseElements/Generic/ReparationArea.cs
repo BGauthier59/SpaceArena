@@ -30,6 +30,8 @@ public class ReparationArea : MonoBehaviour
 
     public void ActivateArea()
     {
+        if (!gameObject.activeSelf) return;
+        
         reparationAreaRenderer.material = reparationAreaEnabled;
 
         foreach (var rd in reparationAreaDevicesRenderer)
@@ -42,6 +44,8 @@ public class ReparationArea : MonoBehaviour
 
     public void DeactivateArea()
     {
+        if (!gameObject.activeSelf) return;
+
         reparationAreaRenderer.material = reparationAreaDisabled;
         
         foreach (var rd in reparationAreaDevicesRenderer)

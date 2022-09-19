@@ -72,9 +72,28 @@ public class BaseElementManager : Entity
 
         InitializeBaseElementInfo();
         BaseManager.instance.allBaseElements.Add(this);
+        
+        SetReparationsAreaNumber();
         foreach (var area in allReparationAreas)
         {
+            if (!area.gameObject.activeSelf) continue;
             area.associatedElement = this;
+        }
+    }
+
+    public void SetReparationsAreaNumber()
+    {
+        int counter = 1;
+        
+        foreach (var ra in allReparationAreas)
+        {
+            if (counter > GameManager.instance.playersNumber)
+            {
+                ra.gameObject.SetActive(false);
+                continue;
+            }
+            ra.gameObject.SetActive(true);
+            counter++;
         }
     }
 
@@ -109,6 +128,7 @@ public class BaseElementManager : Entity
     {
         foreach (var area in allReparationAreas)
         {
+            if (!area.gameObject.activeSelf) continue;
             if (!area.isPlayerOn) return;
         }
 
