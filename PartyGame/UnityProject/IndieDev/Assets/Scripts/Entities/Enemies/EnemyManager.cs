@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -30,10 +31,18 @@ public class EnemyManager : Entity
         // Pour l'instant : non
         //PoolOfObject.Instance.SpawnFromPool(PoolType.EnemyDeath, transform.position, Quaternion.identity);
     }
-
+    
     public override void Heal(int heal)
     {
         base.Heal(heal);
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        
+        if (EnemiesManager.instance == null) return;
+        EnemiesManager.instance.AddEnemy(this);
     }
 
     #endregion
@@ -45,5 +54,16 @@ public class EnemyManager : Entity
     }
 
     #endregion
-    
+
+    private void OnEnable()
+    {
+        if (EnemiesManager.instance == null) return;
+        EnemiesManager.instance.AddEnemy(this);
+    }
+
+    private void OnDisable()
+    {
+        if (EnemiesManager.instance == null) return;
+        EnemiesManager.instance.RemoveEnemy(this);
+    }
 }

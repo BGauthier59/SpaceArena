@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
 {
     #region Variables
 
-    [Header("Input, Gamepad & Data")] public int playerIndex;
+    [Header("Input, Gamepad & Data")] 
+    public int playerIndex;
     public string playerName;
     public PlayerInput playerInput;
 
@@ -18,13 +19,14 @@ public class PlayerController : MonoBehaviour
 
     public PlayerManager manager;
 
-    [Header("Party Data")] public int points;
+    [Header("Party Data")] 
+    public int points;
 
-    [Header("Components")] public Renderer rd;
+    [Header("Components")] 
+    public Renderer rd;
     [SerializeField] private Rigidbody rb;
 
     [Header("Controller & Parameters")]
-
     private bool isActive;
     
     [SerializeField] private Vector2 leftJoystickInput;
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
     [Range(0f, 1f)] [SerializeField] private float moveTolerance;
     [Range(0f, 1f)] [SerializeField] private float aimTolerance;
     [SerializeField] private float speed;
+    private float baseSpeed;
     [SerializeField] private float rotateSpeed;
     private bool aiming;
     [SerializeField] private float dashForce;
@@ -56,6 +59,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float recoil;
     [SerializeField] private Image reloadBar;
 
+    [Header("Power-Up")]
+    [SerializeField] private Slider powerUpGauge;
+    [SerializeField] private int powerUpMax;
+    private int powerUpScore;
+
     [Header("Reparation")] 
     public ReparationArea reparationArea;
 
@@ -68,8 +76,7 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Initialization();
     }
-
-
+    
     private void Initialization()
     {
         GameManager.instance.allPlayers.Add(this);
@@ -87,6 +94,7 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         rb.isKinematic = true;
         
+        
         DeactivatePlayer();
     }
 
@@ -98,7 +106,14 @@ public class PlayerController : MonoBehaviour
     {
         rb.isKinematic = false;
         bulletAmount = maxBulletAmount;
+        
+        baseSpeed = speed;
+        powerUpGauge.maxValue = powerUpMax;
+        powerUpScore = 0;
+        
         reloadBar.transform.parent.SetParent(GameManager.instance.mainCanvas.transform);
+        powerUpGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
+
         rd.material.color = GameManager.instance.colors[playerIndex - 1];
         rd.material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
     }
@@ -127,7 +142,9 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Moving();
+        SettingPowerUpGauge();
     }
+    
 
     #region Input Event
 
@@ -295,6 +312,29 @@ public class PlayerController : MonoBehaviour
             dashTimer = 0f;
         }
         else dashTimer += Time.deltaTime;
+    }
+
+    private void SettingPowerUpGauge()
+    {
+        var nextPos = Camera.main.WorldToScreenPoint(transform.position) 
+                      + new Vector3(40, 0);
+        //powerUpGauge.transform.position = Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.deltaTime);
+        powerUpGauge.transform.position = nextPos;
+    }
+
+    #endregion
+
+    #region Modification
+
+    public void ModifySpeed(float modifier)
+    {
+        var newSpeed = speed * modifier;
+        speed = newSpeed;
+    }
+
+    public void ResetSpeed()
+    {
+        speed = baseSpeed;
     }
 
     #endregion
