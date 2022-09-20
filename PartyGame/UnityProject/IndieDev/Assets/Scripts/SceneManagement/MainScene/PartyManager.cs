@@ -86,6 +86,7 @@ public class PartyManager : MonoBehaviour
         GameManager.instance.playerInputManager = null;
         GameManager.instance.mainCanvas = mainCanvas;
         GameManager.instance.cameraShake = cameraShake;
+        GameManager.instance.partyManager = this;
     }
 
     private void InitializationStart()
@@ -209,6 +210,7 @@ public class PartyManager : MonoBehaviour
 
         GameManager.instance.allPlayers.Clear();
         GameManager.instance.playersNumber = 0;
+        GameManager.instance.partyManager = null;
         SceneManager.LoadScene(GameManager.instance.mainMenuIndex);
     }
 }

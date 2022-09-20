@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public FeedbacksManager feedbacks;
     public GameObject mainCanvas;
     public CameraShake cameraShake;
+    public PartyManager partyManager;
 
     public EventSystem eventSystem;
     private Gamepad _mainGamepad;

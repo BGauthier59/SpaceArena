@@ -26,6 +26,18 @@ public class PlayerManager : Entity
         base.Heal(heal);
 
     }
+    
+    public override void StunEnable()
+    {
+        base.StunEnable();
+        controller.DeactivatePlayer();
+    }
+
+    public override void StunDisable()
+    {
+        base.StunDisable();
+        controller.ActivatePlayer();
+    }
 
     #endregion
 

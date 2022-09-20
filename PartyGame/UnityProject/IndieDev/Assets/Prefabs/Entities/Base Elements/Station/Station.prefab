@@ -756,8 +756,8 @@ MonoBehaviour:
   baseElementNameText: {fileID: 4641165030948856368}
   baseElementLifeText: {fileID: 7828998414517484047}
   baseElementName:
-    frenchName: 
-    englishName: 
+    frenchName: Caserne
+    englishName: Station
   waterPlane: {fileID: 11224046601111515}
   waterHigh: 2
   risingDuration: 3

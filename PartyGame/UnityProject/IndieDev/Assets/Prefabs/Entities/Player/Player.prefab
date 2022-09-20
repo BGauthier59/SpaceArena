@@ -58,9 +58,10 @@ MonoBehaviour:
   totalLife: 10
   currentLife: 0
   animator: {fileID: 0}
-  rb: {fileID: 0}
+  rb: {fileID: 8476079156389380369}
   isDead: 0
-  controller: {fileID: 0}
+  isStunned: 0
+  controller: {fileID: 7167191028575041455}
 --- !u!114 &7167191028575041455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +89,6 @@ MonoBehaviour:
   manager: {fileID: 0}
   points: 0
   rd: {fileID: 3339070274848959740}
-  rb: {fileID: 8476079156389380369}
   leftJoystickInput: {x: 0, y: 0}
   rightJoystickInput: {x: 0, y: 0}
   moveTolerance: 0.15
@@ -290,7 +290,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 3
 --- !u!33 &2801452663178872697
 MeshFilter:
@@ -5579,10 +5579,9 @@ GameObject:
   - component: {fileID: 2845511929148535142}
   - component: {fileID: 1663081980531744039}
   - component: {fileID: 3752287382987835739}
-  - component: {fileID: 4191339619332921578}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5650,19 +5649,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4191339619332921578
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8976461945197570841}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4643646984419343764
 PrefabInstance:
   m_ObjectHideFlags: 0

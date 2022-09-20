@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class EnemyManager : Entity
 {
+    public EnemyBehaviour behaviour;
+    
     #region Entity
 
     public override void TakeDamage(int damage)
@@ -43,6 +45,25 @@ public class EnemyManager : Entity
         
         if (EnemiesManager.instance == null) return;
         EnemiesManager.instance.AddEnemy(this);
+    }
+
+    public override void Update()
+    {
+        base.Update();
+    }
+
+    public override void StunEnable()
+    {
+        base.StunEnable();
+        behaviour.agent.enabled = false;
+        behaviour.enabled = false;
+    }
+
+    public override void StunDisable()
+    {
+        base.StunDisable();
+        behaviour.agent.enabled = true;
+        behaviour.enabled = true;
     }
 
     #endregion

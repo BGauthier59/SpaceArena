@@ -545,6 +545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionDamage: 1
   areaCollider: {fileID: 125619304488598120}
+  explosionForce: 200
 --- !u!1 &7093468802939820166
 GameObject:
   m_ObjectHideFlags: 0

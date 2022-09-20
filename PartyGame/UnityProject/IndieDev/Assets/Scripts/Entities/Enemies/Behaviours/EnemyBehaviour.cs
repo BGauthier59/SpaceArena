@@ -21,7 +21,7 @@ public class EnemyBehaviour : MonoBehaviour
     public virtual void Target()
     {
         target = PlayerDetected();
-        if(target == null) Debug.LogError("No player found!");
+        if(target == null) Debug.LogWarning("No player found!");
     }
     
     public virtual void Attack()
@@ -37,7 +37,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         foreach (var player in GameManager.instance.allPlayers)
         {
-            if (player != null && !player.manager.isDead)
+            if (player && !player.manager.isDead)
             {
                 reachablePlayers.Add(player.manager);
             }

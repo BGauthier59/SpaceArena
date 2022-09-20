@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Components")] 
     public Renderer rd;
-    [SerializeField] private Rigidbody rb;
+    private Rigidbody rb;
 
     [Header("Controller & Parameters")]
     private bool isActive;
@@ -83,7 +83,10 @@ public class PlayerController : MonoBehaviour
 
         playerIndex = GameManager.instance.playerInputManager.playerCount;
         playerName = $"Player {playerIndex}";
+        
         manager = GetComponent<PlayerManager>();
+        rb = manager.rb;
+        
         playerInput = GetComponent<PlayerInput>();
         dataGamepad = new GamepadData()
         {
@@ -120,6 +123,12 @@ public class PlayerController : MonoBehaviour
 
     public void ActivatePlayer()
     {
+        if (GameManager.instance.partyManager.gameState == PartyManager.GameState.Finished || 
+            GameManager.instance.partyManager.gameState == PartyManager.GameState.End)
+        {
+            Debug.LogWarning("Tried to active player after the end of game.");
+            return;
+        }
         isActive = true;
     }
 
