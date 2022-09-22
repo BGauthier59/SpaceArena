@@ -335,9 +335,9 @@ public class PlayerController : MonoBehaviour
 
     #region Modification
 
-    public void ModifySpeed(float modifier)
+    public void ModifySpeed(float factor)
     {
-        var newSpeed = speed * modifier;
+        var newSpeed = speed * factor;
         speed = newSpeed;
     }
 

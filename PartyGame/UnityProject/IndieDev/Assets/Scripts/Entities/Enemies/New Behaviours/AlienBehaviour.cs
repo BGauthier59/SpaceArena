@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class AlienBehaviour : EnemyGenericBehaviour
 {
-    [SerializeField] private AlienState currentState;
+    [SerializeField] public AlienState currentState;
+    [SerializeField] [Range(0, 100)] private float retreatRate;
+
+    private float initSpeed;
+    [SerializeField] private float retreatSpeed;
 
     public enum AlienState
     {
@@ -14,13 +19,14 @@ public class AlienBehaviour : EnemyGenericBehaviour
         Follow,
         Attack,
         Cooldown,
-        SwitchAggro,
+        Retreat,
         Idle
     }
 
     public override void Initialization()
     {
         base.Initialization();
+        initSpeed = speed;
         SwitchState(AlienState.Target);
     }
 
@@ -125,9 +131,18 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
             #region State SwitchAggro
 
-            case AlienState.SwitchAggro:
+            case AlienState.Retreat:
 
-                Debug.LogWarning("Hasn't found any target");
+                if (TryRetreat().Item1)
+                {
+                    Debug.Log($"Retreat worked ! New target : {target}");
+                }
+                else
+                {
+                    Debug.Log($"Retreat hasn't worked ! Keep old target : {target}");
+                }
+
+                SwitchState(AlienState.Follow);
 
                 break;
 
@@ -166,7 +181,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
                 timerCooldown = 0f;
                 break;
 
-            case AlienState.SwitchAggro:
+            case AlienState.Retreat:
                 UnstopAgent();
                 break;
 
@@ -176,5 +191,30 @@ public class AlienBehaviour : EnemyGenericBehaviour
         }
 
         currentState = state;
+    }
+
+    private (bool, Entity) TryRetreat()
+    {
+        speed = initSpeed;
+
+        var ratio = manager.currentLife / manager.totalLife;
+        Debug.Log(ratio);
+
+        if (!manager || ratio > .5f) return (false, target);
+        // Can retreat
+
+        var random = Random.Range(0, 100);
+        if (random >= retreatRate)
+        {
+            // Retreat
+            if (!IsTargetAvailable()) return (false, target);
+
+            target = DetectedEntity(availableTargets, target);
+            initSpeed = speed;
+            speed = retreatSpeed;
+            return (true, target);
+        }
+
+        return (false, target);
     }
 }

@@ -72,12 +72,13 @@ public class EnemyGenericBehaviour : MonoBehaviour
         return path.status == NavMeshPathStatus.PathComplete;
     }
 
-    public Entity DetectedEntity(Entity[] targets)
+    public Entity DetectedEntity(Entity[] targets, Entity exception = null)
     {
         var reachableEntities = new List<Entity>();
-
+        
         foreach (var t in targets)
         {
+            if(t == exception) continue;
             if (t && !t.isDead) reachableEntities.Add(t);
         }
 
@@ -87,6 +88,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
         for (int i = 0; i < reachableEntities.Count; i++)
         {
             var reachable = reachableEntities[i];
+            Debug.Log(reachable.name);
 
             // Est-ce que le chemin est accessible ?
             var path = new NavMeshPath();
@@ -100,6 +102,8 @@ public class EnemyGenericBehaviour : MonoBehaviour
             nearestDistance = distance;
             nearest = reachable;
         }
+        
+        Debug.Log(nearest);
 
         return nearest;
     }
