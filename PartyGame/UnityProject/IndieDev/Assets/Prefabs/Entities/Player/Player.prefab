@@ -86,7 +86,7 @@ MonoBehaviour:
     highA: 0
     rumbleStep: 0
     isMotorActive: 0
-  manager: {fileID: 0}
+  manager: {fileID: 7697744321048509582}
   points: 0
   rd: {fileID: 3339070274848959740}
   leftJoystickInput: {x: 0, y: 0}
