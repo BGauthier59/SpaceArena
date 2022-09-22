@@ -19,7 +19,10 @@ public class HunterBehaviour : EnemyGenericBehaviour
     [SerializeField] private float fleeSpeed;
 
     [SerializeField] private GameObject projectile;
-    
+
+    [SerializeField] private LayerMask detectionLayers;
+    [SerializeField] private CapsuleCollider col;
+
     public enum HunterState
     {
         Target,
@@ -38,7 +41,7 @@ public class HunterBehaviour : EnemyGenericBehaviour
     public override void Initialization()
     {
         base.Initialization();
-        agent.stoppingDistance = distancesFromPlayer.x;
+        //agent.stoppingDistance = distancesFromPlayer.x;
         SwitchState(HunterState.Target);
     }
 
@@ -55,6 +58,8 @@ public class HunterBehaviour : EnemyGenericBehaviour
 
     public override void Attack()
     {
+        Debug.DrawLine(transform.position, targetPos, Color.magenta, .5f);
+
         // Instantiate projectile
         // Set damage
         // Set direction
@@ -67,7 +72,9 @@ public class HunterBehaviour : EnemyGenericBehaviour
         {
             SwitchState(HunterState.Target);
         }
-
+        
+        if(target) targetPos = target.transform.position;
+        
         switch (currentState)
         {
             #region State Target
@@ -92,18 +99,18 @@ public class HunterBehaviour : EnemyGenericBehaviour
                 agent.ResetPath();
                 if (timerBeforeFollow >= durationBeforeFollow)
                 {
-                    var distancePosition = Vector3.Distance(transform.position, target.transform.position);
-                    if (distancePosition <= distancesFromPlayer.y) // Dans la zone d'attaque
+                    var distancePosition = Vector3.Distance(transform.position, targetPos);
+                    if (distancePosition <= distancesFromPlayer.y) // Cible à portée
                     {
-                        // Avant de viser : check qu'il n'y a rien entre lui et la cible (raycast)
-                        // S'il y a un truc, continuer d'avancer (retirer stopping distance ?)
-                        
-                        SwitchState(HunterState.Aim);
+                        RaycastHit hit;
+                        if (Physics.Raycast(transform.position + transform.forward * (col.radius + .01f), -(transform.position - targetPos), 
+                                out hit, distancePosition, detectionLayers)) // S'il y a un obstacle entre l'ennemi et la cible
+                        {
+                            agent.SetDestination(targetPos);
+                        }
+                        else SwitchState(HunterState.Aim);
                     }
-                    else // Trop loin pour attaquer
-                    {
-                        agent.SetDestination(target.transform.position);
-                    }
+                    else agent.SetDestination(targetPos);
                 }
                 else timerBeforeFollow += Time.deltaTime;
 
@@ -116,12 +123,13 @@ public class HunterBehaviour : EnemyGenericBehaviour
             case HunterState.Aim:
 
                 // Viser et reculer si nécessaire
+                Debug.DrawLine(transform.position, targetPos, Color.green);
 
                 agent.transform.rotation = Quaternion.Lerp(transform.rotation,
-                    Quaternion.LookRotation(-(transform.position - target.transform.position)),
+                    Quaternion.LookRotation(-(transform.position - targetPos)),
                     Time.deltaTime * rotationSpeed);
                 
-                var distanceAim = Vector3.Distance(transform.position, target.transform.position);
+                var distanceAim = Vector3.Distance(transform.position, targetPos);
                 if (distanceAim < distancesFromPlayer.x) // Trop près du joueur
                 {
                     var nextPos = transform.position - transform.forward;
@@ -186,7 +194,6 @@ public class HunterBehaviour : EnemyGenericBehaviour
                 break;
 
             case HunterState.Position:
-                Debug.Log(state);
                 UnstopAgent();
                 timerBeforeFollow = 0f;
                 break;

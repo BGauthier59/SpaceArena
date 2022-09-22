@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 6
+  speed: 8
   manager: {fileID: 2396810920112995021}
   isMoving: 0
   isAttacking: 0
@@ -145,18 +145,22 @@ MonoBehaviour:
   damage: 0
   agent: {fileID: 2396810920112995011}
   minDistanceToAttack: 0
-  durationBeforeTarget: 1
-  durationBeforeFollow: 1
-  durationBeforeAttack: 1
-  durationCooldown: 1
+  durationBeforeTarget: 0.5
+  durationBeforeFollow: 0.5
+  durationBeforeAttack: 0.3
+  durationCooldown: 0.7
   currentState: 0
   distancesFromPlayer:
-    x: 3
-    y: 4
-  durationAim: 5
+    x: 4
+    y: 5
+  durationAim: 1
   rotationSpeed: 5
-  fleeSpeed: 8
+  fleeSpeed: 10
   projectile: {fileID: 0}
+  detectionLayers:
+    serializedVersion: 2
+    m_Bits: 320
+  col: {fileID: 2396810920112995018}
 --- !u!114 &2396810920112995021
 MonoBehaviour:
   m_ObjectHideFlags: 0

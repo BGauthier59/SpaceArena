@@ -32,6 +32,8 @@ public class EnemyGenericBehaviour : MonoBehaviour
     [SerializeField] protected float durationCooldown;
     protected float timerCooldown;
 
+    protected Vector3 targetPos;
+
     private void Start()
     {
         Initialization();
@@ -46,6 +48,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
     {
         agent.enabled = true;
         agent.speed = speed;
+        targetPos = Vector3.zero;
     }
 
     public virtual void Target()
@@ -64,7 +67,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
         if (!target || target.isDead) return false;
 
         var path = new NavMeshPath();
-        NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path);
+        NavMesh.CalculatePath(transform.position, targetPos, NavMesh.AllAreas, path);
         
         return path.status == NavMeshPathStatus.PathComplete;
     }
