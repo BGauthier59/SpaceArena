@@ -137,6 +137,11 @@ public class EnemyGenericBehaviour : MonoBehaviour
 
     public void UnstopAgent()
     {
+        if (!agent.enabled)
+        {
+            Debug.LogWarning("agent was disabled");
+            return;
+        }
         agent.isStopped = false;
         manager.rb.isKinematic = false;
     }

@@ -3,18 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class BreakerBehaviour : EnemyGenericBehaviour
 {
     [SerializeField] private BreakerState currentState;
-
+    [SerializeField] [Range(0, 100)] private float changeTargetRate;
+    
     public enum BreakerState
     {
         Target,
         Follow,
         Attack,
         Cooldown,
-        Idle
+        Idle,
+        ChangeTarget
     }
 
     public override void Target()
@@ -118,6 +121,24 @@ public class BreakerBehaviour : EnemyGenericBehaviour
 
             #endregion
 
+            #region State Change Target
+
+            case BreakerState.ChangeTarget:
+
+                if (TryChangeTarget().Item1)
+                {
+                    Debug.Log($"Change target worked ! New target : {target}");
+
+                }
+                else
+                {
+                    
+                }
+                SwitchState(BreakerState.Follow);
+                break;
+
+            #endregion
+            
             #region State Idle
 
             case BreakerState.Idle:
@@ -159,5 +180,18 @@ public class BreakerBehaviour : EnemyGenericBehaviour
         }
 
         currentState = state;
+    }
+
+    private (bool, Entity) TryChangeTarget()
+    {
+        var random = Random.Range(0, 100);
+        if (random >= changeTargetRate)
+        {
+            // Change Target
+            target = DetectedEntity(availableTargets, target);
+            return (true, target);
+        }
+
+        return (false, target);
     }
 }

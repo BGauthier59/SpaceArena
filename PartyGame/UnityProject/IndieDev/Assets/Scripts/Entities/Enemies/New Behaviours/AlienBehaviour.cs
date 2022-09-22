@@ -201,14 +201,10 @@ public class AlienBehaviour : EnemyGenericBehaviour
         Debug.Log(ratio);
 
         if (!manager || ratio > .5f) return (false, target);
-        // Can retreat
 
         var random = Random.Range(0, 100);
         if (random >= retreatRate)
         {
-            // Retreat
-            if (!IsTargetAvailable()) return (false, target);
-
             target = DetectedEntity(availableTargets, target);
             initSpeed = speed;
             speed = retreatSpeed;
