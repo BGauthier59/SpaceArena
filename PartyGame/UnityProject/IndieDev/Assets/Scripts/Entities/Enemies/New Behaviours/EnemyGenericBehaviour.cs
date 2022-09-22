@@ -8,7 +8,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
 {
     protected Entity[] availableTargets;
     [SerializeField] protected Entity target;
-    [SerializeField] private float speed;
+    [SerializeField] protected float speed;
     public EnemyManager manager;
     public bool isMoving;
     public bool isAttacking;
@@ -29,9 +29,6 @@ public class EnemyGenericBehaviour : MonoBehaviour
     [SerializeField] protected float durationBeforeAttack;
     protected float timerBeforeAttack;
 
-    [SerializeField] protected float attackDuration;
-    protected float attackTimer;
-
     [SerializeField] protected float durationCooldown;
     protected float timerCooldown;
 
@@ -47,6 +44,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
 
     public virtual void Initialization()
     {
+        agent.enabled = true;
         agent.speed = speed;
     }
 
@@ -67,6 +65,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
 
         var path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path);
+        
         return path.status == NavMeshPathStatus.PathComplete;
     }
 
@@ -115,9 +114,24 @@ public class EnemyGenericBehaviour : MonoBehaviour
     public virtual void Attack()
     {
         //attackArea.enabled = true;
+        // Au final : activation, désactivation dans l'animation d'attaque ?
         
         // Pour l'instant :
         target.TakeDamage(damage);
+    }
+    
+    public void StopAgent()
+    {
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        manager.rb.velocity = Vector3.zero;
+        manager.rb.isKinematic = true;
+    }
+
+    public void UnstopAgent()
+    {
+        agent.isStopped = false;
+        manager.rb.isKinematic = false;
     }
 
     private void OnEnable()

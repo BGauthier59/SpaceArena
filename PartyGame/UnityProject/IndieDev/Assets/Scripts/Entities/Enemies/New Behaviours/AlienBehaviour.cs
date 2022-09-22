@@ -17,7 +17,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
         SwitchAggro,
         Idle
     }
-    
+
     public override void Initialization()
     {
         base.Initialization();
@@ -52,6 +52,11 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
     public override void CheckState()
     {
+        if (!IsTargetAvailable() && currentState != AlienState.Cooldown && currentState != AlienState.Target)
+        {
+            SwitchState(AlienState.Target);
+        }
+
         switch (currentState)
         {
             #region State Target
@@ -75,17 +80,13 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
                 if (timerBeforeFollow >= durationBeforeFollow)
                 {
-                    if (IsTargetAvailable())
-                    {
-                        agent.SetDestination(target.transform.position);
+                    agent.SetDestination(target.transform.position);
 
-                        var distance = Vector3.Distance(transform.position, target.transform.position);
-                        if (distance <= minDistanceToAttack)
-                        {
-                            SwitchState(AlienState.Attack);
-                        }
+                    var distance = Vector3.Distance(transform.position, target.transform.position);
+                    if (distance <= minDistanceToAttack)
+                    {
+                        SwitchState(AlienState.Attack);
                     }
-                    else SwitchState(AlienState.Target);
                 }
                 else timerBeforeFollow += Time.deltaTime;
 
@@ -99,12 +100,8 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
                 if (timerBeforeAttack >= durationBeforeAttack)
                 {
-                    if (IsTargetAvailable())
-                    {
-                        Attack();
-                        SwitchState(AlienState.Cooldown);
-                    }
-                    else SwitchState(AlienState.Target);
+                    Attack();
+                    SwitchState(AlienState.Cooldown);
                 }
                 else timerBeforeAttack += Time.deltaTime;
 
@@ -147,34 +144,34 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
     public void SwitchState(AlienState state)
     {
-        switch (currentState)
+        switch (state)
         {
             case AlienState.Target:
-                agent.isStopped = true;
+                StopAgent();
                 timerBeforeTarget = 0f;
                 break;
 
             case AlienState.Follow:
-                agent.isStopped = false;
+                UnstopAgent();
                 timerBeforeFollow = 0f;
                 break;
 
             case AlienState.Attack:
-                agent.isStopped = true;
+                StopAgent();
                 timerBeforeAttack = 0f;
                 break;
 
             case AlienState.Cooldown:
-                agent.isStopped = true;
+                StopAgent();
                 timerCooldown = 0f;
                 break;
 
             case AlienState.SwitchAggro:
-                agent.isStopped = false;
+                UnstopAgent();
                 break;
 
             case AlienState.Idle:
-                agent.isStopped = true;
+                StopAgent();
                 break;
         }
 

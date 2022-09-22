@@ -15,6 +15,7 @@ public class HeartBreakerBehaviour : BreakerBehaviour
 
     public override void Attack()
     {
+        base.Attack();
         // Inflige directement des dégâts au coeur
     }
 }
