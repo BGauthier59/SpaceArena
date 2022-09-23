@@ -215,6 +215,7 @@ MonoBehaviour:
   feedbacks: {fileID: 5419757356267785862}
   mainCanvas: {fileID: 0}
   cameraShake: {fileID: 0}
+  partyManager: {fileID: 0}
   eventSystem: {fileID: 1344524508}
   mainGamepadInfo:
     linked: 0
@@ -230,6 +231,6 @@ MonoBehaviour:
   - {r: 0.1490196, g: 1, b: 0.8569903, a: 1}
   - {r: 1, g: 0.79741144, b: 0.29811323, a: 1}
   mainMenuIndex: 1
-  pauseMenuIndex: 4
-  optionMenuIndex: 3
+  pauseMenuIndex: 3
+  optionMenuIndex: 2
   isPaused: 0

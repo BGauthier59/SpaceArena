@@ -12,13 +12,16 @@ EditorBuildSettings:
     path: Assets/_Scenes/MainMenu.unity
     guid: a248f3da56833e24e8f43def93648809
   - enabled: 1
-    path: Assets/_Scenes/MainScene.unity
-    guid: 89d278c11939dab4582c4595c4f4c4f6
-  - enabled: 1
     path: Assets/_Scenes/OptionsMenu.unity
     guid: 4f30e070164095b459970d003e54b220
   - enabled: 1
     path: Assets/_Scenes/PauseMenu.unity
     guid: a2416637d92dfa5448a8f75472ecb076
+  - enabled: 1
+    path: Assets/_Scenes/Arenas/Arena1.unity
+    guid: 89d278c11939dab4582c4595c4f4c4f6
+  - enabled: 1
+    path: Assets/_Scenes/Arenas/Arena2.unity
+    guid: 36d9f37dc7f794e478be5b204a320bfd
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9e57137e192b1154f891b60b93fc7c6d, type: 2}

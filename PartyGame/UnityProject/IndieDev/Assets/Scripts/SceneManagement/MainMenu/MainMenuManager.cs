@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,10 +7,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Windows.WebCam;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private EventSystem eventSystem;
+    [Header("Connection Canvas")] private EventSystem eventSystem;
     [SerializeField] private GameObject firstSelected;
 
     [SerializeField] private PlayerInputManager playerInputManager;
@@ -31,8 +33,46 @@ public class MainMenuManager : MonoBehaviour
         public Image[] coloredImages;
     }
 
+    [Space(5)] [Header("Selection Canvas")] [SerializeField]
+    private Canvas selectionCanvas;
+
+    [SerializeField] private GameObject firstSelectedSelection;
+
+    [SerializeField] private RectTransform arenaInfo;
+    private Vector3 arenaInfoInitPos;
+    private Vector3 arenaInfoInitPosLocked;
+    [SerializeField] private Image arenaImageSelection;
+    [SerializeField] private TextMeshProUGUI arenaTextSelection;
+
+    [SerializeField] private Button cancelButtonSelection;
+    private bool isArenaInfoMoving;
+    [SerializeField] private float arenaMovingHalfDuration;
+    private float arenaMovingTimer;
+    public float arenaInfoPosXToReach;
+    public const float SecurityGap = 100f;
+    private bool isGoingOtherSize;
+    private int arenaIndex;
+
+    private ArenaArea currentSelectedArena;
+    [SerializeField] private ArenaArea[] allArenas;
+
+    [Serializable]
+    public struct ArenaArea
+    {
+        public Sprite arenaImage;
+        public ArenaName arenaName;
+        public int arenaSceneIndex;
+    }
+
+    [Serializable]
+    public struct ArenaName
+    {
+        public string frenchName;
+        public string englishName;
+    }
+
     #region Initialization
-    
+
     private void Start()
     {
         Initialization();
@@ -45,10 +85,14 @@ public class MainMenuManager : MonoBehaviour
 
         arePlayersReady = false;
         canCheckPlayer = false;
+
+        arenaInfoInitPos = arenaInfo.anchoredPosition;
+        arenaInfoInitPosLocked = arenaInfoInitPos;
+        
         GameManager.instance.playerInputManager = playerInputManager;
         GameManager.instance.playerInputManager.DisableJoining();
     }
-    
+
     #endregion
 
     #region Main State
@@ -59,14 +103,14 @@ public class MainMenuManager : MonoBehaviour
         playerSlider.value = playerSlider.minValue;
         eventSystem.SetSelectedGameObject(playerSlider.gameObject);
     } // Button Start on main state
-    
+
     public void OnOptions()
     {
         SceneManager.LoadSceneAsync(GameManager.instance.optionMenuIndex, LoadSceneMode.Additive);
     } // Button Options on main state
-    
+
     #endregion
-    
+
     #region Player Number Selection
 
     public void OnCancel()
@@ -77,7 +121,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnPlay()
     {
-        GameManager.instance.playersNumber = (int) playerSlider.value;
+        GameManager.instance.playersNumber = (int)playerSlider.value;
         lobby.SetActive(true);
         for (int i = 0; i < playerLobbyAreas.Length; i++)
         {
@@ -89,7 +133,7 @@ public class MainMenuManager : MonoBehaviour
                 {
                     image.color = GameManager.instance.colors[i];
                 }
-                
+
                 string message;
 
                 switch (GameManager.instance.settings.currentLanguage)
@@ -123,11 +167,13 @@ public class MainMenuManager : MonoBehaviour
     } // Button Go on player number selection
 
     #endregion
-    
+
     #region Lobby
 
     private void Update()
     {
+        if (isArenaInfoMoving) MovingArenaInfo();
+
         if (!canCheckPlayer) return;
         CheckPlayers();
 
@@ -190,7 +236,7 @@ public class MainMenuManager : MonoBehaviour
     public void OnPlayerJoin(PlayerInput input)
     {
         var gamepad = input.GetDevice<Gamepad>();
-        
+
         int playerIndex = GameManager.instance.playerInputManager.playerCount;
         string message;
 
@@ -215,10 +261,114 @@ public class MainMenuManager : MonoBehaviour
         playerLobbyAreas[playerIndex - 1].textArea.text = message;
     } // When a player joins
 
-    public void OnBeginParty(int index)
+    public void OnBeginParty()
     {
-        SceneManager.LoadScene(index);
+        OpenSelectionCanvas();
     } // Button Play on lobby
+
+    #endregion
+
+    #region Arena Selection
+
+    private void OpenSelectionCanvas()
+    {
+        selectionCanvas.gameObject.SetActive(true);
+        SelectNewArena(0);
+        eventSystem.SetSelectedGameObject(firstSelectedSelection);
+    }
+
+    public void OnCancelSelection()
+    {
+        selectionCanvas.gameObject.SetActive(false);
+        OnCancelParty();
+    }
+
+    public void SelectOnRight()
+    {
+        if (isArenaInfoMoving) return;
+        
+        cancelButtonSelection.interactable = false;
+        arenaInfoPosXToReach = arenaInfo.anchoredPosition.x + (Screen.width * .5f) + (arenaInfo.sizeDelta.x / 2) + SecurityGap;
+        isArenaInfoMoving = true;
+        isGoingOtherSize = false;
+        arenaIndex = Array.IndexOf(allArenas, currentSelectedArena);
+        arenaIndex++;
+
+        if (arenaIndex == allArenas.Length) arenaIndex = 0;
+    }
+
+    public void SelectOnLeft()
+    {
+        if (isArenaInfoMoving) return;
+
+        cancelButtonSelection.interactable = false;
+        arenaInfoPosXToReach = arenaInfo.anchoredPosition.x - ((Screen.width * .5f) + (arenaInfo.sizeDelta.x / 2) + SecurityGap);
+        isArenaInfoMoving = true;
+        isGoingOtherSize = false;
+        arenaIndex = Array.IndexOf(allArenas, currentSelectedArena);
+        arenaIndex--;
+
+        if (arenaIndex == -1) arenaIndex = allArenas.Length - 1;
+    }
+
+    private void MovingArenaInfo()
+    {
+        if (arenaMovingTimer > arenaMovingHalfDuration)
+        {
+            if (isGoingOtherSize)
+            {
+                //arenaInfo.anchoredPosition = arenaInfoInitPos;
+                arenaInfo.anchoredPosition = arenaInfoInitPosLocked;
+                arenaInfoInitPos = arenaInfo.anchoredPosition;
+
+                arenaMovingTimer = 0f;
+
+                cancelButtonSelection.interactable = true;
+                isArenaInfoMoving = false;
+                return;
+            }
+
+            arenaInfo.anchoredPosition = arenaInfo.anchoredPosition.x < 0 ? 
+                new Vector2(Screen.width * .5f + arenaInfo.sizeDelta.x * .5f + SecurityGap, arenaInfo.anchoredPosition.y) : 
+                new Vector2(-(Screen.width * .5f + arenaInfo.sizeDelta.x * .5f + SecurityGap), arenaInfo.anchoredPosition.y);
+            
+            arenaInfoPosXToReach = arenaInfoInitPosLocked.x;
+            arenaInfoInitPos = arenaInfo.anchoredPosition;
+            arenaMovingTimer = 0f;
+            SelectNewArena(arenaIndex);
+            isGoingOtherSize = true;
+        }
+        else
+        {
+            arenaInfo.anchoredPosition = Vector2.Lerp(arenaInfoInitPos,
+                new Vector2(arenaInfoPosXToReach, arenaInfo.anchoredPosition.y),
+                arenaMovingTimer / arenaMovingHalfDuration);
+
+            arenaMovingTimer += Time.deltaTime;
+        }
+    }
+
+    private void SelectNewArena(int index)
+    {
+        currentSelectedArena = allArenas[index];
+
+        arenaImageSelection.sprite = currentSelectedArena.arenaImage;
+
+        switch (GameManager.instance.settings.currentLanguage)
+        {
+            case Language.French:
+                arenaTextSelection.text = currentSelectedArena.arenaName.frenchName;
+                break;
+            case Language.English:
+                arenaTextSelection.text = currentSelectedArena.arenaName.englishName;
+                break;
+        }
+    }
+
+    public void OnPlaySelectedMap()
+    {
+        SceneManager.LoadScene(currentSelectedArena.arenaSceneIndex);
+    }
 
     #endregion
 }
