@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 2396810920112995016}
   - component: {fileID: 2396810920112995017}
   - component: {fileID: 2396810920112995018}
+  - component: {fileID: 2396810920112995022}
   - component: {fileID: 2396810920112995011}
   - component: {fileID: 5013356938241139294}
   - component: {fileID: 2175966823922751460}
-  - component: {fileID: 2396810920112995022}
   m_Layer: 6
   m_Name: Alien
   m_TagString: Enemy
@@ -102,6 +102,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2396810920112995022
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2396810920112995019}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!195 &2396810920112995011
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -111,14 +127,14 @@ NavMeshAgent:
   m_GameObject: {fileID: 2396810920112995019}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
@@ -151,7 +167,7 @@ MonoBehaviour:
   durationCooldown: 0.5
   currentState: 0
   retreatRate: 50
-  retreatSpeed: 15
+  retreatSpeed: 10
 --- !u!114 &2175966823922751460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,22 +187,6 @@ MonoBehaviour:
   isDead: 0
   isStunned: 0
   behaviour: {fileID: 5013356938241139294}
---- !u!54 &2396810920112995022
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2396810920112995019}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
 --- !u!1 &8136527357268122163
 GameObject:
   m_ObjectHideFlags: 0
