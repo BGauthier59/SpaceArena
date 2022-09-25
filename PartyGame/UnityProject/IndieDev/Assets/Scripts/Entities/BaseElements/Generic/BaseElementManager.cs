@@ -178,7 +178,7 @@ public class BaseElementManager : Entity
         }
     }
 
-    public virtual void Update()
+    public new virtual void Update()
     {
         if (isIconMoving)
         {

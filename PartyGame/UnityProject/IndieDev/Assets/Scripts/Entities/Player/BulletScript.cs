@@ -17,7 +17,7 @@ public class BulletScript : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             var script = collision.GetComponent<EnemyManager>();
-            script.rb.AddForce(recoil * rb.velocity);
+            //script.rb.AddForce(recoil * rb.velocity);
             var damage = Range(minDamage, maxDamage);
             script.TakeDamage(damage);
         }

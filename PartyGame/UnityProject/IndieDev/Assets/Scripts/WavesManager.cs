@@ -129,12 +129,12 @@ public class WavesManager : MonoBehaviour
         {
             foreach (var enemyGroup in wave.enemies)
             {
-                Debug.Log("Je spawn");
+                //Debug.Log("Je spawn");
                 var enemyToSpawn = enemyGroup;
                 for (int i = 0; i < enemyToSpawn.enemyCount - 1; i++)
                 {
                     PoolOfObject.Instance.SpawnFromPool(enemyToSpawn.enemyType.enemyName, entrances[wave.entrance].position, Quaternion.identity);
-                    Debug.Log(entrances[wave.entrance].position);
+                    //Debug.Log(entrances[wave.entrance].position);
                     yield return new WaitForSeconds(enemySpawnDelay);
                 }
             }

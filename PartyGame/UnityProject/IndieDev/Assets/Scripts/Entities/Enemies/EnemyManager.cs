@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyManager : Entity
 {
-    public EnemyBehaviour behaviour;
+    public EnemyGenericBehaviour behaviour;
     
     #region Entity
 

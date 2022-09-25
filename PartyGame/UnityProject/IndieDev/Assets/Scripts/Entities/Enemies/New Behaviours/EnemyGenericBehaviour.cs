@@ -8,7 +8,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
 {
     protected Entity[] availableTargets;
     [SerializeField] protected Entity target;
-    [SerializeField] private float speed;
+    [SerializeField] protected float speed;
     public EnemyManager manager;
     public bool isMoving;
     public bool isAttacking;
@@ -29,11 +29,10 @@ public class EnemyGenericBehaviour : MonoBehaviour
     [SerializeField] protected float durationBeforeAttack;
     protected float timerBeforeAttack;
 
-    [SerializeField] protected float attackDuration;
-    protected float attackTimer;
-
     [SerializeField] protected float durationCooldown;
     protected float timerCooldown;
+
+    protected Vector3 targetPos;
 
     private void Start()
     {
@@ -47,7 +46,9 @@ public class EnemyGenericBehaviour : MonoBehaviour
 
     public virtual void Initialization()
     {
+        agent.enabled = true;
         agent.speed = speed;
+        targetPos = Vector3.zero;
     }
 
     public virtual void Target()
@@ -66,16 +67,18 @@ public class EnemyGenericBehaviour : MonoBehaviour
         if (!target || target.isDead) return false;
 
         var path = new NavMeshPath();
-        NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path);
+        NavMesh.CalculatePath(transform.position, targetPos, NavMesh.AllAreas, path);
+        
         return path.status == NavMeshPathStatus.PathComplete;
     }
 
-    public Entity DetectedEntity(Entity[] targets)
+    public Entity DetectedEntity(Entity[] targets, Entity exception = null)
     {
         var reachableEntities = new List<Entity>();
-
+        
         foreach (var t in targets)
         {
+            if(t == exception) continue;
             if (t && !t.isDead) reachableEntities.Add(t);
         }
 
@@ -85,6 +88,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
         for (int i = 0; i < reachableEntities.Count; i++)
         {
             var reachable = reachableEntities[i];
+            Debug.Log(reachable.name);
 
             // Est-ce que le chemin est accessible ?
             var path = new NavMeshPath();
@@ -98,6 +102,8 @@ public class EnemyGenericBehaviour : MonoBehaviour
             nearestDistance = distance;
             nearest = reachable;
         }
+        
+        Debug.Log(nearest);
 
         return nearest;
     }
@@ -115,9 +121,29 @@ public class EnemyGenericBehaviour : MonoBehaviour
     public virtual void Attack()
     {
         //attackArea.enabled = true;
+        // Au final : activation, désactivation dans l'animation d'attaque ?
         
         // Pour l'instant :
         target.TakeDamage(damage);
+    }
+    
+    public void StopAgent()
+    {
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        manager.rb.velocity = Vector3.zero;
+        manager.rb.isKinematic = true;
+    }
+
+    public void UnstopAgent()
+    {
+        if (!agent.enabled)
+        {
+            Debug.LogWarning("agent was disabled");
+            return;
+        }
+        agent.isStopped = false;
+        manager.rb.isKinematic = false;
     }
 
     private void OnEnable()

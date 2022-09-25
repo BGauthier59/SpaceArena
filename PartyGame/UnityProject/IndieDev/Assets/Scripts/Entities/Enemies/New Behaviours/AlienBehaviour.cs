@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class AlienBehaviour : EnemyGenericBehaviour
 {
-    [SerializeField] private AlienState currentState;
+    [SerializeField] public AlienState currentState;
+    [SerializeField] [Range(0, 100)] private float retreatRate;
+
+    private float initSpeed;
+    [SerializeField] private float retreatSpeed;
 
     public enum AlienState
     {
@@ -14,13 +19,14 @@ public class AlienBehaviour : EnemyGenericBehaviour
         Follow,
         Attack,
         Cooldown,
-        SwitchAggro,
+        Retreat,
         Idle
     }
-    
+
     public override void Initialization()
     {
         base.Initialization();
+        initSpeed = speed;
         SwitchState(AlienState.Target);
     }
 
@@ -52,6 +58,11 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
     public override void CheckState()
     {
+        if (!IsTargetAvailable() && currentState != AlienState.Cooldown && currentState != AlienState.Target)
+        {
+            SwitchState(AlienState.Target);
+        }
+
         switch (currentState)
         {
             #region State Target
@@ -75,17 +86,13 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
                 if (timerBeforeFollow >= durationBeforeFollow)
                 {
-                    if (IsTargetAvailable())
-                    {
-                        agent.SetDestination(target.transform.position);
+                    agent.SetDestination(target.transform.position);
 
-                        var distance = Vector3.Distance(transform.position, target.transform.position);
-                        if (distance <= minDistanceToAttack)
-                        {
-                            SwitchState(AlienState.Attack);
-                        }
+                    var distance = Vector3.Distance(transform.position, target.transform.position);
+                    if (distance <= minDistanceToAttack)
+                    {
+                        SwitchState(AlienState.Attack);
                     }
-                    else SwitchState(AlienState.Target);
                 }
                 else timerBeforeFollow += Time.deltaTime;
 
@@ -99,12 +106,8 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
                 if (timerBeforeAttack >= durationBeforeAttack)
                 {
-                    if (IsTargetAvailable())
-                    {
-                        Attack();
-                        SwitchState(AlienState.Cooldown);
-                    }
-                    else SwitchState(AlienState.Target);
+                    Attack();
+                    SwitchState(AlienState.Cooldown);
                 }
                 else timerBeforeAttack += Time.deltaTime;
 
@@ -128,9 +131,18 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
             #region State SwitchAggro
 
-            case AlienState.SwitchAggro:
+            case AlienState.Retreat:
 
-                Debug.LogWarning("Hasn't found any target");
+                if (TryRetreat().Item1)
+                {
+                    Debug.Log($"Retreat worked ! New target : {target}");
+                }
+                else
+                {
+                    Debug.Log($"Retreat hasn't worked ! Keep old target : {target}");
+                }
+
+                SwitchState(AlienState.Follow);
 
                 break;
 
@@ -147,37 +159,58 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
     public void SwitchState(AlienState state)
     {
-        switch (currentState)
+        switch (state)
         {
             case AlienState.Target:
-                agent.isStopped = true;
+                StopAgent();
                 timerBeforeTarget = 0f;
                 break;
 
             case AlienState.Follow:
-                agent.isStopped = false;
+                UnstopAgent();
                 timerBeforeFollow = 0f;
                 break;
 
             case AlienState.Attack:
-                agent.isStopped = true;
+                StopAgent();
                 timerBeforeAttack = 0f;
                 break;
 
             case AlienState.Cooldown:
-                agent.isStopped = true;
+                StopAgent();
                 timerCooldown = 0f;
                 break;
 
-            case AlienState.SwitchAggro:
-                agent.isStopped = false;
+            case AlienState.Retreat:
+                UnstopAgent();
                 break;
 
             case AlienState.Idle:
-                agent.isStopped = true;
+                StopAgent();
                 break;
         }
 
         currentState = state;
+    }
+
+    private (bool, Entity) TryRetreat()
+    {
+        speed = initSpeed;
+
+        var ratio = manager.currentLife / manager.totalLife;
+        Debug.Log(ratio);
+
+        if (!manager || ratio > .5f) return (false, target);
+
+        var random = Random.Range(0, 100);
+        if (random >= retreatRate)
+        {
+            target = DetectedEntity(availableTargets, target);
+            initSpeed = speed;
+            speed = retreatSpeed;
+            return (true, target);
+        }
+
+        return (false, target);
     }
 }
