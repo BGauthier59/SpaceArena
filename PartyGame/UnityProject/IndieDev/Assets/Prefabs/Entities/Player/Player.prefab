@@ -89,6 +89,7 @@ MonoBehaviour:
   manager: {fileID: 7697744321048509582}
   points: 0
   rd: {fileID: 3339070274848959740}
+  col: {fileID: 7792007160848823624}
   leftJoystickInput: {x: 0, y: 0}
   rightJoystickInput: {x: 0, y: 0}
   moveTolerance: 0.15
@@ -110,6 +111,7 @@ MonoBehaviour:
   powerUpGauge: {fileID: 6605169125929842330}
   powerUpMax: 10
   reparationArea: {fileID: 0}
+  accessibleVent: {fileID: 0}
 --- !u!114 &1905726322714944486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +273,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5c954834-0e30-49a6-927a-754de7aaa0d0
     m_ActionName: Player/Repair[/XInputControllerWindows/rightShoulder,/XInputControllerWindows1/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7167191028575041455}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnEnterVent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 200fc1bf-e1cf-4dae-bdb4-65b3259563ce
+    m_ActionName: Player/EnterVent[/XInputControllerWindows/buttonEast]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player

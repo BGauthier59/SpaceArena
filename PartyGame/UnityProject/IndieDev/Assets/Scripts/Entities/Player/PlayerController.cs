@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Components")] 
     public Renderer rd;
+    public Collider col;
     private Rigidbody rb;
 
     [Header("Controller & Parameters")]
@@ -66,6 +67,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Reparation")] 
     public ReparationArea reparationArea;
+
+    [Header("Vent")] 
+    public Vent accessibleVent;
 
     #endregion
 
@@ -154,7 +158,6 @@ public class PlayerController : MonoBehaviour
         SettingPowerUpGauge();
     }
     
-
     #region Input Event
 
     public void OnMove(InputAction.CallbackContext ctx)
@@ -235,6 +238,15 @@ public class PlayerController : MonoBehaviour
         var dashVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         dashVector.Normalize();
         rb.AddForce(dashVector * dashForce);
+    }
+
+    public void OnEnterVent(InputAction.CallbackContext ctx)
+    {
+        if (!isActive) return;
+        if (!accessibleVent) return;
+        
+        accessibleVent.PlayerEnters(this);
+
     }
 
     #endregion
@@ -322,7 +334,7 @@ public class PlayerController : MonoBehaviour
         }
         else dashTimer += Time.deltaTime;
     }
-
+    
     private void SettingPowerUpGauge()
     {
         var nextPos = Camera.main.WorldToScreenPoint(transform.position) 

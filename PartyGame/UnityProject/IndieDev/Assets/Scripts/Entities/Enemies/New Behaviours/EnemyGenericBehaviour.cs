@@ -55,11 +55,6 @@ public class EnemyGenericBehaviour : MonoBehaviour
     {
         SetAvailableTargets();
         target = DetectedEntity(availableTargets);
-        
-        if (!target)
-        {
-            Debug.LogWarning("No target found !");
-        }
     }
     
     public bool IsTargetAvailable()
