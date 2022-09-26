@@ -13,23 +13,16 @@ public class Vent : MonoBehaviour
     private bool isPlayerEntering;
 
     private PlayerController enteringPlayer;
-    private Way ventDirection;
 
     private Vector3 otherVentCenterPos;
     private float ventingTimer;
-    
-
-    public enum Way
-    {
-        Inside, Outside
-    }
 
     public void Initialization(Conduit linkedConduit)
     {
-        if(!otherVent) Debug.LogError("A linked vent is missing!");
+        if (!otherVent) Debug.LogError("A linked vent is missing!");
         conduit = linkedConduit;
         playersOnVent = new List<PlayerController>();
-        
+
         centerPos = transform.position;
         centerPos = new Vector3(centerPos.x, 1, centerPos.z);
 
@@ -65,9 +58,23 @@ public class Vent : MonoBehaviour
 
         isPlayerEntering = true;
         enteringPlayer = player;
-        
+
         enteringPlayer.DeactivatePlayer();
         enteringPlayer.col.enabled = false;
+
+        foreach (var vc in conduit.linkedVent)
+        {
+            if (this == vc.ventIn)
+            {
+                conduit.playersInConduit.Add(enteringPlayer);
+                conduit.EnableTransparency();
+            }
+            else if (this == vc.ventOut)
+            {
+                conduit.playersInConduit.Remove(enteringPlayer);
+                conduit.DisableTransparency();
+            }
+        }
     }
 
     private void Update()
@@ -79,7 +86,7 @@ public class Vent : MonoBehaviour
     {
         if (ventingTimer >= conduit.ventingDuration)
         {
-            ventingTimer = 0f;   
+            ventingTimer = 0f;
             enteringPlayer.ActivatePlayer();
             enteringPlayer.col.enabled = true;
             enteringPlayer = null;
@@ -88,8 +95,9 @@ public class Vent : MonoBehaviour
         else
         {
             ventingTimer += Time.deltaTime;
-            
-            enteringPlayer.transform.position = Vector3.Lerp(centerPos, otherVentCenterPos, ventingTimer / conduit.ventingDuration);
+
+            enteringPlayer.transform.position =
+                Vector3.Lerp(centerPos, otherVentCenterPos, ventingTimer / conduit.ventingDuration);
         }
     }
 }
