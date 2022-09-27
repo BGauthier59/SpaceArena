@@ -9,9 +9,9 @@ public class PlayerManager : Entity
     
     #region Entity
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, Entity attacker = null)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, attacker);
 
     }
 

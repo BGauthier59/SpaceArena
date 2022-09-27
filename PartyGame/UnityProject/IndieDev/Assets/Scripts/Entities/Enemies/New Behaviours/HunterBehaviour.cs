@@ -216,6 +216,10 @@ public class HunterBehaviour : EnemyGenericBehaviour
             case HunterState.Idle:
                 StopAgent();
                 break;
+            
+            default:
+                Debug.LogError("State not available!");
+                break;
         }
 
         currentState = state;

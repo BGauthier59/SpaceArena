@@ -11,10 +11,10 @@ public class GasDevice : BaseElementManager
     [SerializeField] private float explosionInitRadius;
     [SerializeField] private float explosionMaxRadius;
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, Entity attacker = null)
     {
         Debug.Log("Gas Device is hurt");
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, attacker);
     }
 
     public override void OnDestroyed()

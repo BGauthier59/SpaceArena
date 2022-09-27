@@ -19,7 +19,7 @@ public class EnemiesManager : MonoBehaviour
         allEnemies.Clear();
     }
 
-    private List<EnemyManager> allEnemies = new List<EnemyManager>();
+    public List<EnemyManager> allEnemies = new List<EnemyManager>();
 
     public void AddEnemy(EnemyManager enemy)
     {

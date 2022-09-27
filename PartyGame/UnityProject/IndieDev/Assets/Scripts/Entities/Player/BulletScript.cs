@@ -5,6 +5,7 @@ using static UnityEngine.Random;
 
 public class BulletScript : MonoBehaviour
 {
+    private PlayerManager shooter;
     [SerializeField] private float lifespan;
     private Rigidbody rb;
     [SerializeField] private float recoil;
@@ -19,10 +20,16 @@ public class BulletScript : MonoBehaviour
             var script = collision.GetComponent<EnemyManager>();
             //script.rb.AddForce(recoil * rb.velocity);
             var damage = Range(minDamage, maxDamage);
-            script.TakeDamage(damage);
+            script.TakeDamage(damage, shooter);
         }
         gameObject.SetActive(false);
         PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
+    }
+
+    public void Shoot(PlayerController player)
+    {
+        shooter = player.manager;
+        rb.AddForce(transform.forward * player.bulletSpeed);
     }
 
     private void Start()

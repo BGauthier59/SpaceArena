@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AlienManager : EnemyManager
 {
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, Entity attacker = null)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, attacker);
         Debug.Log("Alien got hurt");
         ((AlienBehaviour)behaviour).SwitchState(AlienBehaviour.AlienState.Retreat);
     }

@@ -30,7 +30,7 @@ public class Entity : MonoBehaviour
         currentLife = totalLife;
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage, Entity attacker = null)
     {
         currentLife -= damage;
         if (currentLife <= 0)

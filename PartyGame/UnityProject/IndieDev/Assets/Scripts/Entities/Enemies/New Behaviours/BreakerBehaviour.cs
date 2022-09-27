@@ -177,6 +177,12 @@ public class BreakerBehaviour : EnemyGenericBehaviour
             case BreakerState.Idle:
                 StopAgent();
                 break;
+            case BreakerState.ChangeTarget:
+                StopAgent();
+                break;
+            default:
+                Debug.LogError("State not available!");
+                break;
         }
 
         currentState = state;

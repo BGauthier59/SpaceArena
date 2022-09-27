@@ -1840,7 +1840,7 @@ MonoBehaviour:
     prefab: {fileID: 2168510512892706134, guid: bd94b150838481143a5e53f9c18b497a, type: 3}
     size: 50
   - type: 4
-    prefab: {fileID: 2396810920112995019, guid: 5dd71f043b1c97c44aa784dc8666aa65, type: 3}
+    prefab: {fileID: 2396810920112995019, guid: 1422e4bb0d2d055488366a4967cd8fa5, type: 3}
     size: 50
 --- !u!1 &331491677
 GameObject:
@@ -4340,6 +4340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e86701897f2f24092b5f8d4fb6e788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allEnemies: []
 --- !u!1001 &728957989
 PrefabInstance:
   m_ObjectHideFlags: 0

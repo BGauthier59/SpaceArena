@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isAttacking;
     [SerializeField] private int maxBulletAmount;
     [SerializeField] private int bulletAmount;
-    [SerializeField] private float bulletSpeed;
+    public float bulletSpeed;
     private float timerBeforeNextShoot;
     [SerializeField] private float durationBeforeNextShoot;
 
@@ -289,7 +289,7 @@ public class PlayerController : MonoBehaviour
             shootingParticles.Play();
             var newBullet =
                 PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
-            newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed);
+            newBullet.GetComponent<BulletScript>().Shoot(this);
             GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
             rb.AddForce(-transform.forward * recoil);
             timerBeforeNextShoot = 0f;

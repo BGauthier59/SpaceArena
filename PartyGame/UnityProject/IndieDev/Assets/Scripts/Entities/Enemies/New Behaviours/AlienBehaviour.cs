@@ -188,6 +188,9 @@ public class AlienBehaviour : EnemyGenericBehaviour
             case AlienState.Idle:
                 StopAgent();
                 break;
+            default:
+                Debug.LogError("State not available!");
+                break;
         }
 
         currentState = state;

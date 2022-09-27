@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class EnemyGenericBehaviour : MonoBehaviour
 {
-    protected Entity[] availableTargets;
+    public Entity[] availableTargets;
     [SerializeField] protected Entity target;
     [SerializeField] protected float speed;
     public EnemyManager manager;
@@ -141,6 +141,8 @@ public class EnemyGenericBehaviour : MonoBehaviour
         manager.rb.isKinematic = false;
     }
 
+    public void SetTarget(Entity t) => target = t;
+    
     private void OnEnable()
     {
         Initialization();

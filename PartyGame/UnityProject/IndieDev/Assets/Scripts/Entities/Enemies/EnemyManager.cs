@@ -10,7 +10,7 @@ public class EnemyManager : Entity
     
     #region Entity
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, Entity attacker = null)
     {
         /* Pour l'instant : non
         var damageIndicator = PoolOfObject.Instance.SpawnFromPool(PoolType.Damage, transform.position, Quaternion.identity)
@@ -22,7 +22,7 @@ public class EnemyManager : Entity
         */
         
         Debug.Log("Enemy hit");
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, attacker);
     }
 
     public override void Death()

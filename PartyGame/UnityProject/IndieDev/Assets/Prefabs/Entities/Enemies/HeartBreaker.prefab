@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2396810920112995022}
   - component: {fileID: 2396810920112995011}
   - component: {fileID: 1111618003144136869}
-  - component: {fileID: 5530222125797027475}
+  - component: {fileID: 3638651283830632533}
   m_Layer: 6
   m_Name: HeartBreaker
   m_TagString: Enemy
@@ -152,22 +152,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e48ce1da0e2042408a5a6e56bab26ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableTargets: []
   target: {fileID: 0}
   speed: 2
-  manager: {fileID: 5530222125797027475}
+  manager: {fileID: 3638651283830632533}
   isMoving: 0
   isAttacking: 0
   attackArea: {fileID: 0}
   damage: 2
   agent: {fileID: 2396810920112995011}
   minDistanceToAttack: 2
-  durationBeforeTarget: 0
-  durationBeforeFollow: 0
-  durationBeforeAttack: 0
-  durationCooldown: 0
+  durationBeforeTarget: 0.5
+  durationBeforeFollow: 0.5
+  durationBeforeAttack: 0.5
+  durationCooldown: 0.5
   currentState: 0
-  changeTargetRate: 0
---- !u!114 &5530222125797027475
+  lastAttacker: {fileID: 0}
+  hasCalledForHelp: 0
+  helpersDistance: 10
+  helpRate: 100
+--- !u!114 &3638651283830632533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,16 +180,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2396810920112995019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1e2ecdaa39fd2b4db67c672b41a3f12, type: 3}
+  m_Script: {fileID: 11500000, guid: 62bcc2f1217645a44a07df6162ace584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalLife: 0
-  currentLife: 0
+  totalLife: 400
+  currentLife: 400
   animator: {fileID: 0}
-  rb: {fileID: 0}
+  rb: {fileID: 2396810920112995022}
   isDead: 0
   isStunned: 0
-  behaviour: {fileID: 0}
+  behaviour: {fileID: 1111618003144136869}
 --- !u!1 &8136527357268122163
 GameObject:
   m_ObjectHideFlags: 0

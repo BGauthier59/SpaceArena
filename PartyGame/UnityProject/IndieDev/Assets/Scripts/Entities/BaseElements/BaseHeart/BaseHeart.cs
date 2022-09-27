@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BaseHeart : BaseElementManager
 {
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, Entity attacker = null)
     {
         Debug.Log("Base heart is hurt");
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, attacker);
     }
 
     public override void OnDestroyed()
