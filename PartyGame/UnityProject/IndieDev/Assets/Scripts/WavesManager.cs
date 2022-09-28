@@ -21,6 +21,10 @@ public class WavesManager : MonoBehaviour
     private Wave currentWave;
     [SerializeField] private float spawningDelay;
 
+    private int lastDifficulty;
+    public int difficulty;
+    public int difficultyGap;
+
     [Serializable]
     public class Entrance
     {
@@ -64,7 +68,6 @@ public class WavesManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(entrancesInScene);
         isWaitingForNextWave = false;
 
     }
@@ -83,14 +86,22 @@ public class WavesManager : MonoBehaviour
     public void StartNewWave()
     {
         // Va créer une nouvelle wave et set une difficulté supplémentaire ?
-        Debug.Log("new round");
+        timerBeforeNextWave = 0f;
         isWaitingForNextWave = false;
+
+        lastDifficulty = difficulty;
+        difficulty += difficultyGap;
         
+        var maxDif = (int) (lastDifficulty * .01f);
         var newWave = new Wave
         {
             entrancesCount = Range(1, entrances.Length),
             delay = spawningDelay
         };
+
+        newWave.entrancesCount = Mathf.Min(maxDif, newWave.entrancesCount);
+        
+        Debug.Log($"This wave has taken {newWave.entrancesCount} entrances!");
 
         currentWave = newWave;
         SetWave();
@@ -106,6 +117,9 @@ public class WavesManager : MonoBehaviour
         foreach (var e in entrances) e.isAvailable = true;
         
         currentWave.selectedEntrances = new List<(Entrance, EnemiesGroup)>();
+
+        var difficultyPerEntrance = (int) (lastDifficulty / (float) currentWave.entrancesCount);
+        Debug.Log(difficultyPerEntrance);
 
         for (int i = 0; i < currentWave.entrancesCount; i++)
         {
@@ -131,7 +145,7 @@ public class WavesManager : MonoBehaviour
             var group = new EnemiesGroup
             {
                 enemyData = enemy,
-                count = 3
+                count = (int) (difficultyPerEntrance / (float) enemy.difficulty)
             };
 
             couple.Item2 = group;
@@ -141,6 +155,8 @@ public class WavesManager : MonoBehaviour
 
         foreach (var c in currentWave.selectedEntrances)
         {
+            Debug.Log($"Group : {c.Item2.enemyData.GetType()} ({c.Item2.count})");
+            
             StartCoroutine(currentWave.Spawning(c.Item1.entrance, c.Item2));
         }
     }

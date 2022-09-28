@@ -289,7 +289,10 @@ public class PlayerController : MonoBehaviour
             shootingParticles.Play();
             var newBullet =
                 PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
-            newBullet.GetComponent<BulletScript>().Shoot(this);
+            var bullet = newBullet.GetComponent<BulletScript>();
+            bullet.shooter = manager;
+            bullet.rb.AddForce(transform.forward * bulletSpeed);
+            
             GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
             rb.AddForce(-transform.forward * recoil);
             timerBeforeNextShoot = 0f;
