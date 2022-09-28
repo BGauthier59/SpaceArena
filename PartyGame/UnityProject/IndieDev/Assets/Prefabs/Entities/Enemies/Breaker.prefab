@@ -117,7 +117,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!195 &2396810920112995011
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3cef9766e868b42befce4d403d4a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableTargets: []
   target: {fileID: 0}
   speed: 13
   manager: {fileID: 8258700661660960522}

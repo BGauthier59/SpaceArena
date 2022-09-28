@@ -118,7 +118,7 @@ public class PartyManager : MonoBehaviour
 
         GameManager.instance.EnableAllControllers();
         hasPartyBegun = true;
-        wavesManager.NewRound();
+        wavesManager.StartNewWave();
     }
 
     #region Before Game Starts

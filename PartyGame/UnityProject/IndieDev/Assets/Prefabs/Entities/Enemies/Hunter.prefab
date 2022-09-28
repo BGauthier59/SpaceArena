@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa8826654fa32f4e8c1a7d94fdca4f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableTargets: []
   target: {fileID: 0}
   speed: 8
   manager: {fileID: 2396810920112995021}
@@ -195,7 +196,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!1 &8136527357268122163
 GameObject:
   m_ObjectHideFlags: 0
