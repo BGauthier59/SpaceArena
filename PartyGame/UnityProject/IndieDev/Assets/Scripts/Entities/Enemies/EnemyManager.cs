@@ -22,7 +22,6 @@ public class EnemyManager : Entity
         animator.Play("EnemyHit");
         */
         
-        Debug.Log("Enemy hit");
         base.TakeDamage(damage, attacker);
         if (currentLife == 0)
         {

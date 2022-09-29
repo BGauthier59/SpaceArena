@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem shootingParticles;
     [SerializeField] private CameraShakeScriptable shootingShake;
     [SerializeField] private float recoil;
-    [SerializeField] private Image reloadBar;
+    [SerializeField] private Slider reloadGauge;
 
     [Header("Power-Up")] [SerializeField] private Slider powerUpGauge;
     [SerializeField] private int powerUpMax;
@@ -112,7 +112,8 @@ public class PlayerController : MonoBehaviour
         powerUpGauge.maxValue = powerUpMax;
         powerUpScore = 0;
 
-        reloadBar.transform.parent.SetParent(GameManager.instance.mainCanvas.transform);
+        reloadGauge.maxValue = maxBulletAmount;
+        reloadGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
         powerUpGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
 
         rd.material.color = GameManager.instance.colors[playerIndex - 1];
@@ -155,6 +156,7 @@ public class PlayerController : MonoBehaviour
 
         Moving();
         SettingPowerUpGauge();
+        SettingReloadGauge();
     }
 
     #region Input Event
@@ -208,12 +210,11 @@ public class PlayerController : MonoBehaviour
     public void OnReload(InputAction.CallbackContext ctx)
     {
         if (!isActive) return;
-
-        reloading = ctx.performed;
-        if (!reloading) return;
-        reloadBar.transform.parent.position = Camera.main.WorldToScreenPoint(transform.position)
-                                              + new Vector3(0, -20);
-        reloadBar.transform.parent.gameObject.SetActive(true);
+        if (ctx.canceled) return;
+        if (reloading) return;
+        
+        reloading = true;
+        reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
     }
 
     public void OnRepair(InputAction.CallbackContext ctx)
@@ -308,6 +309,8 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
             rb.AddForce(-transform.forward * recoil);
             timerBeforeNextShoot = 0f;
+
+            reloadGauge.value = bulletAmount;
         }
         else
         {
@@ -319,22 +322,15 @@ public class PlayerController : MonoBehaviour
     {
         if (reloading)
         {
-            if (reloadTimer > reloadDuration)
+            if (reloadTimer >= reloadDuration)
             {
                 reloading = false;
-                reloadTimer = 0;
+                reloadTimer = 0f;
                 bulletAmount = maxBulletAmount;
-                reloadBar.transform.parent.gameObject.SetActive(false);
             }
             else
             {
-                var nextPos = Camera.main.WorldToScreenPoint(transform.position)
-                              + new Vector3(0, -20);
-
-                reloadBar.transform.parent.position = Vector3.Lerp(reloadBar.transform.parent.position, nextPos,
-                    reloadTimer / reloadDuration);
-                reloadBar.fillAmount = reloadTimer / reloadDuration;
-
+                reloadGauge.value = (reloadTimer / reloadDuration) * reloadGauge.maxValue;
                 reloadTimer += Time.deltaTime;
             }
         }
@@ -362,8 +358,16 @@ public class PlayerController : MonoBehaviour
     {
         var nextPos = Camera.main.WorldToScreenPoint(transform.position)
                       + new Vector3(40, 0);
-        //powerUpGauge.transform.position = Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.deltaTime);
-        powerUpGauge.transform.position = nextPos;
+        powerUpGauge.transform.position = Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.deltaTime);
+        //powerUpGauge.transform.position = nextPos;
+    }
+
+    private void SettingReloadGauge()
+    {
+        var nextPos = Camera.main.WorldToScreenPoint(transform.position)
+                      + new Vector3(0, -20);
+
+        reloadGauge.transform.position = Vector3.Lerp(reloadGauge.transform.position, nextPos, Time.deltaTime);
     }
 
     #endregion
