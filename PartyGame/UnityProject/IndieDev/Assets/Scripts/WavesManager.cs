@@ -139,8 +139,6 @@ public class WavesManager : MonoBehaviour
                     enemy = data;
                 }
                 
-                if(enemy.minRound > currentRound) Debug.Log($"{enemy.enemy} can't spawn at this round.");
-
                 security++;
                 if (security >= 100)
                 {

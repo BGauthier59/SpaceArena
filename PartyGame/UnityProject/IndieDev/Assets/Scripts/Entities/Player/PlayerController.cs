@@ -141,6 +141,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!isActive) return;
+        
         Rotating();
         Reloading();
         Firing();
@@ -149,6 +151,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isActive) return;
+
         Moving();
         SettingPowerUpGauge();
     }

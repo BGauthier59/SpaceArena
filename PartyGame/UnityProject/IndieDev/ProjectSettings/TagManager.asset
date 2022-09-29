@@ -17,7 +17,7 @@ TagManager:
   - IgnoreBullet
   - Wall
   - Player
-  - 
+  - CollisionBlocker
   - 
   - 
   - 

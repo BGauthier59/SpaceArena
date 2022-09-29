@@ -28,6 +28,7 @@ public class PartyManager : MonoBehaviour
     private float whenGameEndsTimer;
 
     public GameState gameState;
+    public bool gameWon;
 
     public enum GameState
     {
@@ -103,6 +104,7 @@ public class PartyManager : MonoBehaviour
     private void StartingGame()
     {
         // Initializing players
+        gameState = GameState.InGame;
 
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
@@ -128,7 +130,6 @@ public class PartyManager : MonoBehaviour
         if (beforeGameStartsTimer >= beforeGameStartsDuration)
         {
             // When Game Starts
-            gameState = GameState.InGame;
             StartingGame();
         }
         else beforeGameStartsTimer += Time.deltaTime;
@@ -145,12 +146,7 @@ public class PartyManager : MonoBehaviour
         if (partyTimer <= 0)
         {
             partyTimer = 0f;
-            for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
-            {
-                var player = GameManager.instance.allPlayers[i];
-                player.DeactivatePlayer();
-            }
-            gameState = GameState.End;
+            EndingGame(true);
         }
         else partyTimer -= Time.deltaTime;
         
@@ -161,15 +157,33 @@ public class PartyManager : MonoBehaviour
 
     #region When Game Ends
 
+    public void EndingGame(bool won)
+    {
+        gameWon = won;
+        for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
+        {
+            var player = GameManager.instance.allPlayers[i];
+            player.DeactivatePlayer();
+        }
+
+        wavesManager.enabled = false;
+        gameState = GameState.End;
+    }
+
     private void CheckTimerWhenGameEnds()
     {
         if (whenGameEndsTimer >= whenGameEndsDuration)
         {
             // When Game Ends
-            gameState = GameState.Finished;
-            DisplayScore();
+            FinishingGame();
         }
         else whenGameEndsTimer += Time.deltaTime;
+    }
+
+    private void FinishingGame()
+    {
+        gameState = GameState.Finished;
+        DisplayScore();
     }
     
     private void DisplayScore()
@@ -177,6 +191,12 @@ public class PartyManager : MonoBehaviour
         endOfParty.SetActive(true);
         for (int i = 0; i < scoreAreas.Length; i++)
         {
+            if (i > GameManager.instance.allPlayers.Count - 1)
+            {
+                Debug.LogWarning("There's less players in game than it should be.");
+                break;
+            }
+            
             if (GameManager.instance.playersNumber > i)
             {
                 scoreAreas[i].area.SetActive(true);

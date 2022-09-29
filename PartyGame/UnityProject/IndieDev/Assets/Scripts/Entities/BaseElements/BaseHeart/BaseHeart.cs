@@ -13,7 +13,12 @@ public class BaseHeart : BaseElementManager
     {
         base.OnDestroyed();
         
-        Debug.Log("End of party");
+        if (GameManager.instance.partyManager == null)
+        {
+            Debug.LogError("Party Manager is null!");
+            return;
+        }
+        GameManager.instance.partyManager.EndingGame(false);
     }
 
     public override void OnFixed()
