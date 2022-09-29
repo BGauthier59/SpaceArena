@@ -4018,7 +4018,7 @@ MonoBehaviour:
   launchParty: {fileID: 428374674}
   returnFromLobby: {fileID: 388475049}
   selectionCanvas: {fileID: 953249669}
-  firstSelectedSelection: {fileID: 963390702}
+  firstSelectedSelection: {fileID: 1084966777}
   arenaInfo: {fileID: 1815901440}
   arenaImageSelection: {fileID: 519452037}
   arenaTextSelection: {fileID: 524585948}
