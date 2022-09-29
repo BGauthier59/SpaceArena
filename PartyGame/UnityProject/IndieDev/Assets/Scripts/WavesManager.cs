@@ -12,7 +12,6 @@ public class WavesManager : MonoBehaviour
 {
     [SerializeField] private Entrance[] entrances;
     [SerializeField] private EnemyData[] enemyData;
-    private int entrancesInScene => entrances.Length;
 
     private bool isWaitingForNextWave;
     [SerializeField] private float durationBeforeNextWave;
@@ -21,6 +20,7 @@ public class WavesManager : MonoBehaviour
     private Wave currentWave;
     [SerializeField] private float spawningDelay;
 
+    [SerializeField] private uint currentRound;
     private int lastDifficulty;
     public int difficulty;
     public int difficultyGap;
@@ -47,7 +47,6 @@ public class WavesManager : MonoBehaviour
                 PoolOfObject.Instance.SpawnFromPool(group.enemyData.enemy, entrance.position, Quaternion.identity);
                 yield return new WaitForSeconds(delay);
             }
-            
         }
     }
 
@@ -63,13 +62,14 @@ public class WavesManager : MonoBehaviour
     {
         public PoolType enemy;
         public int difficulty;
+        [Tooltip("Set the minimum round this enemy can spawn at")] public ushort minRound;
     }
 
 
     private void Start()
     {
         isWaitingForNextWave = false;
-
+        currentRound = 0;
     }
     
     private void Update()
@@ -86,13 +86,14 @@ public class WavesManager : MonoBehaviour
     public void StartNewWave()
     {
         // Va créer une nouvelle wave et set une difficulté supplémentaire ?
+        currentRound++;
         timerBeforeNextWave = 0f;
         isWaitingForNextWave = false;
 
         lastDifficulty = difficulty;
         difficulty += difficultyGap;
         
-        var maxDif = (int) (lastDifficulty * .01f);
+        var maxDif = Mathf.Max((int)(lastDifficulty * .01f), 1);
         var newWave = new Wave
         {
             entrancesCount = Range(1, entrances.Length),
@@ -134,14 +135,28 @@ public class WavesManager : MonoBehaviour
             // Set enemies group
 
             var enemy = new EnemyData();
+            var security = 0;
             
-            var groupType = couple.Item1.availableEnemies[Range(0, couple.Item1.availableEnemies.Length)];
-            foreach (var data in enemyData)
+            do
             {
-                if (groupType != data.enemy) continue;
-                enemy = data;
-            }
+                var groupType = couple.Item1.availableEnemies[Range(0, couple.Item1.availableEnemies.Length)];
+                foreach (var data in enemyData)
+                {
+                    if (groupType != data.enemy) continue;
+                    enemy = data;
+                }
+                
+                if(enemy.minRound > currentRound) Debug.Log($"{enemy.enemy} can't spawn at this round.");
 
+                security++;
+                if (security >= 100)
+                {
+                    Debug.LogWarning("No available enemy seems to be found... Breaking.");
+                    break;
+                }
+                
+            } while (enemy.minRound >= currentRound);
+            
             var group = new EnemiesGroup
             {
                 enemyData = enemy,

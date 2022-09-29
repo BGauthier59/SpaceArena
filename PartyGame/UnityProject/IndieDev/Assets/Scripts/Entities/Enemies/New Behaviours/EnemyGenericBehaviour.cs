@@ -121,6 +121,11 @@ public class EnemyGenericBehaviour : MonoBehaviour
     
     public void StopAgent()
     {
+        if (!agent.enabled)
+        {
+            Debug.LogWarning("agent was disabled");
+            return;
+        }
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
         manager.rb.velocity = Vector3.zero;
