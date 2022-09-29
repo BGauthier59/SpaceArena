@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
 {
     #region Variables
 
-    [Header("Input, Gamepad & Data")] 
-    public int playerIndex;
+    [Header("Input, Gamepad & Data")] public int playerIndex;
     public string playerName;
     public PlayerInput playerInput;
 
@@ -19,17 +18,14 @@ public class PlayerController : MonoBehaviour
 
     public PlayerManager manager;
 
-    [Header("Party Data")] 
-    public int points;
+    [Header("Party Data")] public int points;
 
-    [Header("Components")] 
-    public Renderer rd;
+    [Header("Components")] public Renderer rd;
     public Collider col;
     private Rigidbody rb;
 
-    [Header("Controller & Parameters")]
-    private bool isActive;
-    
+    [Header("Controller & Parameters")] private bool isActive;
+
     [SerializeField] private Vector2 leftJoystickInput;
     [SerializeField] private Vector2 rightJoystickInput;
 
@@ -40,12 +36,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotateSpeed;
     private bool aiming;
     [SerializeField] private float dashForce;
+    [SerializeField] private AnimationCurve dashFactor;
     [SerializeField] private float dashDuration;
     private float dashTimer;
     private bool isDashing;
 
-    [Header("Attack")] 
-    [SerializeField] private bool isAttacking;
+    [Header("Attack")] [SerializeField] private bool isAttacking;
     [SerializeField] private int maxBulletAmount;
     [SerializeField] private int bulletAmount;
     public float bulletSpeed;
@@ -60,17 +56,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float recoil;
     [SerializeField] private Image reloadBar;
 
-    [Header("Power-Up")]
-    [SerializeField] private Slider powerUpGauge;
+    [Header("Power-Up")] [SerializeField] private Slider powerUpGauge;
     [SerializeField] private int powerUpMax;
     private int powerUpScore;
     private bool canUsePowerUp;
 
-    [Header("Reparation")] 
-    public ReparationArea reparationArea;
+    [Header("Reparation")] public ReparationArea reparationArea;
 
-    [Header("Vent")] 
-    public Vent accessibleVent;
+    [Header("Vent")] public Vent accessibleVent;
 
     #endregion
 
@@ -81,17 +74,17 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Initialization();
     }
-    
+
     private void Initialization()
     {
         GameManager.instance.allPlayers.Add(this);
 
         playerIndex = GameManager.instance.playerInputManager.playerCount;
         playerName = $"Player {playerIndex}";
-        
+
         manager = GetComponent<PlayerManager>();
         rb = manager.rb;
-        
+
         playerInput = GetComponent<PlayerInput>();
         dataGamepad = new GamepadData()
         {
@@ -101,8 +94,8 @@ public class PlayerController : MonoBehaviour
 
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         rb.isKinematic = true;
-        
-        
+
+
         DeactivatePlayer();
     }
 
@@ -114,11 +107,11 @@ public class PlayerController : MonoBehaviour
     {
         rb.isKinematic = false;
         bulletAmount = maxBulletAmount;
-        
+
         baseSpeed = speed;
         powerUpGauge.maxValue = powerUpMax;
         powerUpScore = 0;
-        
+
         reloadBar.transform.parent.SetParent(GameManager.instance.mainCanvas.transform);
         powerUpGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
 
@@ -128,12 +121,13 @@ public class PlayerController : MonoBehaviour
 
     public void ActivatePlayer()
     {
-        if (GameManager.instance.partyManager.gameState == PartyManager.GameState.Finished || 
+        if (GameManager.instance.partyManager.gameState == PartyManager.GameState.Finished ||
             GameManager.instance.partyManager.gameState == PartyManager.GameState.End)
         {
             Debug.LogWarning("Tried to active player after the end of game.");
             return;
         }
+
         isActive = true;
     }
 
@@ -144,7 +138,7 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
-    
+
     private void Update()
     {
         Rotating();
@@ -158,13 +152,13 @@ public class PlayerController : MonoBehaviour
         Moving();
         SettingPowerUpGauge();
     }
-    
+
     #region Input Event
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
         if (!isActive) return;
-        
+
         leftJoystickInput = ctx.ReadValue<Vector2>();
 
         // Checking conditions
@@ -197,7 +191,7 @@ public class PlayerController : MonoBehaviour
             aiming = false;
             rightJoystickInput = Vector2.zero;
         }
-        else aiming = true;
+        else aiming = ctx.performed;
     }
 
     public void OnFire(InputAction.CallbackContext ctx)
@@ -211,8 +205,9 @@ public class PlayerController : MonoBehaviour
     {
         if (!isActive) return;
 
-        reloading = true;
-        reloadBar.transform.parent.position = Camera.main.WorldToScreenPoint(transform.position) 
+        reloading = ctx.performed;
+        if (!reloading) return;
+        reloadBar.transform.parent.position = Camera.main.WorldToScreenPoint(transform.position)
                                               + new Vector3(0, -20);
         reloadBar.transform.parent.gameObject.SetActive(true);
     }
@@ -223,9 +218,9 @@ public class PlayerController : MonoBehaviour
 
         if (reparationArea == null) return;
         if (!reparationArea.isWaitingForInput) return;
-        
+
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Reparation);
-        
+
         reparationArea.associatedElement.SetCheckingArea();
     }
 
@@ -234,30 +229,32 @@ public class PlayerController : MonoBehaviour
         if (!isActive) return;
 
         if (isDashing) return;
+
         Debug.Log("Je dash");
-        isDashing = true;
-        var dashVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
-        dashVector.Normalize();
-        rb.AddForce(dashVector * dashForce);
+        isDashing = ctx.performed;
+        //var dashVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
+        //dashVector.Normalize();
+        
+        //rb.AddForce(dashVector * dashForce);
     }
 
     public void OnEnterVent(InputAction.CallbackContext ctx)
     {
         if (!isActive) return;
         if (!accessibleVent) return;
-        
-        accessibleVent.PlayerEnters(this);
 
+        accessibleVent.PlayerEnters(this);
     }
 
     public void OnUsePowerUp(InputAction.CallbackContext ctx)
     {
         if (!isActive) return;
         if (!canUsePowerUp) return;
-        
+
         // Power up effect
 
-        canUsePowerUp = false;
+
+        EndOfPowerUp(); // Pour le moment
     }
 
     #endregion
@@ -266,9 +263,9 @@ public class PlayerController : MonoBehaviour
 
     private void Moving()
     {
-        if (isDashing) return;
+        //if (isDashing) return;
         var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
-        rb.velocity = moveVector * speed * Time.fixedDeltaTime;
+        rb.velocity = moveVector * (speed * Time.fixedDeltaTime);
     }
 
     private void Rotating()
@@ -303,7 +300,7 @@ public class PlayerController : MonoBehaviour
             var bullet = newBullet.GetComponent<BulletScript>();
             bullet.shooter = manager;
             bullet.rb.AddForce(transform.forward * bulletSpeed);
-            
+
             GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
             rb.AddForce(-transform.forward * recoil);
             timerBeforeNextShoot = 0f;
@@ -327,13 +324,13 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                var nextPos = Camera.main.WorldToScreenPoint(transform.position) 
+                var nextPos = Camera.main.WorldToScreenPoint(transform.position)
                               + new Vector3(0, -20);
 
                 reloadBar.transform.parent.position = Vector3.Lerp(reloadBar.transform.parent.position, nextPos,
                     reloadTimer / reloadDuration);
                 reloadBar.fillAmount = reloadTimer / reloadDuration;
-                
+
                 reloadTimer += Time.deltaTime;
             }
         }
@@ -341,17 +338,25 @@ public class PlayerController : MonoBehaviour
 
     private void Dashing()
     {
+        if (!isDashing) return;
+
         if (dashTimer >= dashDuration)
         {
             isDashing = false;
+            ResetSpeed();
             dashTimer = 0f;
         }
-        else dashTimer += Time.deltaTime;
+        else
+        {
+            dashTimer += Time.deltaTime;
+            var dashSpeed = dashFactor.Evaluate(dashTimer / dashDuration);
+            ModifySpeed(dashSpeed);
+        }
     }
-    
+
     private void SettingPowerUpGauge()
     {
-        var nextPos = Camera.main.WorldToScreenPoint(transform.position) 
+        var nextPos = Camera.main.WorldToScreenPoint(transform.position)
                       + new Vector3(40, 0);
         //powerUpGauge.transform.position = Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.deltaTime);
         powerUpGauge.transform.position = nextPos;
@@ -363,7 +368,7 @@ public class PlayerController : MonoBehaviour
 
     public void ModifySpeed(float factor)
     {
-        var newSpeed = speed * factor;
+        var newSpeed = baseSpeed * factor;
         speed = newSpeed;
     }
 
@@ -375,7 +380,7 @@ public class PlayerController : MonoBehaviour
     public void IncreasePowerUpGauge(int value)
     {
         if (canUsePowerUp) return;
-        
+
         powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
         powerUpGauge.value = powerUpScore;
         if (powerUpGauge.value >= powerUpMax)
@@ -387,10 +392,16 @@ public class PlayerController : MonoBehaviour
     private void GetPowerUp()
     {
         canUsePowerUp = true;
-        
+
         // Get power up
     }
 
+    public void EndOfPowerUp()
+    {
+        powerUpScore = 0;
+        powerUpGauge.value = powerUpScore;
+        canUsePowerUp = false;
+    }
 
     #endregion
 }

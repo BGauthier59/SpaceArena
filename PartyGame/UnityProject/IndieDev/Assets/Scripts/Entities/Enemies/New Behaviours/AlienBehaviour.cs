@@ -11,7 +11,13 @@ public class AlienBehaviour : EnemyGenericBehaviour
     [SerializeField] [Range(0, 100)] private float retreatRate;
 
     private float initSpeed;
+    private bool isRetreating;
     [SerializeField] private float retreatSpeed;
+    [SerializeField] private float durationBetweenRetreats;
+    private float timerBetweenRetreats;
+    
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem retreatVFX;
 
     public enum AlienState
     {
@@ -27,6 +33,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
     {
         base.Initialization();
         initSpeed = speed;
+        isRetreating = false;
         SwitchState(AlienState.Target);
     }
 
@@ -34,7 +41,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
     {
         base.Target();
     }
-
+    
     public override void SetAvailableTargets()
     {
         var entities = new List<Entity>();
@@ -56,11 +63,24 @@ public class AlienBehaviour : EnemyGenericBehaviour
         base.Attack();
     }
 
+    public override void Update()
+    {
+        base.Update();
+
+        if (!isRetreating) return;
+        if (timerBetweenRetreats > durationBetweenRetreats)
+        {
+            timerBetweenRetreats = 0f;
+            isRetreating = false;
+        }
+        else timerBetweenRetreats += Time.deltaTime;
+    }
+
     public override void CheckState()
     {
         if (!IsTargetAvailable() && currentState != AlienState.Cooldown && currentState != AlienState.Target)
         {
-            SwitchState(AlienState.Target);
+            SwitchState(AlienState.Idle);
         }
 
         switch (currentState)
@@ -151,6 +171,10 @@ public class AlienBehaviour : EnemyGenericBehaviour
             #region State Idle
 
             case AlienState.Idle:
+                // N'a pas de direction prédéterminée
+                // Continue à Target
+                if (IsTargetAvailable()) SwitchState(AlienState.Follow);
+                else Target();
                 break;
 
             #endregion
@@ -201,19 +225,16 @@ public class AlienBehaviour : EnemyGenericBehaviour
         speed = initSpeed;
 
         var ratio = manager.currentLife / manager.totalLife;
-        Debug.Log(ratio);
-
         if (!manager || ratio > .5f) return (false, target);
 
         var random = Random.Range(0, 100);
-        if (random >= retreatRate)
-        {
-            target = DetectedEntity(availableTargets, target);
-            initSpeed = speed;
-            speed = retreatSpeed;
-            return (true, target);
-        }
+        if (random > retreatRate) return (false, target);
 
-        return (false, target);
+        target = DetectedEntity(availableTargets, target);
+        initSpeed = speed;
+        speed = retreatSpeed;
+        if (!retreatVFX.isPlaying) retreatVFX.Play();
+        isRetreating = true;
+        return (true, target);
     }
 }

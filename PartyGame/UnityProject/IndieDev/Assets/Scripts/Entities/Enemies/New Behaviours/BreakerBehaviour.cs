@@ -10,6 +10,14 @@ public class BreakerBehaviour : EnemyGenericBehaviour
     [SerializeField] private BreakerState currentState;
     [SerializeField] [Range(0, 100)] private float changeTargetRate;
     
+    private bool isRetargeting;
+    [SerializeField] private float durationBetweenRetarget;
+    private float timerBetweenRetarget;
+    
+    
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem changeTargetVFX;
+
     public enum BreakerState
     {
         Target,
@@ -48,11 +56,25 @@ public class BreakerBehaviour : EnemyGenericBehaviour
         // Inflige directement des dégâts au base element
     }
 
+    public override void Update()
+    {
+        base.Update();
+
+        if (!isRetargeting) return;
+
+        if (timerBetweenRetarget > durationBetweenRetarget)
+        {
+            timerBetweenRetarget = 0f;
+            isRetargeting = false;
+        }
+        else timerBetweenRetarget += Time.deltaTime;
+    }
+
     public override void CheckState()
     {
         if (!IsTargetAvailable() && currentState != BreakerState.Cooldown && currentState != BreakerState.Target)
         {
-            SwitchState(BreakerState.Target);
+            SwitchState(BreakerState.Idle);
         }
 
         switch (currentState)
@@ -128,20 +150,23 @@ public class BreakerBehaviour : EnemyGenericBehaviour
                 if (TryChangeTarget().Item1)
                 {
                     //Debug.Log($"Change target worked ! New target : {target}");
-
                 }
                 else
                 {
-                    
                 }
+
                 SwitchState(BreakerState.Follow);
                 break;
 
             #endregion
-            
+
             #region State Idle
 
             case BreakerState.Idle:
+                // N'a pas de direction prédéterminée
+                // Continue à Target
+                if (IsTargetAvailable()) SwitchState(BreakerState.Follow);
+                else Target();
                 break;
 
             #endregion
@@ -191,13 +216,13 @@ public class BreakerBehaviour : EnemyGenericBehaviour
     private (bool, Entity) TryChangeTarget()
     {
         var random = Random.Range(0, 100);
-        if (random >= changeTargetRate)
-        {
-            // Change Target
-            target = DetectedEntity(availableTargets, target);
-            return (true, target);
-        }
+        if (random > changeTargetRate) return (false, target);
 
-        return (false, target);
+        // Change Target
+        target = DetectedEntity(availableTargets, target);
+        if (!changeTargetVFX.isPlaying) changeTargetVFX.Play();
+        isRetargeting = true;
+        return (true, target);
+
     }
 }

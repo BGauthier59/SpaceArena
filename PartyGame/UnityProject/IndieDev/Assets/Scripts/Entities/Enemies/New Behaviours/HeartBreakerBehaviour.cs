@@ -14,6 +14,9 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
     [SerializeField] private float helpersDistance;
 
     [SerializeField] [Range(0, 100)] float helpRate;
+    
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem callHelpVFX;
 
     public enum HeartBreakerState
     {
@@ -73,7 +76,7 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
         if (!IsTargetAvailable() && currentState != HeartBreakerState.Cooldown &&
             currentState != HeartBreakerState.Target)
         {
-            SwitchState(HeartBreakerState.Target);
+            SwitchState(HeartBreakerState.Idle);
         }
 
         switch (currentState)
@@ -156,6 +159,10 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
             #region State Idle
 
             case HeartBreakerState.Idle:
+                // N'a pas de direction prédéterminée
+                // Continue à Target
+                if (IsTargetAvailable()) SwitchState(HeartBreakerState.Follow);
+                else Target();
                 break;
 
             #endregion
@@ -207,7 +214,7 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
         if (hasCalledForHelp) return;
 
         var random = Random.Range(0, 100);
-        if (random < helpRate) return;
+        if (random > helpRate) return;
 
         var helping = new List<EnemyManager>();
 
@@ -223,5 +230,6 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
         //Debug.Log($"Called for help!");
 
         hasCalledForHelp = true;
+        if(!callHelpVFX.isPlaying) callHelpVFX.Play();
     }
 }

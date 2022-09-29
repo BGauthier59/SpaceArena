@@ -70,7 +70,7 @@ public class HunterBehaviour : EnemyGenericBehaviour
     {
         if (!IsTargetAvailable() && currentState != HunterState.Cooldown && currentState != HunterState.Target)
         {
-            SwitchState(HunterState.Target);
+            SwitchState(HunterState.Idle);
         }
         
         if(target) targetPos = target.transform.position;
@@ -178,6 +178,12 @@ public class HunterBehaviour : EnemyGenericBehaviour
             #region State Idle
 
             case HunterState.Idle:
+                // N'a pas de direction prédéterminée
+                // Continue à Target
+                
+                if (IsTargetAvailable()) SwitchState(HunterState.Position);
+                else Target();
+                
                 break;
 
             #endregion

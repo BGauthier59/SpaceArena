@@ -39,7 +39,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
         Initialization();
     }
 
-    private void Update()
+    public virtual void Update()
     {
         CheckState();
     }
