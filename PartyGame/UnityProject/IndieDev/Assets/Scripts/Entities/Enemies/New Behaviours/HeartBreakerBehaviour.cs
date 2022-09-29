@@ -216,11 +216,11 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
             if (e.isDead) continue;
             if(Vector3.Distance(transform.position, e.transform.position) > helpersDistance) continue;
             if (!e.behaviour.availableTargets.Contains(lastAttacker)) continue;
-            Debug.Log($"{e} targets attacker!");
+            //Debug.Log($"{e} targets attacker!");
             e.behaviour.SetTarget(lastAttacker);
             helping.Add(e);
         }
-        Debug.Log($"Called for help!");
+        //Debug.Log($"Called for help!");
 
         hasCalledForHelp = true;
     }

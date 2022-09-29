@@ -187,6 +187,7 @@ MonoBehaviour:
   isDead: 0
   isStunned: 0
   behaviour: {fileID: 4005152862852771579}
+  powerUpScore: 2
 --- !u!1 &8136527357268122163
 GameObject:
   m_ObjectHideFlags: 0

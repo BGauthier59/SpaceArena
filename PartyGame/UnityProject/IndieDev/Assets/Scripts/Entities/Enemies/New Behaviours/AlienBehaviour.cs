@@ -135,11 +135,11 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
                 if (TryRetreat().Item1)
                 {
-                    Debug.Log($"Retreat worked ! New target : {target}");
+                    //Debug.Log($"Retreat worked ! New target : {target}");
                 }
                 else
                 {
-                    Debug.Log($"Retreat hasn't worked ! Keep old target : {target}");
+                    //Debug.Log($"Retreat hasn't worked ! Keep old target : {target}");
                 }
 
                 SwitchState(AlienState.Follow);

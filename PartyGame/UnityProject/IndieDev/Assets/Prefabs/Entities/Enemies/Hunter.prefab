@@ -181,6 +181,7 @@ MonoBehaviour:
   isDead: 0
   isStunned: 0
   behaviour: {fileID: 2396810920112995020}
+  powerUpScore: 2
 --- !u!54 &2396810920112995022
 Rigidbody:
   m_ObjectHideFlags: 0

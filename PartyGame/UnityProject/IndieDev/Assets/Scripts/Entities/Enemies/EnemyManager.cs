@@ -7,7 +7,8 @@ using UnityEngine;
 public class EnemyManager : Entity
 {
     public EnemyGenericBehaviour behaviour;
-    
+    public int powerUpScore;
+
     #region Entity
 
     public override void TakeDamage(int damage, Entity attacker = null)
@@ -23,6 +24,10 @@ public class EnemyManager : Entity
         
         Debug.Log("Enemy hit");
         base.TakeDamage(damage, attacker);
+        if (currentLife == 0)
+        {
+            ((PlayerManager)attacker)?.controller.IncreasePowerUpGauge(powerUpScore);
+        }
     }
 
     public override void Death()

@@ -127,7 +127,7 @@ public class BreakerBehaviour : EnemyGenericBehaviour
 
                 if (TryChangeTarget().Item1)
                 {
-                    Debug.Log($"Change target worked ! New target : {target}");
+                    //Debug.Log($"Change target worked ! New target : {target}");
 
                 }
                 else

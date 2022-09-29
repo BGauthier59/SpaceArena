@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Slider powerUpGauge;
     [SerializeField] private int powerUpMax;
     private int powerUpScore;
+    private bool canUsePowerUp;
 
     [Header("Reparation")] 
     public ReparationArea reparationArea;
@@ -216,7 +217,7 @@ public class PlayerController : MonoBehaviour
         reloadBar.transform.parent.gameObject.SetActive(true);
     }
 
-    public void OnRepairing(InputAction.CallbackContext ctx)
+    public void OnRepair(InputAction.CallbackContext ctx)
     {
         if (!isActive) return;
 
@@ -247,6 +248,16 @@ public class PlayerController : MonoBehaviour
         
         accessibleVent.PlayerEnters(this);
 
+    }
+
+    public void OnUsePowerUp(InputAction.CallbackContext ctx)
+    {
+        if (!isActive) return;
+        if (!canUsePowerUp) return;
+        
+        // Power up effect
+
+        canUsePowerUp = false;
     }
 
     #endregion
@@ -360,6 +371,26 @@ public class PlayerController : MonoBehaviour
     {
         speed = baseSpeed;
     }
+
+    public void IncreasePowerUpGauge(int value)
+    {
+        if (canUsePowerUp) return;
+        
+        powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
+        powerUpGauge.value = powerUpScore;
+        if (powerUpGauge.value >= powerUpMax)
+        {
+            GetPowerUp();
+        }
+    }
+
+    private void GetPowerUp()
+    {
+        canUsePowerUp = true;
+        
+        // Get power up
+    }
+
 
     #endregion
 }

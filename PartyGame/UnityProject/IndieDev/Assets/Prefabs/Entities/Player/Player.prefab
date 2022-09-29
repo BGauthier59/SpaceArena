@@ -109,7 +109,7 @@ MonoBehaviour:
   recoil: 200
   reloadBar: {fileID: 6098024310784610334}
   powerUpGauge: {fileID: 6605169125929842330}
-  powerUpMax: 10
+  powerUpMax: 20
   reparationArea: {fileID: 0}
   accessibleVent: {fileID: 0}
 --- !u!114 &1905726322714944486
@@ -261,7 +261,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7167191028575041455}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnRepairing
+        m_MethodName: OnRepair
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -289,6 +289,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 200fc1bf-e1cf-4dae-bdb4-65b3259563ce
     m_ActionName: Player/EnterVent[/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7167191028575041455}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnUsePowerUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d8460f66-4e09-4483-ad52-b9f9d83f02a3
+    m_ActionName: Player/UsePowerUp[/XInputControllerWindows/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player

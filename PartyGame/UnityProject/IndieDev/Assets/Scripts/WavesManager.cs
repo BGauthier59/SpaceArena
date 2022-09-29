@@ -1,12 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Rendering;
 using static UnityEngine.Random;
-using Random = UnityEngine.Random;
 
 public class WavesManager : MonoBehaviour
 {
@@ -102,8 +98,6 @@ public class WavesManager : MonoBehaviour
 
         newWave.entrancesCount = Mathf.Min(maxDif, newWave.entrancesCount);
         
-        Debug.Log($"This wave has taken {newWave.entrancesCount} entrances!");
-
         currentWave = newWave;
         SetWave();
         isWaitingForNextWave = true;
@@ -120,7 +114,6 @@ public class WavesManager : MonoBehaviour
         currentWave.selectedEntrances = new List<(Entrance, EnemiesGroup)>();
 
         var difficultyPerEntrance = (int) (lastDifficulty / (float) currentWave.entrancesCount);
-        Debug.Log(difficultyPerEntrance);
 
         for (int i = 0; i < currentWave.entrancesCount; i++)
         {
@@ -155,7 +148,7 @@ public class WavesManager : MonoBehaviour
                     break;
                 }
                 
-            } while (enemy.minRound >= currentRound);
+            } while (enemy.minRound > currentRound);
             
             var group = new EnemiesGroup
             {
@@ -170,8 +163,6 @@ public class WavesManager : MonoBehaviour
 
         foreach (var c in currentWave.selectedEntrances)
         {
-            Debug.Log($"Group : {c.Item2.enemyData.GetType()} ({c.Item2.count})");
-            
             StartCoroutine(currentWave.Spawning(c.Item1.entrance, c.Item2));
         }
     }
