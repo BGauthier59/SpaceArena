@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -128,7 +127,6 @@ public class PlayerController : MonoBehaviour
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
         material.EnableKeyword("_EMISSION");
         particleSystem.material = directionArrow.material = rd.material = trail.material = material;
-        
     }
 
     public void ActivatePlayer()
