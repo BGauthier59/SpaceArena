@@ -20,11 +20,16 @@ public class ReparationArea : MonoBehaviour
     
     public Material reparationAreaDisabled;
     public Material reparationAreaEnabled;
-    public Material reparationAreaDeviceDisabled;
 
     private void Start()
     {
         areaCollider = GetComponent<Collider>();
+        
+        foreach (var rd in reparationAreaDevicesRenderer)
+        {
+            rd.material = BaseManager.instance.colorVariantMaterial;
+        }
+        
         DeactivateArea();
     }
 
@@ -36,7 +41,9 @@ public class ReparationArea : MonoBehaviour
 
         foreach (var rd in reparationAreaDevicesRenderer)
         {
-            rd.material = associatedElement.reparationAreaDeviceEnabled;
+            //rd.material.color = associatedElement.elementColorRenderer.material.color;
+            rd.material.SetColor("_EmissionColor", associatedElement.color * 2);
+
         }
         
         areaCollider.enabled = true;
@@ -50,7 +57,7 @@ public class ReparationArea : MonoBehaviour
         
         foreach (var rd in reparationAreaDevicesRenderer)
         {
-            rd.material = reparationAreaDeviceDisabled;
+            rd.material.SetColor("_EmissionColor", BaseManager.instance.disabledColor * 1);
         }
         
         areaCollider.enabled = false;

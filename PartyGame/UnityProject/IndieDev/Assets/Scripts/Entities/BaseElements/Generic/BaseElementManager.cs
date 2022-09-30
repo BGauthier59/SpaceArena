@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +23,8 @@ public class BaseElementManager : Entity
     [SerializeField] private float iconMoveDuration;
     private float iconMoveTimer;
     
-    public Material reparationAreaDeviceEnabled;
+    public Renderer elementColorRenderer;
+    public Color color;
 
     [Header("GUI")] 
     [SerializeField] private GameObject baseElementInfo;
@@ -71,7 +69,12 @@ public class BaseElementManager : Entity
         base.Start();
 
         InitializeBaseElementInfo();
+        
+        // Choix de couleur automatisé
         BaseManager.instance.allBaseElements.Add(this);
+        elementColorRenderer.material = BaseManager.instance.colorVariantMaterial;
+        color = BaseManager.instance.baseElementColor[BaseManager.instance.allBaseElements.Count - 1];
+        elementColorRenderer.material.SetColor("_EmissionColor", color * 2);
         
         SetReparationsAreaNumber();
         foreach (var area in allReparationAreas)
@@ -169,7 +172,7 @@ public class BaseElementManager : Entity
             do
             {
                 nextArea = allReparationAreas[Random.Range(0, allReparationAreas.Length)];
-            } while (nextArea == currentCheckingArea);
+            } while (nextArea == currentCheckingArea || !nextArea.gameObject.activeSelf);
 
             lastCheckingArea = currentCheckingArea;
             currentCheckingArea = nextArea;
