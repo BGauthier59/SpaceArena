@@ -32,6 +32,9 @@ public class EnemyGenericBehaviour : MonoBehaviour
     [SerializeField] protected float durationCooldown;
     protected float timerCooldown;
 
+    [SerializeField] protected float attackDuration;
+    protected float attackTimer;
+
     protected Vector3 targetPos;
 
     private void Start()
@@ -42,6 +45,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
     public virtual void Update()
     {
         CheckState();
+        AttackDuration();
     }
 
     public virtual void Initialization()
@@ -116,7 +120,22 @@ public class EnemyGenericBehaviour : MonoBehaviour
         // Au final : activation, désactivation dans l'animation d'attaque ?
         
         // Pour l'instant :
-        target.TakeDamage(damage);
+        //target.TakeDamage(damage);
+        
+        attackArea.gameObject.SetActive(true);
+        isAttacking = true;
+    }
+
+    public void AttackDuration()
+    {
+        if (!isAttacking) return;
+        if (attackTimer > attackDuration)
+        {
+            attackTimer = 0f;
+            attackArea.gameObject.SetActive(false);
+            isAttacking = false;
+        }
+        else attackTimer += Time.deltaTime;
     }
     
     public void StopAgent()

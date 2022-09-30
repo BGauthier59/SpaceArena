@@ -7650,6 +7650,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[2].availableEnemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].availableEnemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[4].availableEnemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[1].availableEnemies.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[2].availableEnemies.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[2].availableEnemies.Array.data[1]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].availableEnemies.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[4].availableEnemies.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[6].availableEnemies.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7624674067756515780, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_RootOrder
       value: 5
