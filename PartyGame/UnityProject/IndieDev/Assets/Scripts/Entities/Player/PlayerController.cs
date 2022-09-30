@@ -247,7 +247,9 @@ public class PlayerController : MonoBehaviour
     {
         if (!isActive) return;
         if (!accessibleVent) return;
+        if (ctx.canceled) return;
 
+        CancelDash();
         accessibleVent.PlayerEnters(this);
     }
 
@@ -268,7 +270,6 @@ public class PlayerController : MonoBehaviour
 
     private void Moving()
     {
-        //if (isDashing) return;
         var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         rb.velocity = moveVector * (speed * Time.fixedDeltaTime);
     }
@@ -342,9 +343,7 @@ public class PlayerController : MonoBehaviour
 
         if (dashTimer >= dashDuration)
         {
-            isDashing = false;
-            ResetSpeed();
-            dashTimer = 0f;
+            CancelDash();
         }
         else
         {
@@ -409,6 +408,14 @@ public class PlayerController : MonoBehaviour
         powerUpScore = 0;
         powerUpGauge.value = powerUpScore;
         canUsePowerUp = false;
+    }
+
+    public void CancelDash()
+    {
+        if (!isDashing) return;
+        isDashing = false;
+        ResetSpeed();
+        dashTimer = 0f;
     }
 
     #endregion

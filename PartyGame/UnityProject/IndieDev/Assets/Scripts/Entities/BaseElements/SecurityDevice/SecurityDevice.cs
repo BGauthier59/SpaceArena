@@ -98,9 +98,7 @@ public class SecurityDevice : BaseElementManager
         {
             if (!door.isMoved) return;
         }
-            
-        Debug.Log("All doors have moved!");
-
+        
         foreach (var door in associatedDoors)
         {
             door.isMoved = false;

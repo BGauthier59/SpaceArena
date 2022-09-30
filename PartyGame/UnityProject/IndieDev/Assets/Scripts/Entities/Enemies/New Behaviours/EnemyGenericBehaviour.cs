@@ -64,7 +64,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
         var path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, targetPos, NavMesh.AllAreas, path);
         
-        return path.status == NavMeshPathStatus.PathComplete;
+        return path.status == NavMeshPathStatus.PathComplete || path.status == NavMeshPathStatus.PathPartial;
     }
 
     public Entity DetectedEntity(Entity[] targets, Entity exception = null)
