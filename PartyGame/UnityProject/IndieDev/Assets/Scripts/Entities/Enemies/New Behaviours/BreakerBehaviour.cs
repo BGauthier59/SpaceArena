@@ -52,7 +52,7 @@ public class BreakerBehaviour : EnemyGenericBehaviour
 
     public override void Attack()
     {
-        base.Attack();
+        target.TakeDamage(damage);
         // Inflige directement des dégâts au base element
     }
 

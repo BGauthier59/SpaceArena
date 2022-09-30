@@ -228,8 +228,9 @@ MonoBehaviour:
   minDistanceToAttack: 2
   durationBeforeTarget: 0.5
   durationBeforeFollow: 0.5
-  durationBeforeAttack: 0.5
-  durationCooldown: 0.5
+  durationBeforeAttack: 1
+  durationCooldown: 2
+  attackDuration: 0
   currentState: 0
   lastAttacker: {fileID: 0}
   hasCalledForHelp: 0

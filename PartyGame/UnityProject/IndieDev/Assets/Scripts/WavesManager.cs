@@ -20,7 +20,7 @@ public class WavesManager : MonoBehaviour
     private int lastDifficulty;
     public int difficulty;
     public int difficultyGap;
-
+    
     [Serializable]
     public class Entrance
     {

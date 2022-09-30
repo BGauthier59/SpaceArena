@@ -18,7 +18,7 @@ public class HunterBehaviour : EnemyGenericBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float fleeSpeed;
 
-    [SerializeField] private GameObject projectile;
+    [SerializeField] private float projectileSpeed;
 
     [SerializeField] private LayerMask detectionLayers;
     [SerializeField] private CapsuleCollider col;
@@ -60,6 +60,12 @@ public class HunterBehaviour : EnemyGenericBehaviour
     {
         Debug.DrawLine(transform.position, targetPos, Color.magenta, .5f);
 
+        var projectile =
+            PoolOfObject.Instance.SpawnFromPool(PoolType.HunterProjectile, transform.position, Quaternion.identity);
+        var hunterProjectile = projectile.GetComponent<HunterProjectile>();
+        hunterProjectile.Initialization(this);
+        hunterProjectile.rb.AddForce(transform.forward * projectileSpeed);
+        
         // Instantiate projectile
         // Set damage
         // Set direction

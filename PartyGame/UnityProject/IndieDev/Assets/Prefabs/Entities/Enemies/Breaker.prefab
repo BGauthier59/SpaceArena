@@ -166,8 +166,9 @@ MonoBehaviour:
   minDistanceToAttack: 2
   durationBeforeTarget: 0.5
   durationBeforeFollow: 0.5
-  durationBeforeAttack: 0.5
-  durationCooldown: 0.5
+  durationBeforeAttack: 0.2
+  durationCooldown: 1
+  attackDuration: 0
   currentState: 0
   changeTargetRate: 75
   durationBetweenRetarget: 2

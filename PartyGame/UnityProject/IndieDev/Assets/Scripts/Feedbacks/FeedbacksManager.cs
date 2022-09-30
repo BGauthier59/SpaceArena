@@ -9,7 +9,9 @@ public class FeedbacksManager : MonoBehaviour
     public Vibrations mainVibration;
     public Vibrations connectionVibration;
     public Vibrations reparationVibration;
-
+    public Vibrations takeDamageVibration;
+    public Vibrations shootVibrations;
+    
     public Vibrations GetVibrations(VibrationsType type)
     {
         switch (type)
@@ -20,6 +22,10 @@ public class FeedbacksManager : MonoBehaviour
                 return connectionVibration;
             case VibrationsType.Reparation:
                 return reparationVibration;
+            case VibrationsType.TakeDamage:
+                return takeDamageVibration;
+            case VibrationsType.Shoot:
+                return shootVibrations;
         }
 
         Debug.LogError("Hasn't found any vibrations");

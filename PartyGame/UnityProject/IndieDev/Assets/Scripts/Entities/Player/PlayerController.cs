@@ -319,6 +319,8 @@ public class PlayerController : MonoBehaviour
             bullet.rb.AddForce(transform.forward * bulletSpeed);
 
             GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
+            GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
+
             rb.AddForce(-transform.forward * recoil);
             timerBeforeNextShoot = 0f;
 

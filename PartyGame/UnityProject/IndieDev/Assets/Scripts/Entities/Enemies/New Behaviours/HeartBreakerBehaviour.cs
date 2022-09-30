@@ -67,7 +67,7 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
 
     public override void Attack()
     {
-        base.Attack();
+        target.TakeDamage(damage);
         // Inflige directement des dégâts au coeur
     }
 

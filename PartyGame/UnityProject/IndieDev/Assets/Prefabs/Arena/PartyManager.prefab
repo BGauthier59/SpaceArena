@@ -497,6 +497,9 @@ MonoBehaviour:
   - type: 7
     prefab: {fileID: 2396810920112995019, guid: 503d1b9f7dd90ee419f0c4a9d6d9e00a, type: 3}
     size: 50
+  - type: 8
+    prefab: {fileID: 3612230743305699402, guid: a0011a1226a756a4fbcceb045a6d8aa7, type: 3}
+    size: 50
 --- !u!1 &7624674068071304360
 GameObject:
   m_ObjectHideFlags: 0

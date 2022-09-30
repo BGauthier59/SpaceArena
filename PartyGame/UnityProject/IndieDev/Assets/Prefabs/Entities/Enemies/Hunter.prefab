@@ -147,10 +147,11 @@ MonoBehaviour:
   damage: 0
   agent: {fileID: 2396810920112995011}
   minDistanceToAttack: 0
-  durationBeforeTarget: 0.5
-  durationBeforeFollow: 0.5
+  durationBeforeTarget: 0.25
+  durationBeforeFollow: 0.4
   durationBeforeAttack: 0.3
-  durationCooldown: 0.7
+  durationCooldown: 0.2
+  attackDuration: 0
   currentState: 0
   distancesFromPlayer:
     x: 4
@@ -158,7 +159,7 @@ MonoBehaviour:
   durationAim: 1
   rotationSpeed: 5
   fleeSpeed: 10
-  projectile: {fileID: 0}
+  projectileSpeed: 2000
   detectionLayers:
     serializedVersion: 2
     m_Bits: 320

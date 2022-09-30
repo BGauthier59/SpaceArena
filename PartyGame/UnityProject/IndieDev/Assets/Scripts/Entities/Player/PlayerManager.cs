@@ -12,7 +12,7 @@ public class PlayerManager : Entity
     public override void TakeDamage(int damage, Entity attacker = null)
     {
         base.TakeDamage(damage, attacker);
-
+        GameManager.instance.feedbacks.RumbleConstant(controller.dataGamepad, VibrationsType.TakeDamage);
     }
 
     public override void Death()

@@ -941,5 +941,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5419757356267785862, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: shootVibrations
+      value: 
+      objectReference: {fileID: 11400000, guid: c52158867398c284182e40f949a3a121, type: 2}
+    - target: {fileID: 5419757356267785862, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: takeDamageVibration
+      value: 
+      objectReference: {fileID: 11400000, guid: 50c744e21c1bd624f9c0d6bacd3f5782, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}

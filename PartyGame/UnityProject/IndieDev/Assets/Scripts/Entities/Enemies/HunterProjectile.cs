@@ -1,15 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Random;
 
-public class BulletScript : MonoBehaviour
+public class HunterProjectile : MonoBehaviour
 {
-    public PlayerManager shooter;
+    private HunterBehaviour hunter;
     public Rigidbody rb;
-    [SerializeField] private int maxDamage;
-    [SerializeField] private int minDamage;
-    
     [SerializeField] private float lifeDuration;
     private float lifeTimer;
 
@@ -22,21 +19,23 @@ public class BulletScript : MonoBehaviour
         }
         else lifeTimer += Time.deltaTime;
     }
-    
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.CompareTag("Player")) return;
-        
-        if (collision.CompareTag("Enemy"))
-        {
-            var script = collision.GetComponent<EnemyManager>();
-            var damage = Range(minDamage, maxDamage);
-            script.TakeDamage(damage, shooter);
-        }
-        lifeTimer = lifeDuration;
-        PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
-    }
 
+    public void Initialization(HunterBehaviour entity)
+    {
+        hunter = entity;
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            var player = other.GetComponent<PlayerManager>();
+            player.TakeDamage(hunter.damage);
+        }
+
+        lifeTimer = lifeDuration;
+    }
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
