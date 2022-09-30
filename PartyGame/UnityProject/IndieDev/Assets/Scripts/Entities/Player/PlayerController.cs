@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
     private float baseSpeed;
     [SerializeField] private float rotateSpeed;
     private bool aiming;
-    [SerializeField] private float dashForce;
     [SerializeField] private AnimationCurve dashFactor;
     [SerializeField] private float dashDuration;
     private float dashTimer;
@@ -64,6 +63,10 @@ public class PlayerController : MonoBehaviour
     [Header("Reparation")] public ReparationArea reparationArea;
 
     [Header("Vent")] public Vent accessibleVent;
+
+    [Header("Graph")] [SerializeField] private SpriteRenderer directionArrow;
+    [SerializeField] private ParticleSystemRenderer particleSystem;
+    [SerializeField] private TrailRenderer trail;
 
     #endregion
 
@@ -115,9 +118,17 @@ public class PlayerController : MonoBehaviour
         reloadGauge.maxValue = maxBulletAmount;
         reloadGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
         powerUpGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
+        GraphInitialization();
+    }
 
-        rd.material.color = GameManager.instance.colors[playerIndex - 1];
-        rd.material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
+    public void GraphInitialization()
+    {
+        var material = rd.material;
+        material.color = GameManager.instance.colors[playerIndex - 1];
+        material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
+        material.EnableKeyword("_EMISSION");
+        particleSystem.material = directionArrow.material = rd.material = trail.material = material;
+        
     }
 
     public void ActivatePlayer()
