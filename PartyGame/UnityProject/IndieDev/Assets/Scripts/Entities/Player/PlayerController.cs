@@ -254,6 +254,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnEnterVent(InputAction.CallbackContext ctx)
     {
+        // Inutile pour l'instant : changement du système
+        return;
+        
         if (!isActive) return;
         if (!accessibleVent) return;
         if (ctx.canceled) return;

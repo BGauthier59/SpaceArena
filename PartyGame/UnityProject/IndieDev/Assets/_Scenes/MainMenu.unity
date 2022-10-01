@@ -4033,19 +4033,14 @@ MonoBehaviour:
     arenaSceneIndex: 4
   - arenaImage: {fileID: 0}
     arenaName:
-      frenchName: "Ar\xE8ne 2"
-      englishName: Arena 2
-    arenaSceneIndex: 5
-  - arenaImage: {fileID: 0}
-    arenaName:
       frenchName: "Ar\xE8ne 3"
       englishName: Arena 3
-    arenaSceneIndex: 6
+    arenaSceneIndex: 5
   - arenaImage: {fileID: 0}
     arenaName:
       frenchName: Prototype Gotgot
       englishName: Prototype Gotgot
-    arenaSceneIndex: 7
+    arenaSceneIndex: 6
 --- !u!4 &969052267
 Transform:
   m_ObjectHideFlags: 0
