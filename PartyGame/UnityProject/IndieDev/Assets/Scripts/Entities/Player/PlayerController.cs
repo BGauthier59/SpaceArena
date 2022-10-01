@@ -62,6 +62,9 @@ public class PlayerController : MonoBehaviour
     [Header("Reparation")] public ReparationArea reparationArea;
 
     [Header("Vent")] public Vent accessibleVent;
+    public NewVent accessibleNewVent;
+    public NewConduit currentConduit;
+    public bool detectInputConduit;
 
     [Header("Graph")] [SerializeField] private SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
@@ -161,6 +164,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        MovingInConduit();
+        
         if (!isActive) return;
 
         Moving();
@@ -172,9 +177,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
-        if (!isActive) return;
-
         leftJoystickInput = ctx.ReadValue<Vector2>();
+
+        //if (!isActive) return;
 
         // Checking conditions
         if (Mathf.Abs(leftJoystickInput.x) < moveTolerance && Mathf.Abs(leftJoystickInput.y) < moveTolerance)
@@ -244,12 +249,7 @@ public class PlayerController : MonoBehaviour
 
         if (isDashing) return;
 
-        Debug.Log("Je dash");
         isDashing = ctx.performed;
-        //var dashVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
-        //dashVector.Normalize();
-        
-        //rb.AddForce(dashVector * dashForce);
     }
 
     public void OnEnterVent(InputAction.CallbackContext ctx)
@@ -281,6 +281,23 @@ public class PlayerController : MonoBehaviour
     {
         var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         rb.velocity = moveVector * (speed * Time.fixedDeltaTime);
+    }
+
+    private void MovingInConduit()
+    {
+        if (currentConduit == null) return;
+        if (!detectInputConduit) return;
+        
+        var moveVector = new Vector2(leftJoystickInput.x, leftJoystickInput.y);
+        var dir = NewConduit.ConduitDirection.NA;
+        
+        if (moveVector.x > .5f) dir = NewConduit.ConduitDirection.Right;
+        else if (moveVector.x < -.5f) dir = NewConduit.ConduitDirection.Left;
+        else if (moveVector.y > .5f) dir = NewConduit.ConduitDirection.Up;
+        else if (moveVector.y < -.5f) dir = NewConduit.ConduitDirection.Bottom;
+
+        if (dir == NewConduit.ConduitDirection.NA) return;
+        currentConduit.SetNextPoint(dir);
     }
 
     private void Rotating()
@@ -351,6 +368,13 @@ public class PlayerController : MonoBehaviour
     private void Dashing()
     {
         if (!isDashing) return;
+        
+        if (accessibleNewVent != null)
+        {
+            CancelDash();
+            accessibleNewVent.EntersVent(this);
+            return;
+        }
 
         if (dashTimer >= dashDuration)
         {
