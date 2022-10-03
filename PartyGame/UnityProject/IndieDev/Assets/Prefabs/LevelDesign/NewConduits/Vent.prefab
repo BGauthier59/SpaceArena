@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4558826610956094623}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FrontPos
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4558826610956094623
 Transform:
@@ -43,12 +43,12 @@ GameObject:
   - component: {fileID: 4558826611656274988}
   - component: {fileID: 4558826611656274979}
   - component: {fileID: 4558826611656274990}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Vent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4558826611656274978
 Transform:
@@ -155,12 +155,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4558826612101862994}
   - component: {fileID: 4558826612101862995}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: VentPoint
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4558826612101862994
 Transform:
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 4558826612330409512}
   - component: {fileID: 4558826612330409519}
   - component: {fileID: 4558826612330409518}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: VentDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

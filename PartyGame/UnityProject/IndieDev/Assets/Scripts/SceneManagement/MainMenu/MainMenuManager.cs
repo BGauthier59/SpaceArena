@@ -283,6 +283,14 @@ public class MainMenuManager : MonoBehaviour
         OnCancelParty();
     }
 
+    public void MoveArena()
+    {
+        var joystick = Gamepad.current.leftStick.ReadValue();
+        Debug.Log(joystick);
+        if(joystick.x > .5f) SelectOnRight();
+        else if(joystick.x < -.5f) SelectOnLeft();
+    }
+
     public void SelectOnRight()
     {
         if (isArenaInfoMoving) return;

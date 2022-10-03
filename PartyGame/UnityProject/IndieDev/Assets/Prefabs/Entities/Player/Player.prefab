@@ -127,7 +127,7 @@ MonoBehaviour:
   bulletAmount: 0
   bulletSpeed: 1600
   durationBeforeNextShoot: 0.1
-  reloadDuration: 1.5
+  reloadDuration: 1
   shootingParticles: {fileID: 5832360938257547889}
   shootingShake: {fileID: 11400000, guid: 78299d7eea4932140bd83a79ab14abc9, type: 2}
   recoil: 200
@@ -136,6 +136,9 @@ MonoBehaviour:
   powerUpMax: 20
   reparationArea: {fileID: 0}
   accessibleVent: {fileID: 0}
+  accessibleNewVent: {fileID: 0}
+  currentConduit: {fileID: 0}
+  detectInputConduit: 0
   directionArrow: {fileID: 2757242180495348}
   particleSystem: {fileID: 3954722437128320551}
   trail: {fileID: 4373219248815043771}
