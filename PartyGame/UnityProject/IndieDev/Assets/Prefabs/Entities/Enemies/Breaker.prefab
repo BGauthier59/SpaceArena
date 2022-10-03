@@ -131,7 +131,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.6
   m_Speed: 3.5
-  m_Acceleration: 30
+  m_Acceleration: 25
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1.5
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableTargets: []
   target: {fileID: 0}
-  speed: 13
+  speed: 12
   manager: {fileID: 8258700661660960522}
   isMoving: 0
   isAttacking: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   durationBeforeTarget: 0.5
   durationBeforeFollow: 0.5
   durationBeforeAttack: 0.2
-  durationCooldown: 1
+  durationCooldown: 1.5
   attackDuration: 0
   currentState: 0
   changeTargetRate: 75
