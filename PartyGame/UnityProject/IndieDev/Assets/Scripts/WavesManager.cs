@@ -26,6 +26,7 @@ public class WavesManager : MonoBehaviour
     {
         public Transform entrance;
         public PoolType[] availableEnemies;
+        public ushort minRound;
         public bool isAvailable;
     }
     
@@ -59,6 +60,7 @@ public class WavesManager : MonoBehaviour
         public PoolType enemy;
         public int difficulty;
         [Tooltip("Set the minimum round this enemy can spawn at")] public ushort minRound;
+        [Tooltip("Set the maximum enemies of this type can spawn on one entrance")] public ushort maxCount;
     }
 
 
@@ -120,11 +122,23 @@ public class WavesManager : MonoBehaviour
             (Entrance, EnemiesGroup) couple;
 
             // Set entrance
+            
+            var securityEntrance = 0;
+
             do
             {
                 couple.Item1 = entrances[Range(0, entrances.Length)];
-            } while (!couple.Item1.isAvailable);
+                if (securityEntrance >= 100)
+                {
+                    Debug.LogWarning("No available entrance seems to be found... Breaking.");
+                    break;
+                }
+                securityEntrance++;
+                
+            } while (!couple.Item1.isAvailable && currentRound < couple.Item1.minRound);
 
+            couple.Item1.isAvailable = false;
+            
             // Set enemies group
 
             var enemy = new EnemyData();
@@ -153,6 +167,7 @@ public class WavesManager : MonoBehaviour
                 enemyData = enemy,
                 count = (int) (difficultyPerEntrance / (float) enemy.difficulty)
             };
+            if (group.count > group.enemyData.maxCount) group.count = group.enemyData.maxCount;
 
             couple.Item2 = group;
             

@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Windows.WebCam;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -286,9 +285,8 @@ public class MainMenuManager : MonoBehaviour
     public void MoveArena()
     {
         var joystick = Gamepad.current.leftStick.ReadValue();
-        Debug.Log(joystick);
-        if(joystick.x > .5f) SelectOnRight();
-        else if(joystick.x < -.5f) SelectOnLeft();
+        if(joystick.x > .5f) SelectOnLeft();
+        else if(joystick.x < -.5f) SelectOnRight();
     }
 
     public void SelectOnRight()

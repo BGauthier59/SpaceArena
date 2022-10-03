@@ -372,7 +372,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDashing) return;
         
-        if (accessibleNewVent != null)
+        if (accessibleNewVent)
         {
             CancelDash();
             accessibleNewVent.EntersVent(this);
