@@ -13,11 +13,11 @@ public class AlienManager : EnemyManager
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("BaseElement"))
         {
             Debug.Log("Hit by alien");
-            var player = other.GetComponent<PlayerManager>();
-            player.TakeDamage(behaviour.damage);
+            var entity = other.GetComponent<Entity>();
+            entity.TakeDamage(behaviour.damage);
         }
     }
 }

@@ -743,7 +743,7 @@ GameObject:
   - component: {fileID: 4119517316068768057}
   m_Layer: 7
   m_Name: BaseHeart
-  m_TagString: Untagged
+  m_TagString: BaseElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -812,6 +812,7 @@ MonoBehaviour:
   reparationIcon: {fileID: 0}
   iconMoveDuration: 0
   elementColorRenderer: {fileID: 6458783760354319711}
+  color: {r: 0, g: 0, b: 0, a: 0}
   baseElementInfo: {fileID: 4641165029665414561}
   lifeSlider: {fileID: 408037423016279077}
   lifeSliderFill: {fileID: 2857354125572956777}

@@ -662,7 +662,7 @@ GameObject:
   - component: {fileID: 7837215782311396094}
   m_Layer: 7
   m_Name: Station
-  m_TagString: Untagged
+  m_TagString: BaseElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -751,7 +751,8 @@ MonoBehaviour:
   - {fileID: 5208951975674840998}
   reparationIcon: {fileID: 1516421589773770615}
   iconMoveDuration: 0.75
-  colorVariant: {fileID: 9211386278967296559}
+  elementColorRenderer: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
   baseElementInfo: {fileID: 4641165029665414561}
   lifeSlider: {fileID: 408037423016279077}
   lifeSliderFill: {fileID: 2857354125572956777}
@@ -978,11 +979,6 @@ PrefabInstance:
 --- !u!4 &8720568979237068923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3132758070233236512, guid: 5fa0e641d6d84ed43b8822ca5fa38f84, type: 3}
-  m_PrefabInstance: {fileID: 5943737301292737627}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &9211386278967296559 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3290177022311671412, guid: 5fa0e641d6d84ed43b8822ca5fa38f84, type: 3}
   m_PrefabInstance: {fileID: 5943737301292737627}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7073520197776208941

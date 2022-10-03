@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 5464702492293266455}
   m_Layer: 7
   m_Name: Electrical
-  m_TagString: Untagged
+  m_TagString: BaseElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -243,7 +243,8 @@ MonoBehaviour:
   - {fileID: 879073058619364454}
   reparationIcon: {fileID: 4787465747578800673}
   iconMoveDuration: 0.5
-  colorVariant: {fileID: 502049044659664393}
+  elementColorRenderer: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
   baseElementInfo: {fileID: 848025918589943421}
   lifeSlider: {fileID: 5622132576681451513}
   lifeSliderFill: {fileID: 7785365194897179061}
@@ -686,11 +687,6 @@ PrefabInstance:
 --- !u!4 &11090490434049117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3132758070233236512, guid: 5fa0e641d6d84ed43b8822ca5fa38f84, type: 3}
-  m_PrefabInstance: {fileID: 3125124736431509629}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &502049044659664393 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3290177022311671412, guid: 5fa0e641d6d84ed43b8822ca5fa38f84, type: 3}
   m_PrefabInstance: {fileID: 3125124736431509629}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3222629085866716953
