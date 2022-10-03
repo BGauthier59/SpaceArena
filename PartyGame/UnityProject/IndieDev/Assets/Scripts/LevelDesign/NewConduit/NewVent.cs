@@ -49,6 +49,11 @@ public class NewVent : MonoBehaviour
 
     public void EntersVent(PlayerController player)
     {
+        foreach (var v in conduit.vents)
+        {
+            if(v.ventingPlayer) return;
+        }
+
         playersOnVent.Remove(player);
 
         ventingPlayer = player;
@@ -85,8 +90,11 @@ public class NewVent : MonoBehaviour
     {
         if (ventingTimer > (conduit.moveDurationUnit * distanceBetweenPoints))
         {
-            ventingTimer = 0f;
-            isVenting = false;
+            foreach (var v in conduit.vents)
+            {
+                v.ventingTimer = 0f;
+                v.isVenting = false;
+            }
 
             if (isEntering)
             {
@@ -96,7 +104,11 @@ public class NewVent : MonoBehaviour
             {
                 ventingPlayer.ActivatePlayer();
                 ventingPlayer.col.enabled = true;
-                ventingPlayer = null;
+
+                foreach (var v in conduit.vents)
+                {
+                    v.ventingPlayer = null;
+                }
             }
         }
         else
