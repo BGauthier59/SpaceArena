@@ -68,7 +68,6 @@ public class WavesManager : MonoBehaviour
         public ushort maxCount;
     }
 
-
     private void Start()
     {
         isWaitingForNextWave = false;
@@ -111,7 +110,7 @@ public class WavesManager : MonoBehaviour
         // Va set les entrées de cette nouvelle wave
     }
 
-    public void SetWave()
+    private void SetWave()
     {
         foreach (var e in entrances) e.isAvailable = true;
 
