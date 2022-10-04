@@ -13,16 +13,13 @@ public class GasDevice : BaseElementManager
 
     public override void TakeDamage(int damage, Entity attacker = null)
     {
-        Debug.Log("Gas Device is hurt");
         base.TakeDamage(damage, attacker);
     }
 
     public override void OnDestroyed()
     {
         base.OnDestroyed();
-
-        Debug.Log("Gas Device is dead");
-
+        
         // Explosion
         
         isBlowingUp = true;

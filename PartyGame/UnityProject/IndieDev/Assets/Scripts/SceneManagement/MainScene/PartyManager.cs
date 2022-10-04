@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -165,6 +162,7 @@ public class PartyManager : MonoBehaviour
             var player = GameManager.instance.allPlayers[i];
             player.DeactivatePlayer();
         }
+        EnemiesManager.instance.DeactivateAllEnemies();
 
         wavesManager.enabled = false;
         gameState = GameState.End;

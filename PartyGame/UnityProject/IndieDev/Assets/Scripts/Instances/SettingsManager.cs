@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
-
     public Language currentLanguage;
+    public bool rumbleActivated;
 }
 
 public enum Language

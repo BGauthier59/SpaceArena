@@ -21,7 +21,6 @@ public class GasExplosion : MonoBehaviour
         {
             var entity = other.GetComponent<Entity>();
             
-            Debug.Log($"{other.name} was hit by explosion !");
             entity.TakeDamage(explosionDamage);
 
             var forceDirection = other.transform.position - transform.position;

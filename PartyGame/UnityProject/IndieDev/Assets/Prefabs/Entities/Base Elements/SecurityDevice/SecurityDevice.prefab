@@ -95,6 +95,7 @@ MonoBehaviour:
     yPosOpened: 0
     yPosClosed: -4
     movingDuration: 3
+    colorSpot: {fileID: 849736631694952911}
     isMoved: 0
 --- !u!54 &7023712582677318017
 Rigidbody:
@@ -847,14 +848,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e4974f93d243cb4aa06b2048b277e39, type: 3}
---- !u!4 &1663783136169003943 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4987412287531717859, guid: 2e4974f93d243cb4aa06b2048b277e39, type: 3}
-  m_PrefabInstance: {fileID: 5917774987860418372}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2666536412172399646 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8584239406313024346, guid: 2e4974f93d243cb4aa06b2048b277e39, type: 3}
+  m_PrefabInstance: {fileID: 5917774987860418372}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1663783136169003943 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4987412287531717859, guid: 2e4974f93d243cb4aa06b2048b277e39, type: 3}
   m_PrefabInstance: {fileID: 5917774987860418372}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6369395210017226643
@@ -1063,6 +1064,11 @@ PrefabInstance:
 --- !u!4 &6287531850356629400 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 721929432588333963, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
+  m_PrefabInstance: {fileID: 6720780328541465619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &849736631694952911 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6237446928606766556, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
   m_PrefabInstance: {fileID: 6720780328541465619}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7105334119257517339

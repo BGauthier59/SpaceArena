@@ -17,6 +17,7 @@ public class ElectricalDevice : BaseElementManager
         public float lightOnIntensity;
         public float lightingOnDuration;
         private float lightingOnTimer;
+        public Renderer colorElement;
 
         public void LightingOff()
         {
@@ -38,18 +39,24 @@ public class ElectricalDevice : BaseElementManager
             else lightingOnTimer += Time.deltaTime;
         }
     }
+
+    public override void Start()
+    {
+        base.Start();
+        foreach (var light in allLights)
+        {
+            light.colorElement.material.SetColor("_EmissionColor", color * 2);
+        }
+    }
     
     public override void TakeDamage(int damage, Entity attacker = null)
     {
-        Debug.Log("Electrical Device is hurt");
         base.TakeDamage(damage, attacker);
     }
 
     public override void OnDestroyed()
     {
         base.OnDestroyed();
-
-        Debug.Log("Electrical Device is dead");
 
         foreach (var light in allLights)
         {
@@ -85,8 +92,6 @@ public class ElectricalDevice : BaseElementManager
             if (!light.isOn) return;
         }
             
-        Debug.Log("All lights are on!");
-
         directionalLight.enabled = true;
         isSwitchingLightsOn = false;
     }

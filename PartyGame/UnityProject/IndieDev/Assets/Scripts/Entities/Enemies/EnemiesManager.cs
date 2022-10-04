@@ -30,4 +30,12 @@ public class EnemiesManager : MonoBehaviour
     {
         if (allEnemies.Contains(enemy)) allEnemies.Remove(enemy);
     }
+
+    public void DeactivateAllEnemies()
+    {
+        foreach (var enemy in allEnemies)
+        {
+            enemy.behaviour.enabled = false;
+        }
+    }
 }

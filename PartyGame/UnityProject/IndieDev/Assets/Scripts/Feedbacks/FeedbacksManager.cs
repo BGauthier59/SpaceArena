@@ -34,6 +34,8 @@ public class FeedbacksManager : MonoBehaviour
     
     public void RumbleConstant(GamepadData g, VibrationsType type)
     {
+        if (!GameManager.instance.settings.rumbleActivated) return;
+        
         if (g.isRumbling) return;
 
         var data = GetVibrations(type);
@@ -47,6 +49,8 @@ public class FeedbacksManager : MonoBehaviour
 
     public void RumblePulse(GamepadData g, VibrationsType type)
     {
+        if (!GameManager.instance.settings.rumbleActivated) return;
+
         if (g.isRumbling) return;
 
         var data = GetVibrations(type);

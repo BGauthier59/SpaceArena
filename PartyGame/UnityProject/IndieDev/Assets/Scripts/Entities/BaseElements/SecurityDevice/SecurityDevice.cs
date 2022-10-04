@@ -21,6 +21,7 @@ public class SecurityDevice : BaseElementManager
 
         public float movingDuration;
         private float movingTimer;
+        public Renderer colorSpot;
 
         public bool isMoved;
 
@@ -47,9 +48,17 @@ public class SecurityDevice : BaseElementManager
         }
     }
 
+    public override void Start()
+    {
+        base.Start();
+        foreach (var door in associatedDoors)
+        {
+            door.colorSpot.material.SetColor("_EmissionColor", color * 2);
+        }
+    }
+
     public override void TakeDamage(int damage, Entity attacker = null)
     {
-        Debug.Log("Security Device is hurt");
         base.TakeDamage(damage, attacker);
     }
 
@@ -57,8 +66,7 @@ public class SecurityDevice : BaseElementManager
     {
         base.OnDestroyed();
 
-        Debug.Log("Security Device is dead");
-        
+       
         foreach (var door in associatedDoors)
         {
             door.SetDoor(true);
