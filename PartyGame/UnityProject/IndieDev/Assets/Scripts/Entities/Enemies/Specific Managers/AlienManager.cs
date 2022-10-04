@@ -14,6 +14,7 @@ public class AlienManager : EnemyManager
     {
         if (other.CompareTag("Player") || other.CompareTag("BaseElement"))
         {
+
             var entity = other.GetComponent<Entity>();
             entity.TakeDamage(behaviour.damage);
         }

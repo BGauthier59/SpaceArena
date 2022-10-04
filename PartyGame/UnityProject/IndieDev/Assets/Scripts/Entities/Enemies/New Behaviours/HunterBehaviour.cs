@@ -9,7 +9,6 @@ public class HunterBehaviour : EnemyGenericBehaviour
 {
     [SerializeField] private HunterState currentState;
 
-   // [SerializeField] private float distanceFromPlayer;
    [SerializeField] private float2 distancesFromPlayer;
 
     [SerializeField] private float durationAim;
@@ -41,7 +40,6 @@ public class HunterBehaviour : EnemyGenericBehaviour
     public override void Initialization()
     {
         base.Initialization();
-        //agent.stoppingDistance = distancesFromPlayer.x;
         SwitchState(HunterState.Target);
     }
 
@@ -65,11 +63,6 @@ public class HunterBehaviour : EnemyGenericBehaviour
         var hunterProjectile = projectile.GetComponent<HunterProjectile>();
         hunterProjectile.Initialization(this);
         hunterProjectile.rb.AddForce(transform.forward * projectileSpeed);
-        
-        // Instantiate projectile
-        // Set damage
-        // Set direction
-        // Set speed
     }
 
     public override void CheckState()
@@ -147,7 +140,6 @@ public class HunterBehaviour : EnemyGenericBehaviour
                     SwitchState(HunterState.Shoot);
                 }
                 else timerAim += Time.deltaTime;
-                
                 break;
 
             #endregion
