@@ -7,7 +7,6 @@ public class AlienManager : EnemyManager
     public override void TakeDamage(int damage, Entity attacker = null)
     {
         base.TakeDamage(damage, attacker);
-        Debug.Log("Alien got hurt");
         ((AlienBehaviour)behaviour).SwitchState(AlienBehaviour.AlienState.Retreat);
     }
     
@@ -15,7 +14,6 @@ public class AlienManager : EnemyManager
     {
         if (other.CompareTag("Player") || other.CompareTag("BaseElement"))
         {
-            Debug.Log("Hit by alien");
             var entity = other.GetComponent<Entity>();
             entity.TakeDamage(behaviour.damage);
         }

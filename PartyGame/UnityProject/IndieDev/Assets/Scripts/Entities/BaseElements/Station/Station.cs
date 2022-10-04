@@ -26,15 +26,12 @@ public class Station : BaseElementManager
 
     public override void TakeDamage(int damage, Entity attacker = null)
     {
-        Debug.Log("Station is hurt");
         base.TakeDamage(damage, attacker);
     }
 
     public override void OnDestroyed()
     {
         base.OnDestroyed();
-
-        Debug.Log("Station is dead");
 
         waterRising = true;
         foreach (var pc in GameManager.instance.allPlayers)

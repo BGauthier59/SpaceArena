@@ -61,7 +61,6 @@ public class NewConduit : MonoBehaviour
         player.detectInputConduit = false;
         nextPoint = next;
         distanceBetweenPoints = Vector3.Distance(currentPoint.pointPos.position, nextPoint.pointPos.position);
-        Debug.Log(distanceBetweenPoints);
         isMoving = true;
     }
 
