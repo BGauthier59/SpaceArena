@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class EnemyManager : Entity
 {
     public EnemyGenericBehaviour behaviour;
     public int powerUpScore;
+    [SerializeField] private Animator mesh;
 
     #region Entity
 
@@ -23,6 +20,10 @@ public class EnemyManager : Entity
         */
         
         base.TakeDamage(damage, attacker);
+        if (mesh != null)
+        {
+            mesh.Play("OnHit");
+        }
         if (currentLife == 0)
         {
             ((PlayerManager)attacker)?.controller.IncreasePowerUpGauge(powerUpScore);
@@ -46,7 +47,6 @@ public class EnemyManager : Entity
     public override void Start()
     {
         base.Start();
-        
         if (EnemiesManager.instance == null) return;
         EnemiesManager.instance.AddEnemy(this);
     }

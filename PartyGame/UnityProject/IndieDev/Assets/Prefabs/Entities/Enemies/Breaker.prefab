@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableTargets: []
   target: {fileID: 0}
-  speed: 12
+  speed: 9
   manager: {fileID: 8258700661660960522}
   isMoving: 0
   isAttacking: 0
