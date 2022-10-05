@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 leftJoystickInput;
     [SerializeField] private Vector2 rightJoystickInput;
 
-    [Range(0f, 1f)] [SerializeField] private float moveTolerance;
+    [Range(0f, 1f)] public float moveTolerance;
     [Range(0f, 1f)] [SerializeField] private float aimTolerance;
     [SerializeField] private float speed;
     private float baseSpeed;
@@ -56,8 +56,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Power-Up")] [SerializeField] private Slider powerUpGauge;
     [SerializeField] private int powerUpMax;
+    [SerializeField] private PowerUpManager currentPowerUp;
     private int powerUpScore;
-    private bool canUsePowerUp;
+    private bool canUsePowerUp = true;
 
     [Header("Reparation")] public ReparationArea reparationArea;
 
@@ -178,7 +179,6 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         leftJoystickInput = ctx.ReadValue<Vector2>();
-
         //if (!isActive) return;
 
         // Checking conditions
@@ -269,11 +269,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!isActive) return;
         if (!canUsePowerUp) return;
+        Debug.Log("j'utilise le power up");
+        if (currentPowerUp != null)
+        {
+            currentPowerUp.user = this;
+            currentPowerUp.OnUse();
+        }
 
-        // Power up effect
-
-
-        EndOfPowerUp(); // Pour le moment
+        //EndOfPowerUp(); // Pour le moment
     }
 
     #endregion
@@ -335,6 +338,7 @@ public class PlayerController : MonoBehaviour
             var bullet = newBullet.GetComponent<BulletScript>();
             bullet.shooter = manager;
             bullet.rb.AddForce(transform.forward * bulletSpeed);
+            
 
             GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
             GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);

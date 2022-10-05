@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
     [Header("Players Parameters")] 
     public Color[] colors = new Color[4];
 
+    public List<PowerUpManager> powerUps;
+
     [Header("Scenes Index")] 
     public int mainMenuIndex;
     public int pauseMenuIndex;
