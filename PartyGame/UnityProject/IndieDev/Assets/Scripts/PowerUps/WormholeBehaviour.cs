@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,14 +12,20 @@ public class WormholeBehaviour : PowerUpManager
     [SerializeField] private float moveSpeed;
     private PlayerInput playerInput;
     private Vector2 leftJoystickInput;
-    private float moveTolerance;
+    [Range(0f, 1f)] private float moveTolerance;
+    private Vector3 moveVector;
 
     public override void OnUse()
     {
-        moveTolerance = user.moveTolerance;
+        moveTolerance = 0.15f;
         playerInput = user.playerInput;
         user.DeactivatePlayer();
-        Debug.Log("wormhole");
+    }
+
+    private void FixedUpdate()
+    {
+        Debug.Log("L'input "+ moveVector);
+        Moving();
     }
     
     public void OnMove(InputAction.CallbackContext ctx)
@@ -28,5 +36,13 @@ public class WormholeBehaviour : PowerUpManager
         // Checking conditions
         if (Mathf.Abs(leftJoystickInput.x) < moveTolerance && Mathf.Abs(leftJoystickInput.y) < moveTolerance)
             leftJoystickInput = Vector2.zero;
+        Debug.Log(leftJoystickInput);
+        moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
     }
+    private void Moving()
+    {
+        transform.Translate(moveVector * (moveSpeed * Time.fixedDeltaTime));
+    }
+
+    
 }

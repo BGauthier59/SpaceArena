@@ -269,11 +269,10 @@ public class PlayerController : MonoBehaviour
     {
         if (!isActive) return;
         if (!canUsePowerUp) return;
-        Debug.Log("j'utilise le power up");
         if (currentPowerUp != null)
         {
-            currentPowerUp.user = this;
-            currentPowerUp.OnUse();
+            var powerUp = Instantiate(currentPowerUp, transform);
+            powerUp.user = this;
         }
 
         //EndOfPowerUp(); // Pour le moment
