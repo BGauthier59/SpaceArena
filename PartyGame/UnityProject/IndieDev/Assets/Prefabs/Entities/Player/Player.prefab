@@ -145,9 +145,12 @@ MonoBehaviour:
   powerUpMax: 20
   reparationArea: {fileID: 0}
   accessibleVent: {fileID: 0}
+  lastTakenNewVent: {fileID: 0}
   accessibleNewVent: {fileID: 0}
   currentConduit: {fileID: 0}
   detectInputConduit: 0
+  isVentingOut: 0
+  afterVentingSecurityDuration: 0.7
   directionArrow: {fileID: 2757242180495348}
   particleSystem: {fileID: 3954722437128320551}
   trail: {fileID: 4373219248815043771}

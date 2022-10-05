@@ -62,9 +62,13 @@ public class PlayerController : MonoBehaviour
     [Header("Reparation")] public ReparationArea reparationArea;
 
     [Header("Vent")] public Vent accessibleVent;
+    public NewVent lastTakenNewVent;
     public NewVent accessibleNewVent;
     public NewConduit currentConduit;
     public bool detectInputConduit;
+    public bool isVentingOut;
+    [SerializeField] private float afterVentingSecurityDuration;
+    private float afterVentingSecurityTimer;
 
     [Header("Graph")] [SerializeField] private SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
@@ -154,6 +158,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        SetTimerAfterVenting();
+        
         if (!isActive) return;
         
         Rotating();
@@ -374,6 +380,8 @@ public class PlayerController : MonoBehaviour
         
         if (accessibleNewVent)
         {
+            if (isVentingOut && accessibleNewVent == lastTakenNewVent) return;
+            
             CancelDash();
             accessibleNewVent.EntersVent(this);
             return;
@@ -389,6 +397,18 @@ public class PlayerController : MonoBehaviour
             var dashSpeed = dashFactor.Evaluate(dashTimer / dashDuration);
             ModifySpeed(dashSpeed);
         }
+    }
+
+    private void SetTimerAfterVenting()
+    {
+        if (!isVentingOut) return;
+        
+        if (afterVentingSecurityTimer > afterVentingSecurityDuration)
+        {
+            afterVentingSecurityTimer = 0f;
+            isVentingOut = false;
+        }
+        else afterVentingSecurityTimer += Time.deltaTime;
     }
 
     private void SettingPowerUpGauge()
