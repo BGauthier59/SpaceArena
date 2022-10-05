@@ -175,4 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 25, z: -5}
+  mainCamera: {fileID: 8744282902909847573}
   lerpSpeed: 3
+  currentZoom: {fileID: 0}
+  host: {fileID: 0}

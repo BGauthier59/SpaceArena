@@ -141,10 +141,10 @@ MonoBehaviour:
   shootingShake: {fileID: 11400000, guid: 78299d7eea4932140bd83a79ab14abc9, type: 2}
   recoil: 200
   reloadGauge: {fileID: 6009135751034671799}
+  setGaugeSpeed: 10
   powerUpGauge: {fileID: 6605169125929842330}
   powerUpMax: 20
   reparationArea: {fileID: 0}
-  accessibleVent: {fileID: 0}
   lastTakenNewVent: {fileID: 0}
   accessibleNewVent: {fileID: 0}
   currentConduit: {fileID: 0}

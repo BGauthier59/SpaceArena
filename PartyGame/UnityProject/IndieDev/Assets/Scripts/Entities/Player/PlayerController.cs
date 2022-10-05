@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
 {
     #region Variables
 
-    [Header("Input, Gamepad & Data")] public int playerIndex;
+    [Header("Input, Gamepad & Data")] 
+    public int playerIndex;
     public string playerName;
     public PlayerInput playerInput;
 
@@ -17,14 +18,16 @@ public class PlayerController : MonoBehaviour
 
     public PlayerManager manager;
 
-    [Header("Party Data")] public int points;
+    [Header("Party Data")] 
+    public int points;
 
-    [Header("Components")] public Renderer rd;
+    [Header("Components")] 
+    public Renderer rd;
     public Collider col;
     private Rigidbody rb;
 
-    [Header("Controller & Parameters")] private bool isActive;
-
+    [Header("Controller & Parameters")] 
+    private bool isActive;
     [SerializeField] private Vector2 leftJoystickInput;
     [SerializeField] private Vector2 rightJoystickInput;
 
@@ -39,7 +42,8 @@ public class PlayerController : MonoBehaviour
     private float dashTimer;
     private bool isDashing;
 
-    [Header("Attack")] [SerializeField] private bool isAttacking;
+    [Header("Attack")] 
+    [SerializeField] private bool isAttacking;
     [SerializeField] private int maxBulletAmount;
     [SerializeField] private int bulletAmount;
     public float bulletSpeed;
@@ -54,14 +58,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float recoil;
     [SerializeField] private Slider reloadGauge;
 
-    [Header("Power-Up")] [SerializeField] private Slider powerUpGauge;
+    [Header("Power-Up")] 
+    [SerializeField] private float setGaugeSpeed;
+    [SerializeField] private Slider powerUpGauge;
     [SerializeField] private int powerUpMax;
     private int powerUpScore;
     private bool canUsePowerUp;
 
-    [Header("Reparation")] public ReparationArea reparationArea;
+    [Header("Reparation")] 
+    public ReparationArea reparationArea;
 
-    [Header("Vent")] public Vent accessibleVent;
+    [Header("Vent")]
     public NewVent lastTakenNewVent;
     public NewVent accessibleNewVent;
     public NewConduit currentConduit;
@@ -70,7 +77,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float afterVentingSecurityDuration;
     private float afterVentingSecurityTimer;
 
-    [Header("Graph")] [SerializeField] private SpriteRenderer directionArrow;
+    [Header("Graph")] 
+    [SerializeField] private SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
     [SerializeField] private TrailRenderer trail;
 
@@ -257,20 +265,7 @@ public class PlayerController : MonoBehaviour
 
         isDashing = ctx.performed;
     }
-
-    public void OnEnterVent(InputAction.CallbackContext ctx)
-    {
-        // Inutile pour l'instant : changement du système
-        return;
-        
-        if (!isActive) return;
-        if (!accessibleVent) return;
-        if (ctx.canceled) return;
-
-        CancelDash();
-        accessibleVent.PlayerEnters(this);
-    }
-
+    
     public void OnUsePowerUp(InputAction.CallbackContext ctx)
     {
         if (!isActive) return;
@@ -290,6 +285,7 @@ public class PlayerController : MonoBehaviour
     {
         var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         rb.velocity = moveVector * (speed * Time.fixedDeltaTime);
+        //rb.velocity = moveVector * (speed * Time.deltaTime);
     }
 
     private void MovingInConduit()
@@ -414,17 +410,19 @@ public class PlayerController : MonoBehaviour
     private void SettingPowerUpGauge()
     {
         var nextPos = Camera.main.WorldToScreenPoint(transform.position)
-                      + new Vector3(40, 0);
-        powerUpGauge.transform.position = Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.deltaTime);
+                      + new Vector3(50, 0);
+        powerUpGauge.transform.position = Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
         //powerUpGauge.transform.position = nextPos;
     }
 
     private void SettingReloadGauge()
     {
         var nextPos = Camera.main.WorldToScreenPoint(transform.position)
-                      + new Vector3(0, -20);
+                      + new Vector3(0, -30);
 
-        reloadGauge.transform.position = Vector3.Lerp(reloadGauge.transform.position, nextPos, Time.deltaTime);
+        reloadGauge.transform.position = Vector3.Lerp(reloadGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
+        //reloadGauge.transform.position = nextPos;
+
     }
 
     #endregion
@@ -474,6 +472,12 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         ResetSpeed();
         dashTimer = 0f;
+    }
+
+    public void SetGaugesState(bool active)
+    {
+        reloadGauge.gameObject.SetActive(active);
+        powerUpGauge.gameObject.SetActive(active);
     }
 
     #endregion

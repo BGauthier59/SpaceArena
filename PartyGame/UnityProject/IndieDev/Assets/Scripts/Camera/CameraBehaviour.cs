@@ -1,39 +1,82 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour
 {
-    [SerializeField] private Vector3 offset;
-    [SerializeField] private float lerpSpeed;
-
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private CameraZoom defaultZoom;
+    [SerializeField] private CameraZoom currentZoom;
+    
+    private float zoomTimer;
     private Vector3 nextPos;
 
-    void LateUpdate()
+    [SerializeField] private Transform host;
+
+    void FixedUpdate()
     {
         if (GameManager.instance.allPlayers.Count == 0) return;
-        
-        float posX = 0f;
-        float posZ = 0f;
+        if (!currentZoom) return;
+        SetCamera();
+    }
 
-        foreach (var player in GameManager.instance.allPlayers)
+    public void SetZoom(CameraZoom zoom) => currentZoom = zoom;
+    
+    public void ResetZoom() => currentZoom = defaultZoom;
+    
+    private void SetCamera()
+    {
+        // Set position
+        switch (currentZoom.target)
         {
-            posX += player.transform.position.x;
-            posZ += player.transform.position.z;
+            case PossibleTarget.Players:
+                float posX = 0f;
+                float posZ = 0f;
+
+                foreach (var player in GameManager.instance.allPlayers)
+                {
+                    posX += player.transform.position.x;
+                    posZ += player.transform.position.z;
+                }
+
+                var players = GameManager.instance.allPlayers.Count;
+                posX /= players;
+                posZ /= players;
+
+                nextPos = new Vector3(posX, 0, posZ);
+                break;
+            
+            case PossibleTarget.Host:
+                nextPos = host.transform.position;
+                break;
+            
+            default:
+                nextPos = Vector3.zero;
+                Debug.LogError("Target is not valid.");
+                break;
+        }
+        
+        // Set offset
+        nextPos += currentZoom.offset;
+        if (transform.position != nextPos)
+        {
+            transform.position = Vector3.Lerp(transform.position, nextPos, Time.fixedDeltaTime * currentZoom.offsetSpeed);
+        }
+        
+        // Set field of view
+        if (Math.Abs(mainCamera.fieldOfView - currentZoom.fieldOfView) < .01f)
+        {
+            mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, currentZoom.fieldOfView,
+                Time.fixedDeltaTime * currentZoom.fovSpeed);
         }
 
-        var players = GameManager.instance.allPlayers.Count;
-        posX /= players;
-        posZ /= players;
+        // Set duration
+        if (!currentZoom.hasDuration) return;
 
-        nextPos = new Vector3(posX + offset.x, offset.y, posZ + offset.z);
-        
-        transform.position = nextPos;
-        //transform.position = Vector3.SmoothDamp(transform.position, nextPos, ref _v, lerpSpeed);
-        //transform.position = Vector3.Lerp(transform.position, nextPos, lerpSpeed * Time.deltaTime);
-        //transform.position = Vector3.Lerp(transform.position, nextPos, Time.deltaTime);
+        if (zoomTimer >= currentZoom.zoomDuration)
+        {
+            zoomTimer = 0f;
+            SetZoom(defaultZoom);
+        }
+        else zoomTimer += Time.deltaTime;
     }
-    
 }
