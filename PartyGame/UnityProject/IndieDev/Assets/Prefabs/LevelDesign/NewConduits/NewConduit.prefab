@@ -84,6 +84,7 @@ MonoBehaviour:
   currentPoint: {fileID: 0}
   nextPoint: {fileID: 0}
   moveDurationUnit: 0.05
+  intersectionDuration: 0.15
 --- !u!1 &908117022245840250
 GameObject:
   m_ObjectHideFlags: 0

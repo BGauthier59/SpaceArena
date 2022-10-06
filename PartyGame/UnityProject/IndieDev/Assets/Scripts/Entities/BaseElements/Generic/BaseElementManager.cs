@@ -87,10 +87,11 @@ public class BaseElementManager : Entity
     public void SetReparationsAreaNumber()
     {
         int counter = 1;
+        int number = Random.Range(2, GameManager.instance.playersNumber + 1);
         
         foreach (var ra in allReparationAreas)
         {
-            if (counter > GameManager.instance.playersNumber)
+            if (counter > number)
             {
                 ra.gameObject.SetActive(false);
                 continue;

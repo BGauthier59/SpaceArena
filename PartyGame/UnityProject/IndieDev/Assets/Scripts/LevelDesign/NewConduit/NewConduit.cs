@@ -10,9 +10,16 @@ public class NewConduit : MonoBehaviour
     private float distanceBetweenPoints;
 
     private bool isMoving;
-    [Tooltip("Move duration for 1 meter distance")] public float moveDurationUnit;
+
+    [Tooltip("Move duration for 1 meter distance")]
+    public float moveDurationUnit;
+
     private float moveTimer;
-    
+
+    private bool isOnIntersection;
+    [SerializeField] private float intersectionDuration;
+    private float intersectionTimer;
+
     private void Start()
     {
         foreach (var vent in vents)
@@ -24,6 +31,7 @@ public class NewConduit : MonoBehaviour
     private void Update()
     {
         if (isMoving) Moving();
+        if (isOnIntersection) SetIntersectionTimer();
     }
 
     public void EntersConduit(NewVent initVent, PlayerController pl)
@@ -31,7 +39,10 @@ public class NewConduit : MonoBehaviour
         player = pl;
         currentPoint = initVent.firstReachedPoint;
         player.currentConduit = this;
-        player.detectInputConduit = true;
+        if (currentPoint.conduitPointType == ConduitPoint.ConduitPointType.IntersectionPoint)
+        {
+            isOnIntersection = true;
+        }
     }
 
     public void SetNextPoint(ConduitDirection direction)
@@ -78,6 +89,17 @@ public class NewConduit : MonoBehaviour
         }
     }
 
+    public void SetIntersectionTimer()
+    {
+        if (intersectionTimer > intersectionDuration)
+        {
+            intersectionTimer = 0f;
+            isOnIntersection = false;
+            player.detectInputConduit = true;
+        }
+        else intersectionTimer += Time.deltaTime;
+    }
+
     public void ReachPoint()
     {
         moveTimer = 0f;
@@ -97,7 +119,7 @@ public class NewConduit : MonoBehaviour
 
             case ConduitPoint.ConduitPointType.IntersectionPoint:
                 // Peut rebouger, ne fait rien ?
-                player.detectInputConduit = true;
+                isOnIntersection = true;
                 break;
 
             default:
@@ -106,7 +128,6 @@ public class NewConduit : MonoBehaviour
         }
     }
 
-   
 
     public enum ConduitDirection
     {
