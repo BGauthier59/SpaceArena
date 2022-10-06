@@ -57,6 +57,8 @@ public class NewVent : MonoBehaviour
         playersOnVent.Remove(player);
 
         ventingPlayer = player;
+        
+        ventingPlayer.SetGaugesState(false);
         ventingPlayer.DeactivatePlayer();
         ventingPlayer.col.enabled = false;
         initPos = frontPos.position;
@@ -71,6 +73,9 @@ public class NewVent : MonoBehaviour
     public void ExitsVent(PlayerController player)
     {
         ventingPlayer = player;
+        ventingPlayer.lastTakenNewVent = this;
+        
+        ventingPlayer.SetGaugesState(true);
         ventingPlayer.DeactivatePlayer();
         initPos = linkedVentPoint.pointPos.position;
         posToreach = frontPos.position;
@@ -102,6 +107,7 @@ public class NewVent : MonoBehaviour
             }
             else
             {
+                ventingPlayer.isVentingOut = true;
                 ventingPlayer.ActivatePlayer();
                 ventingPlayer.col.enabled = true;
 

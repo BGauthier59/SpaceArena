@@ -30,6 +30,50 @@ Transform:
   m_Father: {fileID: 7624674068071304361}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6412734928770094049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5806317602984601587}
+  - component: {fileID: 7984801639912373034}
+  m_Layer: 0
+  m_Name: RandomEventManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5806317602984601587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6412734928770094049}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7624674067756515780}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7984801639912373034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6412734928770094049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 216e2e8e959570f459a63670ac179fb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomEventZoom: {fileID: 11400000, guid: dc080bfc1081c5a468032e5fae482594, type: 2}
 --- !u!1 &7624674066399732457
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,13 +210,12 @@ MonoBehaviour:
   allBaseElements: []
   colorVariantMaterial: {fileID: 2100000, guid: 3da8735dfea233a4fb951106333194bf, type: 2}
   baseElementColor:
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 1, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0.5176471, b: 0, a: 1}
-  - {r: 0, g: 0.8998494, b: 1, a: 1}
+  - {r: 0.46555877, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0.065378524, b: 0, a: 1}
+  - {r: 0, g: 0.27750087, b: 1, a: 1}
+  - {r: 1, g: 0.77683866, b: 0, a: 1}
+  - {r: 0.5882354, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0.77507114, a: 1}
   disabledColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
   baseLifeGradient:
     serializedVersion: 2
@@ -250,38 +293,49 @@ MonoBehaviour:
   entrances:
   - entrance: {fileID: 7624674067797375855}
     availableEnemies: 04000000
+    minRound: 0
     isAvailable: 0
   - entrance: {fileID: 7624674066724139943}
     availableEnemies: 06000000
+    minRound: 1
     isAvailable: 0
   - entrance: {fileID: 7624674068359709933}
     availableEnemies: 0600000007000000
+    minRound: 2
     isAvailable: 0
   - entrance: {fileID: 7624674066399732374}
-    availableEnemies: 0500000004000000
+    availableEnemies: 050000000400000006000000
+    minRound: 2
     isAvailable: 0
   - entrance: {fileID: 7624674068104482087}
-    availableEnemies: 0500000006000000
+    availableEnemies: 06000000
+    minRound: 1
     isAvailable: 0
   - entrance: {fileID: 7624674067363585438}
     availableEnemies: 04000000
+    minRound: 1
     isAvailable: 0
   - entrance: {fileID: 1023977259}
     availableEnemies: 05000000
+    minRound: 1
     isAvailable: 0
   enemyData:
   - enemy: 4
     difficulty: 30
     minRound: 0
+    maxCount: 6
   - enemy: 5
     difficulty: 50
     minRound: 2
+    maxCount: 5
   - enemy: 6
     difficulty: 40
     minRound: 0
+    maxCount: 4
   - enemy: 7
     difficulty: 75
     minRound: 3
+    maxCount: 2
   durationBeforeNextWave: 15
   spawningDelay: 0.25
   currentRound: 0
@@ -364,6 +418,7 @@ Transform:
   - {fileID: 7624674067489746147}
   - {fileID: 7624674067620636259}
   - {fileID: 7624674068071304361}
+  - {fileID: 5806317602984601587}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -386,6 +441,9 @@ MonoBehaviour:
   - {fileID: 0}
   timerText: {fileID: 0}
   wavesManager: {fileID: 7624674067609826636}
+  randomEventManager: {fileID: 7984801639912373034}
+  cameraBehaviour: {fileID: 0}
+  beginningZoom: {fileID: 11400000, guid: 0ca2c322c68a7bc41833227a067a9cd5, type: 2}
   partyDuration: 300
   beforeGameStartsDuration: 3
   whenGameEndsDuration: 3

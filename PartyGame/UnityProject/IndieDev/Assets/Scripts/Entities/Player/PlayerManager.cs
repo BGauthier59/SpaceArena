@@ -1,11 +1,36 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : Entity
 {
     public PlayerController controller;
+    [Header("Respawn")] [SerializeField] private float respawnDuration;
+    private float respawnTimer;
+    private bool isRespawning;
+    
+    public override void Update()
+    {
+        base.Update();
+        if(isRespawning) Respawn();
+    }
+
+    private void Respawn()
+    {
+        if (respawnTimer > respawnDuration)
+        {
+            transform.position = controller.initPos;
+            controller.rd.gameObject.SetActive(true);
+            isDead = false;
+            Heal(totalLife);
+            respawnTimer = 0f;
+            isRespawning = false;
+            controller.col.enabled = true;
+            controller.directionArrow.enabled = true;
+            controller.playerLight.enabled = true;
+            controller.SetGaugesState(true);
+            controller.ActivatePlayer();
+        }
+        else respawnTimer += Time.deltaTime;
+    }
     
     #region Entity
 
@@ -18,15 +43,20 @@ public class PlayerManager : Entity
     public override void Death()
     {
         base.Death();
-
+        controller.DeactivatePlayer();
+        isRespawning = true;
+        controller.rd.gameObject.SetActive(false);
+        controller.col.enabled = false;
+        controller.directionArrow.enabled = false;
+        controller.playerLight.enabled = false;
+        controller.SetGaugesState(false);
     }
 
     public override void Heal(int heal)
     {
         base.Heal(heal);
-
     }
-    
+
     public override void StunEnable()
     {
         base.StunEnable();
@@ -42,16 +72,7 @@ public class PlayerManager : Entity
     #endregion
 
     #region Trigger & Collision
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // S'il entre dans la zone de dégâts d'un ennemi
-        
-        // S'il entre dans la zone de réparation d'un bâtiment
-        
-        // S'il entre dans une zone piégée, enflammée, électrique, etc...
-    }
+    
 
     #endregion
-    
 }

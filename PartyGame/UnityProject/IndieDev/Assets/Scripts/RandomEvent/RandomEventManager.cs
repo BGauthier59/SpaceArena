@@ -1,28 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomEventManager : MonoBehaviour
 {
-    public static RandomEventManager instance;
-    
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            DestroyImmediate(this);
-            return;
-        }
-
-        instance = this;
-    }
-
+    public RandomEvent[] events;
     public RandomEvent currentEvent;
+    public CameraZoom randomEventZoom;
 
     public void StartNewRandomEvent()
     {
-        currentEvent.StartEvent();
+        //currentEvent = events[0]; // Pour l'instant
+        
+        GameManager.instance.partyManager.cameraBehaviour.SetZoom(randomEventZoom);
+        currentEvent?.StartEvent();
     }
 
     private void Update()

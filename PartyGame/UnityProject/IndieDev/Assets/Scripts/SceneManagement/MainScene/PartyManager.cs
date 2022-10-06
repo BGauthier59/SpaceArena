@@ -13,7 +13,10 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private Transform[] allSpawningPoints;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private WavesManager wavesManager;
-
+    public RandomEventManager randomEventManager;
+    public CameraBehaviour cameraBehaviour;
+    public CameraZoom beginningZoom;
+    
     [Header("Game Parameters")] 
     [Tooltip("Duration in seconds")] [SerializeField] private float partyDuration;
     private float partyTimer;
@@ -92,10 +95,13 @@ public class PartyManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
-            player.transform.position = allSpawningPoints[i].position;
+            player.initPos = allSpawningPoints[i].position;
+            player.transform.position = player.initPos;
             player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
             player.PartyBegins();
         }
+        
+        cameraBehaviour.SetZoom(beginningZoom);
     }
     
     private void StartingGame()
@@ -110,14 +116,13 @@ public class PartyManager : MonoBehaviour
         }
         
         // Initializing timer
-
         partyTimer = partyDuration;
         
-        // Starts timer
-
+        // Starts game
         GameManager.instance.EnableAllControllers();
         hasPartyBegun = true;
         wavesManager.StartNewWave();
+        cameraBehaviour.ResetZoom();
     }
 
     #region Before Game Starts
@@ -139,7 +144,7 @@ public class PartyManager : MonoBehaviour
     private void CheckTimerInGame()
     {
         if (!hasPartyBegun) return;
-        
+
         if (partyTimer <= 0)
         {
             partyTimer = 0f;
@@ -213,7 +218,6 @@ public class PartyManager : MonoBehaviour
     }
 
     #endregion
-    
     
     public void OnQuit()
     {

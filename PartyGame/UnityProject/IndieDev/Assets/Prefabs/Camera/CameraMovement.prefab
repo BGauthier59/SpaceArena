@@ -174,5 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1485f1fe1e346054987d3b8957360d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 25, z: -5}
-  lerpSpeed: 3
+  mainCamera: {fileID: 8744282902909847573}
+  defaultZoom: {fileID: 11400000, guid: 227cca5df692f8c4fb8cf333b7ac631c, type: 2}
+  currentZoom: {fileID: 0}
+  host: {fileID: 0}

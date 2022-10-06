@@ -116,12 +116,6 @@ public class EnemyGenericBehaviour : MonoBehaviour
     
     public virtual void Attack()
     {
-        //attackArea.enabled = true;
-        // Au final : activation, désactivation dans l'animation d'attaque ?
-        
-        // Pour l'instant :
-        //target.TakeDamage(damage);
-        
         attackArea.gameObject.SetActive(true);
         isAttacking = true;
     }

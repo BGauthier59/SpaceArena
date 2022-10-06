@@ -21,7 +21,7 @@ public class SecurityDevice : BaseElementManager
 
         public float movingDuration;
         private float movingTimer;
-        public Renderer colorSpot;
+        public Renderer[] colorSpots;
 
         public bool isMoved;
 
@@ -44,7 +44,6 @@ public class SecurityDevice : BaseElementManager
                 movingTimer = 0f;
             }
             else movingTimer += Time.deltaTime;
-            
         }
     }
 
@@ -53,7 +52,12 @@ public class SecurityDevice : BaseElementManager
         base.Start();
         foreach (var door in associatedDoors)
         {
-            door.colorSpot.material.SetColor("_EmissionColor", color * 2);
+            foreach (var rd in door.colorSpots)
+            {
+                rd.material = BaseManager.instance.colorVariantMaterial;
+                rd.material.color = color;
+                rd.material.SetColor("_EmissionColor", color * 2);
+            }
         }
     }
 
@@ -66,7 +70,7 @@ public class SecurityDevice : BaseElementManager
     {
         base.OnDestroyed();
 
-       
+
         foreach (var door in associatedDoors)
         {
             door.SetDoor(true);
@@ -86,11 +90,11 @@ public class SecurityDevice : BaseElementManager
 
         isMovingDoors = true;
     }
-    
+
     public override void Update()
     {
         base.Update();
-        
+
         MovingDoors();
     }
 
@@ -106,7 +110,7 @@ public class SecurityDevice : BaseElementManager
         {
             if (!door.isMoved) return;
         }
-        
+
         foreach (var door in associatedDoors)
         {
             door.isMoved = false;
