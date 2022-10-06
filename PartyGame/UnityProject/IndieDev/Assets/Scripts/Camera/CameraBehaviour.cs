@@ -9,9 +9,7 @@ public class CameraBehaviour : MonoBehaviour
     
     private float zoomTimer;
     private Vector3 nextPos;
-
-    [SerializeField] private Transform host;
-
+    
     void FixedUpdate()
     {
         if (GameManager.instance.allPlayers.Count == 0) return;
@@ -43,10 +41,6 @@ public class CameraBehaviour : MonoBehaviour
                 posZ /= players;
 
                 nextPos = new Vector3(posX, 0, posZ);
-                break;
-            
-            case PossibleTarget.Host:
-                nextPos = host.transform.position;
                 break;
             
             default:

@@ -141,6 +141,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
                 if (timerCooldown >= durationCooldown)
                 {
+                    //attackArea.gameObject.SetActive(false);
                     SwitchState(AlienState.Target);
                 }
                 else timerCooldown += Time.deltaTime;

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454cb5f7cb53b4f4ba0897598374386e, type: 3}
   m_Name: RandomEventZoom
   m_EditorClassIdentifier: 
-  target: 1
+  target: 0
   offset: {x: 0, y: 27, z: 5}
   offsetSpeed: 5
+  eulerAngles: {x: 60, y: 0, z: 0}
+  eulerAnglesSpeed: 0
   fieldOfView: 65
   fovSpeed: 5
   hasDuration: 1
