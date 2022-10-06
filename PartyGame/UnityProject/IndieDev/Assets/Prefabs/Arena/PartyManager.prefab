@@ -298,45 +298,45 @@ MonoBehaviour:
     isAvailable: 0
   - entrance: {fileID: 7624674066724139943}
     availableEnemies: 06000000
-    minRound: 0
+    minRound: 1
     isAvailable: 0
   - entrance: {fileID: 7624674068359709933}
     availableEnemies: 0600000007000000
-    minRound: 0
+    minRound: 2
     isAvailable: 0
   - entrance: {fileID: 7624674066399732374}
-    availableEnemies: 0500000004000000
-    minRound: 0
+    availableEnemies: 050000000400000006000000
+    minRound: 2
     isAvailable: 0
   - entrance: {fileID: 7624674068104482087}
-    availableEnemies: 0500000006000000
-    minRound: 0
+    availableEnemies: 06000000
+    minRound: 1
     isAvailable: 0
   - entrance: {fileID: 7624674067363585438}
     availableEnemies: 04000000
-    minRound: 0
+    minRound: 1
     isAvailable: 0
   - entrance: {fileID: 1023977259}
     availableEnemies: 05000000
-    minRound: 0
+    minRound: 1
     isAvailable: 0
   enemyData:
   - enemy: 4
     difficulty: 30
     minRound: 0
-    maxCount: 0
+    maxCount: 6
   - enemy: 5
     difficulty: 50
     minRound: 2
-    maxCount: 0
+    maxCount: 5
   - enemy: 6
     difficulty: 40
     minRound: 0
-    maxCount: 0
+    maxCount: 4
   - enemy: 7
     difficulty: 75
     minRound: 3
-    maxCount: 0
+    maxCount: 2
   durationBeforeNextWave: 15
   spawningDelay: 0.25
   currentRound: 0
