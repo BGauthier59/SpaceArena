@@ -95,7 +95,8 @@ public class PartyManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
-            player.transform.position = allSpawningPoints[i].position;
+            player.initPos = allSpawningPoints[i].position;
+            player.transform.position = player.initPos;
             player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
             player.PartyBegins();
         }

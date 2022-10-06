@@ -32,6 +32,7 @@ public class Entity : MonoBehaviour
 
     public virtual void TakeDamage(int damage, Entity attacker = null)
     {
+        if (isDead) return;
         currentLife -= damage;
         if (currentLife <= 0)
         {

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Party Data")] 
     public int points;
+    public Vector3 initPos;
 
     [Header("Components")] 
     public Renderer rd;
@@ -79,10 +80,11 @@ public class PlayerController : MonoBehaviour
     private float afterVentingSecurityTimer;
 
     [Header("Graph")] 
-    [SerializeField] private SpriteRenderer directionArrow;
+    public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
     [SerializeField] private TrailRenderer trail;
-
+    public Light playerLight;
+    
     #endregion
 
     #region Connection
@@ -112,7 +114,6 @@ public class PlayerController : MonoBehaviour
 
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         rb.isKinematic = true;
-
 
         DeactivatePlayer();
     }
