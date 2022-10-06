@@ -10,11 +10,16 @@ public class CameraZoom : ScriptableObject
 
     public Vector3 offset;
     public float offsetSpeed;
+    public Vector3 eulerAngles;
+    public float eulerAnglesSpeed;
     public float fieldOfView;
     public float fovSpeed;
     public bool hasDuration;
     [Range(0.1f, 10f)] public float zoomDuration;
 }
-public enum PossibleTarget{
-    Players, Host
+
+public enum PossibleTarget
+{
+    Players,
+    Host
 }

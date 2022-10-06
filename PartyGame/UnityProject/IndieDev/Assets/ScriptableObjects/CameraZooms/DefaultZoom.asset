@@ -15,6 +15,8 @@ MonoBehaviour:
   target: 0
   offset: {x: 0, y: 25, z: -5}
   offsetSpeed: 5
+  eulerAngles: {x: 77.5, y: 0, z: 0}
+  eulerAnglesSpeed: 3
   fieldOfView: 60
   fovSpeed: 5
   hasDuration: 0

@@ -62,6 +62,12 @@ public class CameraBehaviour : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, nextPos, Time.fixedDeltaTime * currentZoom.offsetSpeed);
         }
         
+        // Set rotation
+        if (transform.eulerAngles != currentZoom.eulerAngles)
+        {
+            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, currentZoom.eulerAngles, Time.fixedDeltaTime * currentZoom.eulerAnglesSpeed);
+        }
+        
         // Set field of view
         if (Math.Abs(mainCamera.fieldOfView - currentZoom.fieldOfView) < .01f)
         {
