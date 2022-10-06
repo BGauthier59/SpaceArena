@@ -14,4 +14,9 @@ public class PowerUpManager : MonoBehaviour
     {
         
     }
+    
+    public virtual void OnConditionCheck()
+    {
+        
+    }
 }
