@@ -17,7 +17,7 @@ public class ElectricalDevice : BaseElementManager
         public float lightOnIntensity;
         public float lightingOnDuration;
         private float lightingOnTimer;
-        public Renderer colorElement;
+        public Renderer[] colorElements;
 
         public void LightingOff()
         {
@@ -45,7 +45,11 @@ public class ElectricalDevice : BaseElementManager
         base.Start();
         foreach (var light in allLights)
         {
-            light.colorElement.material.SetColor("_EmissionColor", color * 2);
+            foreach (var rd in light.colorElements)
+            {
+                rd.material.color = color;
+                rd.material.SetColor("_EmissionColor", color * 2);
+            }
         }
     }
     

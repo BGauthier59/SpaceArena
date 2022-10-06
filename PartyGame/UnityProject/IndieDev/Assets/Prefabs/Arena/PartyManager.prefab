@@ -210,13 +210,12 @@ MonoBehaviour:
   allBaseElements: []
   colorVariantMaterial: {fileID: 2100000, guid: 3da8735dfea233a4fb951106333194bf, type: 2}
   baseElementColor:
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 1, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0.5176471, b: 0, a: 1}
-  - {r: 0, g: 0.8998494, b: 1, a: 1}
+  - {r: 0.46555877, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0.065378524, b: 0, a: 1}
+  - {r: 0, g: 0.27750087, b: 1, a: 1}
+  - {r: 1, g: 0.77683866, b: 0, a: 1}
+  - {r: 0.5882354, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0.77507114, a: 1}
   disabledColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
   baseLifeGradient:
     serializedVersion: 2

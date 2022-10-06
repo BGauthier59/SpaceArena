@@ -23,7 +23,7 @@ public class BaseElementManager : Entity
     [SerializeField] private float iconMoveDuration;
     private float iconMoveTimer;
     
-    public Renderer elementColorRenderer;
+    public Renderer[] elementColorRenderers;
     public Color color;
 
     [Header("GUI")] 
@@ -72,15 +72,25 @@ public class BaseElementManager : Entity
         
         // Choix de couleur automatisé
         BaseManager.instance.allBaseElements.Add(this);
-        elementColorRenderer.material = BaseManager.instance.colorVariantMaterial;
-        color = BaseManager.instance.baseElementColor[BaseManager.instance.allBaseElements.Count - 1];
-        elementColorRenderer.material.SetColor("_EmissionColor", color * 2);
         
+        SetBaseElementColor();
+
         SetReparationsAreaNumber();
         foreach (var area in allReparationAreas)
         {
             if (!area.gameObject.activeSelf) continue;
             area.associatedElement = this;
+        }
+    }
+
+    private void SetBaseElementColor()
+    {
+        color = BaseManager.instance.baseElementColor[BaseManager.instance.allBaseElements.Count - 1];
+        foreach (var rd in elementColorRenderers)
+        {
+            rd.material = BaseManager.instance.colorVariantMaterial;
+            rd.material.color = color;
+            rd.material.SetColor("_EmissionColor", color * 2);
         }
     }
 
@@ -203,22 +213,7 @@ public class BaseElementManager : Entity
     }
 
     #region Trigger & Collision
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            SetBaseElementInfo(true);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            SetBaseElementInfo(false);
-        }
-    }
+    
 
     #endregion
 
