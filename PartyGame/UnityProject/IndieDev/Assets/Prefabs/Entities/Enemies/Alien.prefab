@@ -233,7 +233,7 @@ NavMeshAgent:
   m_AngularSpeed: 120
   m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
@@ -266,6 +266,11 @@ MonoBehaviour:
   durationBeforeAttack: 0.4
   durationCooldown: 0.5
   attackDuration: 0.75
+  durationBeforeRandomPoint: 5
+  durationBeforeRandomPointGap: 2
+  durationBeforeRandomPointReal: 0
+  idleRandomPointMaxDistance: 7
+  idleRandomPointMinDistance: 2
   currentState: 0
   retreatRate: 50
   retreatSpeed: 10

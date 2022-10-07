@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class HunterBehaviour : EnemyGenericBehaviour
 {
@@ -40,7 +41,7 @@ public class HunterBehaviour : EnemyGenericBehaviour
     public override void Initialization()
     {
         base.Initialization();
-        SwitchState(HunterState.Target);
+        SwitchState(HunterState.Idle);
     }
 
     public override void SetAvailableTargets()
@@ -67,7 +68,7 @@ public class HunterBehaviour : EnemyGenericBehaviour
 
     public override void CheckState()
     {
-        if (!IsTargetAvailable() && currentState != HunterState.Cooldown && currentState != HunterState.Target)
+        if (!IsTargetAvailable() && currentState != HunterState.Cooldown && currentState != HunterState.Idle)
         {
             SwitchState(HunterState.Idle);
         }
@@ -176,12 +177,32 @@ public class HunterBehaviour : EnemyGenericBehaviour
             #region State Idle
 
             case HunterState.Idle:
-                // N'a pas de direction prédéterminée
-                // Continue à Target
                 
                 if (IsTargetAvailable()) SwitchState(HunterState.Position);
                 else Target();
-                
+
+                if (timerBeforeRandomPoint > durationBeforeRandomPointReal)
+                {
+                    (bool, Vector3) couple;
+                    var security = 0;
+                    do
+                    {
+                        couple = RandomPointOnPath();
+                        security++;
+                        if (security > 100)
+                        {
+                            Debug.LogWarning("Might be not correct point");
+                            return;
+                        }
+                    } while (!couple.Item1);
+
+                    agent.SetDestination(couple.Item2);
+                    timerBeforeRandomPoint = 0f;
+                    durationBeforeRandomPointReal = durationBeforeRandomPoint +
+                                                    Random.Range(-durationBeforeRandomPointGap,
+                                                        durationBeforeRandomPointGap);
+                }
+                else timerBeforeRandomPoint += Time.deltaTime;
                 break;
 
             #endregion
@@ -218,7 +239,11 @@ public class HunterBehaviour : EnemyGenericBehaviour
                 break;
 
             case HunterState.Idle:
-                StopAgent();
+                UnstopAgent();
+                timerBeforeRandomPoint = 0f;
+                durationBeforeRandomPointReal = durationBeforeRandomPoint +
+                                                Random.Range(-durationBeforeRandomPointGap,
+                                                    durationBeforeRandomPointGap);
                 break;
             
             default:

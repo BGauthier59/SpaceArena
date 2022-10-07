@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 3c9f28b51e713824aa10f17fa1e11140, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: fc9f6f55ff19ce24e8d977283faf463a, type: 2}
 --- !u!1001 &35809366
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10328,6 +10328,34 @@ PrefabInstance:
     - target: {fileID: 7624674066724139943, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: enemyData.Array.data[1].minRound
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[2].availableEnemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].availableEnemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[0].availableEnemies.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[1].availableEnemies.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].availableEnemies.Array.data[1]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[5].availableEnemies.Array.data[0]
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7624674067756515780, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_RootOrder

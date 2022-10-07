@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class EnemyGenericBehaviour : MonoBehaviour
 {
+    #region Variables
+
     public Entity[] availableTargets;
     [SerializeField] protected Entity target;
     [SerializeField] protected float speed;
@@ -17,9 +20,9 @@ public class EnemyGenericBehaviour : MonoBehaviour
     public int damage;
 
     public NavMeshAgent agent;
-    
+
     public float minDistanceToAttack;
-    
+
     [Header("Timers")] [SerializeField] protected float durationBeforeTarget;
     protected float timerBeforeTarget;
 
@@ -37,6 +40,16 @@ public class EnemyGenericBehaviour : MonoBehaviour
 
     protected Vector3 targetPos;
 
+    [SerializeField] protected float durationBeforeRandomPoint;
+    protected float timerBeforeRandomPoint;
+    [SerializeField] protected float durationBeforeRandomPointGap;
+    [SerializeField] protected float durationBeforeRandomPointReal;
+
+    [SerializeField] private float idleRandomPointMaxDistance;
+    [SerializeField] private float idleRandomPointMinDistance;
+
+    #endregion
+    
     private void Start()
     {
         Initialization();
@@ -130,6 +143,25 @@ public class EnemyGenericBehaviour : MonoBehaviour
             isAttacking = false;
         }
         else attackTimer += Time.deltaTime;
+    }
+
+    public (bool, Vector3) RandomPointOnPath()
+    {
+        // Set un point aléatoire dans le radius d'idle
+        var randomPoint = transform.position + Random.insideUnitSphere * idleRandomPointMaxDistance;
+        
+        // Check si on navmesh
+        NavMeshHit hit;
+        if (!NavMesh.SamplePosition(randomPoint, out hit, idleRandomPointMaxDistance, NavMesh.AllAreas)) return (false, Vector3.zero);
+        
+        var nextPos = hit.position;
+        if (Vector3.Distance(transform.position, nextPos) < idleRandomPointMinDistance) return (false, Vector3.zero);
+
+        var path = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position, nextPos, NavMesh.AllAreas, path);
+        if (path.status == NavMeshPathStatus.PathInvalid || path.status == NavMeshPathStatus.PathPartial) return (false, Vector3.zero);
+
+        return (true, nextPos);
     }
     
     public void StopAgent()

@@ -15,9 +15,8 @@ public class AlienBehaviour : EnemyGenericBehaviour
     [SerializeField] private float retreatSpeed;
     [SerializeField] private float durationBetweenRetreats;
     private float timerBetweenRetreats;
-    
-    [Header("VFX")]
-    [SerializeField] private ParticleSystem retreatVFX;
+
+    [Header("VFX")] [SerializeField] private ParticleSystem retreatVFX;
 
     public enum AlienState
     {
@@ -34,14 +33,14 @@ public class AlienBehaviour : EnemyGenericBehaviour
         base.Initialization();
         initSpeed = speed;
         isRetreating = false;
-        SwitchState(AlienState.Target);
+        SwitchState(AlienState.Idle);
     }
 
     public override void Target()
     {
         base.Target();
     }
-    
+
     public override void SetAvailableTargets()
     {
         var entities = new List<Entity>();
@@ -78,7 +77,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
 
     public override void CheckState()
     {
-        if (!IsTargetAvailable() && currentState != AlienState.Cooldown && currentState != AlienState.Target)
+        if (!IsTargetAvailable() && currentState != AlienState.Cooldown && currentState != AlienState.Idle)
         {
             SwitchState(AlienState.Idle);
         }
@@ -172,10 +171,33 @@ public class AlienBehaviour : EnemyGenericBehaviour
             #region State Idle
 
             case AlienState.Idle:
-                // N'a pas de direction prédéterminée
-                // Continue à Target
+
                 if (IsTargetAvailable()) SwitchState(AlienState.Follow);
                 else Target();
+
+                if (timerBeforeRandomPoint > durationBeforeRandomPointReal)
+                {
+                    (bool, Vector3) couple;
+                    var security = 0;
+                    do
+                    {
+                        couple = RandomPointOnPath();
+                        security++;
+                        if (security > 100)
+                        {
+                            Debug.LogWarning("Might be not correct point");
+                            return;
+                        }
+                    } while (!couple.Item1);
+
+                    agent.SetDestination(couple.Item2);
+                    timerBeforeRandomPoint = 0f;
+                    durationBeforeRandomPointReal = durationBeforeRandomPoint +
+                                                    Random.Range(-durationBeforeRandomPointGap,
+                                                        durationBeforeRandomPointGap);
+                }
+                else timerBeforeRandomPoint += Time.deltaTime;
+
                 break;
 
             #endregion
@@ -211,7 +233,11 @@ public class AlienBehaviour : EnemyGenericBehaviour
                 break;
 
             case AlienState.Idle:
-                StopAgent();
+                UnstopAgent();
+                timerBeforeRandomPoint = 0f;
+                durationBeforeRandomPointReal = durationBeforeRandomPoint +
+                                                Random.Range(-durationBeforeRandomPointGap,
+                                                    durationBeforeRandomPointGap);
                 break;
             default:
                 Debug.LogError("State not available!");

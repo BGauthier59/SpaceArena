@@ -36,7 +36,7 @@ public class BreakerBehaviour : EnemyGenericBehaviour
     public override void Initialization()
     {
         base.Initialization();
-        SwitchState(BreakerState.Target);
+        SwitchState(BreakerState.Idle);
     }
 
     public override void SetAvailableTargets()
@@ -72,7 +72,7 @@ public class BreakerBehaviour : EnemyGenericBehaviour
 
     public override void CheckState()
     {
-        if (!IsTargetAvailable() && currentState != BreakerState.Cooldown && currentState != BreakerState.Target)
+        if (!IsTargetAvailable() && currentState != BreakerState.Cooldown && currentState != BreakerState.Idle)
         {
             SwitchState(BreakerState.Idle);
         }
@@ -163,10 +163,31 @@ public class BreakerBehaviour : EnemyGenericBehaviour
             #region State Idle
 
             case BreakerState.Idle:
-                // N'a pas de direction prédéterminée
-                // Continue à Target
                 if (IsTargetAvailable()) SwitchState(BreakerState.Follow);
                 else Target();
+
+                if (timerBeforeRandomPoint > durationBeforeRandomPointReal)
+                {
+                    (bool, Vector3) couple;
+                    var security = 0;
+                    do
+                    {
+                        couple = RandomPointOnPath();
+                        security++;
+                        if (security > 100)
+                        {
+                            Debug.LogWarning("Might be not correct point");
+                            return;
+                        }
+                    } while (!couple.Item1);
+
+                    agent.SetDestination(couple.Item2);
+                    timerBeforeRandomPoint = 0f;
+                    durationBeforeRandomPointReal = durationBeforeRandomPoint +
+                                                    Random.Range(-durationBeforeRandomPointGap,
+                                                        durationBeforeRandomPointGap);
+                }
+                else timerBeforeRandomPoint += Time.deltaTime;
                 break;
 
             #endregion
@@ -200,7 +221,11 @@ public class BreakerBehaviour : EnemyGenericBehaviour
                 break;
 
             case BreakerState.Idle:
-                StopAgent();
+                UnstopAgent();
+                timerBeforeRandomPoint = 0f;
+                durationBeforeRandomPointReal = durationBeforeRandomPoint +
+                                                Random.Range(-durationBeforeRandomPointGap,
+                                                    durationBeforeRandomPointGap);
                 break;
             case BreakerState.ChangeTarget:
                 StopAgent();
@@ -218,7 +243,6 @@ public class BreakerBehaviour : EnemyGenericBehaviour
         var random = Random.Range(0, 100);
         if (random > changeTargetRate) return (false, target);
 
-        // Change Target
         target = DetectedEntity(availableTargets, target);
         if (!changeTargetVFX.isPlaying) changeTargetVFX.Play();
         isRetargeting = true;

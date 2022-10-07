@@ -38,6 +38,7 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private bool hasPartyBegun;
 
     [Header("Interface")]
+    [SerializeField] private GameObject timerArea;
     [SerializeField] private GameObject endOfParty;
     [SerializeField] private ScoreArea[] scoreAreas;
     [SerializeField] private Button backToMainMenu;
@@ -117,6 +118,7 @@ public class PartyManager : MonoBehaviour
         
         // Initializing timer
         partyTimer = partyDuration;
+        timerArea.SetActive(true);
         
         // Starts game
         GameManager.instance.EnableAllControllers();
@@ -166,6 +168,7 @@ public class PartyManager : MonoBehaviour
         {
             var player = GameManager.instance.allPlayers[i];
             player.DeactivatePlayer();
+            player.SetGaugesState(false);
         }
         EnemiesManager.instance.DeactivateAllEnemies();
 
@@ -186,6 +189,7 @@ public class PartyManager : MonoBehaviour
     private void FinishingGame()
     {
         gameState = GameState.Finished;
+        timerArea.SetActive(false);
         DisplayScore();
     }
     

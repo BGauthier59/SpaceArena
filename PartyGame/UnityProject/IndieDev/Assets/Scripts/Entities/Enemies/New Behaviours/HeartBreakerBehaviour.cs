@@ -73,8 +73,7 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
 
     public override void CheckState()
     {
-        if (!IsTargetAvailable() && currentState != HeartBreakerState.Cooldown &&
-            currentState != HeartBreakerState.Target)
+        if (!IsTargetAvailable() && currentState != HeartBreakerState.Cooldown && currentState != HeartBreakerState.Idle)
         {
             SwitchState(HeartBreakerState.Idle);
         }
@@ -159,10 +158,31 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
             #region State Idle
 
             case HeartBreakerState.Idle:
-                // N'a pas de direction prédéterminée
-                // Continue à Target
                 if (IsTargetAvailable()) SwitchState(HeartBreakerState.Follow);
                 else Target();
+
+                if (timerBeforeRandomPoint > durationBeforeRandomPointReal)
+                {
+                    (bool, Vector3) couple;
+                    var security = 0;
+                    do
+                    {
+                        couple = RandomPointOnPath();
+                        security++;
+                        if (security > 100)
+                        {
+                            Debug.LogWarning("Might be not correct point");
+                            return;
+                        }
+                    } while (!couple.Item1);
+
+                    agent.SetDestination(couple.Item2);
+                    timerBeforeRandomPoint = 0f;
+                    durationBeforeRandomPointReal = durationBeforeRandomPoint +
+                                                    Random.Range(-durationBeforeRandomPointGap,
+                                                        durationBeforeRandomPointGap);
+                }
+                else timerBeforeRandomPoint += Time.deltaTime;
                 break;
 
             #endregion
@@ -196,7 +216,11 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
                 break;
 
             case HeartBreakerState.Idle:
-                StopAgent();
+                UnstopAgent();
+                timerBeforeRandomPoint = 0f;
+                durationBeforeRandomPointReal = durationBeforeRandomPoint +
+                                                Random.Range(-durationBeforeRandomPointGap,
+                                                    durationBeforeRandomPointGap);
                 break;
             case HeartBreakerState.CallForHelp:
                 StopAgent();
@@ -223,12 +247,9 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
             if (e.isDead) continue;
             if(Vector3.Distance(transform.position, e.transform.position) > helpersDistance) continue;
             if (!e.behaviour.availableTargets.Contains(lastAttacker)) continue;
-            //Debug.Log($"{e} targets attacker!");
             e.behaviour.SetTarget(lastAttacker);
             helping.Add(e);
         }
-        //Debug.Log($"Called for help!");
-
         hasCalledForHelp = true;
         if(!callHelpVFX.isPlaying) callHelpVFX.Play();
     }
