@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Power-Up")] 
     [SerializeField] private float setGaugeSpeed;
+    public bool powerUpIsActive;
     [SerializeField] private Slider powerUpGauge;
     [SerializeField] private int powerUpMax;
     [SerializeField] private PowerUpManager currentPowerUp;
@@ -176,6 +178,7 @@ public class PlayerController : MonoBehaviour
         Reloading();
         Firing();
         Dashing();
+        PowerCheck();
     }
 
     private void FixedUpdate()
@@ -270,11 +273,12 @@ public class PlayerController : MonoBehaviour
     public void OnUsePowerUp(InputAction.CallbackContext ctx)
     {
         if (!isActive) return;
-        if (!canUsePowerUp) return;
+        if (!canUsePowerUp || powerUpIsActive) return;
         if (currentPowerUp != null)
         {
-            var powerUp = Instantiate(currentPowerUp, transform);
-            powerUp.user = this;
+            powerUpIsActive = true;
+            currentPowerUp.user = this;
+            currentPowerUp.OnActivate();
         }
 
         //EndOfPowerUp(); // Pour le moment
@@ -329,30 +333,37 @@ public class PlayerController : MonoBehaviour
     {
         if (!isAttacking || reloading) return;
 
-        if (timerBeforeNextShoot >= durationBeforeNextShoot)
+        if (!powerUpIsActive)
         {
-            bulletAmount--;
-            if (bulletAmount <= 0) reloading = true;
+            if (timerBeforeNextShoot >= durationBeforeNextShoot)
+            {
+                bulletAmount--;
+                if (bulletAmount <= 0) reloading = true;
 
-            shootingParticles.Play();
-            var newBullet =
-                PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
-            var bullet = newBullet.GetComponent<BulletScript>();
-            bullet.shooter = manager;
-            bullet.rb.AddForce(transform.forward * bulletSpeed);
-            
+                shootingParticles.Play();
+                var newBullet =
+                    PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
+                var bullet = newBullet.GetComponent<BulletScript>();
+                bullet.shooter = manager;
+                bullet.rb.AddForce(transform.forward * bulletSpeed);
+                
 
-            GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
-            GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
+                GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
+                GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
 
-            rb.AddForce(-transform.forward * recoil);
-            timerBeforeNextShoot = 0f;
+                rb.AddForce(-transform.forward * recoil);
+                timerBeforeNextShoot = 0f;
 
-            reloadGauge.value = bulletAmount;
+                reloadGauge.value = bulletAmount;
+            }
+            else
+            {
+                timerBeforeNextShoot += Time.deltaTime;
+            }
         }
         else
         {
-            timerBeforeNextShoot += Time.deltaTime;
+            currentPowerUp.OnUse();
         }
     }
 
@@ -429,6 +440,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void PowerCheck()
+    {
+        if (!powerUpIsActive) return;
+
+        if (currentPowerUp.OnConditionCheck()) EndOfPowerUp();
+    }
+
     #endregion
 
     #region Modification
@@ -459,7 +477,8 @@ public class PlayerController : MonoBehaviour
     private void GetPowerUp()
     {
         canUsePowerUp = true;
-
+        currentPowerUp = PowerUpList.powerUpScript[UnityEngine.Random.Range(1, 9)];
+        powerUpGauge.value = 0;
         // Get power up
     }
 
