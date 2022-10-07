@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 using static UnityEngine.Random;
 
@@ -11,7 +10,7 @@ public class WavesManager : MonoBehaviour
     [SerializeField] private EnemyData[] enemyData;
 
     private bool isWaitingForNextWave;
-    [SerializeField] private float durationBeforeNextWave;
+    private float durationBeforeNextWave;
     private float timerBeforeNextWave;
 
     private Wave currentWave;
@@ -20,7 +19,8 @@ public class WavesManager : MonoBehaviour
     [SerializeField] private uint currentRound;
     private int lastDifficulty;
     public int difficulty;
-    public int difficultyGap;
+    public int[] difficultyGapOverRound;
+    public float[] waveDurationOverRound;
 
     [Serializable]
     public class Entrance
@@ -87,15 +87,19 @@ public class WavesManager : MonoBehaviour
 
     public void StartNewWave()
     {
-        // Va créer une nouvelle wave et set une difficulté supplémentaire ?
         currentRound++;
         timerBeforeNextWave = 0f;
         isWaitingForNextWave = false;
 
         lastDifficulty = difficulty;
-        difficulty += difficultyGap;
 
-        var maxDif = Mathf.Max((int)(lastDifficulty * .01f), 1);
+        if (currentRound <= difficultyGapOverRound.Length)
+        {
+            difficulty += difficultyGapOverRound[currentRound - 1];
+            durationBeforeNextWave = waveDurationOverRound[currentRound - 1];
+        }
+
+        var maxDif = Mathf.Max((int) (lastDifficulty * .01f), 1);
         var newWave = new Wave
         {
             entrancesCount = Range(1, entrances.Length),
@@ -107,7 +111,6 @@ public class WavesManager : MonoBehaviour
         currentWave = newWave;
         SetWave();
         isWaitingForNextWave = true;
-        // Va set les entrées de cette nouvelle wave
     }
 
     private void SetWave()
@@ -115,7 +118,7 @@ public class WavesManager : MonoBehaviour
         foreach (var e in entrances) e.isAvailable = true;
 
         currentWave.selectedEntrances = new List<(Entrance, EnemiesGroup)>();
-        
+
         for (int i = 0; i < currentWave.entrancesCount; i++)
         {
             (Entrance, EnemiesGroup) couple;
@@ -126,7 +129,7 @@ public class WavesManager : MonoBehaviour
                 Debug.LogWarning("Can't add this couple because of not valid entrance.");
                 continue;
             }
-            
+
             couple.Item1.isAvailable = false;
             couple.Item2 = SetEnemiesGroup(couple.Item1);
             if (couple.Item2 == null)
@@ -160,7 +163,6 @@ public class WavesManager : MonoBehaviour
 
             securityEntrance++;
             if (securityEntrance >= 100) return null;
-            
         } while (!entrance.isAvailable || currentRound <= entrance.minRound);
 
         return entrance;
@@ -168,7 +170,7 @@ public class WavesManager : MonoBehaviour
 
     private EnemiesGroup SetEnemiesGroup(Entrance ent)
     {
-        var difficultyPerEntrance = (int)(lastDifficulty / (float)currentWave.entrancesCount);
+        var difficultyPerEntrance = (int) (lastDifficulty / (float) currentWave.entrancesCount);
         var enemy = new EnemyData();
         var security = 0;
 
@@ -184,13 +186,12 @@ public class WavesManager : MonoBehaviour
 
             security++;
             if (security >= 100) return null;
-            
         } while (enemy.minRound > currentRound);
 
         var group = new EnemiesGroup
         {
             enemyData = enemy,
-            count = (int)(difficultyPerEntrance / (float)enemy.difficulty)
+            count = (int) (difficultyPerEntrance / (float) enemy.difficulty)
         };
         if (group.count > group.enemyData.maxCount) group.count = group.enemyData.maxCount;
 

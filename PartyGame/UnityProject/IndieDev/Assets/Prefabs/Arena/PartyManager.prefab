@@ -323,24 +323,34 @@ MonoBehaviour:
   - enemy: 4
     difficulty: 40
     minRound: 0
-    maxCount: 6
+    maxCount: 7
   - enemy: 5
     difficulty: 65
     minRound: 2
-    maxCount: 5
+    maxCount: 6
   - enemy: 6
     difficulty: 50
     minRound: 0
-    maxCount: 4
+    maxCount: 5
   - enemy: 7
     difficulty: 90
     minRound: 3
     maxCount: 2
-  durationBeforeNextWave: 10
   spawningDelay: 0.25
   currentRound: 0
   difficulty: 100
-  difficultyGap: 20
+  difficultyGapOverRound: 64000000500000005000000046000000410000003c00000032000000280000001e00000014000000
+  waveDurationOverRound:
+  - 7
+  - 10
+  - 12.5
+  - 15
+  - 15
+  - 17.5
+  - 20
+  - 23.75
+  - 27.5
+  - 30
 --- !u!1 &7624674067620636258
 GameObject:
   m_ObjectHideFlags: 0

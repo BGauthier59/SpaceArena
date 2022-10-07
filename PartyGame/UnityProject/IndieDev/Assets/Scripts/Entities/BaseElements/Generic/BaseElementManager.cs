@@ -147,7 +147,13 @@ public class BaseElementManager : Entity
         }
 
         // Tous les joueurs sont là et prêts pour la réparation !
+        foreach (var area in allReparationAreas)
+        {
+            if (!area.gameObject.activeSelf) continue;
+            area.isEveryPlayerOn = true;
+        }
         BeginsReparation();
+        return;
     }
     
     public void BeginsReparation()
@@ -164,6 +170,12 @@ public class BaseElementManager : Entity
     {
         // A tout moment si un joueur quitte la zone de réparation
 
+        foreach (var area in allReparationAreas)
+        {
+            if (!area.gameObject.activeSelf) continue;
+            area.isEveryPlayerOn = false;
+        }
+        
         reparationIcon.SetActive(false);
         isIconMoving = false;
         currentCheckingArea = null;
