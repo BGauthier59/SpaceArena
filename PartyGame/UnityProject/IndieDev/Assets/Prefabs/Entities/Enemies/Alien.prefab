@@ -264,7 +264,7 @@ MonoBehaviour:
   durationBeforeTarget: 0.5
   durationBeforeFollow: 0.3
   durationBeforeAttack: 0.4
-  durationCooldown: 0.5
+  durationCooldown: 1
   attackDuration: 0.75
   durationBeforeRandomPoint: 5
   durationBeforeRandomPointGap: 2

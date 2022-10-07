@@ -321,26 +321,26 @@ MonoBehaviour:
     isAvailable: 0
   enemyData:
   - enemy: 4
-    difficulty: 30
+    difficulty: 40
     minRound: 0
     maxCount: 6
   - enemy: 5
-    difficulty: 50
+    difficulty: 65
     minRound: 2
     maxCount: 5
   - enemy: 6
-    difficulty: 40
+    difficulty: 50
     minRound: 0
     maxCount: 4
   - enemy: 7
-    difficulty: 75
+    difficulty: 90
     minRound: 3
     maxCount: 2
-  durationBeforeNextWave: 15
+  durationBeforeNextWave: 10
   spawningDelay: 0.25
   currentRound: 0
   difficulty: 100
-  difficultyGap: 25
+  difficultyGap: 20
 --- !u!1 &7624674067620636258
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,6 +450,7 @@ MonoBehaviour:
   gameState: 0
   gameWon: 0
   hasPartyBegun: 0
+  timerArea: {fileID: 0}
   endOfParty: {fileID: 0}
   scoreAreas:
   - area: {fileID: 0}
