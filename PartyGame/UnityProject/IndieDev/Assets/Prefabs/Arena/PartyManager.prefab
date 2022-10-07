@@ -210,7 +210,7 @@ MonoBehaviour:
   allBaseElements: []
   colorVariantMaterial: {fileID: 2100000, guid: 3da8735dfea233a4fb951106333194bf, type: 2}
   baseElementColor:
-  - {r: 0.46555877, g: 1, b: 0, a: 1}
+  - {r: 0.10893285, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.065378524, b: 0, a: 1}
   - {r: 0, g: 0.27750087, b: 1, a: 1}
   - {r: 1, g: 0.77683866, b: 0, a: 1}

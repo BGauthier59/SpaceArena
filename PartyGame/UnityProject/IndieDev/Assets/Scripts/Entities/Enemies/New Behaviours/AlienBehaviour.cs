@@ -10,6 +10,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
     [SerializeField] public AlienState currentState;
     [SerializeField] [Range(0, 100)] private float retreatRate;
 
+    [SerializeField] private float rotateSpeed;
     private float initSpeed;
     private bool isRetreating;
     [SerializeField] private float retreatSpeed;
@@ -128,7 +129,16 @@ public class AlienBehaviour : EnemyGenericBehaviour
                     Attack();
                     SwitchState(AlienState.Cooldown);
                 }
-                else timerBeforeAttack += Time.deltaTime;
+                else
+                {
+                    /*
+                    agent.transform.rotation = Quaternion.Lerp(transform.rotation,
+                        Quaternion.LookRotation(-(transform.position - targetPos)),
+                        Time.deltaTime * rotateSpeed);
+                        */
+                    
+                    timerBeforeAttack += Time.deltaTime;
+                }
 
                 break;
 
