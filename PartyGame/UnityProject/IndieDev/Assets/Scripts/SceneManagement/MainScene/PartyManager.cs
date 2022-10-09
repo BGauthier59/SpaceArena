@@ -13,7 +13,7 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private Transform[] allSpawningPoints;
     [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private WavesManager wavesManager;
+    public WavesManager wavesManager;
     public RandomEventManager randomEventManager;
     public CameraBehaviour cameraBehaviour;
     public CameraZoom showScreenZoom;
@@ -120,30 +120,10 @@ public class PartyManager : MonoBehaviour
         GameManager.instance.mainCanvas = mainCanvas;
         GameManager.instance.cameraShake = cameraShake;
         GameManager.instance.partyManager = this;
+        randomEventManager.Initialization();
+        wavesManager.Initialization();
     }
-
-    private void StartingGame()
-    {
-        // Initializing players
-        gameState = GameState.InGame;
-
-        for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
-        {
-            var player = GameManager.instance.allPlayers[i];
-            player.ActivatePlayer();
-        }
-
-        // Initializing timer
-        partyTimer = partyDuration;
-        timerArea.SetActive(true);
-
-        // Starts game
-        GameManager.instance.EnableAllControllers();
-        hasPartyBegun = true;
-        wavesManager.StartNewWave();
-        cameraBehaviour.ResetZoom();
-    }
-
+    
     #region Before Game Starts
 
     private IEnumerator BeginningGameCinematic()
@@ -165,7 +145,7 @@ public class PartyManager : MonoBehaviour
 
         cameraBehaviour.SetZoom(screenLargeZoom);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         tutorialText.SetText();
 
@@ -189,6 +169,29 @@ public class PartyManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         goText.gameObject.SetActive(false);
+    }
+
+    private void StartingGame()
+    {
+        // Initializing players
+        gameState = GameState.InGame;
+
+        for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
+        {
+            var player = GameManager.instance.allPlayers[i];
+            player.ActivatePlayer();
+            player.SetGaugesState(true);
+        }
+
+        // Initializing timer
+        partyTimer = partyDuration;
+        timerArea.SetActive(true);
+
+        // Starts game
+        GameManager.instance.EnableAllControllers();
+        hasPartyBegun = true;
+        wavesManager.StartNewWave();
+        cameraBehaviour.ResetZoom();
     }
 
     #endregion

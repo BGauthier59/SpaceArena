@@ -22,6 +22,8 @@ public class WavesManager : MonoBehaviour
     public int[] difficultyGapOverRound;
     public float[] waveDurationOverRound;
 
+    private RandomEventManager randomEventManager;
+
     [Serializable]
     public class Entrance
     {
@@ -67,11 +69,12 @@ public class WavesManager : MonoBehaviour
         [Tooltip("Set the maximum enemies of this type can spawn on one entrance")]
         public ushort maxCount;
     }
-
-    private void Start()
+    
+    public void Initialization()
     {
         isWaitingForNextWave = false;
         currentRound = 0;
+        randomEventManager = GameManager.instance.partyManager.randomEventManager;
     }
 
     private void Update()

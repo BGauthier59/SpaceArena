@@ -135,7 +135,13 @@ public class PlayerController : MonoBehaviour
 
         reloadGauge.maxValue = maxBulletAmount;
         reloadGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
+        reloadGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
+                                         + new Vector3(0, -30);
         powerUpGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
+        powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
+                                          + new Vector3(50, 0);
+        
+        SetGaugesState(false);
         GraphInitialization();
     }
 
