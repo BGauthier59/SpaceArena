@@ -43,6 +43,10 @@ public class CameraBehaviour : MonoBehaviour
                 nextPos = new Vector3(posX, 0, posZ);
                 break;
             
+            case PossibleTarget.Center:
+                nextPos = Vector3.zero;
+                break;
+
             default:
                 nextPos = Vector3.zero;
                 Debug.LogError("Target is not valid.");

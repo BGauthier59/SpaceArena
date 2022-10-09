@@ -150,8 +150,7 @@ public class PlayerController : MonoBehaviour
 
     public void ActivatePlayer()
     {
-        if (GameManager.instance.partyManager.gameState == PartyManager.GameState.Finished ||
-            GameManager.instance.partyManager.gameState == PartyManager.GameState.End)
+        if (GameManager.instance.partyManager.gameState == PartyManager.GameState.End)
         {
             Debug.LogWarning("Tried to active player after the end of game.");
             return;

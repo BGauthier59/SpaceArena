@@ -83,7 +83,7 @@ public class BaseElementManager : Entity
         }
     }
 
-    private void SetBaseElementColor()
+    public virtual void SetBaseElementColor()
     {
         color = BaseManager.instance.baseElementColor[BaseManager.instance.allBaseElements.Count - 1];
         foreach (var rd in elementColorRenderers)

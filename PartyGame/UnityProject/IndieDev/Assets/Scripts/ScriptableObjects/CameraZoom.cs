@@ -20,5 +20,5 @@ public class CameraZoom : ScriptableObject
 
 public enum PossibleTarget
 {
-    Players,
+    Players, Center
 }

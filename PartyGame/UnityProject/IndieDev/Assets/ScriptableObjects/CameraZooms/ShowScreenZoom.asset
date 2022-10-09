@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 454cb5f7cb53b4f4ba0897598374386e, type: 3}
-  m_Name: RandomEventZoom
+  m_Name: ShowScreenZoom
   m_EditorClassIdentifier: 
   target: 1
-  offset: {x: 0, y: 27, z: 5}
-  offsetSpeed: 5
-  eulerAngles: {x: 60, y: 0, z: 0}
-  eulerAnglesSpeed: 0
+  offset: {x: 0, y: 25, z: -5}
+  offsetSpeed: 2
+  eulerAngles: {x: 40, y: 0, z: 0}
+  eulerAnglesSpeed: 3
   fieldOfView: 65
-  fovSpeed: 5
-  hasDuration: 1
-  zoomDuration: 3
+  fovSpeed: 2
+  hasDuration: 0
+  zoomDuration: 0.1

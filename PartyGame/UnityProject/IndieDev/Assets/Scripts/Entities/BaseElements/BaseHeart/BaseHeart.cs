@@ -9,6 +9,17 @@ public class BaseHeart : BaseElementManager
         base.TakeDamage(damage, attacker);
     }
 
+    public override void SetBaseElementColor()
+    {
+        color = BaseManager.instance.baseHeartColor;
+        foreach (var rd in elementColorRenderers)
+        {
+            rd.material = BaseManager.instance.colorVariantMaterial;
+            rd.material.color = color;
+            rd.material.SetColor("_EmissionColor", color * 2);
+        }
+    }
+
     public override void OnDestroyed()
     {
         base.OnDestroyed();

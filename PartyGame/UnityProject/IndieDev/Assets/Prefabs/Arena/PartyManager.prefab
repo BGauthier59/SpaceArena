@@ -212,10 +212,10 @@ MonoBehaviour:
   baseElementColor:
   - {r: 0.10893285, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.065378524, b: 0, a: 1}
-  - {r: 0, g: 0.27750087, b: 1, a: 1}
   - {r: 1, g: 0.77683866, b: 0, a: 1}
   - {r: 0.5882354, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 0.77507114, a: 1}
+  baseHeartColor: {r: 0, g: 0.06425047, b: 1, a: 1}
   disabledColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
   baseLifeGradient:
     serializedVersion: 2
@@ -453,27 +453,25 @@ MonoBehaviour:
   wavesManager: {fileID: 7624674067609826636}
   randomEventManager: {fileID: 7984801639912373034}
   cameraBehaviour: {fileID: 0}
-  beginningZoom: {fileID: 11400000, guid: 0ca2c322c68a7bc41833227a067a9cd5, type: 2}
+  showScreenZoom: {fileID: 11400000, guid: 0ca2c322c68a7bc41833227a067a9cd5, type: 2}
+  lightDezoom: {fileID: 11400000, guid: 4d5eaa540e83bc643a3c00ef1abaa49d, type: 2}
+  screenLargeZoom: {fileID: 11400000, guid: 5446a5f1022020543bf6896eefaeba2a, type: 2}
   partyDuration: 300
-  beforeGameStartsDuration: 3
-  whenGameEndsDuration: 3
   gameState: 0
   gameWon: 0
   hasPartyBegun: 0
   timerArea: {fileID: 0}
   endOfParty: {fileID: 0}
-  scoreAreas:
-  - area: {fileID: 0}
-    scoreText: {fileID: 0}
-  - area: {fileID: 0}
-    scoreText: {fileID: 0}
-  - area: {fileID: 0}
-    scoreText: {fileID: 0}
-  - area: {fileID: 0}
-    scoreText: {fileID: 0}
+  newEndOfParty: {fileID: 0}
+  newScoreAreas: []
   backToMainMenu: {fileID: 0}
   mainCanvas: {fileID: 0}
   cameraShake: {fileID: 0}
+  tutorialText:
+    tmp: {fileID: 0}
+    frenchText: "Prot\xE9gez le Coeur !"
+    englishText: Protect the Heart!
+  goText: {fileID: 0}
 --- !u!1 &7624674067797375854
 GameObject:
   m_ObjectHideFlags: 0

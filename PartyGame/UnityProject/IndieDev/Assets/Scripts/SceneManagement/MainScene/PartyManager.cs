@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,41 +16,75 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private WavesManager wavesManager;
     public RandomEventManager randomEventManager;
     public CameraBehaviour cameraBehaviour;
-    public CameraZoom beginningZoom;
-    
-    [Header("Game Parameters")] 
-    [Tooltip("Duration in seconds")] [SerializeField] private float partyDuration;
+    public CameraZoom showScreenZoom;
+    public CameraZoom lightDezoom;
+    public CameraZoom screenLargeZoom;
+
+    [Header("Game Parameters")] [Tooltip("Duration in seconds")] [SerializeField]
+    private float partyDuration;
+
     private float partyTimer;
-
-    [SerializeField] private float beforeGameStartsDuration;
-    private float beforeGameStartsTimer;
-
-    [SerializeField] private float whenGameEndsDuration;
-    private float whenGameEndsTimer;
 
     public GameState gameState;
     public bool gameWon;
 
     public enum GameState
     {
-        Beginning, InGame, End, Finished
+        Beginning,
+        InGame,
+        End
     }
 
     [SerializeField] private bool hasPartyBegun;
 
-    [Header("Interface")]
-    [SerializeField] private GameObject timerArea;
+    [Header("Interface")] [SerializeField] private GameObject timerArea;
+
     [SerializeField] private GameObject endOfParty;
-    [SerializeField] private ScoreArea[] scoreAreas;
+
+    [SerializeField] private GameObject newEndOfParty;
+    [SerializeField] private NewScoreArea[] newScoreAreas;
     [SerializeField] private Button backToMainMenu;
     [SerializeField] private GameObject mainCanvas;
     [SerializeField] private CameraShake cameraShake;
 
+    [SerializeField] private TextOnDisplay tutorialText;
+    [SerializeField] private TextMeshProUGUI goText;
+
     [Serializable]
-    public struct ScoreArea
+    public struct TextOnDisplay
+    {
+        public TextMeshPro tmp;
+        public string frenchText;
+        public string englishText;
+
+        public void SetText()
+        {
+            switch (GameManager.instance.settings.currentLanguage)
+            {
+                case Language.French:
+                    tmp.text = frenchText;
+                    break;
+
+                case Language.English:
+                    tmp.text = englishText;
+                    break;
+
+                default:
+                    Debug.LogError("Language is not valid!");
+                    break;
+            }
+
+            tmp.gameObject.SetActive(true);
+        }
+
+        public void DisableText() => tmp.gameObject.SetActive(false);
+    }
+
+    [Serializable]
+    public struct NewScoreArea
     {
         public GameObject area;
-        public TextMeshProUGUI scoreText;
+        public TextMeshPro scoreText;
     }
 
     private void Awake()
@@ -59,7 +94,7 @@ public class PartyManager : MonoBehaviour
 
     private void Start()
     {
-        InitializationStart();
+        StartCoroutine(BeginningGameCinematic());
     }
 
     private void Update()
@@ -67,15 +102,11 @@ public class PartyManager : MonoBehaviour
         switch (gameState)
         {
             case GameState.Beginning:
-                CheckTimerBeforeGameStarts();
                 break;
             case GameState.InGame:
                 CheckTimerInGame();
                 break;
             case GameState.End:
-                CheckTimerWhenGameEnds();
-                break;
-            case GameState.Finished:
                 break;
         }
     }
@@ -91,20 +122,6 @@ public class PartyManager : MonoBehaviour
         GameManager.instance.partyManager = this;
     }
 
-    private void InitializationStart()
-    {
-        for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
-        {
-            var player = GameManager.instance.allPlayers[i];
-            player.initPos = allSpawningPoints[i].position;
-            player.transform.position = player.initPos;
-            player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
-            player.PartyBegins();
-        }
-        
-        cameraBehaviour.SetZoom(beginningZoom);
-    }
-    
     private void StartingGame()
     {
         // Initializing players
@@ -115,11 +132,11 @@ public class PartyManager : MonoBehaviour
             var player = GameManager.instance.allPlayers[i];
             player.ActivatePlayer();
         }
-        
+
         // Initializing timer
         partyTimer = partyDuration;
         timerArea.SetActive(true);
-        
+
         // Starts game
         GameManager.instance.EnableAllControllers();
         hasPartyBegun = true;
@@ -129,14 +146,49 @@ public class PartyManager : MonoBehaviour
 
     #region Before Game Starts
 
-    private void CheckTimerBeforeGameStarts()
+    private IEnumerator BeginningGameCinematic()
     {
-        if (beforeGameStartsTimer >= beforeGameStartsDuration)
+        for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
-            // When Game Starts
-            StartingGame();
+            var player = GameManager.instance.allPlayers[i];
+            player.initPos = allSpawningPoints[i].position;
+            player.transform.position = player.initPos;
+            player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
+            player.PartyBegins();
         }
-        else beforeGameStartsTimer += Time.deltaTime;
+
+        yield return new WaitForSeconds(1f);
+
+        cameraBehaviour.SetZoom(showScreenZoom);
+
+        yield return new WaitForSeconds(2f);
+
+        cameraBehaviour.SetZoom(screenLargeZoom);
+
+        yield return new WaitForSeconds(3f);
+
+        tutorialText.SetText();
+
+        yield return new WaitForSeconds(2f);
+
+        tutorialText.DisableText();
+        cameraBehaviour.SetZoom(lightDezoom);
+
+        yield return new WaitForSeconds(3f);
+
+        goText.gameObject.SetActive(true);
+        goText.text = "3";
+        yield return new WaitForSeconds(1f);
+        goText.text = "2";
+        yield return new WaitForSeconds(1f);
+        goText.text = "1";
+        yield return new WaitForSeconds(1f);
+        goText.text = "GO!";
+
+        StartingGame();
+
+        yield return new WaitForSeconds(1f);
+        goText.gameObject.SetActive(false);
     }
 
     #endregion
@@ -153,7 +205,7 @@ public class PartyManager : MonoBehaviour
             EndingGame(true);
         }
         else partyTimer -= Time.deltaTime;
-        
+
         timerText.text = ((int) partyTimer).ToString();
     }
 
@@ -164,70 +216,76 @@ public class PartyManager : MonoBehaviour
     public void EndingGame(bool won)
     {
         gameWon = won;
+        gameState = GameState.End;
+        StartCoroutine(EndingGameCinematic());
+    }
+
+    private IEnumerator EndingGameCinematic()
+    {
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
             player.DeactivatePlayer();
             player.SetGaugesState(false);
         }
+
         EnemiesManager.instance.DeactivateAllEnemies();
-
         wavesManager.enabled = false;
-        gameState = GameState.End;
-    }
 
-    private void CheckTimerWhenGameEnds()
-    {
-        if (whenGameEndsTimer >= whenGameEndsDuration)
-        {
-            // When Game Ends
-            FinishingGame();
-        }
-        else whenGameEndsTimer += Time.deltaTime;
-    }
+        yield return new WaitForSeconds(1f);
 
-    private void FinishingGame()
-    {
-        gameState = GameState.Finished;
+        cameraBehaviour.SetZoom(lightDezoom);
+
+        yield return new WaitForSeconds(1f);
+
         timerArea.SetActive(false);
+        cameraBehaviour.SetZoom(showScreenZoom);
+
+        yield return new WaitForSeconds(1f);
+
+        cameraBehaviour.SetZoom(screenLargeZoom);
         DisplayScore();
+
+        yield return new WaitForSeconds(1f); // Pour l'instant, sinon on attent que le winner a eu ses pts
+
+        endOfParty.SetActive(true);
+        eventSystem.SetSelectedGameObject(backToMainMenu.gameObject);
     }
-    
+
     private void DisplayScore()
     {
-        endOfParty.SetActive(true);
-        for (int i = 0; i < scoreAreas.Length; i++)
+        newEndOfParty.SetActive(true);
+        for (int i = 0; i < newScoreAreas.Length; i++)
         {
             if (i > GameManager.instance.allPlayers.Count - 1)
             {
                 Debug.LogWarning("There's less players in game than it should be.");
                 break;
             }
-            
+
             if (GameManager.instance.playersNumber > i)
             {
-                scoreAreas[i].area.SetActive(true);
-                scoreAreas[i].scoreText.text = $"Pt: {GameManager.instance.allPlayers[i].points}";
+                newScoreAreas[i].area.SetActive(true);
+                newScoreAreas[i].scoreText.text = $"Pt: {GameManager.instance.allPlayers[i].points}";
             }
-            else scoreAreas[i].area.SetActive(false);
+            else newScoreAreas[i].area.SetActive(false);
         }
-        eventSystem.SetSelectedGameObject(backToMainMenu.gameObject);
     }
-    
+
     public void OnFinishGame()
     {
         endOfParty.SetActive(false);
-        
         OnQuit();
     }
 
     #endregion
-    
+
     public void OnQuit()
     {
+        StopAllCoroutines();
         GameManager.instance.SetMainGamepad(Gamepad.all[0]);
         GameManager.instance.EnableMainControllerOnly();
-        
+
         for (int i = GameManager.instance.allPlayers.Count - 1; i >= 0; i--)
         {
             var player = GameManager.instance.allPlayers[i];
