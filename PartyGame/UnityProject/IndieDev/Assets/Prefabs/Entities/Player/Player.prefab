@@ -219,14 +219,15 @@ MonoBehaviour:
   bulletSpeed: 1600
   durationBeforeNextShoot: 0.1
   reloadDuration: 1
+  autoReloadDuration: 1
   shootingParticles: {fileID: 5832360938257547889}
   shootingShake: {fileID: 11400000, guid: 78299d7eea4932140bd83a79ab14abc9, type: 2}
   recoil: 200
   reloadGauge: {fileID: 6009135751034671799}
   setGaugeSpeed: 10
+  powerUpIsActive: 0
   powerUpGauge: {fileID: 6605169125929842330}
   powerUpMax: 20
-  currentPowerUp: {fileID: 0}
   reparationArea: {fileID: 0}
   lastTakenNewVent: {fileID: 0}
   accessibleNewVent: {fileID: 0}
@@ -443,6 +444,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d8460f66-4e09-4483-ad52-b9f9d83f02a3
     m_ActionName: Player/UsePowerUp[/XInputControllerWindows/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d5a3927f-3ed2-4565-8f34-1e6cb8c42a94
+    m_ActionName: Player/Connect[/XInputControllerWindows/start,/XInputControllerWindows1/start,/XInputControllerWindows/select,/XInputControllerWindows1/select,/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast,/XInputControllerWindows/buttonWest,/XInputControllerWindows1/buttonWest,/XInputControllerWindows/buttonNorth,/XInputControllerWindows1/buttonNorth,/XInputControllerWindows/leftShoulder,/XInputControllerWindows1/leftShoulder,/XInputControllerWindows/rightShoulder,/XInputControllerWindows1/rightShoulder,/XInputControllerWindows/leftTrigger,/XInputControllerWindows1/leftTrigger,/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger,/XInputControllerWindows/dpad/left,/XInputControllerWindows1/dpad/left,/XInputControllerWindows/dpad/right,/XInputControllerWindows1/dpad/right,/XInputControllerWindows/dpad/up,/XInputControllerWindows1/dpad/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows1/dpad/down,/XInputControllerWindows/leftStickPress,/XInputControllerWindows1/leftStickPress,/XInputControllerWindows/rightStickPress,/XInputControllerWindows1/rightStickPress,/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player

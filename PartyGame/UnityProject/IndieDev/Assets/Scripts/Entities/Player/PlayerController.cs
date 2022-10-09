@@ -4,14 +4,12 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
 {
     #region Variables
 
-    [Header("Input, Gamepad & Data")] 
-    public int playerIndex;
+    [Header("Input, Gamepad & Data")] public int playerIndex;
     public string playerName;
     public PlayerInput playerInput;
 
@@ -19,17 +17,14 @@ public class PlayerController : MonoBehaviour
 
     public PlayerManager manager;
 
-    [Header("Party Data")] 
-    public int points;
+    [Header("Party Data")] public int points;
     public Vector3 initPos;
 
-    [Header("Components")] 
-    public Renderer rd;
+    [Header("Components")] public Renderer rd;
     public Collider col;
     private Rigidbody rb;
 
-    [Header("Controller & Parameters")] 
-    private bool isActive;
+    [Header("Controller & Parameters")] private bool isActive;
     [SerializeField] private Vector2 leftJoystickInput;
     [SerializeField] private Vector2 rightJoystickInput;
 
@@ -44,8 +39,7 @@ public class PlayerController : MonoBehaviour
     private float dashTimer;
     private bool isDashing;
 
-    [Header("Attack")] 
-    [SerializeField] private bool isAttacking;
+    [Header("Attack")] [SerializeField] private bool isAttacking;
     [SerializeField] private int maxBulletAmount;
     [SerializeField] private int bulletAmount;
     public float bulletSpeed;
@@ -55,13 +49,17 @@ public class PlayerController : MonoBehaviour
     private float reloadTimer;
     private bool reloading;
     [SerializeField] private float reloadDuration;
+
+    [SerializeField] private float autoReloadDuration;
+    private float autoReloadTimer;
+    private bool isAutoReloading;
+
     [SerializeField] private ParticleSystem shootingParticles;
     [SerializeField] private CameraShakeScriptable shootingShake;
     [SerializeField] private float recoil;
     [SerializeField] private Slider reloadGauge;
 
-    [Header("Power-Up")] 
-    [SerializeField] private float setGaugeSpeed;
+    [Header("Power-Up")] [SerializeField] private float setGaugeSpeed;
     public bool powerUpIsActive;
     [SerializeField] private Slider powerUpGauge;
     [SerializeField] private int powerUpMax;
@@ -69,11 +67,9 @@ public class PlayerController : MonoBehaviour
     private int powerUpScore;
     private bool canUsePowerUp = true;
 
-    [Header("Reparation")] 
-    public ReparationArea reparationArea;
+    [Header("Reparation")] public ReparationArea reparationArea;
 
-    [Header("Vent")]
-    public NewVent lastTakenNewVent;
+    [Header("Vent")] public NewVent lastTakenNewVent;
     public NewVent accessibleNewVent;
     public NewConduit currentConduit;
     public bool detectInputConduit;
@@ -81,12 +77,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float afterVentingSecurityDuration;
     private float afterVentingSecurityTimer;
 
-    [Header("Graph")] 
-    public SpriteRenderer directionArrow;
+    [Header("Graph")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
     [SerializeField] private TrailRenderer trail;
     public Light playerLight;
-    
+
     #endregion
 
     #region Connection
@@ -140,7 +135,7 @@ public class PlayerController : MonoBehaviour
         powerUpGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
         powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
                                           + new Vector3(50, 0);
-        
+
         SetGaugesState(false);
         GraphInitialization();
     }
@@ -176,10 +171,11 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         SetTimerAfterVenting();
-        
+
         if (!isActive) return;
-        
+
         Rotating();
+        AutoReloading();
         Reloading();
         Firing();
         Dashing();
@@ -189,7 +185,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         MovingInConduit();
-        
+
         if (!isActive) return;
 
         Moving();
@@ -246,10 +242,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnReload(InputAction.CallbackContext ctx)
     {
+        return;
+
         if (!isActive) return;
         if (ctx.canceled) return;
         if (reloading) return;
-        
+
         reloading = true;
         reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
     }
@@ -274,7 +272,7 @@ public class PlayerController : MonoBehaviour
 
         isDashing = ctx.performed;
     }
-    
+
     public void OnUsePowerUp(InputAction.CallbackContext ctx)
     {
         if (!isActive) return;
@@ -304,10 +302,10 @@ public class PlayerController : MonoBehaviour
     {
         if (currentConduit == null) return;
         if (!detectInputConduit) return;
-        
+
         var moveVector = new Vector2(leftJoystickInput.x, leftJoystickInput.y);
         var dir = NewConduit.ConduitDirection.NA;
-        
+
         if (moveVector.x > .5f) dir = NewConduit.ConduitDirection.Right;
         else if (moveVector.x < -.5f) dir = NewConduit.ConduitDirection.Left;
         else if (moveVector.y > .5f) dir = NewConduit.ConduitDirection.Up;
@@ -343,15 +341,13 @@ public class PlayerController : MonoBehaviour
             if (timerBeforeNextShoot >= durationBeforeNextShoot)
             {
                 bulletAmount--;
-                if (bulletAmount <= 0) reloading = true;
-
+                
                 shootingParticles.Play();
                 var newBullet =
                     PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
                 var bullet = newBullet.GetComponent<BulletScript>();
                 bullet.shooter = manager;
                 bullet.rb.AddForce(transform.forward * bulletSpeed);
-                
 
                 GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
                 GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
@@ -360,6 +356,17 @@ public class PlayerController : MonoBehaviour
                 timerBeforeNextShoot = 0f;
 
                 reloadGauge.value = bulletAmount;
+
+                if (bulletAmount <= 0)
+                {
+                    isAutoReloading = false;
+                    reloading = true;
+                }
+                else
+                {
+                    isAutoReloading = true;
+                    autoReloadTimer = 0f;
+                }
             }
             else
             {
@@ -374,30 +381,46 @@ public class PlayerController : MonoBehaviour
 
     private void Reloading()
     {
-        if (reloading)
+        if (!reloading) return;
+
+        if (reloadTimer >= reloadDuration)
         {
-            if (reloadTimer >= reloadDuration)
-            {
-                reloading = false;
-                reloadTimer = 0f;
-                bulletAmount = maxBulletAmount;
-            }
-            else
-            {
-                reloadGauge.value = (reloadTimer / reloadDuration) * reloadGauge.maxValue;
-                reloadTimer += Time.deltaTime;
-            }
+            reloading = false;
+            reloadTimer = 0f;
+            bulletAmount = maxBulletAmount;
+        }
+        else
+        {
+            reloadGauge.value = (reloadTimer / reloadDuration) * reloadGauge.maxValue;
+            reloadTimer += Time.deltaTime;
+        }
+    }
+
+    private void AutoReloading()
+    {
+        if (!isAutoReloading) return;
+
+        if (autoReloadTimer >= autoReloadDuration)
+        {
+            autoReloadTimer = 0f;
+            reloading = true;
+            reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
+            isAutoReloading = false;
+        }
+        else
+        {
+            autoReloadTimer += Time.deltaTime;
         }
     }
 
     private void Dashing()
     {
         if (!isDashing) return;
-        
+
         if (accessibleNewVent)
         {
             if (isVentingOut && accessibleNewVent == lastTakenNewVent) return;
-            
+
             CancelDash();
             accessibleNewVent.EntersVent(this);
             return;
@@ -418,7 +441,7 @@ public class PlayerController : MonoBehaviour
     private void SetTimerAfterVenting()
     {
         if (!isVentingOut) return;
-        
+
         if (afterVentingSecurityTimer > afterVentingSecurityDuration)
         {
             afterVentingSecurityTimer = 0f;
@@ -431,7 +454,8 @@ public class PlayerController : MonoBehaviour
     {
         var nextPos = Camera.main.WorldToScreenPoint(transform.position)
                       + new Vector3(50, 0);
-        powerUpGauge.transform.position = Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
+        powerUpGauge.transform.position =
+            Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
         //powerUpGauge.transform.position = nextPos;
     }
 
@@ -440,9 +464,9 @@ public class PlayerController : MonoBehaviour
         var nextPos = Camera.main.WorldToScreenPoint(transform.position)
                       + new Vector3(0, -30);
 
-        reloadGauge.transform.position = Vector3.Lerp(reloadGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
+        reloadGauge.transform.position =
+            Vector3.Lerp(reloadGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
         //reloadGauge.transform.position = nextPos;
-
     }
 
     private void PowerCheck()
