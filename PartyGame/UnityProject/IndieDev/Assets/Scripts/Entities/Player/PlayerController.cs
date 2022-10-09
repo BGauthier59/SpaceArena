@@ -122,16 +122,17 @@ public class PlayerController : MonoBehaviour
     public void PartyBegins()
     {
         rb.isKinematic = false;
-        bulletAmount = maxBulletAmount;
-
         baseSpeed = speed;
-        powerUpGauge.maxValue = powerUpMax;
-        powerUpScore = 0;
 
+        bulletAmount = maxBulletAmount;
         reloadGauge.maxValue = maxBulletAmount;
+        reloadGauge.value = reloadGauge.maxValue;
         reloadGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
         reloadGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
                                          + new Vector3(0, -30);
+        powerUpScore = 0;
+        powerUpGauge.maxValue = powerUpMax;
+        powerUpGauge.value = powerUpGauge.minValue;
         powerUpGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
         powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
                                           + new Vector3(50, 0);
@@ -341,7 +342,7 @@ public class PlayerController : MonoBehaviour
             if (timerBeforeNextShoot >= durationBeforeNextShoot)
             {
                 bulletAmount--;
-                
+
                 shootingParticles.Play();
                 var newBullet =
                     PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
