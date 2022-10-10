@@ -24,7 +24,7 @@ public class EnemyManager : Entity
         {
             mesh.Play("OnHit");
         }
-        if (currentLife == 0)
+        if (currentLife <= 0)
         {
             ((PlayerManager)attacker)?.controller.IncreasePowerUpGauge(powerUpScore);
         }

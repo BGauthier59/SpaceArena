@@ -629,6 +629,7 @@ MonoBehaviour:
   wavesManager: {fileID: 7624674067609826636}
   randomEventManager: {fileID: 7984801639912373034}
   cameraManager: {fileID: 5274706629730034120}
+  mainLight: {fileID: 0}
   showScreenZoom: {fileID: 11400000, guid: 0ca2c322c68a7bc41833227a067a9cd5, type: 2}
   lightDezoom: {fileID: 11400000, guid: 4d5eaa540e83bc643a3c00ef1abaa49d, type: 2}
   screenLargeZoom: {fileID: 11400000, guid: 5446a5f1022020543bf6896eefaeba2a, type: 2}
@@ -733,7 +734,7 @@ MonoBehaviour:
   - type: 0
     prefab: {fileID: 6393692887041716744, guid: 9061718f3d3384645adc263d51f31739, type: 3}
     size: 50
-  - type: 1
+  - type: 2
     prefab: {fileID: 2168510512892706134, guid: bd94b150838481143a5e53f9c18b497a, type: 3}
     size: 50
   - type: 4
@@ -751,6 +752,12 @@ MonoBehaviour:
   - type: 8
     prefab: {fileID: 3612230743305699402, guid: a0011a1226a756a4fbcceb045a6d8aa7, type: 3}
     size: 50
+  - type: 9
+    prefab: {fileID: 3247061765919183223, guid: 72d8b951559fb3a4284377eccbba279c, type: 3}
+    size: 35
+  - type: 10
+    prefab: {fileID: 5349093574151052031, guid: 48f41b57384f217448908cbfcba19728, type: 3}
+    size: 10
 --- !u!1 &7624674068071304360
 GameObject:
   m_ObjectHideFlags: 0
