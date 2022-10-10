@@ -306,7 +306,7 @@ public class PartyManager : MonoBehaviour
 
         GameManager.instance.allPlayers.Clear();
         GameManager.instance.playersNumber = 0;
-        GameManager.instance.partyManager = null;
+        //GameManager.instance.partyManager = null;
         SceneManager.LoadScene(GameManager.instance.mainMenuIndex);
     }
 
