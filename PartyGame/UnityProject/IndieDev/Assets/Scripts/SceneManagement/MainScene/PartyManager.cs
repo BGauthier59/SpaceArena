@@ -314,11 +314,13 @@ public class PartyManager : MonoBehaviour
 
     public IEnumerator RandomEventSetDisplay(RandomEvent ev)
     {
+        timerArea.SetActive(false);
         randomEventArea.SetActive(true);
         ev.randomEventText.SetText();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         ev.randomEventText.DisableText();
         randomEventArea.SetActive(false);
+        timerArea.SetActive(true);
     }
 
     #endregion

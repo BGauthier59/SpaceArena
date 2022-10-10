@@ -36,6 +36,8 @@ public class RandomEventManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.partyManager.gameState == PartyManager.GameState.End) return;
+        
         CheckFirstTimer();
         CheckTimer();
         CheckEventDuration();
