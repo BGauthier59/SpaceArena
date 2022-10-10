@@ -40,9 +40,15 @@ public class PlayerManager : Entity
         GameManager.instance.feedbacks.RumbleConstant(controller.dataGamepad, VibrationsType.TakeDamage);
     }
 
-    public override void Death()
+    protected override void Death()
     {
         base.Death();
+
+        if (controller.reparationArea.isEveryPlayerOn)
+        {
+            controller.reparationArea.OnTriggerExit(controller.col);
+        }
+        
         controller.DeactivatePlayer();
         isRespawning = true;
         controller.rd.gameObject.SetActive(false);

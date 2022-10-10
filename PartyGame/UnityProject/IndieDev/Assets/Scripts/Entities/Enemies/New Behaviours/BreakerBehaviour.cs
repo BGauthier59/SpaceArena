@@ -42,7 +42,7 @@ public class BreakerBehaviour : EnemyGenericBehaviour
     public override void SetAvailableTargets()
     {
         var entities = new List<Entity>();
-        foreach (var baseElement in BaseManager.instance.allBaseElements)
+        foreach (var baseElement in GameManager.instance.partyManager.baseManager.allBaseElements)
         {
             entities.Add(baseElement);
         }

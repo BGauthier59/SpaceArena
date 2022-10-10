@@ -13,10 +13,15 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private Transform[] allSpawningPoints;
     [SerializeField] private TextMeshProUGUI timerText;
+
+    [Header("Instances")] public BaseManager baseManager;
+    public EnemiesManager enemiesManager;
     public WavesManager wavesManager;
     public RandomEventManager randomEventManager;
-    public CameraBehaviour cameraBehaviour;
-    public CameraZoom showScreenZoom;
+    public CameraManager cameraManager;
+    public Light mainLight;
+
+    [Header("Cinematic camera zooms")] public CameraZoom showScreenZoom;
     public CameraZoom lightDezoom;
     public CameraZoom screenLargeZoom;
 
@@ -37,15 +42,13 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private bool hasPartyBegun;
 
-    [Header("Interface")] [SerializeField] private GameObject timerArea;
-
+    [Header("Interface")] public GameObject mainCanvas;
+    [SerializeField] private GameObject timerArea;
     [SerializeField] private GameObject endOfParty;
-
     [SerializeField] private GameObject newEndOfParty;
     [SerializeField] private NewScoreArea[] newScoreAreas;
     [SerializeField] private Button backToMainMenu;
-    [SerializeField] private GameObject mainCanvas;
-    [SerializeField] private CameraShake cameraShake;
+    public CameraShake cameraShake;
 
     [SerializeField] private TextOnDisplay tutorialText;
     [SerializeField] private TextMeshProUGUI goText;
@@ -113,17 +116,20 @@ public class PartyManager : MonoBehaviour
 
     private void InitializationAwake()
     {
+        SetInstances();
         gameState = GameState.Beginning;
         hasPartyBegun = false;
+    }
+
+    private void SetInstances()
+    {
         eventSystem = GameManager.instance.eventSystem;
         GameManager.instance.playerInputManager = null;
-        GameManager.instance.mainCanvas = mainCanvas;
-        GameManager.instance.cameraShake = cameraShake;
         GameManager.instance.partyManager = this;
         randomEventManager.Initialization();
         wavesManager.Initialization();
     }
-    
+
     #region Before Game Starts
 
     private IEnumerator BeginningGameCinematic()
@@ -139,11 +145,11 @@ public class PartyManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        cameraBehaviour.SetZoom(showScreenZoom);
+        cameraManager.SetZoom(showScreenZoom);
 
         yield return new WaitForSeconds(2f);
 
-        cameraBehaviour.SetZoom(screenLargeZoom);
+        cameraManager.SetZoom(screenLargeZoom);
 
         yield return new WaitForSeconds(1f);
 
@@ -152,7 +158,7 @@ public class PartyManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         tutorialText.DisableText();
-        cameraBehaviour.SetZoom(lightDezoom);
+        cameraManager.SetZoom(lightDezoom);
 
         yield return new WaitForSeconds(3f);
 
@@ -191,7 +197,7 @@ public class PartyManager : MonoBehaviour
         GameManager.instance.EnableAllControllers();
         hasPartyBegun = true;
         wavesManager.StartNewWave();
-        cameraBehaviour.ResetZoom();
+        cameraManager.ResetZoom();
     }
 
     #endregion
@@ -209,7 +215,7 @@ public class PartyManager : MonoBehaviour
         }
         else partyTimer -= Time.deltaTime;
 
-        timerText.text = ((int) partyTimer).ToString();
+        timerText.text = ((int)partyTimer).ToString();
     }
 
     #endregion
@@ -232,21 +238,21 @@ public class PartyManager : MonoBehaviour
             player.SetGaugesState(false);
         }
 
-        EnemiesManager.instance.DeactivateAllEnemies();
+        enemiesManager.DeactivateAllEnemies();
         wavesManager.enabled = false;
 
         yield return new WaitForSeconds(1f);
 
-        cameraBehaviour.SetZoom(lightDezoom);
+        cameraManager.SetZoom(lightDezoom);
 
         yield return new WaitForSeconds(1f);
 
         timerArea.SetActive(false);
-        cameraBehaviour.SetZoom(showScreenZoom);
+        cameraManager.SetZoom(showScreenZoom);
 
         yield return new WaitForSeconds(1f);
 
-        cameraBehaviour.SetZoom(screenLargeZoom);
+        cameraManager.SetZoom(screenLargeZoom);
         DisplayScore();
 
         yield return new WaitForSeconds(1f); // Pour l'instant, sinon on attent que le winner a eu ses pts

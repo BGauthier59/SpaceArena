@@ -29,7 +29,7 @@ public class RandomEventManager : MonoBehaviour
     {
         //currentEvent = events[0]; // Pour l'instant
         
-        GameManager.instance.partyManager.cameraBehaviour.SetZoom(randomEventZoom);
+        GameManager.instance.partyManager.cameraManager.SetZoom(randomEventZoom);
         currentEvent?.StartEvent();
     }
 

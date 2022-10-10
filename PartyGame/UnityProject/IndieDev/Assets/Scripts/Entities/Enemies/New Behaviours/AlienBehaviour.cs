@@ -50,7 +50,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
             entities.Add(player.manager);
         }
 
-        foreach (var baseElement in BaseManager.instance.allBaseElements)
+        foreach (var baseElement in GameManager.instance.partyManager.baseManager.allBaseElements)
         {
             entities.Add(baseElement);
         }

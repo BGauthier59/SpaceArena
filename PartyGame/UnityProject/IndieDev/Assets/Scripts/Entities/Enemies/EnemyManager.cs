@@ -30,7 +30,7 @@ public class EnemyManager : Entity
         }
     }
 
-    public override void Death()
+    protected override void Death()
     {
         base.Death();
         gameObject.SetActive(false);
@@ -47,8 +47,8 @@ public class EnemyManager : Entity
     public override void Start()
     {
         base.Start();
-        if (EnemiesManager.instance == null) return;
-        EnemiesManager.instance.AddEnemy(this);
+        if (GameManager.instance.partyManager == null) return;
+        GameManager.instance.partyManager.enemiesManager.AddEnemy(this);
     }
 
     public override void Update()
@@ -82,13 +82,13 @@ public class EnemyManager : Entity
 
     private void OnEnable()
     {
-        if (EnemiesManager.instance == null) return;
-        EnemiesManager.instance.AddEnemy(this);
+        if (GameManager.instance.partyManager == null) return;
+        GameManager.instance.partyManager.enemiesManager.AddEnemy(this);
     }
 
     private void OnDisable()
     {
-        if (EnemiesManager.instance == null) return;
-        EnemiesManager.instance.RemoveEnemy(this);
+        if (GameManager.instance.partyManager == null) return;
+        GameManager.instance.partyManager.enemiesManager.RemoveEnemy(this);
     }
 }

@@ -5,20 +5,6 @@ using UnityEngine;
 
 public class EnemiesManager : MonoBehaviour
 {
-    public static EnemiesManager instance;
-
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
-            DestroyImmediate(this);
-            return;
-        }
-
-        instance = this;
-        allEnemies.Clear();
-    }
-
     public List<EnemyManager> allEnemies = new List<EnemyManager>();
 
     public void AddEnemy(EnemyManager enemy)

@@ -37,7 +37,7 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
 
     public override void Target()
     {
-        foreach (var element in BaseManager.instance.allBaseElements)
+        foreach (var element in GameManager.instance.partyManager.baseManager.allBaseElements)
         {
             if (element.GetType() == typeof(BaseHeart)) target = element;
         }
@@ -57,7 +57,7 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
     public override void SetAvailableTargets()
     {
         var entities = new List<Entity>();
-        foreach (var baseElement in BaseManager.instance.allBaseElements)
+        foreach (var baseElement in GameManager.instance.partyManager.baseManager.allBaseElements)
         {
             entities.Add(baseElement);
         }
@@ -242,7 +242,7 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
 
         var helping = new List<EnemyManager>();
 
-        foreach (var e in EnemiesManager.instance.allEnemies)
+        foreach (var e in GameManager.instance.partyManager.enemiesManager.allEnemies)
         {
             if (e.isDead) continue;
             if(Vector3.Distance(transform.position, e.transform.position) > helpersDistance) continue;

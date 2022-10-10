@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CameraBehaviour : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
     [SerializeField] private CameraZoom defaultZoom;

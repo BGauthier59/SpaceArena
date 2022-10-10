@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ElectricalDevice : BaseElementManager
 {
-    [SerializeField] private Light directionalLight;
+    private Light directionalLight;
     [SerializeField] private ElectricalLight[] allLights;
     private bool isSwitchingLightsOn;
     
@@ -43,6 +43,7 @@ public class ElectricalDevice : BaseElementManager
     public override void Start()
     {
         base.Start();
+        directionalLight = GameManager.instance.partyManager.mainLight;
         foreach (var light in allLights)
         {
             foreach (var rd in light.colorElements)

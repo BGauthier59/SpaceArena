@@ -49,7 +49,7 @@ public class BaseElementManager : Entity
         SetLifeSlider();
     }
 
-    public override void Death()
+    protected override void Death()
     {
         if (isDead) return;
         OnDestroyed();
@@ -71,7 +71,7 @@ public class BaseElementManager : Entity
         InitializeBaseElementInfo();
         
         // Choix de couleur automatisé
-        BaseManager.instance.allBaseElements.Add(this);
+        GameManager.instance.partyManager.baseManager.allBaseElements.Add(this);
         
         SetBaseElementColor();
 
@@ -85,10 +85,10 @@ public class BaseElementManager : Entity
 
     public virtual void SetBaseElementColor()
     {
-        color = BaseManager.instance.baseElementColor[BaseManager.instance.allBaseElements.Count - 1];
+        color = GameManager.instance.partyManager.baseManager.baseElementColor[GameManager.instance.partyManager.baseManager.allBaseElements.Count - 1];
         foreach (var rd in elementColorRenderers)
         {
-            rd.material = BaseManager.instance.colorVariantMaterial;
+            rd.material = GameManager.instance.partyManager.baseManager.colorVariantMaterial;
             rd.material.color = color;
             rd.material.SetColor("_EmissionColor", color * 2);
         }
@@ -246,7 +246,7 @@ public class BaseElementManager : Entity
 
         lifeSlider.maxValue = totalLife;
 
-        baseElementInfo.transform.SetParent(GameManager.instance.mainCanvas.transform);
+        baseElementInfo.transform.SetParent(GameManager.instance.partyManager.mainCanvas.transform);
         SetLifeSlider();
         SetBaseElementInfo(false);
     }
@@ -254,13 +254,13 @@ public class BaseElementManager : Entity
     public void SetBaseElementInfo(bool active)
     {
         baseElementInfo.SetActive(active);
-        baseElementInfo.transform.position = Camera.main.WorldToScreenPoint(transform.position + BaseManager.instance.baseElementInfoOffset);
+        baseElementInfo.transform.position = Camera.main.WorldToScreenPoint(transform.position + GameManager.instance.partyManager.baseManager.baseElementInfoOffset);
     }
     
     public void SetLifeSlider()
     {
         lifeSlider.value = currentLife;
-        lifeSliderFill.color = BaseManager.instance.baseLifeGradient.Evaluate((float) currentLife / totalLife);
+        lifeSliderFill.color = GameManager.instance.partyManager.baseManager.baseLifeGradient.Evaluate((float) currentLife / totalLife);
         baseElementLifeText.text = $"{currentLife}/{totalLife}";
     }
 

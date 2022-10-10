@@ -41,7 +41,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public virtual void Death()
+    protected virtual void Death()
     {
         isDead = true;
     }

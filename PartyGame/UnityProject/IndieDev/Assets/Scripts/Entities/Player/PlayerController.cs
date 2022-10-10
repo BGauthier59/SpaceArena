@@ -127,13 +127,13 @@ public class PlayerController : MonoBehaviour
         bulletAmount = maxBulletAmount;
         reloadGauge.maxValue = maxBulletAmount;
         reloadGauge.value = reloadGauge.maxValue;
-        reloadGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
+        reloadGauge.transform.SetParent(GameManager.instance.partyManager.mainCanvas.transform);
         reloadGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
                                          + new Vector3(0, -30);
         powerUpScore = 0;
         powerUpGauge.maxValue = powerUpMax;
         powerUpGauge.value = powerUpGauge.minValue;
-        powerUpGauge.transform.SetParent(GameManager.instance.mainCanvas.transform);
+        powerUpGauge.transform.SetParent(GameManager.instance.partyManager.mainCanvas.transform);
         powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
                                           + new Vector3(50, 0);
 
@@ -350,7 +350,7 @@ public class PlayerController : MonoBehaviour
                 bullet.shooter = manager;
                 bullet.rb.AddForce(transform.forward * bulletSpeed);
 
-                GameManager.instance.cameraShake.AddShakeEvent(shootingShake);
+                GameManager.instance.partyManager.cameraShake.AddShakeEvent(shootingShake);
                 GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
 
                 rb.AddForce(-transform.forward * recoil);

@@ -11,10 +11,10 @@ public class BaseHeart : BaseElementManager
 
     public override void SetBaseElementColor()
     {
-        color = BaseManager.instance.baseHeartColor;
+        color = GameManager.instance.partyManager.baseManager.baseHeartColor;
         foreach (var rd in elementColorRenderers)
         {
-            rd.material = BaseManager.instance.colorVariantMaterial;
+            rd.material = GameManager.instance.partyManager.baseManager.colorVariantMaterial;
             rd.material.color = color;
             rd.material.SetColor("_EmissionColor", color * 2);
         }
