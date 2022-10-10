@@ -1,40 +1,74 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RandomEventManager : MonoBehaviour
 {
     public RandomEvent[] events;
-    public RandomEvent currentEvent;
+    public List<RandomEvent> currentEvents;
     public CameraZoom randomEventZoom;
     private WavesManager wavesManager;
 
-    private bool isWaitingForNextEvent;
+    public bool isRunningEvent;
+    public bool isStartingEvent;
+
+    [SerializeField] private float eventDuration;
+    private float eventTimer;
+
+    [SerializeField] private float startingEventDuration;
+    private float startingEventTimer;
 
     public void Initialization()
     {
+        currentEvents = new List<RandomEvent>();
         wavesManager = GameManager.instance.partyManager.wavesManager;
-        isWaitingForNextEvent = false;
-        
-        // Set first event timer
-    }
+        isStartingEvent = false;
 
-    // Quand start un nouvel event random ?
-    
-    // Waves Manager doit être en isWaitingForNextWave (pas d'event pendant le spawn d'une wave)
-    
-    // Conséquence d'un event aléatoire ?
-    // Durant la cinématique de l'évent (camera change, screen animations), le timer du Waves Manager est en pause
-    
-    public void StartNewRandomEvent()
-    {
-        //currentEvent = events[0]; // Pour l'instant
-        
-        GameManager.instance.partyManager.cameraManager.SetZoom(randomEventZoom);
-        currentEvent?.StartEvent();
+        // Set first event timer
     }
 
     private void Update()
     {
-        if (!isWaitingForNextEvent) return;
+        if (!isRunningEvent) return;
+        if (startingEventTimer >= startingEventDuration)
+        {
+            isStartingEvent = false;
+        }
+        else startingEventTimer += Time.deltaTime;
+
+        if (!isStartingEvent) return;
+        if (wavesManager.isSpawning) return;
+
+        if (eventTimer >= eventDuration)
+        {
+            StartNewRandomEvent();
+        }
+        else eventTimer += Time.deltaTime;
+    }
+
+    public void StartNewRandomEvent()
+    {
+        startingEventTimer = 0f;
+        eventTimer = 0f;
+        isStartingEvent = true;
+        isRunningEvent = true;
+
+        GameManager.instance.partyManager.cameraManager.SetZoom(randomEventZoom);
+
+        // Set Random Event
+        RandomEvent newEvent;
+        do
+        {
+            newEvent = events[Random.Range(0, events.Length)];
+        } while (events.Contains(newEvent));
+
+        currentEvents.Add(newEvent);
+
+
+        newEvent.StartEvent();
+
+        isStartingEvent = false;
     }
 }

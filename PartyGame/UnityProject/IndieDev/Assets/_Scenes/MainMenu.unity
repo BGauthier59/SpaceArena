@@ -3767,6 +3767,11 @@ MonoBehaviour:
       frenchName: Prototype Gotgot
       englishName: Prototype Gotgot
     arenaSceneIndex: 5
+  - arenaImage: {fileID: 0}
+    arenaName:
+      frenchName: "Ar\xE8ne 2"
+      englishName: Arena 2
+    arenaSceneIndex: 6
 --- !u!4 &969052267
 Transform:
   m_ObjectHideFlags: 0

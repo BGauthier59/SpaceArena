@@ -9,7 +9,7 @@ public class WavesManager : MonoBehaviour
     [SerializeField] private Entrance[] entrances;
     [SerializeField] private EnemyData[] enemyData;
 
-    private bool isWaitingForNextWave;
+    public bool isSpawning;
     private float durationBeforeNextWave;
     private float timerBeforeNextWave;
 
@@ -72,14 +72,15 @@ public class WavesManager : MonoBehaviour
     
     public void Initialization()
     {
-        isWaitingForNextWave = false;
+        isSpawning = true;
         currentRound = 0;
         randomEventManager = GameManager.instance.partyManager.randomEventManager;
     }
 
     private void Update()
     {
-        if (!isWaitingForNextWave) return;
+        if (isSpawning) return;
+        if (randomEventManager.isStartingEvent) return;
 
         if (timerBeforeNextWave >= durationBeforeNextWave)
         {
@@ -92,7 +93,7 @@ public class WavesManager : MonoBehaviour
     {
         currentRound++;
         timerBeforeNextWave = 0f;
-        isWaitingForNextWave = false;
+        isSpawning = true;
 
         lastDifficulty = difficulty;
 
@@ -113,7 +114,7 @@ public class WavesManager : MonoBehaviour
 
         currentWave = newWave;
         SetWave();
-        isWaitingForNextWave = true;
+        isSpawning = false;
     }
 
     private void SetWave()

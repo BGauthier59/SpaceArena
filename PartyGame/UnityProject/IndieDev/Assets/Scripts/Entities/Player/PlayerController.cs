@@ -515,6 +515,12 @@ public class PlayerController : MonoBehaviour
 
     public void SetGaugesState(bool active)
     {
+        if (active && GameManager.instance.partyManager.gameState == PartyManager.GameState.End)
+        {
+            Debug.LogWarning("Tried to display gauges after end of game.");
+            return;
+        }
+        
         reloadGauge.gameObject.SetActive(active);
         powerUpGauge.gameObject.SetActive(active);
     }

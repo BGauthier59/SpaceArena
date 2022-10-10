@@ -23,5 +23,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Arenas/PrototypeScene.unity
     guid: 4e044db3db3a0ef4ca87cf203b71c397
+  - enabled: 1
+    path: Assets/_Scenes/Arenas/Arena2.unity
+    guid: 953a1dc1e686969479deea00ac25f331
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9e57137e192b1154f891b60b93fc7c6d, type: 2}
