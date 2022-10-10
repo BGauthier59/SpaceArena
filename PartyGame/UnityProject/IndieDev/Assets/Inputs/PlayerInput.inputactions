@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Reload",
-                    "type": "Button",
-                    "id": "19556e22-90d3-403c-9e27-8b4a24d33602",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Dash",
                     "type": "Button",
                     "id": "af640302-3190-4b35-8d4b-64cbbb09ed0e",
@@ -138,17 +129,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c5b666b0-fb2c-4440-9df9-2d4a78adfa14",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -365,19 +365,7 @@ MonoBehaviour:
     m_ActionId: 9ace7937-58ae-445f-9049-de38b8b2cf12
     m_ActionName: Player/Fire
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7167191028575041455}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnReload
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 19556e22-90d3-403c-9e27-8b4a24d33602
     m_ActionName: Player/Reload
   - m_PersistentCalls:

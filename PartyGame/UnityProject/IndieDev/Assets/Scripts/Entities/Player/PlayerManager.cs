@@ -43,8 +43,8 @@ public class PlayerManager : Entity
     protected override void Death()
     {
         base.Death();
-
-        if (controller.reparationArea.isEveryPlayerOn)
+        
+        if (controller.reparationArea != null && controller.reparationArea.isEveryPlayerOn)
         {
             controller.reparationArea.OnTriggerExit(controller.col);
         }

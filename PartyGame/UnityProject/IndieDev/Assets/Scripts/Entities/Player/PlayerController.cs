@@ -199,7 +199,6 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         leftJoystickInput = ctx.ReadValue<Vector2>();
-        //if (!isActive) return;
 
         // Checking conditions
         if (Mathf.Abs(leftJoystickInput.x) < moveTolerance && Mathf.Abs(leftJoystickInput.y) < moveTolerance)
@@ -239,18 +238,6 @@ public class PlayerController : MonoBehaviour
         if (!isActive) return;
 
         isAttacking = ctx.performed;
-    }
-
-    public void OnReload(InputAction.CallbackContext ctx)
-    {
-        return;
-
-        if (!isActive) return;
-        if (ctx.canceled) return;
-        if (reloading) return;
-
-        reloading = true;
-        reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
     }
 
     public void OnRepair(InputAction.CallbackContext ctx)
@@ -296,7 +283,6 @@ public class PlayerController : MonoBehaviour
     {
         var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         rb.velocity = moveVector * (speed * Time.fixedDeltaTime);
-        //rb.velocity = moveVector * (speed * Time.deltaTime);
     }
 
     private void MovingInConduit()

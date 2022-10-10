@@ -266,7 +266,7 @@ public class PartyManager : MonoBehaviour
         newEndOfParty.SetActive(true);
         for (int i = 0; i < newScoreAreas.Length; i++)
         {
-            if (i > GameManager.instance.allPlayers.Count - 1)
+            if (GameManager.instance.allPlayers.Count <= 1)
             {
                 Debug.LogWarning("There's less players in game than it should be.");
                 break;
