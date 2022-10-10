@@ -1,21 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RandomEvent
+[Serializable]
+public abstract class RandomEvent : MonoBehaviour
 {
-    // Que font les random events ?
-    
-    
-    // Ouvre des trappes dans le sol ?
-    // Inverse les contrôles ?
-    // Fumée qui brouille la vue ?
-    
-    // Point commun : duration, activation de script
+    public PartyManager.TextOnDisplay randomEventText;
 
+    public Sprite randomEventSprite;
 
     public float eventDuration;
     public float eventTimer;
+
+    private void Start()
+    {
+        GameManager.instance.partyManager.randomEventManager.events.Add(this);
+    }
 
     public abstract void StartEvent();
 

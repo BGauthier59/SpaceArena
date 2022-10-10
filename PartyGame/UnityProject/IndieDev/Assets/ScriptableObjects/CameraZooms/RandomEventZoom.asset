@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: RandomEventZoom
   m_EditorClassIdentifier: 
   target: 1
-  offset: {x: 0, y: 27, z: 5}
+  offset: {x: 0, y: 34, z: -18}
   offsetSpeed: 5
-  eulerAngles: {x: 60, y: 0, z: 0}
-  eulerAnglesSpeed: 0
+  eulerAngles: {x: 55, y: 0, z: 0}
+  eulerAnglesSpeed: 5
   fieldOfView: 65
   fovSpeed: 5
   hasDuration: 1

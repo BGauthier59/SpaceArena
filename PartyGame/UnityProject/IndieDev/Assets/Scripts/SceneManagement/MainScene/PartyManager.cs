@@ -53,6 +53,8 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private TextOnDisplay tutorialText;
     [SerializeField] private TextMeshProUGUI goText;
 
+    [SerializeField] private GameObject randomEventArea;
+    
     [Serializable]
     public struct TextOnDisplay
     {
@@ -197,6 +199,7 @@ public class PartyManager : MonoBehaviour
         GameManager.instance.EnableAllControllers();
         hasPartyBegun = true;
         wavesManager.StartNewWave();
+        randomEventManager.StartRandomEventManager();
         cameraManager.ResetZoom();
     }
 
@@ -306,4 +309,17 @@ public class PartyManager : MonoBehaviour
         GameManager.instance.partyManager = null;
         SceneManager.LoadScene(GameManager.instance.mainMenuIndex);
     }
+
+    #region Display
+
+    public IEnumerator RandomEventSetDisplay(RandomEvent ev)
+    {
+        randomEventArea.SetActive(true);
+        ev.randomEventText.SetText();
+        yield return new WaitForSeconds(2f);
+        ev.randomEventText.DisableText();
+        randomEventArea.SetActive(false);
+    }
+
+    #endregion
 }

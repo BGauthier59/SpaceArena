@@ -1,74 +1,130 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class RandomEventManager : MonoBehaviour
 {
-    public RandomEvent[] events;
+    public List<RandomEvent> events;
     public List<RandomEvent> currentEvents;
     public CameraZoom randomEventZoom;
     private WavesManager wavesManager;
 
-    public bool isRunningEvent;
     public bool isStartingEvent;
 
-    [SerializeField] private float eventDuration;
-    private float eventTimer;
+    private bool begun;
+    [SerializeField] private float durationBeforeFirstEvent;
+    private float timerBeforeFirstEvent;
+
+    [SerializeField] private float durationBeforeNextEvent;
+    private float timerBeforeNextEvent;
+
+    public bool isEventRunning;
 
     [SerializeField] private float startingEventDuration;
-    private float startingEventTimer;
 
     public void Initialization()
     {
         currentEvents = new List<RandomEvent>();
         wavesManager = GameManager.instance.partyManager.wavesManager;
         isStartingEvent = false;
-
-        // Set first event timer
+        begun = true;
     }
+
+    public void StartRandomEventManager() => begun = false;
 
     private void Update()
     {
-        if (!isRunningEvent) return;
-        if (startingEventTimer >= startingEventDuration)
-        {
-            isStartingEvent = false;
-        }
-        else startingEventTimer += Time.deltaTime;
+        CheckFirstTimer();
+        CheckTimer();
+        CheckEventDuration();
+    }
 
-        if (!isStartingEvent) return;
+    private void CheckFirstTimer()
+    {
+        if (begun) return;
+
+        if (timerBeforeFirstEvent >= durationBeforeFirstEvent)
+        {
+            timerBeforeFirstEvent = 0f;
+            timerBeforeNextEvent = 0f;
+            StartNewRandomEvent();
+            begun = true;
+        }
+        else timerBeforeFirstEvent += Time.deltaTime;
+    }
+
+    private void CheckTimer()
+    {
+        if (!begun) return;
+        if (isStartingEvent) return;
         if (wavesManager.isSpawning) return;
 
-        if (eventTimer >= eventDuration)
+        if (timerBeforeNextEvent >= durationBeforeNextEvent)
         {
             StartNewRandomEvent();
         }
-        else eventTimer += Time.deltaTime;
+        else timerBeforeNextEvent += Time.deltaTime;
+    }
+
+    private void CheckEventDuration()
+    {
+        if (currentEvents.Count == 0) return;
+        if (!isEventRunning) return;
+
+        for (int i = 0; i < currentEvents.Count; i++)
+        {
+            var re = currentEvents[i];
+
+            if (re.eventTimer >= re.eventDuration)
+            {
+                re.eventTimer = 0f;
+                re.EndEvent();
+                currentEvents.Remove(re);
+            }
+            else re.eventTimer += Time.deltaTime;
+        }
+
+        if (currentEvents.Count == 0) isEventRunning = false;
     }
 
     public void StartNewRandomEvent()
     {
-        startingEventTimer = 0f;
-        eventTimer = 0f;
+        // Set Random Event
+        RandomEvent newEvent;
+        var security = 0;
+        do
+        {
+            newEvent = events[Random.Range(0, events.Count)];
+
+            security++;
+            if (security > 100)
+            {
+                Debug.LogWarning("No Event found. Choosing same event");
+                break;
+            }
+        } while (currentEvents.Contains(newEvent));
+
+        StartCoroutine(StartingNewEvent(newEvent));
+    }
+
+    private IEnumerator StartingNewEvent(RandomEvent @event)
+    {
+        timerBeforeNextEvent = 0f;
         isStartingEvent = true;
-        isRunningEvent = true;
+        
+        currentEvents.Add(@event);
 
         GameManager.instance.partyManager.cameraManager.SetZoom(randomEventZoom);
 
-        // Set Random Event
-        RandomEvent newEvent;
-        do
-        {
-            newEvent = events[Random.Range(0, events.Length)];
-        } while (events.Contains(newEvent));
+        StartCoroutine(GameManager.instance.partyManager.RandomEventSetDisplay(@event));
+        // Afficher l'event sur le main screen
 
-        currentEvents.Add(newEvent);
-
-
-        newEvent.StartEvent();
+        yield return new WaitForSeconds(startingEventDuration);
 
         isStartingEvent = false;
+        isEventRunning = true;
+        @event.StartEvent();
     }
 }
