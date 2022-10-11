@@ -36,6 +36,7 @@ public class BreakerBehaviour : EnemyGenericBehaviour
     public override void Initialization()
     {
         base.Initialization();
+        isRetargeting = false;
         SwitchState(BreakerState.Idle);
     }
 

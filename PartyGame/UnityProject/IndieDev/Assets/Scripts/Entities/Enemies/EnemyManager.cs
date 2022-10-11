@@ -18,12 +18,13 @@ public class EnemyManager : Entity
         damageIndicator.text = damage.ToString();
         animator.Play("EnemyHit");
         */
-        
+
         base.TakeDamage(damage, attacker);
         if (mesh != null)
         {
             mesh.Play("OnHit");
         }
+
         if (currentLife == 0)
         {
             ((PlayerManager)attacker)?.controller.IncreasePowerUpGauge(powerUpScore);
@@ -33,12 +34,21 @@ public class EnemyManager : Entity
     protected override void Death()
     {
         base.Death();
-        gameObject.SetActive(false);
+        ResetEnemy();
         
         // Pour l'instant : non
         //PoolOfObject.Instance.SpawnFromPool(PoolType.EnemyDeath, transform.position, Quaternion.identity);
     }
-    
+
+    private void ResetEnemy()
+    {
+        // Reset enemy after death
+
+        Heal(totalLife);
+        isDead = false;
+        gameObject.SetActive(false);
+    }
+
     public override void Heal(int heal)
     {
         base.Heal(heal);

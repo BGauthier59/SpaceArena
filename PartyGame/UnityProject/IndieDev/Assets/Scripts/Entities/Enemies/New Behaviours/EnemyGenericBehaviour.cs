@@ -65,6 +65,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
     {
         agent.enabled = true;
         agent.speed = speed;
+        target = null;
         targetPos = Vector3.zero;
     }
 
