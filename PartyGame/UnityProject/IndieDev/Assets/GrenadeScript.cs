@@ -9,6 +9,7 @@ public class GrenadeScript : MonoBehaviour
     [SerializeField] private float timer;
     [SerializeField] private List<EnemyManager> enemiesInRange;
     [SerializeField] private int damage;
+    [SerializeField] private CameraShakeScriptable explosionShake;
 
     private void Start()
     {
@@ -29,7 +30,7 @@ public class GrenadeScript : MonoBehaviour
         }
 
         PoolOfObject.Instance.SpawnFromPool(PoolType.Explosion, transform.position, Quaternion.identity);
-        //GameManager.instance.partyManager.cameraShake.AddShakeEvent();
+        GameManager.instance.partyManager.cameraShake.AddShakeEvent(explosionShake);
         gameObject.SetActive(false);
     }
 
