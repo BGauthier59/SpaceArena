@@ -13,7 +13,7 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
     public bool hasCalledForHelp;
     [SerializeField] private float helpersDistance;
 
-    [SerializeField] [Range(0, 100)] float helpRate;
+    [SerializeField] [Range(0, 100)] private float helpRate;
     
     [Header("VFX")]
     [SerializeField] private ParticleSystem callHelpVFX;

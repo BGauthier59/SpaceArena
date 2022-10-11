@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class AlienBehaviour : EnemyGenericBehaviour
@@ -32,6 +29,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
     public override void Initialization()
     {
         base.Initialization();
+        if(initSpeed != 0) speed = initSpeed;
         initSpeed = speed;
         isRetreating = false;
         SwitchState(AlienState.Idle);

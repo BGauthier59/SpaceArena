@@ -244,8 +244,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!isActive) return;
 
+        if (!ctx.performed) return;
         if (reparationArea == null) return;
-        if (!reparationArea.isWaitingForInput) return;
+        if (!reparationArea.isWaitingForInput)
+        {
+            Debug.Log("You failed reparation");
+            //reparationArea.associatedElement.CancelReparation();
+            return;
+        }
 
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Reparation);
 
