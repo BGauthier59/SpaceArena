@@ -212,6 +212,10 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   dashDuration: 0.1
+  fallSpeed: 20
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
   isAttacking: 0
   maxBulletAmount: 18
   bulletAmount: 0

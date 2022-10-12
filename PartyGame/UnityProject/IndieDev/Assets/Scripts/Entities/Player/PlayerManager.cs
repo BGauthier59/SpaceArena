@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerManager : Entity
@@ -6,11 +7,11 @@ public class PlayerManager : Entity
     [Header("Respawn")] [SerializeField] private float respawnDuration;
     private float respawnTimer;
     private bool isRespawning;
-    
+
     public override void Update()
     {
         base.Update();
-        if(isRespawning) Respawn();
+        if (isRespawning) Respawn();
     }
 
     private void Respawn()
@@ -31,7 +32,7 @@ public class PlayerManager : Entity
         }
         else respawnTimer += Time.deltaTime;
     }
-    
+
     #region Entity
 
     public override void TakeDamage(int damage, Entity attacker = null)
@@ -43,24 +44,31 @@ public class PlayerManager : Entity
     protected override void Death()
     {
         base.Death();
-        
+
         if (controller.reparationArea != null && controller.reparationArea.isEveryPlayerOn)
         {
             controller.reparationArea.OnTriggerExit(controller.col);
         }
-        
+
         controller.DeactivatePlayer();
         isRespawning = true;
         controller.rd.gameObject.SetActive(false);
         controller.col.enabled = false;
         controller.directionArrow.enabled = false;
         controller.playerLight.enabled = false;
+        controller.ResetSpeed();
         controller.SetGaugesState(false);
     }
 
     public override void Heal(int heal)
     {
         base.Heal(heal);
+    }
+
+    public override void Fall()
+    {
+        controller.CancelDash();
+        base.Fall();
     }
 
     public override void StunEnable()
@@ -74,11 +82,6 @@ public class PlayerManager : Entity
         base.StunDisable();
         controller.ActivatePlayer();
     }
-
-    #endregion
-
-    #region Trigger & Collision
-    
 
     #endregion
 }

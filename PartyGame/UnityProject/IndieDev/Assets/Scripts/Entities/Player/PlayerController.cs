@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
@@ -21,8 +22,9 @@ public class PlayerController : MonoBehaviour
     public Vector3 initPos;
 
     [Header("Components")] public Renderer rd;
-    public Collider col;
+    public CapsuleCollider col;
     private Rigidbody rb;
+    private RigidbodyConstraints defaultConstraints;
 
     [Header("Controller & Parameters")] private bool isActive;
     [SerializeField] private Vector2 leftJoystickInput;
@@ -38,6 +40,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDuration;
     private float dashTimer;
     private bool isDashing;
+
+    [Header("Gravity")] [SerializeField] private float fallSpeed;
+    [SerializeField] private LayerMask groundLayer;
+    private bool grounded;
 
     [Header("Attack")] [SerializeField] private bool isAttacking;
     [SerializeField] private int maxBulletAmount;
@@ -111,6 +117,7 @@ public class PlayerController : MonoBehaviour
 
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         rb.isKinematic = true;
+        defaultConstraints = rb.constraints;
 
         DeactivatePlayer();
     }
@@ -175,6 +182,7 @@ public class PlayerController : MonoBehaviour
 
         if (!isActive) return;
 
+        Grounding();
         Rotating();
         AutoReloading();
         Reloading();
@@ -287,6 +295,8 @@ public class PlayerController : MonoBehaviour
 
     private void Moving()
     {
+        if (!grounded) return;
+
         var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
         rb.velocity = moveVector * (speed * Time.fixedDeltaTime);
     }
@@ -306,6 +316,21 @@ public class PlayerController : MonoBehaviour
 
         if (dir == NewConduit.ConduitDirection.NA) return;
         currentConduit.SetNextPoint(dir);
+    }
+
+    private void Grounding()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, (col.height / 2 + 0.1f), groundLayer))
+        {
+            rb.constraints = defaultConstraints;
+            grounded = true;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            rb.position += Vector3.up * (-fallSpeed * Time.deltaTime);
+            grounded = false;
+        }
     }
 
     private void Rotating()
@@ -397,7 +422,7 @@ public class PlayerController : MonoBehaviour
         {
             autoReloadTimer = 0f;
             reloading = true;
-            reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
+            reloadTimer = (bulletAmount / (float)maxBulletAmount) * reloadDuration;
             isAutoReloading = false;
         }
         else
@@ -526,7 +551,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Tried to display gauges after end of game.");
             return;
         }
-        
+
         reloadGauge.gameObject.SetActive(active);
         powerUpGauge.gameObject.SetActive(active);
     }

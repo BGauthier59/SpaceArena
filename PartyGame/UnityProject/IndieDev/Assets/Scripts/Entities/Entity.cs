@@ -72,6 +72,11 @@ public class Entity : MonoBehaviour
         else currentStunTimer += Time.deltaTime;
     }
 
+    public virtual void Fall()
+    {
+        TakeDamage(totalLife);
+    }
+
     public virtual void StunEnable()
     {
         isStunned = true;
@@ -81,4 +86,16 @@ public class Entity : MonoBehaviour
     {
         isStunned = false;
     }
+
+    #region Trigger & Collisions
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Hole"))
+        {
+            Fall();
+        }
+    }
+
+    #endregion
 }
