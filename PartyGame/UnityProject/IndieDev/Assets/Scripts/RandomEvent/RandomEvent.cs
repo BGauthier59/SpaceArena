@@ -12,6 +12,7 @@ public abstract class RandomEvent : MonoBehaviour
 
     public float eventDuration;
     public float eventTimer;
+    protected bool isRunning;
 
     private void Start()
     {

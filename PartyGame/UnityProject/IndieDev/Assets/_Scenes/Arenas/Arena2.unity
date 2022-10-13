@@ -10302,6 +10302,30 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5274706629730034121, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7798845
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274706629730034121, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.62592345
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274706629730034121, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274706629730034121, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274706629730034121, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274706629730034121, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: waveDurationOverRound.Array.data[1]
       value: 10

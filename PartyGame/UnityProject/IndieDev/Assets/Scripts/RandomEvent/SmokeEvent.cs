@@ -10,7 +10,8 @@ public class SmokeEvent : RandomEvent
     {
         // Lance FX de fumée
         Debug.Log("Smoke Event starts!");
-        
+        isRunning = true;
+
     }
 
     public override void EndEvent()
@@ -18,5 +19,6 @@ public class SmokeEvent : RandomEvent
         Debug.Log("Smoke Event ends!");
 
         // Enlève fumée
+        isRunning = false;
     }
 }

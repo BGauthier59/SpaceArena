@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
+    public Camera mainCamera;
     [SerializeField] private CameraZoom defaultZoom;
     [SerializeField] private CameraZoom currentZoom;
     
