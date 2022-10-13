@@ -52,19 +52,27 @@ public class MainMenuManager : MonoBehaviour
     private bool isGoingOtherSize;
     private int arenaIndex;
 
-    private ArenaArea currentSelectedArena;
-    [SerializeField] private ArenaArea[] allArenas;
+    private ArenasPanel currentSelectedArenasPanel;
+    [SerializeField] private ArenasPanel[] allArenasPanels;
 
+    [Serializable]
+    public struct ArenasPanel
+    {
+        public ArenaArea[] arenas;
+        public TranslatableName panelName;
+        public Sprite panelImage;
+        public int currentIndex;
+    }
+    
     [Serializable]
     public struct ArenaArea
     {
-        public Sprite arenaImage;
-        public ArenaName arenaName;
+        public TranslatableName translatableName;
         public int arenaSceneIndex;
     }
 
     [Serializable]
-    public struct ArenaName
+    public struct TranslatableName
     {
         public string frenchName;
         public string englishName;
@@ -297,10 +305,10 @@ public class MainMenuManager : MonoBehaviour
         arenaInfoPosXToReach = arenaInfo.anchoredPosition.x + (Screen.width * .5f) + (arenaInfo.sizeDelta.x / 2) + SecurityGap;
         isArenaInfoMoving = true;
         isGoingOtherSize = false;
-        arenaIndex = Array.IndexOf(allArenas, currentSelectedArena);
+        arenaIndex = Array.IndexOf(allArenasPanels, currentSelectedArenasPanel);
         arenaIndex++;
 
-        if (arenaIndex == allArenas.Length) arenaIndex = 0;
+        if (arenaIndex == allArenasPanels.Length) arenaIndex = 0;
     }
 
     public void SelectOnLeft()
@@ -311,10 +319,10 @@ public class MainMenuManager : MonoBehaviour
         arenaInfoPosXToReach = arenaInfo.anchoredPosition.x - ((Screen.width * .5f) + (arenaInfo.sizeDelta.x / 2) + SecurityGap);
         isArenaInfoMoving = true;
         isGoingOtherSize = false;
-        arenaIndex = Array.IndexOf(allArenas, currentSelectedArena);
+        arenaIndex = Array.IndexOf(allArenasPanels, currentSelectedArenasPanel);
         arenaIndex--;
 
-        if (arenaIndex == -1) arenaIndex = allArenas.Length - 1;
+        if (arenaIndex == -1) arenaIndex = allArenasPanels.Length - 1;
     }
 
     private void MovingArenaInfo()
@@ -356,24 +364,28 @@ public class MainMenuManager : MonoBehaviour
 
     private void SelectNewArena(int index)
     {
-        currentSelectedArena = allArenas[index];
+        currentSelectedArenasPanel = allArenasPanels[index];
 
-        arenaImageSelection.sprite = currentSelectedArena.arenaImage;
+        arenaImageSelection.sprite = currentSelectedArenasPanel.panelImage;
 
         switch (GameManager.instance.settings.currentLanguage)
         {
             case Language.French:
-                arenaTextSelection.text = currentSelectedArena.arenaName.frenchName;
+                arenaTextSelection.text = currentSelectedArenasPanel.panelName.frenchName;
                 break;
             case Language.English:
-                arenaTextSelection.text = currentSelectedArena.arenaName.englishName;
+                arenaTextSelection.text = currentSelectedArenasPanel.panelName.englishName;
                 break;
         }
     }
 
     public void OnPlaySelectedMap()
     {
-        SceneManager.LoadScene(currentSelectedArena.arenaSceneIndex);
+        currentSelectedArenasPanel.currentIndex = 0;
+        GameManager.instance.currentPanel = currentSelectedArenasPanel;
+        
+        SceneManager.LoadScene(GameManager.instance.currentPanel.arenas
+            [GameManager.instance.currentPanel.currentIndex].arenaSceneIndex);
     }
 
     #endregion

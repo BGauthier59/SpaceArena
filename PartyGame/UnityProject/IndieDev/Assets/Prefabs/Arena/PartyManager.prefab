@@ -1034,7 +1034,7 @@ PrefabInstance:
       objectReference: {fileID: 7624674067756515781}
     - target: {fileID: 7970876194103548644, guid: 4765020cbadef8d4fb984fb30058ac97, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnQuit
+      value: OnFinishGame
       objectReference: {fileID: 0}
     - target: {fileID: 7970876194791286953, guid: 4765020cbadef8d4fb984fb30058ac97, type: 3}
       propertyPath: m_Pivot.x

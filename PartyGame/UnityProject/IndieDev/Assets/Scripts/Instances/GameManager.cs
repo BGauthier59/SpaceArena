@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public SettingsManager settings;
     public FeedbacksManager feedbacks;
     public PartyManager partyManager;
+    public MainMenuManager.ArenasPanel currentPanel;
 
     public EventSystem eventSystem;
     private Gamepad _mainGamepad;

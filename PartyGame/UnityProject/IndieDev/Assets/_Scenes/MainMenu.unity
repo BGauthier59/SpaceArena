@@ -3756,17 +3756,31 @@ MonoBehaviour:
   cancelButtonSelection: {fileID: 963390704}
   arenaMovingHalfDuration: 0.2
   arenaInfoPosXToReach: 0
-  allArenas:
-  - arenaImage: {fileID: 0}
-    arenaName:
-      frenchName: "Ar\xE8ne 2"
-      englishName: Arena 2
-    arenaSceneIndex: 4
-  - arenaImage: {fileID: 0}
-    arenaName:
-      frenchName: Hole
-      englishName: Hole
-    arenaSceneIndex: 5
+  allArenasPanels:
+  - arenas:
+    - translatableName:
+        frenchName: "Ar\xE8ne 2"
+        englishName: Arena 2
+      arenaSceneIndex: 4
+    - translatableName:
+        frenchName: "Ar\xE8ne 3"
+        englishName: Arena 3
+      arenaSceneIndex: 5
+    panelName:
+      frenchName: Panel 1
+      englishName: Panel 1
+    panelImage: {fileID: 0}
+    currentIndex: 0
+  - arenas:
+    - translatableName:
+        frenchName: "Ar\xE8ne 2"
+        englishName: Arena 2
+      arenaSceneIndex: 5
+    panelName:
+      frenchName: Hole & trapdoors
+      englishName: Hole & trapdoors
+    panelImage: {fileID: 0}
+    currentIndex: 0
 --- !u!4 &969052267
 Transform:
   m_ObjectHideFlags: 0

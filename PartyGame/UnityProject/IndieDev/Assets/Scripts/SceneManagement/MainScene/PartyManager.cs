@@ -54,7 +54,7 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goText;
 
     [SerializeField] private GameObject randomEventArea;
-    
+
     [Serializable]
     public struct TextOnDisplay
     {
@@ -238,6 +238,7 @@ public class PartyManager : MonoBehaviour
         {
             var player = GameManager.instance.allPlayers[i];
             player.DeactivatePlayer();
+            player.RebindGauges();
             player.SetGaugesState(false);
         }
 
@@ -287,7 +288,7 @@ public class PartyManager : MonoBehaviour
     public void OnFinishGame()
     {
         endOfParty.SetActive(false);
-        OnQuit();
+        OnSetNextArena();
     }
 
     #endregion
@@ -308,6 +309,23 @@ public class PartyManager : MonoBehaviour
         GameManager.instance.playersNumber = 0;
         //GameManager.instance.partyManager = null;
         SceneManager.LoadScene(GameManager.instance.mainMenuIndex);
+    }
+
+    public void OnSetNextArena()
+    {
+        GameManager.instance.currentPanel.currentIndex++;
+
+        if (GameManager.instance.currentPanel.currentIndex == GameManager.instance.currentPanel.arenas.Length)
+        {
+            OnQuit();
+        }
+        else
+        {
+            StopAllCoroutines();
+
+            SceneManager.LoadScene(GameManager.instance.currentPanel.arenas
+                [GameManager.instance.currentPanel.currentIndex].arenaSceneIndex);
+        }
     }
 
     #region Display

@@ -556,6 +556,12 @@ public class PlayerController : MonoBehaviour
         powerUpGauge.gameObject.SetActive(active);
     }
 
+    public void RebindGauges()
+    {
+        reloadGauge.transform.SetParent(transform);
+        powerUpGauge.transform.SetParent(transform);
+    }
+
     #endregion
 }
 
