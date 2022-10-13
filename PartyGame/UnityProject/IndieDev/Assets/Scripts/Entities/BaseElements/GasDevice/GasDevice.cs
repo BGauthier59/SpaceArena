@@ -16,7 +16,7 @@ public class GasDevice : BaseElementManager
         base.TakeDamage(damage, attacker);
     }
 
-    public override void OnDestroyed()
+    protected override void OnDestroyed()
     {
         base.OnDestroyed();
         
@@ -27,7 +27,7 @@ public class GasDevice : BaseElementManager
         // FX Explosion
     }
 
-    public override void OnFixed()
+    protected override void OnFixed()
     {
         base.OnFixed();
 

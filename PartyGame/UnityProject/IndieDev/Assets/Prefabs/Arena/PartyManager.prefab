@@ -435,6 +435,7 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0.77507114, a: 1}
   baseHeartColor: {r: 0, g: 0.06425047, b: 1, a: 1}
   disabledColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
+  reparationPoint: 50
   baseLifeGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0.2686702, b: 0, a: 1}

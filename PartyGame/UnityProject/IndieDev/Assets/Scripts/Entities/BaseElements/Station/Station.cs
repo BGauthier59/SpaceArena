@@ -29,7 +29,7 @@ public class Station : BaseElementManager
         base.TakeDamage(damage, attacker);
     }
 
-    public override void OnDestroyed()
+    protected override void OnDestroyed()
     {
         base.OnDestroyed();
 
@@ -41,7 +41,7 @@ public class Station : BaseElementManager
         }
     }
 
-    public override void OnFixed()
+    protected override void OnFixed()
     {
         base.OnFixed();
 

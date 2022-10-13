@@ -59,7 +59,7 @@ public class ElectricalDevice : BaseElementManager
         base.TakeDamage(damage, attacker);
     }
 
-    public override void OnDestroyed()
+    protected override void OnDestroyed()
     {
         base.OnDestroyed();
 
@@ -70,7 +70,7 @@ public class ElectricalDevice : BaseElementManager
         directionalLight.enabled = false;
     }
 
-    public override void OnFixed()
+    protected override void OnFixed()
     {
         base.OnFixed();
 

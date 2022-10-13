@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +8,7 @@ public class BaseManager : MonoBehaviour
     public Color[] baseElementColor;
     public Color baseHeartColor;
     public Color disabledColor;
+    public int reparationPoint;
     
     [Header("GUI")] 
     public Gradient baseLifeGradient;

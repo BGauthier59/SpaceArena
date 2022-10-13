@@ -9,7 +9,7 @@ public class BaseHeart : BaseElementManager
         base.TakeDamage(damage, attacker);
     }
 
-    public override void SetBaseElementColor()
+    protected override void SetBaseElementColor()
     {
         color = GameManager.instance.partyManager.baseManager.baseHeartColor;
         foreach (var rd in elementColorRenderers)
@@ -20,7 +20,7 @@ public class BaseHeart : BaseElementManager
         }
     }
 
-    public override void OnDestroyed()
+    protected override void OnDestroyed()
     {
         base.OnDestroyed();
         
@@ -32,7 +32,7 @@ public class BaseHeart : BaseElementManager
         GameManager.instance.partyManager.EndingGame(false);
     }
 
-    public override void OnFixed()
+    protected override void OnFixed()
     {
         // Can't be fixed...
     }

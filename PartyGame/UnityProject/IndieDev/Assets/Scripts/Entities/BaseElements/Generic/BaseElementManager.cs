@@ -83,7 +83,7 @@ public class BaseElementManager : Entity
         }
     }
 
-    public virtual void SetBaseElementColor()
+    protected virtual void SetBaseElementColor()
     {
         color = GameManager.instance.partyManager.baseManager.baseElementColor[GameManager.instance.partyManager.baseManager.allBaseElements.Count - 1];
         foreach (var rd in elementColorRenderers)
@@ -94,7 +94,7 @@ public class BaseElementManager : Entity
         }
     }
 
-    public void SetReparationsAreaNumber()
+    private void SetReparationsAreaNumber()
     {
         int counter = 1;
         int number = Random.Range(2, GameManager.instance.playersNumber + 1);
@@ -111,7 +111,7 @@ public class BaseElementManager : Entity
         }
     }
 
-    public virtual void OnDestroyed()
+    protected virtual void OnDestroyed()
     {
         onDestroyText.SetActive(true);
         foreach (var area in allReparationAreas)
@@ -120,14 +120,21 @@ public class BaseElementManager : Entity
         }
     }
 
-    public bool TryToRepair()
+    private bool TryToRepair()
     {
         return reparationInputsCounter >= reparationInputs;
     }
 
-    public virtual void OnFixed()
+    protected virtual void OnFixed()
     {
         onDestroyText.SetActive(false);
+        
+        foreach (var area in allReparationAreas)
+        {
+            if (!area.gameObject.activeSelf) continue;
+            area.currentPlayerOnArea.manager.GetPoint(GameManager.instance.partyManager.baseManager.reparationPoint);
+        }
+        
         CancelReparation();
         foreach (var area in allReparationAreas)
         {

@@ -292,6 +292,8 @@ MonoBehaviour:
   behaviour: {fileID: 2396810920112995020}
   powerUpScore: 2
   mesh: {fileID: 5798334160371906306}
+  hitPoint: 2
+  deathPoint: 5
 --- !u!54 &2396810920112995022
 Rigidbody:
   m_ObjectHideFlags: 0

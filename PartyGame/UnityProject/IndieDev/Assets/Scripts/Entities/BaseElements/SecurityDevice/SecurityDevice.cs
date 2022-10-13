@@ -66,7 +66,7 @@ public class SecurityDevice : BaseElementManager
         base.TakeDamage(damage, attacker);
     }
 
-    public override void OnDestroyed()
+    protected override void OnDestroyed()
     {
         base.OnDestroyed();
 
@@ -79,7 +79,7 @@ public class SecurityDevice : BaseElementManager
         isMovingDoors = true;
     }
 
-    public override void OnFixed()
+    protected override void OnFixed()
     {
         base.OnFixed();
 

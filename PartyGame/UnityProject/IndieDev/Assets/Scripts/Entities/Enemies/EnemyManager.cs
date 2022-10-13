@@ -5,6 +5,8 @@ public class EnemyManager : Entity
     public EnemyGenericBehaviour behaviour;
     public int powerUpScore;
     [SerializeField] private Animator mesh;
+    public int hitPoint;
+    public int deathPoint;
 
     #region Entity
 
@@ -25,17 +27,33 @@ public class EnemyManager : Entity
             mesh.Play("OnHit");
         }
 
+        if (!attacker) return;
+        var player = (PlayerManager)attacker;
+        if (player == null)
+        {
+            Debug.LogWarning("Cast did not work?");
+            return;
+        }
+
+        int point;
         if (currentLife == 0)
         {
-            ((PlayerManager)attacker)?.controller.IncreasePowerUpGauge(powerUpScore);
+            player.controller.IncreasePowerUpGauge(powerUpScore);
+            point = deathPoint;
         }
+        else
+        {
+            point = hitPoint;
+        }
+        
+        player.GetPoint(point);
     }
 
     protected override void Death()
     {
         base.Death();
         ResetEnemy();
-        
+
         // Pour l'instant : non
         //PoolOfObject.Instance.SpawnFromPool(PoolType.EnemyDeath, transform.position, Quaternion.identity);
     }

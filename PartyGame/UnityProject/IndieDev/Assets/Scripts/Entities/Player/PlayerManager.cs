@@ -7,6 +7,8 @@ public class PlayerManager : Entity
     [Header("Respawn")] [SerializeField] private float respawnDuration;
     private float respawnTimer;
     private bool isRespawning;
+    private int score;
+    [SerializeField] [Tooltip("Must be negative")] private int deathMalusPoint;
 
     public override void Update()
     {
@@ -33,6 +35,18 @@ public class PlayerManager : Entity
         else respawnTimer += Time.deltaTime;
     }
 
+    public void GetPoint(int point)
+    {
+        Debug.Log($"name has got {point} points.");
+        score += point;
+        if (score <= 0) score = 0;
+    }
+
+    public int ReturnPoint()
+    {
+        return score;
+    }
+
     #region Entity
 
     public override void TakeDamage(int damage, Entity attacker = null)
@@ -50,6 +64,7 @@ public class PlayerManager : Entity
             controller.reparationArea.OnTriggerExit(controller.col);
         }
 
+        GetPoint(deathMalusPoint);
         controller.DeactivatePlayer();
         isRespawning = true;
         controller.rd.gameObject.SetActive(false);

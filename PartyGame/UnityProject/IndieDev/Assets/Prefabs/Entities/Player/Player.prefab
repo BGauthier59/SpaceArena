@@ -143,6 +143,7 @@ MonoBehaviour:
   isStunned: 0
   controller: {fileID: 7167191028575041455}
   respawnDuration: 3
+  deathMalusPoint: 20
 --- !u!114 &7167191028575041455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +169,6 @@ MonoBehaviour:
     rumbleStep: 0
     isMotorActive: 0
   manager: {fileID: 7697744321048509582}
-  points: 0
   initPos: {x: 0, y: 0, z: 0}
   rd: {fileID: 2471484476679893371}
   col: {fileID: 7792007160848823624}

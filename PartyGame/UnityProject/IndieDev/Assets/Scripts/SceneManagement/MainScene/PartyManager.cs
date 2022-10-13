@@ -278,7 +278,7 @@ public class PartyManager : MonoBehaviour
             if (GameManager.instance.playersNumber > i)
             {
                 newScoreAreas[i].area.SetActive(true);
-                newScoreAreas[i].scoreText.text = $"Pt: {GameManager.instance.allPlayers[i].points}";
+                newScoreAreas[i].scoreText.text = $"Pt: {GameManager.instance.allPlayers[i].manager.ReturnPoint()}";
             }
             else newScoreAreas[i].area.SetActive(false);
         }

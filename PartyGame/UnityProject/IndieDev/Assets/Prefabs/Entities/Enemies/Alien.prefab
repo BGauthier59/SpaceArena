@@ -298,6 +298,8 @@ MonoBehaviour:
   behaviour: {fileID: 5013356938241139294}
   powerUpScore: 1
   mesh: {fileID: 4874764670020217228}
+  hitPoint: 1
+  deathPoint: 3
 --- !u!1 &4242212954886998834
 GameObject:
   m_ObjectHideFlags: 0

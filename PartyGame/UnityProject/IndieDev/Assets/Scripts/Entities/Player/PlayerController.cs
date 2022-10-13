@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public PlayerManager manager;
 
-    [Header("Party Data")] public int points;
+    [Header("Party Data")] 
     public Vector3 initPos;
 
     [Header("Components")] public Renderer rd;
