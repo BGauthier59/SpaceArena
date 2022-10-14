@@ -2148,8 +2148,116 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[0].maxCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[0].minRound
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[1].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[1].minRound
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[2].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[2].minRound
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].minRound
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[4].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[4].minRound
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[5].entrance
+      value: 
+      objectReference: {fileID: 7624674068347082455}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: waveDurationOverRound.Array.data[1]
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[0].availableEnemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[1].availableEnemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].availableEnemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[4].availableEnemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[0].availableEnemies.Array.data[0]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[0].availableEnemies.Array.data[1]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[1].availableEnemies.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[1].availableEnemies.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[2].availableEnemies.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[2].availableEnemies.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].availableEnemies.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].availableEnemies.Array.data[1]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[4].availableEnemies.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[4].availableEnemies.Array.data[1]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[5].availableEnemies.Array.data[0]
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7624674067756515780, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_RootOrder
@@ -2401,3 +2509,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+--- !u!4 &7624674068347082455 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1023977259, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+  m_PrefabInstance: {fileID: 7624674068347082454}
+  m_PrefabAsset: {fileID: 0}

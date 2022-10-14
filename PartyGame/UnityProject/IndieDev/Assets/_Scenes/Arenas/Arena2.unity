@@ -10327,6 +10327,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[0].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[1].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[2].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[3].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[4].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: entrances.Array.data[6].maxCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: waveDurationOverRound.Array.data[1]
       value: 10
       objectReference: {fileID: 0}

@@ -31,6 +31,7 @@ public class WavesManager : MonoBehaviour
         public PoolType[] availableEnemies;
         public ushort minRound;
         public bool isAvailable;
+        [Tooltip("Set the maximum of enemies that can spawn at this entrance")] public ushort maxCount;
     }
 
     [Serializable]
@@ -66,7 +67,7 @@ public class WavesManager : MonoBehaviour
         [Tooltip("Set the minimum round this enemy can spawn at")]
         public ushort minRound;
 
-        [Tooltip("Set the maximum enemies of this type can spawn on one entrance")]
+        [Tooltip("Set the maximum of enemies of this type that can spawn at one entrance")]
         public ushort maxCount;
     }
     
@@ -197,7 +198,8 @@ public class WavesManager : MonoBehaviour
             enemyData = enemy,
             count = (int) (difficultyPerEntrance / (float) enemy.difficulty)
         };
-        if (group.count > group.enemyData.maxCount) group.count = group.enemyData.maxCount;
+        group.count = Mathf.Min(group.count, group.enemyData.maxCount);
+        group.count = Mathf.Min(group.count, ent.maxCount);
 
         return group;
     }
