@@ -19,6 +19,7 @@ public class WavesManager : MonoBehaviour
     [SerializeField] private uint currentRound;
     private int lastDifficulty;
     public int difficulty;
+    public int pointPerEntranceCount;
     public int[] difficultyGapOverRound;
     public float[] waveDurationOverRound;
 
@@ -104,7 +105,7 @@ public class WavesManager : MonoBehaviour
             durationBeforeNextWave = waveDurationOverRound[currentRound - 1];
         }
 
-        var maxDif = Mathf.Max((int) (lastDifficulty * .01f), 1);
+        var maxDif = Mathf.Max((int) (lastDifficulty / (float) pointPerEntranceCount), 1);
         var newWave = new Wave
         {
             entrancesCount = Range(1, entrances.Length),

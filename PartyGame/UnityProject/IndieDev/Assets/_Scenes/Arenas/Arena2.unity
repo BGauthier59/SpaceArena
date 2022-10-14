@@ -10327,6 +10327,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: pointPerEntranceCount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624674067609826636, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: entrances.Array.data[0].maxCount
       value: 6
       objectReference: {fileID: 0}

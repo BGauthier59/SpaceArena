@@ -951,7 +951,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 50c744e21c1bd624f9c0d6bacd3f5782, type: 2}
     - target: {fileID: 8591720794918883700, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
       propertyPath: rumbleActivated
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
