@@ -195,5 +195,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void DisableAllControllers()
+    {
+        mainGamepadOnly = false;
+
+        foreach (var gamepad in Gamepad.all)
+        {
+            InputSystem.DisableDevice(gamepad);
+            Debug.Log($"Disabled {gamepad.name}!");
+        }
+    }
+
     #endregion
 }
