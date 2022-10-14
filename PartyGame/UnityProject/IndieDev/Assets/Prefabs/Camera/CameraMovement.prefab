@@ -143,7 +143,7 @@ GameObject:
   m_Layer: 0
   m_Name: CameraMovement
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -177,4 +177,3 @@ MonoBehaviour:
   mainCamera: {fileID: 8744282902909847573}
   defaultZoom: {fileID: 11400000, guid: 227cca5df692f8c4fb8cf333b7ac631c, type: 2}
   currentZoom: {fileID: 0}
-  host: {fileID: 0}

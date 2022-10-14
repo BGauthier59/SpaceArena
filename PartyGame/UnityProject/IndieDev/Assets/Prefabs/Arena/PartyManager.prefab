@@ -567,6 +567,7 @@ MonoBehaviour:
   spawningDelay: 0.25
   currentRound: 0
   difficulty: 100
+  pointPerEntranceCount: 0
   difficultyGapOverRound: 64000000500000005000000046000000410000003c00000032000000280000001e00000014000000
   waveDurationOverRound:
   - 7
@@ -992,10 +993,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8744282903108681815, guid: 9167fac3de15d4d44b9833dcf3cbbff2, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
-    - target: {fileID: 8744282903108681815, guid: 9167fac3de15d4d44b9833dcf3cbbff2, type: 3}
       propertyPath: m_Name
       value: CameraMovement
       objectReference: {fileID: 0}
@@ -1039,10 +1036,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7624674067756515781}
-    - target: {fileID: 7970876194103548644, guid: 4765020cbadef8d4fb984fb30058ac97, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnFinishGame
-      objectReference: {fileID: 0}
     - target: {fileID: 7970876194791286953, guid: 4765020cbadef8d4fb984fb30058ac97, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1128,10 +1121,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7970876194791286965, guid: 4765020cbadef8d4fb984fb30058ac97, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
-    - target: {fileID: 7970876194791286965, guid: 4765020cbadef8d4fb984fb30058ac97, type: 3}
       propertyPath: m_Name
       value: MainCanvas
       objectReference: {fileID: 0}
@@ -1197,10 +1186,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7624674067756515780}
     m_Modifications:
-    - target: {fileID: 678370565083077348, guid: dfa566b2d30682a4098239460d05582a, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 678370565083077348, guid: dfa566b2d30682a4098239460d05582a, type: 3}
       propertyPath: m_Name
       value: BasicArena
@@ -1367,10 +1352,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7624674067756515780}
     m_Modifications:
-    - target: {fileID: 9170464379422500672, guid: 8ee8b9c4d1f9c3f47a6eb1841986c826, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 9170464379422500672, guid: 8ee8b9c4d1f9c3f47a6eb1841986c826, type: 3}
       propertyPath: m_Name
       value: ArenaSettings

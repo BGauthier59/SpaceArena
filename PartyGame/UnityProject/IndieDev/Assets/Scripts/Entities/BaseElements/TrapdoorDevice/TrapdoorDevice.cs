@@ -14,13 +14,20 @@ public class TrapdoorDevice : BaseElementManager
     public class Trapdoor
     {
         public Animation trapAnimation;
+        public Renderer[] colorElements;
     }
 
     public override void Start()
     {
         base.Start();
 
-        
+        foreach (var t in allTrapdoors)
+        {
+            foreach (var rd in t.colorElements)
+            {
+                rd.material.SetColor("_EmissionColor", color * 2);
+            }
+        }
     }
 
     public override void TakeDamage(int damage, Entity attacker = null)

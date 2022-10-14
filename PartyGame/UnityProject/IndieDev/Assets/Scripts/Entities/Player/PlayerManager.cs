@@ -8,7 +8,9 @@ public class PlayerManager : Entity
     private float respawnTimer;
     private bool isRespawning;
     private int score;
-    [SerializeField] [Tooltip("Must be negative")] private int deathMalusPoint;
+
+    [SerializeField] [Tooltip("Must be negative")]
+    private int deathMalusPoint;
 
     public override void Update()
     {
@@ -20,17 +22,12 @@ public class PlayerManager : Entity
     {
         if (respawnTimer > respawnDuration)
         {
-            transform.position = controller.initPos;
-            controller.rd.gameObject.SetActive(true);
-            isDead = false;
-            Heal(totalLife);
             respawnTimer = 0f;
             isRespawning = false;
-            controller.col.enabled = true;
-            controller.directionArrow.enabled = true;
-            controller.playerLight.enabled = true;
-            controller.SetGaugesState(true);
-            controller.ActivatePlayer();
+            isDead = false;
+            Heal(totalLife);
+            
+            controller.ResetAfterDeath();
         }
         else respawnTimer += Time.deltaTime;
     }
@@ -58,21 +55,11 @@ public class PlayerManager : Entity
     protected override void Death()
     {
         base.Death();
-
-        if (controller.reparationArea != null && controller.reparationArea.isEveryPlayerOn)
-        {
-            controller.reparationArea.OnTriggerExit(controller.col);
-        }
-
+        
+        controller.ResetWhenDeath();
         GetPoint(deathMalusPoint);
-        controller.DeactivatePlayer();
         isRespawning = true;
-        controller.rd.gameObject.SetActive(false);
-        controller.col.enabled = false;
-        controller.directionArrow.enabled = false;
-        controller.playerLight.enabled = false;
-        controller.ResetSpeed();
-        controller.SetGaugesState(false);
+        
     }
 
     public override void Heal(int heal)

@@ -18,8 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public PlayerManager manager;
 
-    [Header("Party Data")] 
-    public Vector3 initPos;
+    [Header("Party Data")] public Vector3 initPos;
 
     [Header("Components")] public Renderer rd;
     public CapsuleCollider col;
@@ -131,19 +130,10 @@ public class PlayerController : MonoBehaviour
         rb.isKinematic = false;
         baseSpeed = speed;
 
-        bulletAmount = maxBulletAmount;
-        reloadGauge.maxValue = maxBulletAmount;
-        reloadGauge.value = reloadGauge.maxValue;
         reloadGauge.transform.SetParent(GameManager.instance.partyManager.mainCanvas.transform);
-        reloadGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
-                                         + new Vector3(0, -30);
-        powerUpScore = 0;
-        powerUpGauge.maxValue = powerUpMax;
-        powerUpGauge.value = powerUpGauge.minValue;
         powerUpGauge.transform.SetParent(GameManager.instance.partyManager.mainCanvas.transform);
-        powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
-                                          + new Vector3(50, 0);
 
+        ResetGauges();
         SetGaugesState(false);
         GraphInitialization();
     }
@@ -509,6 +499,47 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
     }
 
+    public void ResetWhenDeath()
+    {
+        if (reparationArea != null && reparationArea.isEveryPlayerOn)
+        {
+            reparationArea.OnTriggerExit(col);
+        }
+
+        DeactivatePlayer();
+        col.enabled = false;
+        rd.gameObject.SetActive(false);
+        directionArrow.enabled = false;
+        playerLight.enabled = false;
+        trail.enabled = false;
+
+        isAttacking = false;
+        isVentingOut = false;
+        isDashing = false;
+        isAutoReloading = false;
+        powerUpIsActive = false;
+        // Désactiver pouvoirs
+
+
+        ResetSpeed();
+        SetGaugesState(false);
+    }
+
+    public void ResetAfterDeath()
+    {
+        ResetGauges();
+        SetGaugesState(true);
+        transform.position = initPos;
+
+        rd.gameObject.SetActive(true);
+        trail.enabled = true;
+        directionArrow.enabled = true;
+        playerLight.enabled = true;
+        col.enabled = true;
+
+        ActivatePlayer();
+    }
+
     public void IncreasePowerUpGauge(int value)
     {
         if (canUsePowerUp) return;
@@ -554,6 +585,20 @@ public class PlayerController : MonoBehaviour
 
         reloadGauge.gameObject.SetActive(active);
         powerUpGauge.gameObject.SetActive(active);
+    }
+
+    private void ResetGauges()
+    {
+        bulletAmount = maxBulletAmount;
+        reloadGauge.maxValue = maxBulletAmount;
+        reloadGauge.value = reloadGauge.maxValue;
+        reloadGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
+                                         + new Vector3(0, -30);
+        powerUpScore = 0;
+        powerUpGauge.maxValue = powerUpMax;
+        powerUpGauge.value = powerUpGauge.minValue;
+        powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
+                                          + new Vector3(50, 0);
     }
 
     public void RebindGauges()
