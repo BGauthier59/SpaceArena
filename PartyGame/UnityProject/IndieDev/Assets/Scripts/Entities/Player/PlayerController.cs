@@ -453,6 +453,7 @@ public class PlayerController : MonoBehaviour
         if (afterVentingSecurityTimer > afterVentingSecurityDuration)
         {
             afterVentingSecurityTimer = 0f;
+            lastTakenNewVent = null;
             isVentingOut = false;
         }
         else afterVentingSecurityTimer += Time.deltaTime;

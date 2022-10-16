@@ -105,6 +105,7 @@ public class NewConduit : MonoBehaviour
         moveTimer = 0f;
         currentPoint = nextPoint;
         isMoving = false;
+        player.transform.position = nextPoint.pointPos.position;
 
         switch (currentPoint.conduitPointType)
         {

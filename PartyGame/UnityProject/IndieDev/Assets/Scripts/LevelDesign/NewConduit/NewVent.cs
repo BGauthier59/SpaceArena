@@ -13,7 +13,7 @@ public class NewVent : MonoBehaviour
     public ConduitPoint firstReachedPoint;
 
     public Transform frontPos;
-    
+
     private Vector3 initPos;
     private Vector3 posToreach;
     private float distanceBetweenPoints;
@@ -51,13 +51,14 @@ public class NewVent : MonoBehaviour
     {
         foreach (var v in conduit.vents)
         {
-            if(v.ventingPlayer) return;
+            if (v.ventingPlayer) return;
         }
 
         playersOnVent.Remove(player);
 
         ventingPlayer = player;
-        
+
+        ventingPlayer.accessibleNewVent = null;
         ventingPlayer.SetGaugesState(false);
         ventingPlayer.DeactivatePlayer();
         ventingPlayer.col.enabled = false;
@@ -65,21 +66,21 @@ public class NewVent : MonoBehaviour
         posToreach = firstReachedPoint.pointPos.position;
 
         distanceBetweenPoints = Vector3.Distance(initPos, posToreach);
-        
+
         isVenting = true;
         isEntering = true;
     }
-    
+
     public void ExitsVent(PlayerController player)
     {
         ventingPlayer = player;
         ventingPlayer.lastTakenNewVent = this;
-        
+
         ventingPlayer.SetGaugesState(true);
         ventingPlayer.DeactivatePlayer();
         initPos = linkedVentPoint.pointPos.position;
         posToreach = frontPos.position;
-        
+
         distanceBetweenPoints = Vector3.Distance(initPos, posToreach);
 
         isVenting = true;
@@ -88,13 +89,15 @@ public class NewVent : MonoBehaviour
 
     private void Update()
     {
-        if(isVenting) Venting();
+        if (isVenting) Venting();
     }
 
     public void Venting()
     {
         if (ventingTimer > (conduit.moveDurationUnit * distanceBetweenPoints))
         {
+            ventingPlayer.transform.position = posToreach;
+
             foreach (var v in conduit.vents)
             {
                 v.ventingTimer = 0f;
@@ -107,9 +110,11 @@ public class NewVent : MonoBehaviour
             }
             else
             {
+                ventingPlayer.currentConduit = null;
                 ventingPlayer.isVentingOut = true;
-                ventingPlayer.ActivatePlayer();
                 ventingPlayer.col.enabled = true;
+
+                ventingPlayer.ActivatePlayer();
 
                 foreach (var v in conduit.vents)
                 {
@@ -119,7 +124,8 @@ public class NewVent : MonoBehaviour
         }
         else
         {
-            ventingPlayer.transform.position = Vector3.Lerp(initPos, posToreach, ventingTimer / (conduit.moveDurationUnit * distanceBetweenPoints));
+            ventingPlayer.transform.position = Vector3.Lerp(initPos, posToreach,
+                ventingTimer / (conduit.moveDurationUnit * distanceBetweenPoints));
             ventingTimer += Time.deltaTime;
         }
     }
