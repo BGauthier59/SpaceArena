@@ -9,7 +9,7 @@ using UnityEngine.Rendering.Universal;
 [Serializable]
 public class DistortionEvent : RandomEvent
 {
-    [SerializeField] private VolumeProfile globalVolume;
+    [SerializeField] private Volume globalVolume;
     private LensDistortion lensDistortion;
 
     [SerializeField] private float2 distortionValuesInit;
@@ -24,7 +24,7 @@ public class DistortionEvent : RandomEvent
         // Lance FX de fumée
         Debug.Log("Distortion Event starts!");
         
-        if (!globalVolume.TryGet(out lensDistortion)) Debug.LogError("No Lens Distorsion found");
+        if (!globalVolume.profile.TryGet(out lensDistortion)) Debug.LogError("No Lens Distorsion found");
 
         distortionValues.x = distortionValuesInit.x;
         distortionValues.y = distortionValuesInit.y;
@@ -51,8 +51,8 @@ public class DistortionEvent : RandomEvent
         }
         else
         {
-            lensDistortion.intensity.Override(Mathf.Lerp(distortionValues.x, distortionValues.y,
-                distortionDuration / distortionTimer));
+            lensDistortion.intensity.value = Mathf.Lerp(distortionValues.x, distortionValues.y,
+                distortionTimer / distortionDuration);
 
             distortionTimer += Time.deltaTime;
         }

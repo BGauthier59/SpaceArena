@@ -375,7 +375,7 @@ MonoBehaviour:
   randomEventZoom: {fileID: 11400000, guid: dc080bfc1081c5a468032e5fae482594, type: 2}
   isStartingEvent: 0
   durationBeforeFirstEvent: 5
-  durationBeforeNextEvent: 30
+  durationBeforeNextEvent: 40
   isEventRunning: 0
   startingEventDuration: 6
 --- !u!114 &3781391913026221643
@@ -392,12 +392,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomEventText:
     tmp: {fileID: 5923104611056374143}
-    frenchText: "Fum\xE9e !"
-    englishText: Smoke!
+    frenchText: Distorsion
+    englishText: Distortion
   randomEventSprite: {fileID: 0}
   eventDuration: 20
   eventTimer: 0
-  globalVolume: {fileID: 11400000, guid: c8d0f89e3b5d163449f4383e98c3418e, type: 2}
+  globalVolume: {fileID: 1207984548155424887}
   distortionValuesInit:
     x: -0.5
     y: 0.5
@@ -1572,3 +1572,14 @@ Light:
   m_CorrespondingSourceObject: {fileID: 9170464381059490165, guid: 8ee8b9c4d1f9c3f47a6eb1841986c826, type: 3}
   m_PrefabInstance: {fileID: 8036558428139648438}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1207984548155424887 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9170464380399678913, guid: 8ee8b9c4d1f9c3f47a6eb1841986c826, type: 3}
+  m_PrefabInstance: {fileID: 8036558428139648438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
