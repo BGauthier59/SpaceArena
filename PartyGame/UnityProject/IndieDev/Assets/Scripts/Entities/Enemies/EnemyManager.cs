@@ -5,6 +5,7 @@ public class EnemyManager : Entity
     public EnemyGenericBehaviour behaviour;
     public int powerUpScore;
     [SerializeField] private Animator mesh;
+    public int deathPoint;
 
     #region Entity
 
@@ -24,9 +25,6 @@ public class EnemyManager : Entity
         {
             mesh.Play("OnHit");
         }
-<<<<<<< Updated upstream
-        if (currentLife <= 0)
-=======
 
         Debug.Log(attacker);
         if (!attacker) return;
@@ -45,7 +43,6 @@ public class EnemyManager : Entity
             point = deathPoint;
         }
         else
->>>>>>> Stashed changes
         {
             ((PlayerManager)attacker)?.controller.IncreasePowerUpGauge(powerUpScore);
         }
