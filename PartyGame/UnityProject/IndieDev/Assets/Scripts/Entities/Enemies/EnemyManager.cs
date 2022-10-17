@@ -21,14 +21,16 @@ public class EnemyManager : Entity
         animator.Play("EnemyHit");
         */
 
-        base.TakeDamage(damage, attacker);
         if (mesh != null)
         {
             mesh.Play("OnHit");
         }
 
+        base.TakeDamage(damage, attacker);
 
         if (!attacker) return;
+        if (!isDead) return;
+        
         var player = (PlayerManager)attacker;
         if (player == null)
         {
@@ -36,25 +38,14 @@ public class EnemyManager : Entity
             return;
         }
 
-        int point;
-        if (currentLife <= 0)
-
-        {
-            player.controller.IncreasePowerUpGauge(powerUpScore);
-            point = deathPoint;
-        }
-        else
-        {
-            point = hitPoint;
-        }
-        
-        player.GetPoint(point);
+        player.controller.IncreasePowerUpGauge(powerUpScore);
+        player.GetPoint(deathPoint);
     }
 
     protected override void Death()
     {
         base.Death();
-        ResetEnemy();
+        gameObject.SetActive(false);
 
         // Pour l'instant : non
         //PoolOfObject.Instance.SpawnFromPool(PoolType.EnemyDeath, transform.position, Quaternion.identity);
@@ -66,7 +57,6 @@ public class EnemyManager : Entity
 
         Heal(totalLife);
         isDead = false;
-        gameObject.SetActive(false);
     }
 
     public override void Heal(int heal)
@@ -106,6 +96,7 @@ public class EnemyManager : Entity
     {
         if (GameManager.instance.partyManager == null) return;
         GameManager.instance.partyManager.enemiesManager.AddEnemy(this);
+        ResetEnemy();
     }
 
     private void OnDisable()

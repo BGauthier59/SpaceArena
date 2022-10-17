@@ -13,7 +13,10 @@ GameObject:
   - component: {fileID: 5747930555108071730}
   - component: {fileID: 3603403644799658625}
   - component: {fileID: 3394500840370587898}
-  m_Layer: 0
+  - component: {fileID: 1394719734624893962}
+  - component: {fileID: 2647890313048283769}
+  - component: {fileID: -7218325363059964181}
+  m_Layer: 9
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +111,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bed2b55ef6de5d04895f0c2fae266172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifespan: 8
-  shootingRate: 0.3
+  shootingRate: 0.2
   bulletSpeed: 1200
+  maxRange: 10
+  target: {fileID: 0}
   user: {fileID: 0}
+  meshRenderer: {fileID: 0}
+  enemiesInRange: []
+--- !u!135 &1394719734624893962
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7952185433038346993}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.99
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2647890313048283769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7952185433038346993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7871db386f8c3349832f46293328bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalLife: 150
+  currentLife: 0
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  isDead: 0
+  isStunned: 0
+--- !u!208 &-7218325363059964181
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7952185433038346993}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
