@@ -385,7 +385,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6412734928770094049}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a8c9bd4c86c81645840c3425512b050, type: 3}
   m_Name: 
@@ -397,6 +397,11 @@ MonoBehaviour:
   randomEventSprite: {fileID: 0}
   eventDuration: 20
   eventTimer: 0
+  globalVolume: {fileID: 11400000, guid: c8d0f89e3b5d163449f4383e98c3418e, type: 2}
+  distortionValuesInit:
+    x: -0.5
+    y: 0.5
+  distortionDuration: 3
 --- !u!114 &7210571267363574786
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10298,6 +10298,14 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Strength
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1280108179021190513, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2908222628140992437, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3
+      objectReference: {fileID: 0}
     - target: {fileID: 3287454553294659425, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -10328,6 +10336,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5274706629730034121, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7210571267363574786, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7624674066399732374, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
