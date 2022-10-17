@@ -24,7 +24,28 @@ public class EnemyManager : Entity
         {
             mesh.Play("OnHit");
         }
+<<<<<<< Updated upstream
         if (currentLife <= 0)
+=======
+
+        Debug.Log(attacker);
+        if (!attacker) return;
+        var player = (PlayerManager)attacker;
+        if (player == null)
+        {
+            Debug.LogWarning("Cast did not work?");
+            return;
+        }
+
+        int point;
+        if (currentLife <= 0)
+        {
+            Debug.Log("J'ajoute des points");
+            player.controller.IncreasePowerUpGauge(powerUpScore);
+            point = deathPoint;
+        }
+        else
+>>>>>>> Stashed changes
         {
             ((PlayerManager)attacker)?.controller.IncreasePowerUpGauge(powerUpScore);
         }

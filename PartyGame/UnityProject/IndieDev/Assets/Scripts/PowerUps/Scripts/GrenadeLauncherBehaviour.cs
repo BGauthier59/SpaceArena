@@ -27,12 +27,10 @@ public class GrenadeLauncherBehaviour : PowerUpManager
         if (grenadeAmount <= 0)
         {
             user.durationBeforeNextShoot = 0.1f;
+            user = null;
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     private void Update()
