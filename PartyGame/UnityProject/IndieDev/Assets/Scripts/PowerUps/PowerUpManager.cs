@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUpManager 
+public class PowerUpManager : MonoBehaviour
 {
     public PlayerController user;
     
@@ -57,11 +57,6 @@ public class LaserBehaviour : PowerUpManager
 }
 
 public class TurretBehaviour : PowerUpManager
-{
-    
-}
-
-public class GrenadeLauncherBehaviour : PowerUpManager
 {
     
 }

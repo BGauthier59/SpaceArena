@@ -64,5 +64,5 @@ public class PoolOfObject : MonoBehaviour
 
 public enum PoolType
 {
-    Bullet, Bullet_Impact, Damage, EnemyDeath, Alien, Hunter, Breaker, HeartBreaker, HunterProjectile
+    Bullet, Bullet_Impact, Damage, EnemyDeath, Alien, Hunter, Breaker, HeartBreaker, HunterProjectile, Grenade, Explosion
 }

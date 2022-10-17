@@ -27,6 +27,7 @@ public class EnemyManager : Entity
             mesh.Play("OnHit");
         }
 
+
         if (!attacker) return;
         var player = (PlayerManager)attacker;
         if (player == null)
@@ -36,7 +37,8 @@ public class EnemyManager : Entity
         }
 
         int point;
-        if (currentLife == 0)
+        if (currentLife <= 0)
+
         {
             player.controller.IncreasePowerUpGauge(powerUpScore);
             point = deathPoint;

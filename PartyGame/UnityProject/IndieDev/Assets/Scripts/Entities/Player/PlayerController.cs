@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int bulletAmount;
     public float bulletSpeed;
     private float timerBeforeNextShoot;
-    [SerializeField] private float durationBeforeNextShoot;
+    public float durationBeforeNextShoot;
 
     private float reloadTimer;
     private bool reloading;
@@ -69,8 +69,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Slider powerUpGauge;
     [SerializeField] private int powerUpMax;
     [SerializeField] private PowerUpManager currentPowerUp;
-    private int powerUpScore;
-    private bool canUsePowerUp = true;
+    public int powerUpScore;
+    private bool canUsePowerUp;
 
     [Header("Reparation")] public ReparationArea reparationArea;
 
@@ -154,7 +154,6 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Tried to active player after the end of game.");
             return;
         }
-
         isActive = true;
     }
 
@@ -344,47 +343,50 @@ public class PlayerController : MonoBehaviour
     {
         if (!isAttacking || reloading) return;
 
-        if (!powerUpIsActive)
-        {
+        
             if (timerBeforeNextShoot >= durationBeforeNextShoot)
             {
-                bulletAmount--;
-
-                shootingParticles.Play();
-                var newBullet =
-                    PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
-                var bullet = newBullet.GetComponent<BulletScript>();
-                bullet.shooter = manager;
-                bullet.rb.AddForce(transform.forward * bulletSpeed);
-
-                GameManager.instance.partyManager.cameraShake.AddShakeEvent(shootingShake);
-                GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
-
-                rb.AddForce(-transform.forward * recoil);
-                timerBeforeNextShoot = 0f;
-
-                reloadGauge.value = bulletAmount;
-
-                if (bulletAmount <= 0)
+                if (!powerUpIsActive)
                 {
-                    isAutoReloading = false;
-                    reloading = true;
+                    bulletAmount--;
+
+                    shootingParticles.Play();
+                    var newBullet =
+                        PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
+                    var bullet = newBullet.GetComponent<BulletScript>();
+                    bullet.shooter = manager;
+                    bullet.rb.AddForce(transform.forward * bulletSpeed);
+
+                    GameManager.instance.partyManager.cameraShake.AddShakeEvent(shootingShake);
+                    GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
+
+                    rb.AddForce(-transform.forward * recoil);
+                    timerBeforeNextShoot = 0f;
+
+                    reloadGauge.value = bulletAmount;
+
+                    if (bulletAmount <= 0)
+                    {
+                        isAutoReloading = false;
+                        reloading = true;
+                    }
+                    else
+                    {
+                        isAutoReloading = true;
+                        autoReloadTimer = 0f;
+                    }
                 }
                 else
                 {
-                    isAutoReloading = true;
-                    autoReloadTimer = 0f;
+                    currentPowerUp.OnUse();
+                    timerBeforeNextShoot = 0f;
                 }
             }
             else
             {
                 timerBeforeNextShoot += Time.deltaTime;
             }
-        }
-        else
-        {
-            currentPowerUp.OnUse();
-        }
+        
     }
 
     private void Reloading()
@@ -544,7 +546,7 @@ public class PlayerController : MonoBehaviour
     public void IncreasePowerUpGauge(int value)
     {
         if (canUsePowerUp) return;
-
+        Debug.Log("Le power up");
         powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
         powerUpGauge.value = powerUpScore;
         if (powerUpGauge.value >= powerUpMax)
@@ -556,7 +558,7 @@ public class PlayerController : MonoBehaviour
     private void GetPowerUp()
     {
         canUsePowerUp = true;
-        currentPowerUp = PowerUpList.powerUpScript[UnityEngine.Random.Range(1, 9)];
+        currentPowerUp = PowerUpList.powerUpScript[7];
         powerUpGauge.value = 0;
         // Get power up
     }
@@ -566,6 +568,7 @@ public class PlayerController : MonoBehaviour
         powerUpScore = 0;
         powerUpGauge.value = powerUpScore;
         canUsePowerUp = false;
+        powerUpIsActive = false;
     }
 
     public void CancelDash()
