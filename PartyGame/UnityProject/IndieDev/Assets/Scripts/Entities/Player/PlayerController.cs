@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int powerUpMax;
     [SerializeField] private PowerUpManager currentPowerUp;
     public int powerUpScore;
-    private bool canUsePowerUp;
+    private bool canUsePowerUp = false;
 
     [Header("Reparation")] public ReparationArea reparationArea;
 
@@ -545,8 +545,8 @@ public class PlayerController : MonoBehaviour
 
     public void IncreasePowerUpGauge(int value)
     {
-        if (canUsePowerUp) return;
         Debug.Log("Le power up");
+        if (canUsePowerUp) return;
         powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
         powerUpGauge.value = powerUpScore;
         if (powerUpGauge.value >= powerUpMax)
@@ -558,7 +558,7 @@ public class PlayerController : MonoBehaviour
     private void GetPowerUp()
     {
         canUsePowerUp = true;
-        currentPowerUp = PowerUpList.powerUpScript[7];
+        currentPowerUp = PowerUpList.powerUpScript[6];
         powerUpGauge.value = 0;
         // Get power up
     }

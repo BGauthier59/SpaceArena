@@ -56,11 +56,6 @@ public class LaserBehaviour : PowerUpManager
     
 }
 
-public class TurretBehaviour : PowerUpManager
-{
-    
-}
-
 public class RageBehaviour : PowerUpManager
 {
     

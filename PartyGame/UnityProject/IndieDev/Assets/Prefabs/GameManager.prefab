@@ -75,6 +75,85 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: 03902dbc4c04a3b40a522e0d271595b1, type: 3}
   m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
+--- !u!1 &312591759999808391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4143479492357009238}
+  - component: {fileID: 3440054037391332376}
+  m_Layer: 0
+  m_Name: GrenadeLauncher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4143479492357009238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312591759999808391}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1947379686137986270}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3440054037391332376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312591759999808391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a0e9c7dbc29b240b79f5271c544fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  grenadeAmount: 6
+  grenadeSpeed: 700
+  shootingRate: 0.3
+--- !u!1 &325993677407743795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1947379686137986270}
+  m_Layer: 0
+  m_Name: PowerUps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1947379686137986270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325993677407743795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4143479492357009238}
+  - {fileID: 6788539835768825756}
+  m_Father: {fileID: 4576669941368348803}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &384345679598244634
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +247,51 @@ MonoBehaviour:
   reparationVibration: {fileID: 11400000, guid: 1f14fe8e0ac26e442a81d94211288dfa, type: 2}
   takeDamageVibration: {fileID: 0}
   shootVibrations: {fileID: 0}
+--- !u!1 &3176966467083152872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6788539835768825756}
+  - component: {fileID: 8859914751961483725}
+  m_Layer: 0
+  m_Name: Turret
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6788539835768825756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3176966467083152872}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1947379686137986270}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8859914751961483725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3176966467083152872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d505c6697940cb349a1b3fa82790fc4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  turret: {fileID: 3394500840370587898, guid: a6263ad58b3ce824fab9b2c11984b3af, type: 3}
 --- !u!1 &4576669941368348805
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +323,7 @@ Transform:
   - {fileID: 4093506189265125457}
   - {fileID: 8574416004573558909}
   - {fileID: 1344524509}
+  - {fileID: 1947379686137986270}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -216,9 +341,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 8591720794918883700}
   feedbacks: {fileID: 5419757356267785862}
-  mainCanvas: {fileID: 0}
-  cameraShake: {fileID: 0}
   partyManager: {fileID: 0}
+  currentPanel:
+    arenas: []
+    panelName:
+      frenchName: 
+      englishName: 
+    panelImage: {fileID: 0}
+    currentIndex: 0
   eventSystem: {fileID: 1344524508}
   mainGamepadInfo:
     linked: 0
@@ -234,7 +364,8 @@ MonoBehaviour:
   - {r: 0.1490196, g: 1, b: 0.8569903, a: 1}
   - {r: 1, g: 0.79741144, b: 0.29811323, a: 1}
   powerUps:
-  - {fileID: 1897022457836373842, guid: 9ac6b037bb4df94419c471ecf38416ac, type: 3}
+  - {fileID: 3440054037391332376}
+  - {fileID: 8859914751961483725}
   mainMenuIndex: 1
   pauseMenuIndex: 3
   optionMenuIndex: 2
