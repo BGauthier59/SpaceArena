@@ -168,6 +168,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Tried to active player after the end of game.");
             return;
         }
+
         isActive = true;
     }
 
@@ -357,51 +358,47 @@ public class PlayerController : MonoBehaviour
     private void Firing()
     {
         if (!isAttacking || reloading) return;
-
-        
-            if (timerBeforeNextShoot >= durationBeforeNextShoot)
+        if (timerBeforeNextShoot >= durationBeforeNextShoot)
+        {
+            if (!powerUpIsActive)
             {
-                if (!powerUpIsActive)
+                bulletAmount--;
+                shootingParticles.Play();
+                var newBullet =
+                    PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
+                var bullet = newBullet.GetComponent<BulletScript>();
+                bullet.shooter = manager;
+                bullet.rb.AddForce(transform.forward * bulletSpeed);
+
+                partyManager.cameraShake.AddShakeEvent(shootingShake);
+                GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
+
+                rb.AddForce(-transform.forward * recoil);
+                timerBeforeNextShoot = 0f;
+
+                reloadGauge.value = bulletAmount;
+
+                if (bulletAmount <= 0)
                 {
-                    bulletAmount--;
-
-                    shootingParticles.Play();
-                    var newBullet =
-                        PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
-                    var bullet = newBullet.GetComponent<BulletScript>();
-                    bullet.shooter = manager;
-                    bullet.rb.AddForce(transform.forward * bulletSpeed);
-
-                    partyManager.cameraShake.AddShakeEvent(shootingShake);
-                    GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
-
-                    rb.AddForce(-transform.forward * recoil);
-                    timerBeforeNextShoot = 0f;
-
-                    reloadGauge.value = bulletAmount;
-
-                    if (bulletAmount <= 0)
-                    {
-                        isAutoReloading = false;
-                        reloading = true;
-                    }
-                    else
-                    {
-                        isAutoReloading = true;
-                        autoReloadTimer = 0f;
-                    }
+                    isAutoReloading = false;
+                    reloading = true;
                 }
                 else
                 {
-                    currentPowerUp.OnUse();
-                    timerBeforeNextShoot = 0f;
+                    isAutoReloading = true;
+                    autoReloadTimer = 0f;
                 }
             }
             else
             {
-                timerBeforeNextShoot += Time.deltaTime;
+                currentPowerUp.OnUse();
+                timerBeforeNextShoot = 0f;
             }
-        
+        }
+        else
+        {
+            timerBeforeNextShoot += Time.deltaTime;
+        }
     }
 
     private void Reloading()
