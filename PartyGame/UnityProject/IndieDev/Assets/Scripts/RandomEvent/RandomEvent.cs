@@ -14,9 +14,12 @@ public abstract class RandomEvent : MonoBehaviour
     public float eventTimer;
     protected bool isRunning;
 
+    protected PartyManager partyManager;
+
     private void Start()
     {
-        GameManager.instance.partyManager.randomEventManager.events.Add(this);
+        partyManager = GameManager.instance.partyManager;
+        partyManager.randomEventManager.events.Add(this);
     }
 
     public abstract void StartEvent();

@@ -29,6 +29,7 @@ public class PartyManager : MonoBehaviour
     private float partyDuration;
 
     private float partyTimer;
+    [SerializeField] private float durationBeforeCrownAppears;
 
     public GameState gameState;
     public bool gameWon;
@@ -218,7 +219,7 @@ public class PartyManager : MonoBehaviour
         }
         else partyTimer -= Time.deltaTime;
 
-        timerText.text = ((int)partyTimer).ToString();
+        timerText.text = ((int) partyTimer).ToString();
     }
 
     #endregion
@@ -244,6 +245,7 @@ public class PartyManager : MonoBehaviour
 
         enemiesManager.DeactivateAllEnemies();
         wavesManager.enabled = false;
+        randomEventManager.CancelRandomEventManager();
 
         yield return new WaitForSeconds(1f);
 
@@ -291,6 +293,23 @@ public class PartyManager : MonoBehaviour
         OnSetNextArena();
     }
 
+    private void OnSetNextArena()
+    {
+        GameManager.instance.currentPanel.currentIndex++;
+
+        if (GameManager.instance.currentPanel.currentIndex == GameManager.instance.currentPanel.arenas.Length)
+        {
+            OnQuit();
+        }
+        else
+        {
+            StopAllCoroutines();
+
+            SceneManager.LoadScene(GameManager.instance.currentPanel.arenas
+                [GameManager.instance.currentPanel.currentIndex].arenaSceneIndex);
+        }
+    }
+
     #endregion
 
     public void OnQuit()
@@ -311,34 +330,57 @@ public class PartyManager : MonoBehaviour
         SceneManager.LoadScene(GameManager.instance.mainMenuIndex);
     }
 
-    public void OnSetNextArena()
-    {
-        GameManager.instance.currentPanel.currentIndex++;
-
-        if (GameManager.instance.currentPanel.currentIndex == GameManager.instance.currentPanel.arenas.Length)
-        {
-            OnQuit();
-        }
-        else
-        {
-            StopAllCoroutines();
-
-            SceneManager.LoadScene(GameManager.instance.currentPanel.arenas
-                [GameManager.instance.currentPanel.currentIndex].arenaSceneIndex);
-        }
-    }
-
     #region Display
 
     public IEnumerator RandomEventSetDisplay(RandomEvent ev)
     {
-        timerArea.SetActive(false);
-        randomEventArea.SetActive(true);
+        SetScreenRandomEvent(true);
         ev.randomEventText.SetText();
         yield return new WaitForSeconds(5f);
         ev.randomEventText.DisableText();
-        randomEventArea.SetActive(false);
-        timerArea.SetActive(true);
+        SetScreenRandomEvent(false);
+    }
+
+    public void SetScreenRandomEvent(bool active)
+    {
+        timerArea.SetActive(!active);
+        randomEventArea.SetActive(active);
+    }
+
+    #endregion
+
+    #region Score Management
+
+    public void OnScoresChange()
+    {
+        if (partyTimer >= partyDuration - durationBeforeCrownAppears) return;
+
+
+        PlayerController currentWinner = null;
+        var bestScore = 0f;
+        foreach (var pc in GameManager.instance.allPlayers)
+        {
+            if (pc.manager.score >= bestScore)
+            {
+                bestScore = pc.manager.score;
+                currentWinner = pc;
+            }
+        }
+
+        if (currentWinner == null)
+        {
+            Debug.LogWarning("No winner found.");
+            return;
+        }
+
+        if (currentWinner.crown.activeSelf) return;
+
+        foreach (var pc in GameManager.instance.allPlayers)
+        {
+            pc.crown.SetActive(false);
+        }
+
+        currentWinner.crown.SetActive(true);
     }
 
     #endregion

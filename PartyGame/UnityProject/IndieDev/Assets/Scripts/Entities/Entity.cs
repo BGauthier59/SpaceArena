@@ -14,6 +14,8 @@ public class Entity : MonoBehaviour
     public bool isStunned;
     private float currentStunDuration;
     private float currentStunTimer;
+    
+    protected PartyManager partyManager;
 
     public virtual void Start()
     {
@@ -25,8 +27,9 @@ public class Entity : MonoBehaviour
         Stunning();
     }
 
-    private void Initialization()
+    public void Initialization()
     {
+        partyManager = GameManager.instance.partyManager;
         currentLife = totalLife;
     }
 

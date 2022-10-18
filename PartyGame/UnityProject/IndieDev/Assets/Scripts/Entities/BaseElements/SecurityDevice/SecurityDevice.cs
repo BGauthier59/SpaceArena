@@ -54,7 +54,7 @@ public class SecurityDevice : BaseElementManager
         {
             foreach (var rd in door.colorSpots)
             {
-                rd.material = GameManager.instance.partyManager.baseManager.colorVariantMaterial;
+                rd.material = partyManager.baseManager.colorVariantMaterial;
                 rd.material.color = color;
                 rd.material.SetColor("_EmissionColor", color * 2);
             }

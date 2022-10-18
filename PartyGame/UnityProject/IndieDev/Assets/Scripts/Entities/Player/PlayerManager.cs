@@ -7,7 +7,7 @@ public class PlayerManager : Entity
     [Header("Respawn")] [SerializeField] private float respawnDuration;
     private float respawnTimer;
     private bool isRespawning;
-    private int score;
+    public int score;
 
     [SerializeField] [Tooltip("Must be negative")]
     private int deathMalusPoint;
@@ -26,7 +26,6 @@ public class PlayerManager : Entity
             isRespawning = false;
             isDead = false;
             Heal(totalLife);
-            
             controller.ResetAfterDeath();
         }
         else respawnTimer += Time.deltaTime;
@@ -34,14 +33,19 @@ public class PlayerManager : Entity
 
     public void GetPoint(int point)
     {
-        Debug.Log($"name has got {point} points.");
         score += point;
         if (score <= 0) score = 0;
+        partyManager.OnScoresChange();
     }
 
     public int ReturnPoint()
     {
         return score;
+    }
+
+    public void LinkReferences()
+    {
+        partyManager = GameManager.instance.partyManager;
     }
 
     #region Entity
@@ -50,6 +54,10 @@ public class PlayerManager : Entity
     {
         base.TakeDamage(damage, attacker);
         GameManager.instance.feedbacks.RumbleConstant(controller.dataGamepad, VibrationsType.TakeDamage);
+        if (attacker)
+        {
+            Debug.Log(attacker.name +  " has attacked a player!");
+        }
     }
 
     protected override void Death()

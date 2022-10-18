@@ -8,9 +8,12 @@ public class PauseMenuManager : MonoBehaviour
     private EventSystem eventSystem;
     [SerializeField] private GameObject firstSelected;
 
+    private PartyManager partyManager;
+
     void Start()
     {
         eventSystem = GameManager.instance.eventSystem;
+        partyManager = GameManager.instance.partyManager;
 
         GameManager.instance.EnableMainControllerOnly();
 
@@ -33,7 +36,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void OnQuit()
     {
-        if (GameManager.instance.partyManager == null)
+        if (partyManager == null)
         {
             Debug.LogError("Party manager is null!");
             return;
@@ -41,7 +44,7 @@ public class PauseMenuManager : MonoBehaviour
         
         LeavePause();
         SceneManager.UnloadSceneAsync(GameManager.instance.pauseMenuIndex);
-        GameManager.instance.partyManager.OnQuit();
+        partyManager.OnQuit();
     }
 
     private void LeavePause()

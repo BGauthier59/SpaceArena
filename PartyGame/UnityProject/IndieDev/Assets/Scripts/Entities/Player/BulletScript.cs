@@ -25,11 +25,12 @@ public class BulletScript : MonoBehaviour
     
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.CompareTag("Player")) return;
+        //if (collision.CompareTag("Player")) return;
         
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Player"))
         {
-            var script = collision.GetComponent<EnemyManager>();
+            var script = collision.GetComponent<Entity>();
+            if (script == shooter) return;
             var damage = Range(minDamage, maxDamage);
             script.TakeDamage(damage, shooter);
         }

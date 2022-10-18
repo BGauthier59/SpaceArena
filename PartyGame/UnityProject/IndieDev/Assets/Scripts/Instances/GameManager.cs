@@ -9,14 +9,20 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    #region Variables: Instances
+
+    [Header("Instances")] public static GameManager instance;
     public SettingsManager settings;
     public FeedbacksManager feedbacks;
     public PartyManager partyManager;
-    public MainMenuManager.ArenasPanel currentPanel;
 
-    public EventSystem eventSystem;
+    #endregion
+
+    #region Variables: Data
+
+    [Header("Data")] public EventSystem eventSystem;
     private Gamepad _mainGamepad;
+
     public Gamepad mainGamepad
     {
         get { return _mainGamepad; }
@@ -27,36 +33,29 @@ public class GameManager : MonoBehaviour
             mainGamepadInfo.name = _mainGamepad == null ? "[Not linked]" : _mainGamepad.name;
         }
     }
+
     public MainGamepadData mainGamepadInfo;
-
-    [Serializable]
-    public struct MainGamepadData
-    {
-        public bool linked;
-        public string name;
-    }
-
     public bool mainGamepadOnly;
-
     public int playersNumber;
     public PlayerInputManager playerInputManager;
-
     public List<PlayerController> allPlayers;
-
-    public List<TranslatableText> allTranslatableTexts;
-
-    [Header("Players Parameters")] 
-    public Color[] colors = new Color[4];
-
     public List<PowerUpManager> powerUps;
-
-    [Header("Scenes Index")] 
-    public int mainMenuIndex;
-    public int pauseMenuIndex;
-    public int optionMenuIndex;
-    
+    public List<TranslatableText> allTranslatableTexts;
+    public MainMenuManager.ArenasPanel currentPanel;
     public bool isPaused;
 
+    #endregion
+
+    #region Variables: Parameters
+
+    [Header("Players Parameters")] public Color[] colors = new Color[4];
+
+    [Header("Scenes Indexes")] public int mainMenuIndex;
+    public int pauseMenuIndex;
+    public int optionMenuIndex;
+
+    #endregion
+    
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -76,7 +75,9 @@ public class GameManager : MonoBehaviour
     {
         InputSystem.onDeviceChange -= OnDeviceChange;
     }
-    
+
+    #region Translation Management
+
     public void TranslateTexts()
     {
         var textsToDelete = new List<TranslatableText>();
@@ -106,7 +107,9 @@ public class GameManager : MonoBehaviour
             allTranslatableTexts.Remove(tmp);
         }
     }
-    
+
+    #endregion
+
     #region Gamepads Management
 
     private void OnDeviceChange(InputDevice device, InputDeviceChange deviceChange)
@@ -179,6 +182,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log($"Enabled {gamepad.name}!");
                 continue;
             }
+
             InputSystem.DisableDevice(gamepad);
             Debug.Log($"Disabled {gamepad.name}!");
         }
@@ -207,4 +211,26 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+}
+
+[Serializable]
+public class GamepadData
+{
+    public Gamepad gamepad;
+    public bool isRumbling;
+
+    public RumblePattern activeRumblePattern;
+    public float rumbleDuration;
+    public float pulseDuration;
+    public float lowA;
+    public float highA;
+    public float rumbleStep;
+    public bool isMotorActive;
+}
+
+[Serializable]
+public struct MainGamepadData
+{
+    public bool linked;
+    public string name;
 }

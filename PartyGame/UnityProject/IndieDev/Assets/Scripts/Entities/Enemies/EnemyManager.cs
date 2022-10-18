@@ -67,8 +67,8 @@ public class EnemyManager : Entity
     public override void Start()
     {
         base.Start();
-        if (GameManager.instance.partyManager == null) return;
-        GameManager.instance.partyManager.enemiesManager.AddEnemy(this);
+        if (partyManager == null) return;
+        partyManager.enemiesManager.AddEnemy(this);
     }
 
     public override void Update()
@@ -94,14 +94,14 @@ public class EnemyManager : Entity
 
     private void OnEnable()
     {
-        if (GameManager.instance.partyManager == null) return;
-        GameManager.instance.partyManager.enemiesManager.AddEnemy(this);
+        if (partyManager == null) return;
+        partyManager.enemiesManager.AddEnemy(this);
         ResetEnemy();
     }
 
     private void OnDisable()
     {
-        if (GameManager.instance.partyManager == null) return;
-        GameManager.instance.partyManager.enemiesManager.RemoveEnemy(this);
+        if (partyManager == null) return;
+        partyManager.enemiesManager.RemoveEnemy(this);
     }
 }
