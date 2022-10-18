@@ -50,6 +50,10 @@ public class PlayerManager : Entity
     {
         base.TakeDamage(damage, attacker);
         GameManager.instance.feedbacks.RumbleConstant(controller.dataGamepad, VibrationsType.TakeDamage);
+        if (attacker)
+        {
+            Debug.Log(attacker.name +  " has attacked a player!");
+        }
     }
 
     protected override void Death()

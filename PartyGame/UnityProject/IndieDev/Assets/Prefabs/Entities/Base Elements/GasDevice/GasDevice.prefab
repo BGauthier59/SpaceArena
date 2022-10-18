@@ -744,8 +744,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f911c99f6fb9e408053a66740a2b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalLife: 3
-  currentLife: 3
+  totalLife: 45
+  currentLife: 0
   animator: {fileID: 0}
   rb: {fileID: 0}
   isDead: 0
