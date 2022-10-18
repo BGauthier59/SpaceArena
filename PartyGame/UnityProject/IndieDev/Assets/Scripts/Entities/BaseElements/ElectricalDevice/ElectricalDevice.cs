@@ -43,7 +43,7 @@ public class ElectricalDevice : BaseElementManager
     public override void Start()
     {
         base.Start();
-        directionalLight = GameManager.instance.partyManager.mainLight;
+        directionalLight = partyManager.mainLight;
         foreach (var light in allLights)
         {
             foreach (var rd in light.colorElements)

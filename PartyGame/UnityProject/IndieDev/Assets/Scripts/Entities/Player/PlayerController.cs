@@ -88,6 +88,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TrailRenderer trail;
     public Light playerLight;
 
+    private PartyManager partyManager;
+
     #endregion
 
     #region Connection
@@ -97,6 +99,8 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Initialization();
     }
+
+    
 
     private void Initialization()
     {
@@ -122,17 +126,25 @@ public class PlayerController : MonoBehaviour
         DeactivatePlayer();
     }
 
+    private void LinkReferences()
+    {
+        partyManager = GameManager.instance.partyManager;
+        manager.LinkReferences();
+    }
+
     #endregion
 
     #region Party Initialization
 
     public void PartyBegins()
     {
+        LinkReferences();
+        
         rb.isKinematic = false;
         baseSpeed = speed;
 
-        reloadGauge.transform.SetParent(GameManager.instance.partyManager.mainCanvas.transform);
-        powerUpGauge.transform.SetParent(GameManager.instance.partyManager.mainCanvas.transform);
+        reloadGauge.transform.SetParent(partyManager.mainCanvas.transform);
+        powerUpGauge.transform.SetParent(partyManager.mainCanvas.transform);
 
         ResetGauges();
         SetGaugesState(false);
@@ -151,7 +163,7 @@ public class PlayerController : MonoBehaviour
 
     public void ActivatePlayer()
     {
-        if (GameManager.instance.partyManager.gameState == PartyManager.GameState.End)
+        if (partyManager.gameState == PartyManager.GameState.End)
         {
             Debug.LogWarning("Tried to active player after the end of game.");
             return;
@@ -359,7 +371,7 @@ public class PlayerController : MonoBehaviour
                 bullet.shooter = manager;
                 bullet.rb.AddForce(transform.forward * bulletSpeed);
 
-                GameManager.instance.partyManager.cameraShake.AddShakeEvent(shootingShake);
+                partyManager.cameraShake.AddShakeEvent(shootingShake);
                 GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
 
                 rb.AddForce(-transform.forward * recoil);
@@ -580,7 +592,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetGaugesState(bool active)
     {
-        if (active && GameManager.instance.partyManager.gameState == PartyManager.GameState.End)
+        if (active && partyManager.gameState == PartyManager.GameState.End)
         {
             Debug.LogWarning("Tried to display gauges after end of game.");
             return;

@@ -350,8 +350,8 @@ public class PartyManager : MonoBehaviour
     public void OnScoresChange()
     {
         if (partyTimer >= partyDuration - durationBeforeCrownAppears) return;
-        
-        
+
+
         PlayerController currentWinner = null;
         var bestScore = 0f;
         foreach (var pc in GameManager.instance.allPlayers)

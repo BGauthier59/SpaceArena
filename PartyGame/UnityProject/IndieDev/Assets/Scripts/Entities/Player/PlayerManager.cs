@@ -35,12 +35,17 @@ public class PlayerManager : Entity
     {
         score += point;
         if (score <= 0) score = 0;
-        GameManager.instance.partyManager.OnScoresChange();
+        partyManager.OnScoresChange();
     }
 
     public int ReturnPoint()
     {
         return score;
+    }
+
+    public void LinkReferences()
+    {
+        partyManager = GameManager.instance.partyManager;
     }
 
     #region Entity
