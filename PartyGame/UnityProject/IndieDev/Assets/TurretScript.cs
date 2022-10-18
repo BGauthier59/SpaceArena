@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TurretScript : MonoBehaviour
 {
+    [SerializeField] private float lifespan;
     [SerializeField] private float shootingRate;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float maxRange;
@@ -17,6 +19,7 @@ public class TurretScript : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(Lifespan());
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.material = user.rd.material;
     }
@@ -47,7 +50,6 @@ public class TurretScript : MonoBehaviour
             var bullet = newBullet.GetComponent<BulletScript>();
             bullet.shooter = user.manager;
             bullet.rb.AddForce(shootingDirection * bulletSpeed);
-            newBullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletSpeed);
         }
     }
 
@@ -88,5 +90,11 @@ public class TurretScript : MonoBehaviour
     {
         Shoot();
         CheckTarget();
+    }
+
+    private IEnumerator Lifespan()
+    {
+        yield return new WaitForSeconds(lifespan);
+        Destroy(gameObject);
     }
 }
