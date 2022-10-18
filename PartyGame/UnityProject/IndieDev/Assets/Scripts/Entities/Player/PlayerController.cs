@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public PlayerManager manager;
 
     [Header("Party Data")] public Vector3 initPos;
+    public GameObject crown;
 
     [Header("Components")] public Renderer rd;
     public CapsuleCollider col;
@@ -145,6 +146,7 @@ public class PlayerController : MonoBehaviour
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
         material.EnableKeyword("_EMISSION");
         particleSystem.material = directionArrow.material = rd.material = trail.material = material;
+        crown.SetActive(false);
     }
 
     public void ActivatePlayer()
@@ -611,17 +613,3 @@ public class PlayerController : MonoBehaviour
     #endregion
 }
 
-[Serializable]
-public class GamepadData
-{
-    public Gamepad gamepad;
-    public bool isRumbling;
-
-    public RumblePattern activeRumblePattern;
-    public float rumbleDuration;
-    public float pulseDuration;
-    public float lowA;
-    public float highA;
-    public float rumbleStep;
-    public bool isMotorActive;
-}
