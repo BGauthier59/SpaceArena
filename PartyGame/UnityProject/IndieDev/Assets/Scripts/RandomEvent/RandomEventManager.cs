@@ -132,4 +132,21 @@ public class RandomEventManager : MonoBehaviour
         isEventRunning = true;
         @event.StartEvent();
     }
+
+    public void CancelRandomEventManager()
+    {
+        if (currentEvents.Count == 0)
+        {
+            Debug.Log("No event to cancel");
+            return;
+        }
+
+        foreach (var re in currentEvents)
+        {
+            re.EndEvent();
+        }
+        currentEvents.Clear();
+        StopAllCoroutines();
+        partyManager.SetScreenRandomEvent(false);
+    }
 }

@@ -100,8 +100,6 @@ public class PlayerController : MonoBehaviour
         Initialization();
     }
 
-    
-
     private void Initialization()
     {
         GameManager.instance.allPlayers.Add(this);
@@ -139,7 +137,7 @@ public class PlayerController : MonoBehaviour
     public void PartyBegins()
     {
         LinkReferences();
-        
+
         rb.isKinematic = false;
         baseSpeed = speed;
 
@@ -149,6 +147,8 @@ public class PlayerController : MonoBehaviour
         ResetGauges();
         SetGaugesState(false);
         GraphInitialization();
+        ResetPlayer();
+        ResetPlayerGraphsAndCollisions();
     }
 
     public void GraphInitialization()
@@ -426,7 +426,7 @@ public class PlayerController : MonoBehaviour
         {
             autoReloadTimer = 0f;
             reloading = true;
-            reloadTimer = (bulletAmount / (float)maxBulletAmount) * reloadDuration;
+            reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
             isAutoReloading = false;
         }
         else
@@ -528,15 +528,7 @@ public class PlayerController : MonoBehaviour
         playerLight.enabled = false;
         trail.enabled = false;
 
-        isAttacking = false;
-        isVentingOut = false;
-        isDashing = false;
-        isAutoReloading = false;
-        powerUpIsActive = false;
-        // Désactiver pouvoirs
-
-
-        ResetSpeed();
+        ResetPlayer();
         SetGaugesState(false);
     }
 
@@ -545,14 +537,28 @@ public class PlayerController : MonoBehaviour
         ResetGauges();
         SetGaugesState(true);
         transform.position = initPos;
+        ResetPlayerGraphsAndCollisions();
+        ActivatePlayer();
+    }
 
+    private void ResetPlayer()
+    {
+        ResetSpeed();
+        isAttacking = false;
+        isVentingOut = false;
+        isDashing = false;
+        isAutoReloading = false;
+        powerUpIsActive = false;
+        // Désactiver pouvoirs
+    }
+
+    private void ResetPlayerGraphsAndCollisions()
+    {
         rd.gameObject.SetActive(true);
         trail.enabled = true;
         directionArrow.enabled = true;
         playerLight.enabled = true;
         col.enabled = true;
-
-        ActivatePlayer();
     }
 
     public void IncreasePowerUpGauge(int value)
@@ -624,4 +630,3 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 }
-

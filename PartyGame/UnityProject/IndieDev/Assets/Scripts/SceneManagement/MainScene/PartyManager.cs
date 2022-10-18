@@ -245,6 +245,7 @@ public class PartyManager : MonoBehaviour
 
         enemiesManager.DeactivateAllEnemies();
         wavesManager.enabled = false;
+        randomEventManager.CancelRandomEventManager();
 
         yield return new WaitForSeconds(1f);
 
@@ -329,18 +330,21 @@ public class PartyManager : MonoBehaviour
         SceneManager.LoadScene(GameManager.instance.mainMenuIndex);
     }
 
-
     #region Display
 
     public IEnumerator RandomEventSetDisplay(RandomEvent ev)
     {
-        timerArea.SetActive(false);
-        randomEventArea.SetActive(true);
+        SetScreenRandomEvent(true);
         ev.randomEventText.SetText();
         yield return new WaitForSeconds(5f);
         ev.randomEventText.DisableText();
-        randomEventArea.SetActive(false);
-        timerArea.SetActive(true);
+        SetScreenRandomEvent(false);
+    }
+
+    public void SetScreenRandomEvent(bool active)
+    {
+        timerArea.SetActive(!active);
+        randomEventArea.SetActive(active);
     }
 
     #endregion
