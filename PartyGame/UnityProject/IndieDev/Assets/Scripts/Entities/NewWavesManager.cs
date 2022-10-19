@@ -249,7 +249,7 @@ public class NewWavesManager : MonoBehaviour
                 securityEntrance++;
                 if (securityEntrance >= 100) return null;
                 entrance = entrances[Random.Range(0, entrances.Length)];
-            } while (!entrance.isAvailable || round <= entrance.minRound);
+            } while (!entrance.isAvailable || round < entrance.minRound);
         }
         else
         {
