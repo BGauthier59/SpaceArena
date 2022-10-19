@@ -16,7 +16,7 @@ public class PartyManager : MonoBehaviour
 
     [Header("Instances")] public BaseManager baseManager;
     public EnemiesManager enemiesManager;
-    public WavesManager wavesManager;
+    public NewWavesManager wavesManager;
     public RandomEventManager randomEventManager;
     public CameraManager cameraManager;
     public Light mainLight;

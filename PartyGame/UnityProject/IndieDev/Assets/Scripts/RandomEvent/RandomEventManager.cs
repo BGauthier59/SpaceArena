@@ -9,7 +9,7 @@ public class RandomEventManager : MonoBehaviour
     public List<RandomEvent> events;
     public List<RandomEvent> currentEvents;
     public CameraZoom randomEventZoom;
-    private WavesManager wavesManager;
+    private NewWavesManager wavesManager;
 
     public bool isStartingEvent;
 
