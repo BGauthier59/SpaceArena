@@ -42,11 +42,13 @@ public class NewWavesManager : MonoBehaviour
 
         public IEnumerator Spawning()
         {
-            foreach (var c in selectedEntrances)
+            Debug.Log(selectedEntrances.Count);
+            foreach (var (entrance, enemiesGroup) in selectedEntrances)
             {
-                for (int i = 0; i < c.Item2.count; i++)
+                Debug.Log(enemiesGroup.count);
+                for (int i = 0; i < enemiesGroup.count; i++)
                 {
-                    PoolOfObject.Instance.SpawnFromPool(c.Item2.enemyData.enemy, c.Item1.entrance.position, Quaternion.identity);
+                    PoolOfObject.Instance.SpawnFromPool(enemiesGroup.enemyData.enemy, entrance.entrance.position, Quaternion.identity);
                     yield return new WaitForSeconds(delay);
                 }
             }
@@ -132,6 +134,7 @@ public class NewWavesManager : MonoBehaviour
         round++;
         timerBeforeNextWave = 0f;
         isSpawning = true;
+        currentWave = null;
 
         if (round > waves.Length - 1)
         {
@@ -139,8 +142,6 @@ public class NewWavesManager : MonoBehaviour
             return;
         }
         
-        Debug.LogWarning($"Start Wave {round + 1}");
-
         var data = waves[round];
         difficulty += data.difficultyIncrementation;
         durationBeforeNextWave = data.durationBeforeNextActivation;
@@ -156,7 +157,6 @@ public class NewWavesManager : MonoBehaviour
 
         if (!newWave.fullRandomEntrances && newWave.entrancesCount != newWave.selectableEntrancesIndex.Length)
         {
-            //Debug.LogWarning("Entrance count is not the same than entrances selectable entrances");
             newWave.entrancesCount = newWave.selectableEntrancesIndex.Length;
         }
 
@@ -214,7 +214,6 @@ public class NewWavesManager : MonoBehaviour
         {
             for (int j = 0; j < currentWave.selectableEntrancesIndex[i].Length; j++)
             {
-                //Debug.Log(i + " " + j);
                 indexSortedIndexReal.Add(counter, currentWave.selectableEntrancesIndex[i][j]);
                 counter++;
             }
@@ -254,7 +253,7 @@ public class NewWavesManager : MonoBehaviour
         }
         else
         {
-            var randomLengthIndex = Random.Range(0, allLengths[allLengths.Count - 1]);
+            var randomLengthIndex = Random.Range(0, allLengths.Count - 1);
             var lengthValue = allLengths[randomLengthIndex];
 
             var minIndex = 0;
@@ -269,13 +268,7 @@ public class NewWavesManager : MonoBehaviour
             allLengths.Remove(lengthValue);
         }
 
-        Debug.Log(entrance.entrance.name);
         return entrance;
-        
-        // redebug.log
-        // min et max
-        // lengthValue
-        // dictionary
     }
 
     private EnemiesGroup SetEnemiesGroup(Entrance ent)
@@ -304,6 +297,11 @@ public class NewWavesManager : MonoBehaviour
         };
         group.count = Mathf.Min(group.count, group.enemyData.maxCount);
         group.count = Mathf.Min(group.count, ent.maxCount);
+        if (group.count == 0)
+        {
+            group.count = 1;
+            Debug.Log("Count set to 1.");
+        }
 
         return group;
     }

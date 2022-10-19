@@ -69,6 +69,7 @@ public class EnemyManager : Entity
         base.Start();
         if (partyManager == null) return;
         partyManager.enemiesManager.AddEnemy(this);
+        //Destroy(gameObject, 2f);
     }
 
     public override void Update()
