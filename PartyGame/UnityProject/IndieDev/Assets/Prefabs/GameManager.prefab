@@ -151,6 +151,7 @@ Transform:
   m_Children:
   - {fileID: 4143479492357009238}
   - {fileID: 6788539835768825756}
+  - {fileID: 4899788196504159048}
   m_Father: {fileID: 4576669941368348803}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -342,13 +343,6 @@ MonoBehaviour:
   settings: {fileID: 8591720794918883700}
   feedbacks: {fileID: 5419757356267785862}
   partyManager: {fileID: 0}
-  currentPanel:
-    arenas: []
-    panelName:
-      frenchName: 
-      englishName: 
-    panelImage: {fileID: 0}
-    currentIndex: 0
   eventSystem: {fileID: 1344524508}
   mainGamepadInfo:
     linked: 0
@@ -357,16 +351,72 @@ MonoBehaviour:
   playersNumber: 0
   playerInputManager: {fileID: 0}
   allPlayers: []
+  powerUps:
+  - {fileID: 3440054037391332376}
+  - {fileID: 8859914751961483725}
+  - {fileID: 6002665978843510583}
   allTranslatableTexts: []
+  currentPanel:
+    arenas: []
+    panelName:
+      frenchName: 
+      englishName: 
+    panelImage: {fileID: 0}
+    currentIndex: 0
+  isPaused: 0
   colors:
   - {r: 1, g: 0.3075472, b: 0.3075472, a: 1}
   - {r: 0.34528303, g: 0.44405025, b: 1, a: 1}
   - {r: 0.1490196, g: 1, b: 0.8569903, a: 1}
   - {r: 1, g: 0.79741144, b: 0.29811323, a: 1}
-  powerUps:
-  - {fileID: 3440054037391332376}
-  - {fileID: 8859914751961483725}
   mainMenuIndex: 1
   pauseMenuIndex: 3
   optionMenuIndex: 2
-  isPaused: 0
+--- !u!1 &7543529591412086983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4899788196504159048}
+  - component: {fileID: 6002665978843510583}
+  m_Layer: 0
+  m_Name: Rage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4899788196504159048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543529591412086983}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1947379686137986270}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6002665978843510583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543529591412086983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87bb93e6e1ede3b47bd63c2558aff3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  duration: 6
+  damage: 50
+  speedMultiplier: 2
+  isFinished: 0

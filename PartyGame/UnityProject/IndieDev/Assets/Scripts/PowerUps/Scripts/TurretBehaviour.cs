@@ -7,6 +7,7 @@ public class TurretBehaviour : PowerUpManager
     public override void OnActivate()
     {
         base.OnActivate();
+        turretUsed = false;
     }
 
     public override void OnUse()

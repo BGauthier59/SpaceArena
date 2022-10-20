@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PowerUpManager currentPowerUp;
     public int powerUpScore;
     private bool canUsePowerUp;
+    public RageScript rageCollider;
 
     [Header("Reparation")] public ReparationArea reparationArea;
 
@@ -568,6 +569,7 @@ public class PlayerController : MonoBehaviour
         powerUpGauge.value = powerUpScore;
         if (powerUpGauge.value >= powerUpMax)
         {
+            Debug.Log("J'ai assez de points");
             GetPowerUp();
         }
     }
@@ -576,7 +578,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Je récupère un power up");
         canUsePowerUp = true;
-        currentPowerUp = GameManager.instance.powerUps[1];
+        currentPowerUp = GameManager.instance.powerUps[2];
         powerUpGauge.value = 0;
         // Get power up
     }
@@ -588,6 +590,7 @@ public class PlayerController : MonoBehaviour
         powerUpGauge.value = powerUpScore;
         canUsePowerUp = false;
         powerUpIsActive = false;
+        currentPowerUp = null;
     }
 
     public void CancelDash()

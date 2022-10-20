@@ -12,6 +12,7 @@ public class GrenadeLauncherBehaviour : PowerUpManager
     public override void OnActivate()
     {
         user.durationBeforeNextShoot = shootingRate;
+        grenadeAmount = 6;
     }
 
     public override void OnUse()

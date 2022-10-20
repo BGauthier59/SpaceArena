@@ -763,6 +763,17 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1192709701 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6002665978843510583, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+  m_PrefabInstance: {fileID: 4576669940968088894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87bb93e6e1ede3b47bd63c2558aff3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1509819271
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,6 +857,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: powerUps.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
       propertyPath: colors.Array.data[0].b
       value: 0
       objectReference: {fileID: 0}
@@ -893,6 +908,10 @@ PrefabInstance:
       propertyPath: colors.Array.data[3].r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: powerUps.Array.data[2]
+      value: 
+      objectReference: {fileID: 1192709701}
     - target: {fileID: 4576669941368348803, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
       propertyPath: m_RootOrder
       value: 3
