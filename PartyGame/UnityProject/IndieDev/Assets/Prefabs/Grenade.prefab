@@ -115,6 +115,7 @@ MonoBehaviour:
   timer: 2
   enemiesInRange: []
   damage: 70
+  explosionShake: {fileID: 11400000, guid: 50835ce3d31ac0e46aa462c6e2134b63, type: 2}
 --- !u!135 &-4614857351767604097
 SphereCollider:
   m_ObjectHideFlags: 0

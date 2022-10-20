@@ -578,7 +578,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Je récupère un power up");
         canUsePowerUp = true;
-        currentPowerUp = GameManager.instance.powerUps[2];
+        currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
         powerUpGauge.value = 0;
         // Get power up
     }
