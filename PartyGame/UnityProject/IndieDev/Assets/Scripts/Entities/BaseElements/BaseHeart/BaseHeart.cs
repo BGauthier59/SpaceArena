@@ -11,10 +11,10 @@ public class BaseHeart : BaseElementManager
 
     protected override void SetBaseElementColor()
     {
-        color = GameManager.instance.partyManager.baseManager.baseHeartColor;
+        color = partyManager.baseManager.baseHeartColor;
         foreach (var rd in elementColorRenderers)
         {
-            rd.material = GameManager.instance.partyManager.baseManager.colorVariantMaterial;
+            rd.material = partyManager.baseManager.colorVariantMaterial;
             rd.material.color = color;
             rd.material.SetColor("_EmissionColor", color * 2);
         }
@@ -24,12 +24,12 @@ public class BaseHeart : BaseElementManager
     {
         base.OnDestroyed();
         
-        if (GameManager.instance.partyManager == null)
+        if (partyManager == null)
         {
             Debug.LogError("Party Manager is null!");
             return;
         }
-        GameManager.instance.partyManager.EndingGame(false);
+        partyManager.EndingGame(false);
     }
 
     protected override void OnFixed()

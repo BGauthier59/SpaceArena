@@ -48,6 +48,8 @@ public class EnemyGenericBehaviour : MonoBehaviour
     [SerializeField] private float idleRandomPointMaxDistance;
     [SerializeField] private float idleRandomPointMinDistance;
 
+    protected PartyManager partyManager;
+
     #endregion
     
     private void Start()
@@ -63,6 +65,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
 
     public virtual void Initialization()
     {
+        partyManager = GameManager.instance.partyManager;
         agent.enabled = true;
         agent.speed = speed;
         target = null;

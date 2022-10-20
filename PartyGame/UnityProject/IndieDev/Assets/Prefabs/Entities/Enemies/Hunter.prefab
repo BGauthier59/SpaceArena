@@ -246,7 +246,7 @@ MonoBehaviour:
   isMoving: 0
   isAttacking: 0
   attackArea: {fileID: 0}
-  damage: 2
+  damage: 12
   agent: {fileID: 2396810920112995011}
   minDistanceToAttack: 0
   durationBeforeTarget: 0.25

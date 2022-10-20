@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public PlayerManager manager;
 
     [Header("Party Data")] public Vector3 initPos;
+    public GameObject crown;
 
     [Header("Components")] public Renderer rd;
     public CapsuleCollider col;
@@ -87,6 +88,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TrailRenderer trail;
     public Light playerLight;
 
+    private PartyManager partyManager;
+
     #endregion
 
     #region Connection
@@ -121,21 +124,31 @@ public class PlayerController : MonoBehaviour
         DeactivatePlayer();
     }
 
+    private void LinkReferences()
+    {
+        partyManager = GameManager.instance.partyManager;
+        manager.LinkReferences();
+    }
+
     #endregion
 
     #region Party Initialization
 
     public void PartyBegins()
     {
+        LinkReferences();
+
         rb.isKinematic = false;
         baseSpeed = speed;
 
-        reloadGauge.transform.SetParent(GameManager.instance.partyManager.mainCanvas.transform);
-        powerUpGauge.transform.SetParent(GameManager.instance.partyManager.mainCanvas.transform);
+        reloadGauge.transform.SetParent(partyManager.mainCanvas.transform);
+        powerUpGauge.transform.SetParent(partyManager.mainCanvas.transform);
 
         ResetGauges();
         SetGaugesState(false);
         GraphInitialization();
+        ResetPlayer();
+        ResetPlayerGraphsAndCollisions();
     }
 
     public void GraphInitialization()
@@ -145,15 +158,17 @@ public class PlayerController : MonoBehaviour
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
         material.EnableKeyword("_EMISSION");
         particleSystem.material = directionArrow.material = rd.material = trail.material = material;
+        crown.SetActive(false);
     }
 
     public void ActivatePlayer()
     {
-        if (GameManager.instance.partyManager.gameState == PartyManager.GameState.End)
+        if (partyManager.gameState == PartyManager.GameState.End)
         {
             Debug.LogWarning("Tried to active player after the end of game.");
             return;
         }
+
         isActive = true;
     }
 
@@ -343,51 +358,47 @@ public class PlayerController : MonoBehaviour
     private void Firing()
     {
         if (!isAttacking || reloading) return;
-
-        
-            if (timerBeforeNextShoot >= durationBeforeNextShoot)
+        if (timerBeforeNextShoot >= durationBeforeNextShoot)
+        {
+            if (!powerUpIsActive)
             {
-                if (!powerUpIsActive)
+                bulletAmount--;
+                shootingParticles.Play();
+                var newBullet =
+                    PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
+                var bullet = newBullet.GetComponent<BulletScript>();
+                bullet.shooter = manager;
+                bullet.rb.AddForce(transform.forward * bulletSpeed);
+
+                partyManager.cameraShake.AddShakeEvent(shootingShake);
+                GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
+
+                rb.AddForce(-transform.forward * recoil);
+                timerBeforeNextShoot = 0f;
+
+                reloadGauge.value = bulletAmount;
+
+                if (bulletAmount <= 0)
                 {
-                    bulletAmount--;
-
-                    shootingParticles.Play();
-                    var newBullet =
-                        PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
-                    var bullet = newBullet.GetComponent<BulletScript>();
-                    bullet.shooter = manager;
-                    bullet.rb.AddForce(transform.forward * bulletSpeed);
-
-                    GameManager.instance.partyManager.cameraShake.AddShakeEvent(shootingShake);
-                    GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
-
-                    rb.AddForce(-transform.forward * recoil);
-                    timerBeforeNextShoot = 0f;
-
-                    reloadGauge.value = bulletAmount;
-
-                    if (bulletAmount <= 0)
-                    {
-                        isAutoReloading = false;
-                        reloading = true;
-                    }
-                    else
-                    {
-                        isAutoReloading = true;
-                        autoReloadTimer = 0f;
-                    }
+                    isAutoReloading = false;
+                    reloading = true;
                 }
                 else
                 {
-                    currentPowerUp.OnUse();
-                    timerBeforeNextShoot = 0f;
+                    isAutoReloading = true;
+                    autoReloadTimer = 0f;
                 }
             }
             else
             {
-                timerBeforeNextShoot += Time.deltaTime;
+                currentPowerUp.OnUse();
+                timerBeforeNextShoot = 0f;
             }
-        
+        }
+        else
+        {
+            timerBeforeNextShoot += Time.deltaTime;
+        }
     }
 
     private void Reloading()
@@ -415,7 +426,7 @@ public class PlayerController : MonoBehaviour
         {
             autoReloadTimer = 0f;
             reloading = true;
-            reloadTimer = (bulletAmount / (float)maxBulletAmount) * reloadDuration;
+            reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
             isAutoReloading = false;
         }
         else
@@ -517,15 +528,7 @@ public class PlayerController : MonoBehaviour
         playerLight.enabled = false;
         trail.enabled = false;
 
-        isAttacking = false;
-        isVentingOut = false;
-        isDashing = false;
-        isAutoReloading = false;
-        powerUpIsActive = false;
-        // Désactiver pouvoirs
-
-
-        ResetSpeed();
+        ResetPlayer();
         SetGaugesState(false);
     }
 
@@ -534,14 +537,28 @@ public class PlayerController : MonoBehaviour
         ResetGauges();
         SetGaugesState(true);
         transform.position = initPos;
+        ResetPlayerGraphsAndCollisions();
+        ActivatePlayer();
+    }
 
+    private void ResetPlayer()
+    {
+        ResetSpeed();
+        isAttacking = false;
+        isVentingOut = false;
+        isDashing = false;
+        isAutoReloading = false;
+        powerUpIsActive = false;
+        // Désactiver pouvoirs
+    }
+
+    private void ResetPlayerGraphsAndCollisions()
+    {
         rd.gameObject.SetActive(true);
         trail.enabled = true;
         directionArrow.enabled = true;
         playerLight.enabled = true;
         col.enabled = true;
-
-        ActivatePlayer();
     }
 
     public void IncreasePowerUpGauge(int value)
@@ -583,7 +600,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetGaugesState(bool active)
     {
-        if (active && GameManager.instance.partyManager.gameState == PartyManager.GameState.End)
+        if (active && partyManager.gameState == PartyManager.GameState.End)
         {
             Debug.LogWarning("Tried to display gauges after end of game.");
             return;
@@ -614,19 +631,4 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
-}
-
-[Serializable]
-public class GamepadData
-{
-    public Gamepad gamepad;
-    public bool isRumbling;
-
-    public RumblePattern activeRumblePattern;
-    public float rumbleDuration;
-    public float pulseDuration;
-    public float lowA;
-    public float highA;
-    public float rumbleStep;
-    public bool isMotorActive;
 }

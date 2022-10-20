@@ -9,7 +9,7 @@ public class RandomEventManager : MonoBehaviour
     public List<RandomEvent> events;
     public List<RandomEvent> currentEvents;
     public CameraZoom randomEventZoom;
-    private WavesManager wavesManager;
+    private NewWavesManager wavesManager;
 
     public bool isStartingEvent;
 
@@ -24,10 +24,13 @@ public class RandomEventManager : MonoBehaviour
 
     [SerializeField] private float startingEventDuration;
 
+    private PartyManager partyManager;
+
     public void Initialization()
     {
         currentEvents = new List<RandomEvent>();
-        wavesManager = GameManager.instance.partyManager.wavesManager;
+        partyManager = GameManager.instance.partyManager;
+        wavesManager = partyManager.wavesManager;
         isStartingEvent = false;
         begun = true;
     }
@@ -36,7 +39,7 @@ public class RandomEventManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.partyManager.gameState == PartyManager.GameState.End) return;
+        if (partyManager.gameState == PartyManager.GameState.End) return;
         
         CheckFirstTimer();
         CheckTimer();
@@ -118,9 +121,9 @@ public class RandomEventManager : MonoBehaviour
         
         currentEvents.Add(@event);
 
-        GameManager.instance.partyManager.cameraManager.SetZoom(randomEventZoom);
+        partyManager.cameraManager.SetZoom(randomEventZoom);
 
-        StartCoroutine(GameManager.instance.partyManager.RandomEventSetDisplay(@event));
+        StartCoroutine(partyManager.RandomEventSetDisplay(@event));
         // Afficher l'event sur le main screen
 
         yield return new WaitForSeconds(startingEventDuration);
@@ -128,5 +131,22 @@ public class RandomEventManager : MonoBehaviour
         isStartingEvent = false;
         isEventRunning = true;
         @event.StartEvent();
+    }
+
+    public void CancelRandomEventManager()
+    {
+        if (currentEvents.Count == 0)
+        {
+            Debug.Log("No event to cancel");
+            return;
+        }
+
+        foreach (var re in currentEvents)
+        {
+            re.EndEvent();
+        }
+        currentEvents.Clear();
+        StopAllCoroutines();
+        partyManager.SetScreenRandomEvent(false);
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawningPoint (6)
   m_TagString: Untagged
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -153,6 +153,120 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &3078389691285531749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5085306690933639541}
+  - component: {fileID: 6223918651986429473}
+  m_Layer: 0
+  m_Name: NewWavesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5085306690933639541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3078389691285531749}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7624674068071304361}
+  m_Father: {fileID: 7624674067756515780}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6223918651986429473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3078389691285531749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf7921dbb2aa714b89fd95ff04f59db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waves:
+  - durationBeforeNextActivation: 0
+    difficultyIncrementation: 50
+    minMaxEntrances:
+      x: 0
+      y: 0
+    entrancesCount: 0
+    fullRandomEntrances: 0
+    selectableEntrancesStructs:
+    - indexes: 
+    - indexes: 
+    - indexes: 
+    difficultyPerEntrance: 0
+    delay: 0
+  entrances:
+  - entrance: {fileID: 7624674067797375855}
+    availableEnemies: 
+    minRound: 0
+    isAvailable: 0
+    maxCount: 6
+  - entrance: {fileID: 7624674066724139943}
+    availableEnemies: 
+    minRound: 0
+    isAvailable: 0
+    maxCount: 6
+  - entrance: {fileID: 7624674068359709933}
+    availableEnemies: 
+    minRound: 0
+    isAvailable: 0
+    maxCount: 6
+  - entrance: {fileID: 7624674066399732374}
+    availableEnemies: 
+    minRound: 0
+    isAvailable: 0
+    maxCount: 6
+  - entrance: {fileID: 7624674068104482087}
+    availableEnemies: 
+    minRound: 0
+    isAvailable: 0
+    maxCount: 6
+  - entrance: {fileID: 7624674067363585438}
+    availableEnemies: 
+    minRound: 0
+    isAvailable: 0
+    maxCount: 6
+  - entrance: {fileID: 1023977259}
+    availableEnemies: 
+    minRound: 0
+    isAvailable: 0
+    maxCount: 6
+  enemyData:
+  - enemy: 4
+    difficulty: 40
+    minRound: 0
+    maxCount: 7
+  - enemy: 5
+    difficulty: 65
+    minRound: 0
+    maxCount: 6
+  - enemy: 6
+    difficulty: 50
+    minRound: 0
+    maxCount: 5
+  - enemy: 7
+    difficulty: 90
+    minRound: 0
+    maxCount: 2
+  spawningDelay: 0.25
+  difficulty: 100
+  isSpawning: 0
 --- !u!1 &3642139475717394693
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +578,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawningPoint (3)
   m_TagString: Untagged
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -494,7 +608,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawningPoint (1)
   m_TagString: Untagged
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -524,7 +638,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawningPoint (5)
   m_TagString: Untagged
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -626,120 +740,6 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   baseElementInfoOffset: {x: 0, y: 0, z: 1}
---- !u!1 &7624674067609826638
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7624674067609826639}
-  - component: {fileID: 7624674067609826636}
-  m_Layer: 0
-  m_Name: WavesManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7624674067609826639
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7624674067609826638}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 7624674068071304361}
-  m_Father: {fileID: 7624674067756515780}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7624674067609826636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7624674067609826638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea01026964608445a0ff8ad47c5876a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entrances:
-  - entrance: {fileID: 7624674067797375855}
-    availableEnemies: 04000000
-    minRound: 0
-    isAvailable: 0
-    maxCount: 0
-  - entrance: {fileID: 7624674066724139943}
-    availableEnemies: 06000000
-    minRound: 1
-    isAvailable: 0
-    maxCount: 0
-  - entrance: {fileID: 7624674068359709933}
-    availableEnemies: 0600000007000000
-    minRound: 2
-    isAvailable: 0
-    maxCount: 0
-  - entrance: {fileID: 7624674066399732374}
-    availableEnemies: 050000000400000006000000
-    minRound: 2
-    isAvailable: 0
-    maxCount: 0
-  - entrance: {fileID: 7624674068104482087}
-    availableEnemies: 06000000
-    minRound: 1
-    isAvailable: 0
-    maxCount: 0
-  - entrance: {fileID: 7624674067363585438}
-    availableEnemies: 04000000
-    minRound: 1
-    isAvailable: 0
-    maxCount: 0
-  - entrance: {fileID: 1023977259}
-    availableEnemies: 05000000
-    minRound: 1
-    isAvailable: 0
-    maxCount: 0
-  enemyData:
-  - enemy: 4
-    difficulty: 40
-    minRound: 0
-    maxCount: 7
-  - enemy: 5
-    difficulty: 65
-    minRound: 2
-    maxCount: 6
-  - enemy: 6
-    difficulty: 50
-    minRound: 0
-    maxCount: 5
-  - enemy: 7
-    difficulty: 90
-    minRound: 3
-    maxCount: 2
-  isSpawning: 0
-  spawningDelay: 0.25
-  currentRound: 0
-  difficulty: 100
-  pointPerEntranceCount: 0
-  difficultyGapOverRound: 64000000500000005000000046000000410000003c00000032000000280000001e00000014000000
-  waveDurationOverRound:
-  - 7
-  - 10
-  - 12.5
-  - 15
-  - 15
-  - 17.5
-  - 20
-  - 23.75
-  - 27.5
-  - 30
 --- !u!1 &7624674067620636258
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,7 +815,7 @@ Transform:
   m_Children:
   - {fileID: 5274706629730034121}
   - {fileID: 5806317602984601587}
-  - {fileID: 7624674067609826639}
+  - {fileID: 5085306690933639541}
   - {fileID: 7624674068035499098}
   - {fileID: 7624674067489746147}
   - {fileID: 7624674067620636259}
@@ -846,14 +846,15 @@ MonoBehaviour:
   timerText: {fileID: 2852438131246684211}
   baseManager: {fileID: 7624674067489746144}
   enemiesManager: {fileID: 7624674067620636256}
-  wavesManager: {fileID: 7624674067609826636}
+  wavesManager: {fileID: 6223918651986429473}
   randomEventManager: {fileID: 7984801639912373034}
   cameraManager: {fileID: 5274706629730034120}
   mainLight: {fileID: 1207984548298822851}
   showScreenZoom: {fileID: 11400000, guid: 0ca2c322c68a7bc41833227a067a9cd5, type: 2}
   lightDezoom: {fileID: 11400000, guid: 4d5eaa540e83bc643a3c00ef1abaa49d, type: 2}
   screenLargeZoom: {fileID: 11400000, guid: 5446a5f1022020543bf6896eefaeba2a, type: 2}
-  partyDuration: 300
+  partyDuration: 240
+  durationBeforeCrownAppears: 15
   gameState: 0
   gameWon: 0
   hasPartyBegun: 0
@@ -903,9 +904,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7624674067797375855}
   m_Layer: 0
-  m_Name: EnemySpawningPoint
+  m_Name: EnemySpawningPoint (0)
   m_TagString: Untagged
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1029,7 +1030,7 @@ Transform:
   - {fileID: 7624674068104482087}
   - {fileID: 7624674067363585438}
   - {fileID: 1023977259}
-  m_Father: {fileID: 7624674067609826639}
+  m_Father: {fileID: 5085306690933639541}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7624674068347082456
@@ -1059,7 +1060,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawningPoint (4)
   m_TagString: Untagged
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1089,7 +1090,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawningPoint (2)
   m_TagString: Untagged
-  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

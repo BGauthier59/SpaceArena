@@ -23,18 +23,21 @@ public class ReparationArea : MonoBehaviour
     public Material reparationAreaDisabled;
     public Material reparationAreaEnabled;
 
+    private PartyManager partyManager;
+
     private void Start()
     {
         areaCollider = GetComponent<Collider>();
+        partyManager = GameManager.instance.partyManager;
 
         foreach (var rd in reparationAreaDevicesRenderer)
         {
-            rd.material = GameManager.instance.partyManager.baseManager.colorVariantMaterial;
+            rd.material = partyManager.baseManager.colorVariantMaterial;
         }
 
         DeactivateArea();
     }
-
+    
     private void Update()
     {
         if (isActivated) SetColor();
@@ -55,7 +58,7 @@ public class ReparationArea : MonoBehaviour
         if (timer > 1) timer = 0f;
         else
         {
-            raColor = Color.Lerp(associatedElement.color, GameManager.instance.partyManager.baseManager.disabledColor, timer);
+            raColor = Color.Lerp(associatedElement.color, partyManager.baseManager.disabledColor, timer);
 
             foreach (var rd in reparationAreaDevicesRenderer)
             {
@@ -84,7 +87,7 @@ public class ReparationArea : MonoBehaviour
 
         foreach (var rd in reparationAreaDevicesRenderer)
         {
-            rd.material.SetColor("_EmissionColor", GameManager.instance.partyManager.baseManager.disabledColor * 1);
+            rd.material.SetColor("_EmissionColor", partyManager.baseManager.disabledColor * 1);
         }
 
         areaCollider.enabled = false;
