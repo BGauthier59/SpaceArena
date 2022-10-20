@@ -56,11 +56,6 @@ public class LaserBehaviour : PowerUpManager
     
 }
 
-public class TeslaBehaviour : PowerUpManager
-{
-    
-}
-
 public class OverloadBehaviour : PowerUpManager
 {
     
