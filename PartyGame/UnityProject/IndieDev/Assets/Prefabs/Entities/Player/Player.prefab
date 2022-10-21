@@ -231,6 +231,10 @@ MonoBehaviour:
   shootingShake: {fileID: 11400000, guid: 78299d7eea4932140bd83a79ab14abc9, type: 2}
   recoil: 200
   reloadGauge: {fileID: 6009135751034671799}
+  helpingAimMaxDistance: 10
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
   setGaugeSpeed: 10
   powerUpIsActive: 0
   powerUpGauge: {fileID: 6605169125929842330}

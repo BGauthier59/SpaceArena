@@ -65,6 +65,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float recoil;
     [SerializeField] private Slider reloadGauge;
 
+    [Header("HelpingAim")] [SerializeField]
+    private float helpingAimMaxDistance;
+    [SerializeField] private LayerMask enemyLayer;
+    private Vector3 helpingAimDirection;
+    private bool helpingAimSet;
+
     [Header("Power-Up")] [SerializeField] private float setGaugeSpeed;
     public bool powerUpIsActive;
     [SerializeField] private Slider powerUpGauge;
@@ -353,7 +359,27 @@ public class PlayerController : MonoBehaviour
         {
             var angle = Mathf.Atan2(rightJoystickInput.y, rightJoystickInput.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, -angle + 90, 0);
+            HelpingAim();
         }
+    }
+
+    private void HelpingAim()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, helpingAimMaxDistance, enemyLayer))
+        {
+            //Debug.DrawRay(transform.position, transform.forward * helpingAimMaxDistance, Color.green);
+            helpingAimDirection = hit.transform.position - transform.position;
+            //Debug.DrawRay(transform.position, helpingAimDirection * 10);
+            helpingAimSet = true;
+        }
+        else
+        {
+            //Debug.DrawRay(transform.position, transform.forward * helpingAimMaxDistance, Color.red);
+            helpingAimDirection = Vector3.zero;
+            helpingAimSet = false;
+        }
+
     }
 
     private void Firing()
@@ -369,7 +395,15 @@ public class PlayerController : MonoBehaviour
                     PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
                 var bullet = newBullet.GetComponent<BulletScript>();
                 bullet.shooter = manager;
-                bullet.rb.AddForce(transform.forward * bulletSpeed);
+
+                if (helpingAimSet)
+                {
+                    bullet.rb.AddForce(helpingAimDirection.normalized * bulletSpeed);
+                }
+                else
+                {
+                    bullet.rb.AddForce(transform.forward * bulletSpeed);
+                }
 
                 partyManager.cameraShake.AddShakeEvent(shootingShake);
                 GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
