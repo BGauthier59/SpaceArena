@@ -3773,7 +3773,7 @@ MonoBehaviour:
     panelName:
       frenchName: LD 1 2 3
       englishName: LD 1 2 3
-    panelImage: {fileID: 0}
+    panelImage: {fileID: 21300000, guid: 91c9343fddcdaad479348c2d9bf57a84, type: 3}
     currentIndex: 0
   - arenas:
     - translatableName:
@@ -3783,7 +3783,7 @@ MonoBehaviour:
     panelName:
       frenchName: LD_02
       englishName: LD_02
-    panelImage: {fileID: 0}
+    panelImage: {fileID: 21300000, guid: 14316e4f23273494d95fc229d9403f08, type: 3}
     currentIndex: 0
   - arenas:
     - translatableName:
@@ -3793,7 +3793,7 @@ MonoBehaviour:
     panelName:
       frenchName: LD_03
       englishName: LD_03
-    panelImage: {fileID: 21300000, guid: 98b11760d18e3d4419dd2c0161f9a50a, type: 3}
+    panelImage: {fileID: 21300000, guid: 5293e65ec7e6fb04ba590b4b3e1d44b6, type: 3}
     currentIndex: 0
 --- !u!4 &969052267
 Transform:

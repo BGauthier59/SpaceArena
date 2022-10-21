@@ -61,7 +61,7 @@ public class MainMenuManager : MonoBehaviour
         public ArenaArea[] arenas;
         public TranslatableName panelName;
         public Sprite panelImage;
-        public int currentIndex;
+        [HideInInspector] public int currentIndex;
     }
     
     [Serializable]
