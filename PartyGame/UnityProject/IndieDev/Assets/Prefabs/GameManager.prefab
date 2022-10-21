@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLanguage: 0
-  rumbleActivated: 0
+  rumbleActivated: 1
 --- !u!1 &2901952424801644936
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,8 +246,8 @@ MonoBehaviour:
   mainVibration: {fileID: 11400000, guid: b0aea77c2136d494c8afea69f20aa109, type: 2}
   connectionVibration: {fileID: 11400000, guid: ddc5a5ca8c79ea0449036743d5ea6fe6, type: 2}
   reparationVibration: {fileID: 11400000, guid: 1f14fe8e0ac26e442a81d94211288dfa, type: 2}
-  takeDamageVibration: {fileID: 0}
-  shootVibrations: {fileID: 0}
+  takeDamageVibration: {fileID: 11400000, guid: 50c744e21c1bd624f9c0d6bacd3f5782, type: 2}
+  shootVibrations: {fileID: 11400000, guid: c52158867398c284182e40f949a3a121, type: 2}
 --- !u!1 &3176966467083152872
 GameObject:
   m_ObjectHideFlags: 0

@@ -535,10 +535,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 31827161, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 969052266}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[0].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[0].g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[0].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[1].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[1].g
+      value: 0.14970064
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[1].r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[2].b
+      value: 0.07243514
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[2].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[2].r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[3].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[3].g
+      value: 0.92414725
+      objectReference: {fileID: 0}
+    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: colors.Array.data[3].r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4576669941368348803, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -587,14 +631,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5419757356267785862, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: vibrationsType1
-      value: 
-      objectReference: {fileID: 11400000, guid: ddc5a5ca8c79ea0449036743d5ea6fe6, type: 2}
-    - target: {fileID: 5419757356267785862, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: connectionVibration
-      value: 
-      objectReference: {fileID: 11400000, guid: ddc5a5ca8c79ea0449036743d5ea6fe6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
 --- !u!1 &217440720
@@ -3794,6 +3830,16 @@ MonoBehaviour:
       frenchName: LD_03
       englishName: LD_03
     panelImage: {fileID: 21300000, guid: 5293e65ec7e6fb04ba590b4b3e1d44b6, type: 3}
+    currentIndex: 0
+  - arenas:
+    - translatableName:
+        frenchName: 01-1
+        englishName: 01-1
+      arenaSceneIndex: 7
+    panelName:
+      frenchName: Apprentissage
+      englishName: Learning
+    panelImage: {fileID: 0}
     currentIndex: 0
 --- !u!4 &969052267
 Transform:
