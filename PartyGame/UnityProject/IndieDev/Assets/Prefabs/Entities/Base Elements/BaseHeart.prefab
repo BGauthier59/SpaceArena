@@ -90,9 +90,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7657267462596785996}
-  m_Layer: 0
+  - component: {fileID: 4138404899465712747}
+  - component: {fileID: 6047526565768416098}
+  - component: {fileID: 4499719867280447185}
+  m_Layer: 7
   m_Name: Device
-  m_TagString: Untagged
+  m_TagString: BaseElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,9 +120,75 @@ Transform:
   - {fileID: 7093468803174227335}
   - {fileID: 7093468802488531138}
   - {fileID: 8753299329030759364}
+  - {fileID: 8127658041745486561}
+  - {fileID: 1191434874585798609}
   m_Father: {fileID: 7093468803843002882}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4138404899465712747
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3501306684766199168}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 2, z: 1.5}
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!114 &6047526565768416098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3501306684766199168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 912f84eb7b13c1642813c536a922a30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalLife: 75
+  currentLife: 0
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  isDead: 0
+  isStunned: 0
+  onDestroyText: {fileID: 4506188067696156706}
+  reparationInputs: 0
+  allReparationAreas: []
+  reparationIcon: {fileID: 0}
+  iconMoveDuration: 0
+  elementColorRenderers:
+  - {fileID: 7093468802652956510}
+  - {fileID: 7093468803591421836}
+  - {fileID: 7093468804151769186}
+  - {fileID: 7093468803174227334}
+  - {fileID: 7093468802488531141}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  baseElementInfo: {fileID: 7304735291914537418}
+  lifeSlider: {fileID: 2350521480599316558}
+  lifeSliderFill: {fileID: 184723977723885058}
+  baseElementNameText: {fileID: 7304735292510221915}
+  baseElementLifeText: {fileID: 5301063997415911012}
+  baseElementName:
+    frenchName: Coeur de la Base
+    englishName: Base Heart
+--- !u!135 &4499719867280447185
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3501306684766199168}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7093468802488531139
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,12 +765,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7093468803843002882}
-  - component: {fileID: 7093468803843002883}
-  - component: {fileID: 6627555131343834032}
-  - component: {fileID: 4119517316068768057}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: BaseHeart
-  m_TagString: BaseElement
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -718,75 +784,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7657267462596785996}
-  - {fileID: 8127658041745486561}
-  - {fileID: 1191434874585798609}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7093468803843002883
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7093468803843002880}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 2, z: 1.5}
-  m_Center: {x: 0, y: 0.75, z: 0}
---- !u!114 &6627555131343834032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7093468803843002880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 912f84eb7b13c1642813c536a922a30b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalLife: 75
-  currentLife: 0
-  animator: {fileID: 0}
-  rb: {fileID: 0}
-  isDead: 0
-  isStunned: 0
-  onDestroyText: {fileID: 4506188067696156706}
-  reparationInputs: 0
-  allReparationAreas: []
-  reparationIcon: {fileID: 0}
-  iconMoveDuration: 0
-  elementColorRenderers:
-  - {fileID: 7093468802652956510}
-  - {fileID: 7093468803591421836}
-  - {fileID: 7093468804151769186}
-  - {fileID: 7093468803174227334}
-  - {fileID: 7093468802488531141}
-  color: {r: 0, g: 0, b: 0, a: 0}
-  baseElementInfo: {fileID: 7304735291914537418}
-  lifeSlider: {fileID: 2350521480599316558}
-  lifeSliderFill: {fileID: 184723977723885058}
-  baseElementNameText: {fileID: 7304735292510221915}
-  baseElementLifeText: {fileID: 5301063997415911012}
-  baseElementName:
-    frenchName: Coeur de la Base
-    englishName: Base Heart
---- !u!135 &4119517316068768057
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7093468803843002880}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 3
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7093468804151769184
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,12 +873,12 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7093468803843002882}
+    m_TransformParent: {fileID: 7657267462596785996}
     m_Modifications:
     - target: {fileID: 692495334019775865, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
       propertyPath: baseElement
       value: 
-      objectReference: {fileID: 6627555131343834032}
+      objectReference: {fileID: 0}
     - target: {fileID: 3022299866126143678, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -889,7 +889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3639827033271228291, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3639827033271228291, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1000,7 +1000,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7093468803843002882}
+    m_TransformParent: {fileID: 7657267462596785996}
     m_Modifications:
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_Pivot.x
@@ -1012,7 +1012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1060,11 +1060,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_AnchoredPosition.x

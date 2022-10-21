@@ -171,12 +171,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1643710193594196254}
-  - component: {fileID: 1643710193594196249}
-  - component: {fileID: 6494679129175261836}
-  - component: {fileID: 5464702492293266455}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Electrical
-  m_TagString: BaseElement
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -197,7 +194,6 @@ Transform:
   - {fileID: 3009894498627795258}
   - {fileID: 3980772606143509852}
   - {fileID: 4131060172621701322}
-  - {fileID: 3423259979367399482}
   - {fileID: 2456952652108370862}
   - {fileID: 5724814258495654979}
   - {fileID: 5657050825120202027}
@@ -205,90 +201,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1643710193594196249
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643710193594196255}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 3, z: 1.5}
-  m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &6494679129175261836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643710193594196255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c03cdf1ff2da3242b078fd45420646b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalLife: 50
-  currentLife: 0
-  animator: {fileID: 0}
-  rb: {fileID: 0}
-  isDead: 0
-  isStunned: 0
-  onDestroyText: {fileID: 7044706312578749177}
-  reparationInputs: 6
-  allReparationAreas:
-  - {fileID: 879073058619364454}
-  - {fileID: 7014744676065971083}
-  - {fileID: 6965415927372233443}
-  - {fileID: 7205064316423644076}
-  reparationIcon: {fileID: 4787465747578800673}
-  iconMoveDuration: 0.5
-  elementColorRenderers:
-  - {fileID: 1643710193565245566}
-  - {fileID: 6864134950728185997}
-  color: {r: 0, g: 0, b: 0, a: 0}
-  baseElementInfo: {fileID: 5108413197997728940}
-  lifeSlider: {fileID: 226765898248946984}
-  lifeSliderFill: {fileID: 2390107166292548452}
-  baseElementNameText: {fileID: 5108413196848700221}
-  baseElementLifeText: {fileID: 7649980972927501058}
-  baseElementName:
-    frenchName: "G\xE9n\xE9rateur Electrique"
-    englishName: Electric Generator
-  allLights:
-  - light: {fileID: 4617704382395628481}
-    isOn: 1
-    lightOnIntensity: 5
-    lightingOnDuration: 3
-    colorElements:
-    - {fileID: 253890594413642977}
-  - light: {fileID: 6840582089484679079}
-    isOn: 1
-    lightOnIntensity: 5
-    lightingOnDuration: 3
-    colorElements:
-    - {fileID: 2125066426187253895}
-  - light: {fileID: 5801854458854466097}
-    isOn: 1
-    lightOnIntensity: 5
-    lightingOnDuration: 3
-    colorElements:
-    - {fileID: 1375623637858213137}
---- !u!135 &5464702492293266455
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643710193594196255}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 3
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1643710194041532550
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,9 +291,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 913759558302176951}
-  m_Layer: 0
+  - component: {fileID: 7156216123899567874}
+  - component: {fileID: 4122890632156477873}
+  - component: {fileID: 1166884311731921451}
+  m_Layer: 7
   m_Name: Device
-  m_TagString: Untagged
+  m_TagString: BaseElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -402,9 +317,94 @@ Transform:
   - {fileID: 1643710193565245567}
   - {fileID: 8009900453121637120}
   - {fileID: 3689515737601538743}
+  - {fileID: 3423259979367399482}
   m_Father: {fileID: 1643710193594196254}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7156216123899567874
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686213781010172845}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 3, z: 1.5}
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &4122890632156477873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686213781010172845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c03cdf1ff2da3242b078fd45420646b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalLife: 50
+  currentLife: 0
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  isDead: 0
+  isStunned: 0
+  onDestroyText: {fileID: 7044706312578749177}
+  reparationInputs: 6
+  allReparationAreas:
+  - {fileID: 879073058619364454}
+  - {fileID: 7014744676065971083}
+  - {fileID: 6965415927372233443}
+  - {fileID: 7205064316423644076}
+  reparationIcon: {fileID: 4787465747578800673}
+  iconMoveDuration: 0.5
+  elementColorRenderers:
+  - {fileID: 1643710193565245566}
+  - {fileID: 6864134950728185997}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  baseElementInfo: {fileID: 5108413197997728940}
+  lifeSlider: {fileID: 226765898248946984}
+  lifeSliderFill: {fileID: 2390107166292548452}
+  baseElementNameText: {fileID: 5108413196848700221}
+  baseElementLifeText: {fileID: 7649980972927501058}
+  baseElementName:
+    frenchName: "G\xE9n\xE9rateur Electrique"
+    englishName: Electric Generator
+  allLights:
+  - light: {fileID: 4617704382395628481}
+    isOn: 1
+    lightOnIntensity: 5
+    lightingOnDuration: 3
+    colorElements:
+    - {fileID: 253890594413642977}
+  - light: {fileID: 6840582089484679079}
+    isOn: 1
+    lightOnIntensity: 5
+    lightingOnDuration: 3
+    colorElements:
+    - {fileID: 2125066426187253895}
+  - light: {fileID: 5801854458854466097}
+    isOn: 1
+    lightOnIntensity: 5
+    lightingOnDuration: 3
+    colorElements:
+    - {fileID: 1375623637858213137}
+--- !u!135 &1166884311731921451
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686213781010172845}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4528784436243420929
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +496,7 @@ PrefabInstance:
     - target: {fileID: 692495334019775865, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
       propertyPath: baseElement
       value: 
-      objectReference: {fileID: 6494679129175261836}
+      objectReference: {fileID: 0}
     - target: {fileID: 3022299866126143678, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -614,7 +614,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1643710193594196254}
+    m_TransformParent: {fileID: 913759558302176951}
     m_Modifications:
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_Pivot.x
@@ -674,11 +674,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 726397677696592400, guid: 4aa585db0a5d5a14facd6912bf705566, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -725,7 +725,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -869,7 +869,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -942,7 +942,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1015,7 +1015,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1208,11 +1208,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c6c19c4b1c634d409cbe601073f7363, type: 3}
---- !u!108 &5801854458854466097 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 2334713834655798393, guid: 9c6c19c4b1c634d409cbe601073f7363, type: 3}
-  m_PrefabInstance: {fileID: 8134277426320520776}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4131060172621701322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5311638892232922754, guid: 9c6c19c4b1c634d409cbe601073f7363, type: 3}
@@ -1221,6 +1216,11 @@ Transform:
 --- !u!23 &1375623637858213137 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7202927413280074585, guid: 9c6c19c4b1c634d409cbe601073f7363, type: 3}
+  m_PrefabInstance: {fileID: 8134277426320520776}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &5801854458854466097 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2334713834655798393, guid: 9c6c19c4b1c634d409cbe601073f7363, type: 3}
   m_PrefabInstance: {fileID: 8134277426320520776}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9117591278773298142

@@ -306,9 +306,9 @@ public class MainMenuManager : MonoBehaviour
         isArenaInfoMoving = true;
         isGoingOtherSize = false;
         arenaIndex = Array.IndexOf(allArenasPanels, currentSelectedArenasPanel);
-        arenaIndex++;
+        arenaIndex--;
 
-        if (arenaIndex == allArenasPanels.Length) arenaIndex = 0;
+        if (arenaIndex == -1) arenaIndex = allArenasPanels.Length - 1;
     }
 
     public void SelectOnLeft()
@@ -320,9 +320,9 @@ public class MainMenuManager : MonoBehaviour
         isArenaInfoMoving = true;
         isGoingOtherSize = false;
         arenaIndex = Array.IndexOf(allArenasPanels, currentSelectedArenasPanel);
-        arenaIndex--;
+        arenaIndex++;
 
-        if (arenaIndex == -1) arenaIndex = allArenasPanels.Length - 1;
+        if (arenaIndex == allArenasPanels.Length) arenaIndex = 0;
     }
 
     private void MovingArenaInfo()

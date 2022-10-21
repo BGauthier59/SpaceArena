@@ -42,10 +42,8 @@ public class NewWavesManager : MonoBehaviour
 
         public IEnumerator Spawning()
         {
-            Debug.Log(selectedEntrances.Count);
             foreach (var (entrance, enemiesGroup) in selectedEntrances)
             {
-                Debug.Log(enemiesGroup.count);
                 for (int i = 0; i < enemiesGroup.count; i++)
                 {
                     PoolOfObject.Instance.SpawnFromPool(enemiesGroup.enemyData.enemy, entrance.entrance.position, Quaternion.identity);

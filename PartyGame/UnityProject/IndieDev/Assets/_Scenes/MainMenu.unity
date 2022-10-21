@@ -3759,27 +3759,41 @@ MonoBehaviour:
   allArenasPanels:
   - arenas:
     - translatableName:
-        frenchName: "Ar\xE8ne 2"
-        englishName: Arena 2
+        frenchName: LD_01
+        englishName: LD_01
       arenaSceneIndex: 4
     - translatableName:
-        frenchName: "Ar\xE8ne 3"
-        englishName: Arena 3
+        frenchName: LD_02
+        englishName: LD_02
       arenaSceneIndex: 5
+    - translatableName:
+        frenchName: LD_03
+        englishName: LD_04
+      arenaSceneIndex: 6
     panelName:
-      frenchName: Panel 1
-      englishName: Panel 1
+      frenchName: LD 1 2 3
+      englishName: LD 1 2 3
     panelImage: {fileID: 0}
     currentIndex: 0
   - arenas:
     - translatableName:
-        frenchName: "Ar\xE8ne 2"
-        englishName: Arena 2
+        frenchName: LD_02
+        englishName: LD_02
       arenaSceneIndex: 5
     panelName:
-      frenchName: Hole & trapdoors
-      englishName: Hole & trapdoors
+      frenchName: LD_02
+      englishName: LD_02
     panelImage: {fileID: 0}
+    currentIndex: 0
+  - arenas:
+    - translatableName:
+        frenchName: LD_03
+        englishName: LD_03
+      arenaSceneIndex: 6
+    panelName:
+      frenchName: LD_03
+      englishName: LD_03
+    panelImage: {fileID: 21300000, guid: 98b11760d18e3d4419dd2c0161f9a50a, type: 3}
     currentIndex: 0
 --- !u!4 &969052267
 Transform:

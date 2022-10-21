@@ -548,6 +548,7 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
         isVentingOut = false;
         isDashing = false;
+        aiming = false;
         isAutoReloading = false;
         powerUpIsActive = false;
         // Désactiver pouvoirs
