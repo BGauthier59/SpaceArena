@@ -26,6 +26,9 @@ public class BulletScript : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         //if (collision.CompareTag("Player")) return;
+
+        var interactable = collision.GetComponent<IInteractable>();
+        interactable?.OnHitByProjectile();
         
         if (collision.CompareTag("Enemy") || collision.CompareTag("Player"))
         {

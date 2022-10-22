@@ -3841,6 +3841,16 @@ MonoBehaviour:
       englishName: Learning
     panelImage: {fileID: 0}
     currentIndex: 0
+  - arenas:
+    - translatableName:
+        frenchName: 4
+        englishName: 4
+      arenaSceneIndex: 8
+    panelName:
+      frenchName: Magnetic
+      englishName: Magnetic
+    panelImage: {fileID: 0}
+    currentIndex: 0
 --- !u!4 &969052267
 Transform:
   m_ObjectHideFlags: 0
