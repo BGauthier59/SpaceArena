@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -8.25
       objectReference: {fileID: 0}
+    - target: {fileID: 1646263856160935240, guid: 97169d0901aefa449b71e758546f59c1, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     - target: {fileID: 1646263856160935242, guid: 97169d0901aefa449b71e758546f59c1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7
@@ -562,7 +566,6 @@ MonoBehaviour:
   magnetizedCubeLayer:
     serializedVersion: 2
     m_Bits: 8192
-  stoppingDistance: 3.75
   rotatingCube: {fileID: 2105171506}
 --- !u!65 &1998184289
 BoxCollider:
@@ -808,7 +811,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4905756251316166031, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4905756251316166031, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_LocalPosition.z
