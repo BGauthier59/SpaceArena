@@ -249,6 +249,9 @@ MonoBehaviour:
   detectInputConduit: 0
   isVentingOut: 0
   afterVentingSecurityDuration: 0.7
+  accessibleControllableTurret: {fileID: 0}
+  currentControllableTurret: {fileID: 0}
+  durationBeforeReenteringTurret: 1
   directionArrow: {fileID: 2757242180495348}
   particleSystem: {fileID: 3954722437128320551}
   trail: {fileID: 4373219248815043771}

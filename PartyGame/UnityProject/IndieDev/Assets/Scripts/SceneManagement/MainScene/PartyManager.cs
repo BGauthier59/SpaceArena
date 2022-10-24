@@ -241,6 +241,7 @@ public class PartyManager : MonoBehaviour
             player.DeactivatePlayer();
             player.RebindGauges();
             player.SetGaugesState(false);
+            DontDestroyOnLoad(player.gameObject);
         }
 
         enemiesManager.DeactivateAllEnemies();

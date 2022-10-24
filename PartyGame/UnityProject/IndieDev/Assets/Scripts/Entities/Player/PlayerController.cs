@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("HelpingAim")] [SerializeField]
     private float helpingAimMaxDistance;
+
     [SerializeField] private LayerMask enemyLayer;
     private Vector3 helpingAimDirection;
     private bool helpingAimSet;
@@ -89,6 +90,12 @@ public class PlayerController : MonoBehaviour
     public bool isVentingOut;
     [SerializeField] private float afterVentingSecurityDuration;
     private float afterVentingSecurityTimer;
+
+    [Header("Controllable Turret")] public ControllableTurret accessibleControllableTurret;
+    public ControllableTurret currentControllableTurret;
+    private bool leavingTurret;
+    [SerializeField] private float durationBeforeReenteringTurret;
+    private float timerBeforeReenteringTurret;
 
     [Header("Graph")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
@@ -190,6 +197,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         SetTimerAfterVenting();
+        SetTimerAfterLeavingControllableTurret();
+        MovingInTurret();
 
         if (!isActive) return;
 
@@ -279,8 +288,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext ctx)
     {
+        if (!isActive && ctx.performed && currentControllableTurret)
+        {
+            leavingTurret = true;
+            currentControllableTurret.OnPlayerExits();
+            return;
+        }
+        
         if (!isActive) return;
-
         if (isDashing) return;
 
         isDashing = ctx.performed;
@@ -330,6 +345,13 @@ public class PlayerController : MonoBehaviour
         currentConduit.SetNextPoint(dir);
     }
 
+    private void MovingInTurret()
+    {
+        if (currentControllableTurret == null) return;
+        var moveVector = new Vector2(leftJoystickInput.x, leftJoystickInput.y);
+        currentControllableTurret.Rotating(moveVector);
+    }
+
     private void Grounding()
     {
         if (Physics.Raycast(transform.position, Vector3.down, (col.height / 2 + 0.1f), groundLayer))
@@ -352,7 +374,7 @@ public class PlayerController : MonoBehaviour
             var forward = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
             if (forward == Vector3.zero) return;
             transform.rotation =
-                Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(forward), Time.deltaTime * rotateSpeed);
+                Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(forward), Time.deltaTime * rotateSpeed);
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
         else
@@ -368,18 +390,14 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, helpingAimMaxDistance, enemyLayer))
         {
-            //Debug.DrawRay(transform.position, transform.forward * helpingAimMaxDistance, Color.green);
             helpingAimDirection = hit.transform.position - transform.position;
-            //Debug.DrawRay(transform.position, helpingAimDirection * 10);
             helpingAimSet = true;
         }
         else
         {
-            //Debug.DrawRay(transform.position, transform.forward * helpingAimMaxDistance, Color.red);
             helpingAimDirection = Vector3.zero;
             helpingAimSet = false;
         }
-
     }
 
     private void Firing()
@@ -483,6 +501,14 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+
+        if (!leavingTurret && accessibleControllableTurret)
+        {
+            accessibleControllableTurret.OnPlayerEnters(this);
+            return;
+        }
+        
+
         if (dashTimer >= dashDuration)
         {
             CancelDash();
@@ -506,6 +532,18 @@ public class PlayerController : MonoBehaviour
             isVentingOut = false;
         }
         else afterVentingSecurityTimer += Time.deltaTime;
+    }
+
+    private void SetTimerAfterLeavingControllableTurret()
+    {
+        if (!leavingTurret) return;
+
+        if (timerBeforeReenteringTurret > durationBeforeReenteringTurret)
+        {
+            timerBeforeReenteringTurret = 0f;
+            leavingTurret = false;
+        }
+        else timerBeforeReenteringTurret += Time.deltaTime;
     }
 
     private void SettingPowerUpGauge()
