@@ -11,6 +11,8 @@ public class ControllableTurret : MonoBehaviour
     [SerializeField] private Transform seat;
     [SerializeField] private float rotatingSpeed;
     [SerializeField] private Transform rotatingPart;
+    [SerializeField] private Transform cannonOrigin;
+    public Rigidbody controllableTurretProjectile;
 
     private void OnTriggerEnter(Collider other)
     {
