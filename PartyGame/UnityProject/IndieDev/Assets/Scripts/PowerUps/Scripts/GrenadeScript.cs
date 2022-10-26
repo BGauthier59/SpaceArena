@@ -6,20 +6,20 @@ using UnityEngine;
 
 public class GrenadeScript : MonoBehaviour
 {
-    [SerializeField] private float timer;
+    [SerializeField] private float duration;
+    private float timer;
     [SerializeField] private List<EnemyManager> enemiesInRange;
     [SerializeField] private int damage;
     [SerializeField] private CameraShakeScriptable explosionShake;
 
-    private void Start()
+    private void Update()
     {
-        StartCoroutine(Lifespan());
-    }
-
-    private IEnumerator Lifespan()
-    {
-        yield return new WaitForSeconds(timer);
-        Explode();
+        if (timer >= duration)
+        {
+            timer = 0f;
+            Explode();
+        }
+        else timer += Time.deltaTime;
     }
 
     private void Explode()
@@ -28,6 +28,7 @@ public class GrenadeScript : MonoBehaviour
         {
             enemy.TakeDamage(damage);
         }
+        enemiesInRange.Clear();
 
         PoolOfObject.Instance.SpawnFromPool(PoolType.Explosion, transform.position, Quaternion.identity);
         GameManager.instance.partyManager.cameraShake.AddShakeEvent(explosionShake);

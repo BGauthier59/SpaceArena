@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e13af2f7bba6bc4284f893628732616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 2
+  duration: 2
   enemiesInRange: []
   damage: 70
   explosionShake: {fileID: 11400000, guid: 50835ce3d31ac0e46aa462c6e2134b63, type: 2}

@@ -461,7 +461,9 @@ public class PlayerController : MonoBehaviour
                         Debug.LogWarning("No controllable turret found ?");
                         return;
                     }
-                    
+
+                    if (currentControllableTurret.needToReload) return;
+
                     currentControllableTurret.Shoot();
                     partyManager.cameraShake.AddShakeEvent(shootingShake);
                     GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
@@ -655,7 +657,7 @@ public class PlayerController : MonoBehaviour
         {
             reparationArea.OnTriggerExit(col);
         }
-
+        
         DeactivatePlayer();
         col.enabled = false;
         rd.gameObject.SetActive(false);
@@ -675,9 +677,12 @@ public class PlayerController : MonoBehaviour
         ActivatePlayer();
     }
 
-    private void ResetPlayer() // Resets the player's main variables
+    private void ResetPlayer() // Resets the player's main variables when the game begins or when dying
     {
+        if(isActiveVent) SetVentingPlayer(false);
+        if(isActiveControllableTurret) SetControllableTurretPlayer(false);
         ResetSpeed();
+        ResetShootCooldown();
         isAttacking = false;
         isVentingOut = false;
         isDashing = false;
@@ -801,6 +806,7 @@ public class PlayerController : MonoBehaviour
 
     public void DeactivatePlayer()
     {
+        leftJoystickInput = Vector2.zero;
         rb.velocity = Vector3.zero;
         isActive = false;
     }
@@ -822,14 +828,16 @@ public class PlayerController : MonoBehaviour
             // Feedbacks player goes out
             currentConduit = null;
             isVentingOut = true;
+            detectInputConduit = false;
         }
     }
 
     public void SetControllableTurretPlayer(bool goingIn)
     {
+        isActiveControllableTurret = goingIn;
+        SetGaugesState(!goingIn);
         rb.velocity = Vector3.zero;
         col.enabled = !goingIn;
-        isActiveControllableTurret = goingIn;
         if (goingIn == false) ResetShootCooldown();
     }
 

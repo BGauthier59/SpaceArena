@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ControllableTurret : MonoBehaviour
@@ -16,13 +17,22 @@ public class ControllableTurret : MonoBehaviour
     [SerializeField] private int maxBullet;
     private int bulletAmount;
     [SerializeField] private int bulletSpeed;
-    private bool needToReload = false;
+    public bool needToReload;
     [SerializeField] private float reloadDuration;
     private float reloadTimer;
+    [SerializeField] private Renderer blinkingMesh;
+    [SerializeField] private Color enableColor;
+    [SerializeField] private Color disableColor;
+    [SerializeField] private float enableSpeed;
+    [SerializeField] private float disableSpeed;
+    private static readonly int BlinkColor = Shader.PropertyToID("_BlinkColor");
+    private static readonly int BlinkSpeed = Shader.PropertyToID("_BlinkSpeed");
+    [SerializeField] private TextMeshPro indicator;
 
     private void Start()
     {
         bulletAmount = maxBullet;
+        SetText();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,25 +92,32 @@ public class ControllableTurret : MonoBehaviour
 
     public void Shoot()
     {
-        if (bulletAmount <= 0)
-        {
-            Debug.Log("You can't shoot any more");
-            // Feedbacks
-            needToReload = true;
-            return;
-        }
-
         bulletAmount--;
+        SetText();
         var bullet = PoolOfObject.Instance
             .SpawnFromPool(PoolType.ControllableTurretProjectile, cannonOrigin.position, Quaternion.identity)
             .GetComponent<Rigidbody>();
 
         bullet.AddForce(transform.forward * bulletSpeed);
+
+        if (bulletAmount <= 0)
+        {
+            Debug.Log("You can't shoot any more");
+            // Feedbacks
+            needToReload = true;
+            blinkingMesh.material.SetColor(BlinkColor, disableColor * 1);
+            blinkingMesh.material.SetFloat(BlinkSpeed, disableSpeed);
+        }
+    }
+
+    private void SetText()
+    {
+        indicator.text = $"{bulletAmount} / {maxBullet}";
     }
 
     private void Update()
     {
-        if(needToReload) Reloading();
+        if (needToReload) Reloading();
     }
 
     public void Reloading()
@@ -110,6 +127,9 @@ public class ControllableTurret : MonoBehaviour
             reloadTimer = 0f;
             needToReload = false;
             bulletAmount = maxBullet;
+            blinkingMesh.material.SetColor(BlinkColor, enableColor * 1);
+            blinkingMesh.material.SetFloat(BlinkSpeed, enableSpeed);
+            SetText();
         }
         else reloadTimer += Time.deltaTime;
     }

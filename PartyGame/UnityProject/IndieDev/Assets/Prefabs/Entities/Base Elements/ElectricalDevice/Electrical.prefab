@@ -496,7 +496,7 @@ PrefabInstance:
     - target: {fileID: 692495334019775865, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
       propertyPath: baseElement
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4122890632156477873}
     - target: {fileID: 3022299866126143678, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
