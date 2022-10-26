@@ -27,7 +27,7 @@ public class NewVent : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var player = other.GetComponent<PlayerController>();
-            player.accessibleNewVent = this;
+            player.SetAccessibleNewVent(this);
             playersOnVent.Add(player);
         }
     }
@@ -37,7 +37,7 @@ public class NewVent : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var player = other.GetComponent<PlayerController>();
-            player.accessibleNewVent = null;
+            player.SetAccessibleNewVent(null);
             playersOnVent.Remove(player);
         }
     }
@@ -58,10 +58,7 @@ public class NewVent : MonoBehaviour
 
         ventingPlayer = player;
 
-        ventingPlayer.accessibleNewVent = null;
-        ventingPlayer.SetGaugesState(false);
-        ventingPlayer.DeactivatePlayer();
-        ventingPlayer.col.enabled = false;
+        ventingPlayer.SetVentingPlayer(true);
         initPos = frontPos.position;
         posToreach = firstReachedPoint.pointPos.position;
 
@@ -74,10 +71,8 @@ public class NewVent : MonoBehaviour
     public void ExitsVent(PlayerController player)
     {
         ventingPlayer = player;
-        ventingPlayer.lastTakenNewVent = this;
+        ventingPlayer.SetLastTakenNewVent(this);
 
-        ventingPlayer.SetGaugesState(true);
-        ventingPlayer.DeactivatePlayer();
         initPos = linkedVentPoint.pointPos.position;
         posToreach = frontPos.position;
 
@@ -110,11 +105,7 @@ public class NewVent : MonoBehaviour
             }
             else
             {
-                ventingPlayer.currentConduit = null;
-                ventingPlayer.isVentingOut = true;
-                ventingPlayer.col.enabled = true;
-
-                ventingPlayer.ActivatePlayer();
+                ventingPlayer.SetVentingPlayer(false);
 
                 foreach (var v in conduit.vents)
                 {

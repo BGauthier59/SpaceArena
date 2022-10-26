@@ -161,7 +161,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerIndex: 0
   playerName: 
+  manager: {fileID: 7697744321048509582}
   playerInput: {fileID: 0}
+  rd: {fileID: 2471484476679893371}
+  col: {fileID: 7792007160848823624}
   dataGamepad:
     isRumbling: 0
     activeRumblePattern: 0
@@ -171,17 +174,38 @@ MonoBehaviour:
     highA: 0
     rumbleStep: 0
     isMotorActive: 0
-  manager: {fileID: 7697744321048509582}
-  initPos: {x: 0, y: 0, z: 0}
+  reloadGauge: {fileID: 6009135751034671799}
+  powerUpGauge: {fileID: 6605169125929842330}
+  rageCollider: {fileID: 7124102069715449014}
+  directionArrow: {fileID: 2757242180495348}
+  particleSystem: {fileID: 3954722437128320551}
+  trail: {fileID: 4373219248815043771}
+  playerLight: {fileID: 2039718282750719980}
+  shootingParticles: {fileID: 5832360938257547889}
   crown: {fileID: 1457590333612161897}
-  rd: {fileID: 2471484476679893371}
-  col: {fileID: 7792007160848823624}
+  shootingShake: {fileID: 11400000, guid: 78299d7eea4932140bd83a79ab14abc9, type: 2}
+  isActive: 0
+  isActiveVent: 0
+  isActiveControllableTurret: 0
+  detectInputConduit: 0
+  powerUpIsActive: 0
   leftJoystickInput: {x: 0, y: 0}
   rightJoystickInput: {x: 0, y: 0}
+  initPos: {x: 0, y: 0, z: 0}
+  dashDuration: 0.1
+  shootCooldownDuration: 0.1
+  reloadDuration: 1
+  autoReloadDuration: 1
+  ventingCooldownDuration: 0.7
+  turretCooldownDuration: 1
   moveTolerance: 0.15
-  aimTolerance: 0.15
   speed: 500
+  aimTolerance: 0.15
   rotateSpeed: 150
+  helpingAimMaxDistance: 10
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
   dashFactor:
     serializedVersion: 2
     m_Curve:
@@ -215,47 +239,16 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  dashDuration: 0.1
+  maxBulletAmount: 18
+  bulletSpeed: 1600
+  recoil: 200
   fallSpeed: 20
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
-  isAttacking: 0
-  maxBulletAmount: 18
-  bulletAmount: 0
-  bulletSpeed: 1600
-  durationBeforeNextShoot: 0.1
-  reloadDuration: 1
-  autoReloadDuration: 1
-  shootingParticles: {fileID: 5832360938257547889}
-  shootingShake: {fileID: 11400000, guid: 78299d7eea4932140bd83a79ab14abc9, type: 2}
-  recoil: 200
-  reloadGauge: {fileID: 6009135751034671799}
-  helpingAimMaxDistance: 10
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  setGaugeSpeed: 10
-  powerUpIsActive: 0
-  powerUpGauge: {fileID: 6605169125929842330}
   powerUpMax: 20
-  currentPowerUp: {fileID: 0}
   powerUpScore: 19
-  rageCollider: {fileID: 7124102069715449014}
-  reparationArea: {fileID: 0}
-  lastTakenNewVent: {fileID: 0}
-  accessibleNewVent: {fileID: 0}
-  currentConduit: {fileID: 0}
-  detectInputConduit: 0
-  isVentingOut: 0
-  afterVentingSecurityDuration: 0.7
-  accessibleControllableTurret: {fileID: 0}
-  currentControllableTurret: {fileID: 0}
-  durationBeforeReenteringTurret: 1
-  directionArrow: {fileID: 2757242180495348}
-  particleSystem: {fileID: 3954722437128320551}
-  trail: {fileID: 4373219248815043771}
-  playerLight: {fileID: 2039718282750719980}
+  setGaugeSpeed: 10
 --- !u!114 &1905726322714944486
 MonoBehaviour:
   m_ObjectHideFlags: 0

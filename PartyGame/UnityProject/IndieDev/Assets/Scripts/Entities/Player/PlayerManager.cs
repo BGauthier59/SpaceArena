@@ -26,7 +26,7 @@ public class PlayerManager : Entity
             isRespawning = false;
             isDead = false;
             Heal(totalLife);
-            controller.ResetAfterDeath();
+            controller.ResetRespawn();
         }
         else respawnTimer += Time.deltaTime;
     }
@@ -64,7 +64,7 @@ public class PlayerManager : Entity
     {
         base.Death();
         
-        controller.ResetWhenDeath();
+        controller.ResetDeath();
         GetPoint(deathMalusPoint);
         isRespawning = true;
         

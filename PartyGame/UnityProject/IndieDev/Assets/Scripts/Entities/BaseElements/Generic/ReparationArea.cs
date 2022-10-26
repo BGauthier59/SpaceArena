@@ -107,7 +107,7 @@ public class ReparationArea : MonoBehaviour
 
             if (playersOnArea.Count == 1)
             {
-                player.reparationArea = this;
+                player.SetCurrentReparationArea(this);
                 isPlayerOn = true;
                 currentPlayerOnArea = playersOnArea[0];
                 associatedElement.CheckPlayersOnReparationAreas();
@@ -121,7 +121,7 @@ public class ReparationArea : MonoBehaviour
         {
             var player = other.GetComponent<PlayerController>();
             playersOnArea.Remove(player);
-            player.reparationArea = null;
+            player.SetCurrentReparationArea(null);
 
             if (playersOnArea.Count == 0)
             {
@@ -133,7 +133,7 @@ public class ReparationArea : MonoBehaviour
             else
             {
                 currentPlayerOnArea = playersOnArea[0];
-                currentPlayerOnArea.reparationArea = this;
+                currentPlayerOnArea.SetCurrentReparationArea(this);
             }
         }
     }

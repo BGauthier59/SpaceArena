@@ -21,7 +21,7 @@ public class ControllableTurret : MonoBehaviour
         {
             var player = other.GetComponent<PlayerController>();
             players.Add(player);
-            player.accessibleControllableTurret = this;
+            player.SetAccessibleTurret(this);
         }
     }
 
@@ -31,7 +31,7 @@ public class ControllableTurret : MonoBehaviour
         {
             var player = other.GetComponent<PlayerController>();
             players.Remove(player);
-            player.accessibleControllableTurret = null;
+            player.SetAccessibleTurret(null);
         }
     }
 
@@ -39,22 +39,22 @@ public class ControllableTurret : MonoBehaviour
     {
         isPlayerInside = true;
         playerInside = player;
-        playerInside.DeactivatePlayer();
+        playerInside.SetControllableTurretPlayer(true);
 
         playerInside.transform.position = seat.position;
 
         playerInside.transform.SetParent(rotatingPart);
         playerInside.transform.localRotation = Quaternion.identity;
 
-        playerInside.currentControllableTurret = this;
+        playerInside.SetCurrentTurret(this);
     }
 
     public void OnPlayerExits()
     {
-        playerInside.currentControllableTurret = null;
+        playerInside.SetCurrentTurret(null);
         playerInside.transform.SetParent(null);
         DontDestroyOnLoad(playerInside.gameObject); // Il faut le refaire ?
-        playerInside.ActivatePlayer();
+        playerInside.SetControllableTurretPlayer(false);
         playerInside = null;
         isPlayerInside = false;
     }

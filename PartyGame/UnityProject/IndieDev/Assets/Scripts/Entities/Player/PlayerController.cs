@@ -1,108 +1,122 @@
 using System;
+using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
 {
     #region Variables
 
-    [Header("Input, Gamepad & Data")] public int playerIndex;
+    [Header("Id")] [Space(5)] [Header("DATA")]
+    public int playerIndex;
     public string playerName;
-    public PlayerInput playerInput;
 
-    public GamepadData dataGamepad;
-
+    [Space(3)] [Header("Components")] 
     public PlayerManager manager;
-
-    [Header("Party Data")] public Vector3 initPos;
-    public GameObject crown;
-
-    [Header("Components")] public Renderer rd;
+    public PlayerInput playerInput;
+    public Renderer rd;
     public CapsuleCollider col;
     private Rigidbody rb;
-    private RigidbodyConstraints defaultConstraints;
-
-    [Header("Controller & Parameters")] private bool isActive;
-    [SerializeField] private Vector2 leftJoystickInput;
-    [SerializeField] private Vector2 rightJoystickInput;
-
-    [Range(0f, 1f)] public float moveTolerance;
-    [Range(0f, 1f)] [SerializeField] private float aimTolerance;
-    [SerializeField] private float speed;
-    private float baseSpeed;
-    [SerializeField] private float rotateSpeed;
-    private bool aiming;
-    [SerializeField] private AnimationCurve dashFactor;
-    [SerializeField] private float dashDuration;
-    private float dashTimer;
-    private bool isDashing;
-
-    [Header("Gravity")] [SerializeField] private float fallSpeed;
-    [SerializeField] private LayerMask groundLayer;
-    private bool grounded;
-
-    [Header("Attack")] [SerializeField] private bool isAttacking;
-    [SerializeField] private int maxBulletAmount;
-    [SerializeField] private int bulletAmount;
-    public float bulletSpeed;
-    private float timerBeforeNextShoot;
-    public float durationBeforeNextShoot;
-
-    private float reloadTimer;
-    private bool reloading;
-    [SerializeField] private float reloadDuration;
-
-    [SerializeField] private float autoReloadDuration;
-    private float autoReloadTimer;
-    private bool isAutoReloading;
-
-    [SerializeField] private ParticleSystem shootingParticles;
-    [SerializeField] private CameraShakeScriptable shootingShake;
-    [SerializeField] private float recoil;
+    public GamepadData dataGamepad;
     [SerializeField] private Slider reloadGauge;
-
-    [Header("HelpingAim")] [SerializeField]
-    private float helpingAimMaxDistance;
-
-    [SerializeField] private LayerMask enemyLayer;
-    private Vector3 helpingAimDirection;
-    private bool helpingAimSet;
-
-    [Header("Power-Up")] [SerializeField] private float setGaugeSpeed;
-    public bool powerUpIsActive;
     [SerializeField] private Slider powerUpGauge;
-    [SerializeField] private int powerUpMax;
-    [SerializeField] private PowerUpManager currentPowerUp;
-    public int powerUpScore;
-    private bool canUsePowerUp;
     public RageScript rageCollider;
 
-    [Header("Reparation")] public ReparationArea reparationArea;
-
-    [Header("Vent")] public NewVent lastTakenNewVent;
-    public NewVent accessibleNewVent;
-    public NewConduit currentConduit;
-    public bool detectInputConduit;
-    public bool isVentingOut;
-    [SerializeField] private float afterVentingSecurityDuration;
-    private float afterVentingSecurityTimer;
-
-    [Header("Controllable Turret")] public ControllableTurret accessibleControllableTurret;
-    public ControllableTurret currentControllableTurret;
-    private bool leavingTurret;
-    [SerializeField] private float durationBeforeReenteringTurret;
-    private float timerBeforeReenteringTurret;
-
-    [Header("Graph")] public SpriteRenderer directionArrow;
+    [Space(3)] [Header("Renderer")] 
+    public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
     [SerializeField] private TrailRenderer trail;
     public Light playerLight;
-
+    [SerializeField] private ParticleSystem shootingParticles;
+    public GameObject crown;
     private PartyManager partyManager;
+
+    [Space(3)] [Header("Feedbacks")] 
+    [SerializeField] private CameraShakeScriptable shootingShake;
+
+    private RigidbodyConstraints defaultConstraints;
+    private float baseSpeed;
+    private int bulletAmount;
+
+    [Space(3)] [Header("Booleans")] 
+    [SerializeField] private bool isActive;
+    [SerializeField] public bool isActiveVent;
+    [SerializeField] public bool isActiveControllableTurret;
+    [Space(3)] private bool isAttacking;
+    private bool aiming;
+    private bool isDashing;
+    private bool grounded;
+    private bool reloading;
+    private bool isAutoReloading;
+    private bool helpingAimSet;
+    private bool isVentingOut;
+    public bool detectInputConduit;
+    private bool leavingTurret;
+    public bool powerUpIsActive;
+    private bool canUsePowerUp;
+
+    [Space(3)] [Header("Joysticks inputs")] 
+    [SerializeField] private Vector2 leftJoystickInput;
+    [SerializeField] private Vector2 rightJoystickInput;
+
+    [Space(3)] [Header("References")] 
+    public Vector3 initPos;
+    private Vector3 helpingAimDirection;
+    private PowerUpManager currentPowerUp;
+    private ReparationArea reparationArea;
+    private NewVent lastTakenNewVent;
+    private NewVent accessibleNewVent;
+    private NewConduit currentConduit;
+    private ControllableTurret accessibleControllableTurret;
+    private ControllableTurret currentControllableTurret;
+
+    [Space(5)] [Header("Durations")] [Header("PARAMETERS")] 
+    [SerializeField] private float dashDuration;
+    public float shootCooldownDuration;
+    [SerializeField] private float reloadDuration;
+    [SerializeField] private float autoReloadDuration;
+    [SerializeField] private float ventingCooldownDuration;
+    [SerializeField] private float turretCooldownDuration;
+
+    private float dashTimer;
+    private float shootCooldownTimer;
+    private float reloadTimer;
+    private float autoReloadTimer;
+    private float ventingCooldownTimer;
+    private float turretCooldownTimer;
+
+    [Space(3)] [Header("Move parameters")] 
+    [SerializeField] [Range(0f, 1f)] public float moveTolerance;
+    [SerializeField] private float speed;
+
+    [Space(3)] [Header("Aim parameters")] 
+    [Range(0f, 1f)] [SerializeField] private float aimTolerance;
+    [SerializeField] private float rotateSpeed;
+    [SerializeField] private float helpingAimMaxDistance;
+    [SerializeField] private LayerMask enemyLayer;
+
+    [Space(3)] [Header("Dash parameters")] 
+    [SerializeField] private AnimationCurve dashFactor;
+
+    [Space(3)] [Header("Attack parameters")] 
+    [SerializeField] private int maxBulletAmount;
+    public float bulletSpeed;
+    [SerializeField] private float recoil;
+
+    [Space(3)] [Header("Gravity parameters")] 
+    [SerializeField] private float fallSpeed;
+    [SerializeField] private LayerMask groundLayer;
+
+    [Space(3)] [Header("Power-up parameters")] 
+    [SerializeField] private int powerUpMax;
+    public int powerUpScore;
+
+    [Space(3)] [Header("GUI parameters")] 
+    [SerializeField] private float setGaugeSpeed;
 
     #endregion
 
@@ -146,7 +160,7 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    #region Party Initialization
+    #region Game Initialization
 
     public void PartyBegins()
     {
@@ -175,33 +189,23 @@ public class PlayerController : MonoBehaviour
         crown.SetActive(false);
     }
 
-    public void ActivatePlayer()
-    {
-        if (partyManager.gameState == PartyManager.GameState.End)
-        {
-            Debug.LogWarning("Tried to active player after the end of game.");
-            return;
-        }
-
-        isActive = true;
-    }
-
-    public void DeactivatePlayer()
-    {
-        rb.velocity = Vector3.zero;
-        isActive = false;
-    }
-
     #endregion
+
+    #region Updates & FixedUpdates
 
     private void Update()
     {
+        if (!isActive) return;
+        UpdateClassic();
+        UpdateControllableTurret();
+    } // Main Update
+
+    private void UpdateClassic()
+    {
+        if (isActiveVent || isActiveControllableTurret) return;
+
         SetTimerAfterVenting();
         SetTimerAfterLeavingControllableTurret();
-        MovingInTurret();
-
-        if (!isActive) return;
-
         Grounding();
         Rotating();
         AutoReloading();
@@ -209,32 +213,54 @@ public class PlayerController : MonoBehaviour
         Firing();
         Dashing();
         PowerCheck();
-    }
+    } // Calls methods when the player is on a classic state
+
+    private void UpdateControllableTurret()
+    {
+        if (isActiveControllableTurret) return;
+        MovingInTurret();
+    } // Calls methods when the player is controlling a turret
 
     private void FixedUpdate()
     {
-        MovingInConduit();
-
         if (!isActive) return;
+        FixedUpdateClassic();
+        FixedUpdateVent();
+    } // Main FixedUpdate
+
+    private void FixedUpdateClassic()
+    {
+        if (isActiveVent || isActiveControllableTurret) return;
 
         Moving();
         SettingPowerUpGauge();
         SettingReloadGauge();
-    }
+    } // Calls methods when the player is on a classic state
+
+    private void FixedUpdateVent()
+    {
+        if (!isActiveVent) return;
+        MovingInConduit();
+    } // Calls methods when the player is venting
+
+    #endregion
 
     #region Input Event
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
+        // Can't be used if is not active
+        if (!isActive) return;
+
         leftJoystickInput = ctx.ReadValue<Vector2>();
 
-        // Checking conditions
         if (Mathf.Abs(leftJoystickInput.x) < moveTolerance && Mathf.Abs(leftJoystickInput.y) < moveTolerance)
             leftJoystickInput = Vector2.zero;
     }
 
     public void OnPause(InputAction.CallbackContext ctx)
     {
+        // Can't be used if is not active
         if (!isActive) return;
 
         // Checking conditions
@@ -249,10 +275,13 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext ctx)
     {
+        // Can't be used if is not active, or if player is venting or controlling a turret
         if (!isActive) return;
+        if (isActiveVent || isActiveControllableTurret) return;
 
         rightJoystickInput = ctx.ReadValue<Vector2>();
 
+        // Checking conditions
         if (Mathf.Abs(rightJoystickInput.x) < aimTolerance && Mathf.Abs(rightJoystickInput.y) < aimTolerance)
         {
             aiming = false;
@@ -263,14 +292,18 @@ public class PlayerController : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext ctx)
     {
+        // Can't be used if is not active, or if player is venting or controlling a turret
         if (!isActive) return;
+        if (isActiveVent || isActiveControllableTurret) return;
 
         isAttacking = ctx.performed;
     }
 
     public void OnRepair(InputAction.CallbackContext ctx)
     {
+        // Can't be used if is not active, or if player is venting or controlling a turret
         if (!isActive) return;
+        if (isActiveVent || isActiveControllableTurret) return;
 
         if (!ctx.performed) return;
         if (reparationArea == null) return;
@@ -288,14 +321,18 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext ctx)
     {
-        if (!isActive && ctx.performed && currentControllableTurret)
+        // Can make a player leaves a turret if is inside
+        if (!isActiveControllableTurret && ctx.performed && currentControllableTurret)
         {
             leavingTurret = true;
             currentControllableTurret.OnPlayerExits();
             return;
         }
-        
+
+        // Can't be used if is not active, or if player is venting
         if (!isActive) return;
+        if (isActiveVent) return;
+
         if (isDashing) return;
 
         isDashing = ctx.performed;
@@ -303,17 +340,17 @@ public class PlayerController : MonoBehaviour
 
     public void OnUsePowerUp(InputAction.CallbackContext ctx)
     {
+        // Can't be used if is not active, or if player is venting or controlling a turret
         if (!isActive) return;
-        if (!canUsePowerUp || powerUpIsActive) return;
-        if (currentPowerUp != null)
-        {
-            Debug.Log("J'utilise le power up");
-            powerUpIsActive = true;
-            currentPowerUp.user = this;
-            currentPowerUp.OnActivate();
-        }
+        if (isActiveVent || isActiveControllableTurret) return;
 
-        //EndOfPowerUp(); // Pour le moment
+        // Can't be used if there's no power up available or already using one
+        if (!canUsePowerUp || powerUpIsActive) return;
+        if (currentPowerUp == null) return;
+
+        powerUpIsActive = true;
+        currentPowerUp.user = this;
+        currentPowerUp.OnActivate();
     }
 
     #endregion
@@ -403,7 +440,7 @@ public class PlayerController : MonoBehaviour
     private void Firing()
     {
         if (!isAttacking || reloading) return;
-        if (timerBeforeNextShoot >= durationBeforeNextShoot)
+        if (shootCooldownTimer >= shootCooldownDuration)
         {
             if (!powerUpIsActive)
             {
@@ -427,7 +464,7 @@ public class PlayerController : MonoBehaviour
                 GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
 
                 rb.AddForce(-transform.forward * recoil);
-                timerBeforeNextShoot = 0f;
+                shootCooldownTimer = 0f;
 
                 reloadGauge.value = bulletAmount;
 
@@ -445,12 +482,12 @@ public class PlayerController : MonoBehaviour
             else
             {
                 currentPowerUp.OnUse();
-                timerBeforeNextShoot = 0f;
+                shootCooldownTimer = 0f;
             }
         }
         else
         {
-            timerBeforeNextShoot += Time.deltaTime;
+            shootCooldownTimer += Time.deltaTime;
         }
     }
 
@@ -492,23 +529,23 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDashing) return;
 
-        if (accessibleNewVent)
+        // Tries to enter a vent
+        if (accessibleNewVent && accessibleNewVent != lastTakenNewVent && !isVentingOut)
         {
-            if (isVentingOut && accessibleNewVent == lastTakenNewVent) return;
-
             CancelDash();
             accessibleNewVent.EntersVent(this);
             return;
         }
 
-
+        // Tries to enter a turret
         if (!leavingTurret && accessibleControllableTurret)
         {
+            CancelDash();
             accessibleControllableTurret.OnPlayerEnters(this);
             return;
         }
-        
 
+        // Just dashing
         if (dashTimer >= dashDuration)
         {
             CancelDash();
@@ -525,25 +562,25 @@ public class PlayerController : MonoBehaviour
     {
         if (!isVentingOut) return;
 
-        if (afterVentingSecurityTimer > afterVentingSecurityDuration)
+        if (ventingCooldownTimer > ventingCooldownDuration)
         {
-            afterVentingSecurityTimer = 0f;
+            ventingCooldownTimer = 0f;
             lastTakenNewVent = null;
             isVentingOut = false;
         }
-        else afterVentingSecurityTimer += Time.deltaTime;
+        else ventingCooldownTimer += Time.deltaTime;
     }
 
     private void SetTimerAfterLeavingControllableTurret()
     {
         if (!leavingTurret) return;
 
-        if (timerBeforeReenteringTurret > durationBeforeReenteringTurret)
+        if (turretCooldownTimer > turretCooldownDuration)
         {
-            timerBeforeReenteringTurret = 0f;
+            turretCooldownTimer = 0f;
             leavingTurret = false;
         }
-        else timerBeforeReenteringTurret += Time.deltaTime;
+        else turretCooldownTimer += Time.deltaTime;
     }
 
     private void SettingPowerUpGauge()
@@ -552,7 +589,6 @@ public class PlayerController : MonoBehaviour
                       + new Vector3(50, 0);
         powerUpGauge.transform.position =
             Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
-        //powerUpGauge.transform.position = nextPos;
     }
 
     private void SettingReloadGauge()
@@ -562,7 +598,6 @@ public class PlayerController : MonoBehaviour
 
         reloadGauge.transform.position =
             Vector3.Lerp(reloadGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
-        //reloadGauge.transform.position = nextPos;
     }
 
     private void PowerCheck()
@@ -570,24 +605,20 @@ public class PlayerController : MonoBehaviour
         if (!powerUpIsActive) return;
 
         if (currentPowerUp.OnConditionCheck()) EndOfPowerUp();
+
+        // Que se passe-t-il si le joueur entre dans une vent ou dans une tourelle avec un power up ? Il s'annule ? Il s'interromp et reprend après avoir quitté ?
     }
 
     #endregion
 
-    #region Modification
-
-    public void ModifySpeed(float factor)
-    {
-        var newSpeed = baseSpeed * factor;
-        speed = newSpeed;
-    }
+    #region Reset
 
     public void ResetSpeed()
     {
         speed = baseSpeed;
-    }
+    } // Resets player's speed
 
-    public void ResetWhenDeath()
+    public void ResetDeath() // Called when the player dies
     {
         if (reparationArea != null && reparationArea.isEveryPlayerOn)
         {
@@ -605,16 +636,15 @@ public class PlayerController : MonoBehaviour
         SetGaugesState(false);
     }
 
-    public void ResetAfterDeath()
+    public void ResetRespawn() // Called when the player respawns
     {
-        ResetGauges();
         SetGaugesState(true);
         transform.position = initPos;
         ResetPlayerGraphsAndCollisions();
         ActivatePlayer();
     }
 
-    private void ResetPlayer()
+    private void ResetPlayer() // Resets the player's main variables
     {
         ResetSpeed();
         isAttacking = false;
@@ -626,64 +656,13 @@ public class PlayerController : MonoBehaviour
         // Désactiver pouvoirs
     }
 
-    private void ResetPlayerGraphsAndCollisions()
+    private void ResetPlayerGraphsAndCollisions() // Resets the player's renderers and colliders
     {
         rd.gameObject.SetActive(true);
         trail.enabled = true;
         directionArrow.enabled = true;
         playerLight.enabled = true;
         col.enabled = true;
-    }
-
-    public void IncreasePowerUpGauge(int value)
-    {
-        if (canUsePowerUp) return;
-        powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
-        powerUpGauge.value = powerUpScore;
-        if (powerUpGauge.value >= powerUpMax)
-        {
-            Debug.Log("J'ai assez de points");
-            GetPowerUp();
-        }
-    }
-
-    private void GetPowerUp()
-    {
-        Debug.Log("Je récupère un power up");
-        canUsePowerUp = true;
-        currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
-        powerUpGauge.value = 0;
-        // Get power up
-    }
-
-    public void EndOfPowerUp()
-    {
-        Debug.Log("C'est la fin du power up");
-        powerUpScore = 0;
-        powerUpGauge.value = powerUpScore;
-        canUsePowerUp = false;
-        powerUpIsActive = false;
-        currentPowerUp = null;
-    }
-
-    public void CancelDash()
-    {
-        if (!isDashing) return;
-        isDashing = false;
-        ResetSpeed();
-        dashTimer = 0f;
-    }
-
-    public void SetGaugesState(bool active)
-    {
-        if (active && partyManager.gameState == PartyManager.GameState.End)
-        {
-            Debug.LogWarning("Tried to display gauges after end of game.");
-            return;
-        }
-
-        reloadGauge.gameObject.SetActive(active);
-        powerUpGauge.gameObject.SetActive(active);
     }
 
     private void ResetGauges()
@@ -698,13 +677,138 @@ public class PlayerController : MonoBehaviour
         powerUpGauge.value = powerUpGauge.minValue;
         powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
                                           + new Vector3(50, 0);
+    } // Resets gauges to their initial values
+
+    #endregion
+
+    #region Modification
+
+    public void ModifySpeed(float factor)
+    {
+        var newSpeed = baseSpeed * factor;
+        speed = newSpeed;
+    } // Multiplies the speed by factor
+
+    public void CancelDash()
+    {
+        if (!isDashing) return;
+        isDashing = false;
+        ResetSpeed();
+        dashTimer = 0f;
     }
+
+    #endregion
+
+    #region Gauges
+
+    public void SetGaugesState(bool active)
+    {
+        if (active && partyManager.gameState == PartyManager.GameState.End)
+        {
+            Debug.LogWarning("Tried to display gauges after end of game.");
+            return;
+        }
+
+        reloadGauge.gameObject.SetActive(active);
+        powerUpGauge.gameObject.SetActive(active);
+    } // Displays or hides gauges
 
     public void RebindGauges()
     {
         reloadGauge.transform.SetParent(transform);
         powerUpGauge.transform.SetParent(transform);
+    } // Rebinds gauges to the player before the game ends, to prevent them from being destroyed when a new arena loads
+
+    #endregion
+
+    #region Power-Ups
+
+    public void IncreasePowerUpGauge(int value)
+    {
+        if (canUsePowerUp) return;
+        powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
+        powerUpGauge.value = powerUpScore;
+
+        if (powerUpGauge.value >= powerUpMax) GetPowerUp();
+    } // Increases power up gauge value when the player hits an enemy
+
+    private void GetPowerUp()
+    {
+        // Feedback get power up
+        canUsePowerUp = true;
+        currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
+        powerUpGauge.value = 0;
+        // Get power up
+    } // Gives the player a new power up
+
+    public void EndOfPowerUp()
+    {
+        // Faut-il call cette fonction quand on vent ou entre dans une tourelle ?
+
+        Debug.Log("C'est la fin du power up");
+        powerUpScore = 0;
+        powerUpGauge.value = powerUpScore;
+        canUsePowerUp = false;
+        powerUpIsActive = false;
+        currentPowerUp = null;
+    } // Resets player variables when a power up ends
+
+    #endregion
+
+    #region Activation & Deactivation
+
+    public void ActivatePlayer()
+    {
+        if (partyManager.gameState == PartyManager.GameState.End)
+        {
+            Debug.LogWarning("Tried to active player after the end of game.");
+            return;
+        }
+
+        isActive = true;
     }
+
+    public void DeactivatePlayer()
+    {
+        rb.velocity = Vector3.zero;
+        isActive = false;
+    }
+
+    public void SetVentingPlayer(bool goingIn)
+    {
+        isActiveVent = goingIn;
+        SetGaugesState(!goingIn);
+        col.enabled = !goingIn;
+        rb.velocity = Vector3.zero;
+
+        if (goingIn)
+        {
+            // Feedbacks player goes in
+            accessibleNewVent = null;
+        }
+        else
+        {
+            // Feedbacks player goes out
+            currentConduit = null;
+            isVentingOut = true;
+        }
+    }
+
+    public void SetControllableTurretPlayer(bool goingIn)
+    {
+        isActiveControllableTurret = goingIn;
+    }
+
+    #endregion
+
+    #region Setter
+
+    public void SetCurrentReparationArea(ReparationArea ra) => reparationArea = ra;
+    public void SetAccessibleNewVent(NewVent v) => accessibleNewVent = v;
+    public void SetLastTakenNewVent(NewVent v) => lastTakenNewVent = v;
+    public void SetCurrentConduit(NewConduit c) => currentConduit = c;
+    public void SetAccessibleTurret(ControllableTurret ct) => accessibleControllableTurret = ct;
+    public void SetCurrentTurret(ControllableTurret ct) => currentControllableTurret = ct;
 
     #endregion
 }

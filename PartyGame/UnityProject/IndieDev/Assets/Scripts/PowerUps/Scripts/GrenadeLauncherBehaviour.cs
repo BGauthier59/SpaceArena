@@ -11,7 +11,7 @@ public class GrenadeLauncherBehaviour : PowerUpManager
 
     public override void OnActivate()
     {
-        user.durationBeforeNextShoot = shootingRate;
+        user.shootCooldownDuration = shootingRate;
         grenadeAmount = 6;
     }
 
@@ -27,7 +27,7 @@ public class GrenadeLauncherBehaviour : PowerUpManager
     {
         if (grenadeAmount <= 0)
         {
-            user.durationBeforeNextShoot = 0.1f;
+            user.shootCooldownDuration = 0.1f;
             user = null;
             return true;
         }

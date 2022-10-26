@@ -38,7 +38,7 @@ public class NewConduit : MonoBehaviour
     {
         player = pl;
         currentPoint = initVent.firstReachedPoint;
-        player.currentConduit = this;
+        player.SetCurrentConduit(this);
         if (currentPoint.conduitPointType == ConduitPoint.ConduitPointType.IntersectionPoint)
         {
             isOnIntersection = true;
@@ -112,7 +112,7 @@ public class NewConduit : MonoBehaviour
             case ConduitPoint.ConduitPointType.VentPoint:
                 // Sortie automatique du conduit depuis la vent
                 currentPoint.linkedVent.ExitsVent(player);
-                player.currentConduit = null;
+                player.SetCurrentConduit(null);
                 player = null;
                 currentPoint = null;
                 nextPoint = null;
