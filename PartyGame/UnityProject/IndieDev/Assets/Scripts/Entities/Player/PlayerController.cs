@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Runtime.Remoting.Channels;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -13,10 +14,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Id")] [Space(5)] [Header("DATA")]
     public int playerIndex;
+
     public string playerName;
 
-    [Space(3)] [Header("Components")] 
-    public PlayerManager manager;
+    [Space(3)] [Header("Components")] public PlayerManager manager;
     public PlayerInput playerInput;
     public Renderer rd;
     public CapsuleCollider col;
@@ -26,8 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Slider powerUpGauge;
     public RageScript rageCollider;
 
-    [Space(3)] [Header("Renderer")] 
-    public SpriteRenderer directionArrow;
+    [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
     [SerializeField] private TrailRenderer trail;
     public Light playerLight;
@@ -35,15 +35,17 @@ public class PlayerController : MonoBehaviour
     public GameObject crown;
     private PartyManager partyManager;
 
-    [Space(3)] [Header("Feedbacks")] 
-    [SerializeField] private CameraShakeScriptable shootingShake;
+    [Space(3)] [Header("Feedbacks")] [SerializeField]
+    private CameraShakeScriptable shootingShake;
 
     private RigidbodyConstraints defaultConstraints;
     private float baseSpeed;
+    private float baseShootCooldown;
     private int bulletAmount;
 
-    [Space(3)] [Header("Booleans")] 
-    [SerializeField] private bool isActive;
+    [Space(3)] [Header("Booleans")] [SerializeField]
+    private bool isActive;
+
     [SerializeField] public bool isActiveVent;
     [SerializeField] public bool isActiveControllableTurret;
     [Space(3)] private bool isAttacking;
@@ -59,12 +61,12 @@ public class PlayerController : MonoBehaviour
     public bool powerUpIsActive;
     private bool canUsePowerUp;
 
-    [Space(3)] [Header("Joysticks inputs")] 
-    [SerializeField] private Vector2 leftJoystickInput;
+    [Space(3)] [Header("Joysticks inputs")] [SerializeField]
+    private Vector2 leftJoystickInput;
+
     [SerializeField] private Vector2 rightJoystickInput;
 
-    [Space(3)] [Header("References")] 
-    public Vector3 initPos;
+    [Space(3)] [Header("References")] public Vector3 initPos;
     private Vector3 helpingAimDirection;
     private PowerUpManager currentPowerUp;
     private ReparationArea reparationArea;
@@ -74,8 +76,9 @@ public class PlayerController : MonoBehaviour
     private ControllableTurret accessibleControllableTurret;
     private ControllableTurret currentControllableTurret;
 
-    [Space(5)] [Header("Durations")] [Header("PARAMETERS")] 
-    [SerializeField] private float dashDuration;
+    [Space(5)] [Header("Durations")] [Header("PARAMETERS")] [SerializeField]
+    private float dashDuration;
+
     public float shootCooldownDuration;
     [SerializeField] private float reloadDuration;
     [SerializeField] private float autoReloadDuration;
@@ -89,34 +92,39 @@ public class PlayerController : MonoBehaviour
     private float ventingCooldownTimer;
     private float turretCooldownTimer;
 
-    [Space(3)] [Header("Move parameters")] 
-    [SerializeField] [Range(0f, 1f)] public float moveTolerance;
+    [Space(3)] [Header("Move parameters")] [SerializeField] [Range(0f, 1f)]
+    public float moveTolerance;
+
     [SerializeField] private float speed;
 
-    [Space(3)] [Header("Aim parameters")] 
-    [Range(0f, 1f)] [SerializeField] private float aimTolerance;
+    [Space(3)] [Header("Aim parameters")] [Range(0f, 1f)] [SerializeField]
+    private float aimTolerance;
+
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float helpingAimMaxDistance;
     [SerializeField] private LayerMask enemyLayer;
 
-    [Space(3)] [Header("Dash parameters")] 
-    [SerializeField] private AnimationCurve dashFactor;
+    [Space(3)] [Header("Dash parameters")] [SerializeField]
+    private AnimationCurve dashFactor;
 
-    [Space(3)] [Header("Attack parameters")] 
-    [SerializeField] private int maxBulletAmount;
+    [Space(3)] [Header("Attack parameters")] [SerializeField]
+    private int maxBulletAmount;
+
     public float bulletSpeed;
     [SerializeField] private float recoil;
 
-    [Space(3)] [Header("Gravity parameters")] 
-    [SerializeField] private float fallSpeed;
+    [Space(3)] [Header("Gravity parameters")] [SerializeField]
+    private float fallSpeed;
+
     [SerializeField] private LayerMask groundLayer;
 
-    [Space(3)] [Header("Power-up parameters")] 
-    [SerializeField] private int powerUpMax;
+    [Space(3)] [Header("Power-up parameters")] [SerializeField]
+    private int powerUpMax;
+
     public int powerUpScore;
 
-    [Space(3)] [Header("GUI parameters")] 
-    [SerializeField] private float setGaugeSpeed;
+    [Space(3)] [Header("GUI parameters")] [SerializeField]
+    private float setGaugeSpeed;
 
     #endregion
 
@@ -168,6 +176,7 @@ public class PlayerController : MonoBehaviour
 
         rb.isKinematic = false;
         baseSpeed = speed;
+        baseShootCooldown = shootCooldownDuration;
 
         reloadGauge.transform.SetParent(partyManager.mainCanvas.transform);
         powerUpGauge.transform.SetParent(partyManager.mainCanvas.transform);
@@ -217,8 +226,9 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateControllableTurret()
     {
-        if (isActiveControllableTurret) return;
+        if (!isActiveControllableTurret) return;
         MovingInTurret();
+        Firing();
     } // Calls methods when the player is controlling a turret
 
     private void FixedUpdate()
@@ -292,9 +302,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext ctx)
     {
-        // Can't be used if is not active, or if player is venting or controlling a turret
+        // Can't be used if is not active, or if player is venting
         if (!isActive) return;
-        if (isActiveVent || isActiveControllableTurret) return;
+        if (isActiveVent) return;
 
         isAttacking = ctx.performed;
     }
@@ -322,7 +332,7 @@ public class PlayerController : MonoBehaviour
     public void OnDash(InputAction.CallbackContext ctx)
     {
         // Can make a player leaves a turret if is inside
-        if (!isActiveControllableTurret && ctx.performed && currentControllableTurret)
+        if (isActiveControllableTurret && ctx.performed && currentControllableTurret)
         {
             leavingTurret = true;
             currentControllableTurret.OnPlayerExits();
@@ -444,39 +454,54 @@ public class PlayerController : MonoBehaviour
         {
             if (!powerUpIsActive)
             {
-                bulletAmount--;
-                shootingParticles.Play();
-                var newBullet =
-                    PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
-                var bullet = newBullet.GetComponent<BulletScript>();
-                bullet.shooter = manager;
-
-                if (helpingAimSet)
+                if (isActiveControllableTurret)
                 {
-                    bullet.rb.AddForce(helpingAimDirection.normalized * bulletSpeed);
+                    if (!currentControllableTurret)
+                    {
+                        Debug.LogWarning("No controllable turret found ?");
+                        return;
+                    }
+                    
+                    currentControllableTurret.Shoot();
+                    partyManager.cameraShake.AddShakeEvent(shootingShake);
+                    GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
+                    shootCooldownTimer = 0f;
                 }
                 else
                 {
-                    bullet.rb.AddForce(transform.forward * bulletSpeed);
-                }
+                    bulletAmount--;
+                    shootingParticles.Play();
+                    var bullet = PoolOfObject.Instance
+                        .SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity)
+                        .GetComponent<BulletScript>();
+                    bullet.shooter = manager;
 
-                partyManager.cameraShake.AddShakeEvent(shootingShake);
-                GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
+                    if (helpingAimSet)
+                    {
+                        bullet.rb.AddForce(helpingAimDirection.normalized * bulletSpeed);
+                    }
+                    else
+                    {
+                        bullet.rb.AddForce(transform.forward * bulletSpeed);
+                    }
 
-                rb.AddForce(-transform.forward * recoil);
-                shootCooldownTimer = 0f;
+                    partyManager.cameraShake.AddShakeEvent(shootingShake);
+                    GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
 
-                reloadGauge.value = bulletAmount;
+                    rb.AddForce(-transform.forward * recoil);
+                    shootCooldownTimer = 0f;
+                    reloadGauge.value = bulletAmount;
 
-                if (bulletAmount <= 0)
-                {
-                    isAutoReloading = false;
-                    reloading = true;
-                }
-                else
-                {
-                    isAutoReloading = true;
-                    autoReloadTimer = 0f;
+                    if (bulletAmount <= 0)
+                    {
+                        isAutoReloading = false;
+                        reloading = true;
+                    }
+                    else
+                    {
+                        isAutoReloading = true;
+                        autoReloadTimer = 0f;
+                    }
                 }
             }
             else
@@ -540,6 +565,7 @@ public class PlayerController : MonoBehaviour
         // Tries to enter a turret
         if (!leavingTurret && accessibleControllableTurret)
         {
+            Debug.Log("Entering turret");
             CancelDash();
             accessibleControllableTurret.OnPlayerEnters(this);
             return;
@@ -617,6 +643,11 @@ public class PlayerController : MonoBehaviour
     {
         speed = baseSpeed;
     } // Resets player's speed
+
+    public void ResetShootCooldown()
+    {
+        shootCooldownDuration = baseShootCooldown;
+    }
 
     public void ResetDeath() // Called when the player dies
     {
@@ -796,7 +827,10 @@ public class PlayerController : MonoBehaviour
 
     public void SetControllableTurretPlayer(bool goingIn)
     {
+        rb.velocity = Vector3.zero;
+        col.enabled = !goingIn;
         isActiveControllableTurret = goingIn;
+        if (goingIn == false) ResetShootCooldown();
     }
 
     #endregion

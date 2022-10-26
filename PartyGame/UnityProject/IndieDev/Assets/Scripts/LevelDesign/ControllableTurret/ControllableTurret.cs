@@ -12,7 +12,18 @@ public class ControllableTurret : MonoBehaviour
     [SerializeField] private float rotatingSpeed;
     [SerializeField] private Transform rotatingPart;
     [SerializeField] private Transform cannonOrigin;
-    public Rigidbody controllableTurretProjectile;
+    [SerializeField] private float shootCooldownDuration;
+    [SerializeField] private int maxBullet;
+    private int bulletAmount;
+    [SerializeField] private int bulletSpeed;
+    private bool needToReload = false;
+    [SerializeField] private float reloadDuration;
+    private float reloadTimer;
+
+    private void Start()
+    {
+        bulletAmount = maxBullet;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -47,6 +58,7 @@ public class ControllableTurret : MonoBehaviour
         playerInside.transform.localRotation = Quaternion.identity;
 
         playerInside.SetCurrentTurret(this);
+        playerInside.shootCooldownDuration = shootCooldownDuration;
     }
 
     public void OnPlayerExits()
@@ -66,5 +78,39 @@ public class ControllableTurret : MonoBehaviour
         rotatingPart.rotation = Quaternion.Lerp(rotatingPart.rotation, Quaternion.LookRotation(forward),
             Time.deltaTime * rotatingSpeed);
         rotatingPart.eulerAngles = new Vector3(0, rotatingPart.eulerAngles.y, 0);
+    }
+
+    public void Shoot()
+    {
+        if (bulletAmount <= 0)
+        {
+            Debug.Log("You can't shoot any more");
+            // Feedbacks
+            needToReload = true;
+            return;
+        }
+
+        bulletAmount--;
+        var bullet = PoolOfObject.Instance
+            .SpawnFromPool(PoolType.ControllableTurretProjectile, cannonOrigin.position, Quaternion.identity)
+            .GetComponent<Rigidbody>();
+
+        bullet.AddForce(transform.forward * bulletSpeed);
+    }
+
+    private void Update()
+    {
+        if(needToReload) Reloading();
+    }
+
+    public void Reloading()
+    {
+        if (reloadTimer >= reloadDuration)
+        {
+            reloadTimer = 0f;
+            needToReload = false;
+            bulletAmount = maxBullet;
+        }
+        else reloadTimer += Time.deltaTime;
     }
 }
