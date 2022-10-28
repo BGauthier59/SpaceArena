@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public PlayerInput playerInput;
     public Renderer rd;
     public CapsuleCollider col;
-    private Rigidbody rb;
+    public Rigidbody rb;
     public GamepadData dataGamepad;
     [SerializeField] private Slider reloadGauge;
     [SerializeField] private Slider powerUpGauge;
