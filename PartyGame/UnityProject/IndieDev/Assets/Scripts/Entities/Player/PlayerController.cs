@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public GamepadData dataGamepad;
     [SerializeField] private Slider reloadGauge;
-    [SerializeField] private Slider powerUpGauge;
+    [SerializeField] private Image powerUpGauge;
+    [SerializeField] private Slider lifeGauge;
+    public Transform playerUI;
     public RageScript rageCollider;
 
     [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
@@ -119,9 +121,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Space(3)] [Header("Power-up parameters")] [SerializeField]
-    private int powerUpMax;
+    private float powerUpMax;
 
-    public int powerUpScore;
+    public float powerUpScore;
 
     [Space(3)] [Header("GUI parameters")] [SerializeField]
     private float setGaugeSpeed;
@@ -178,8 +180,8 @@ public class PlayerController : MonoBehaviour
         baseSpeed = speed;
         baseShootCooldown = shootCooldownDuration;
 
-        reloadGauge.transform.SetParent(partyManager.mainCanvas.transform);
-        powerUpGauge.transform.SetParent(partyManager.mainCanvas.transform);
+        //reloadGauge.transform.SetParent(partyManager.mainCanvas.transform);
+        //powerUpGauge.transform.SetParent(partyManager.mainCanvas.transform);
 
         ResetGauges();
         SetGaugesState(false);
@@ -243,8 +245,8 @@ public class PlayerController : MonoBehaviour
         if (isActiveVent || isActiveControllableTurret) return;
 
         Moving();
-        SettingPowerUpGauge();
-        SettingReloadGauge();
+        //SettingPowerUpGauge();
+        //SettingReloadGauge();
     } // Calls methods when the player is on a classic state
 
     private void FixedUpdateVent()
@@ -706,13 +708,13 @@ public class PlayerController : MonoBehaviour
         bulletAmount = maxBulletAmount;
         reloadGauge.maxValue = maxBulletAmount;
         reloadGauge.value = reloadGauge.maxValue;
-        reloadGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
-                                         + new Vector3(0, -30);
+        //reloadGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
+        //                                 + new Vector3(0, -30);
         powerUpScore = 0;
-        powerUpGauge.maxValue = powerUpMax;
-        powerUpGauge.value = powerUpGauge.minValue;
-        powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
-                                          + new Vector3(50, 0);
+        //powerUpGauge.fill = powerUpMax;
+        powerUpGauge.fillAmount = 0;
+        //powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
+        //                                  + new Vector3(50, 0);
     } // Resets gauges to their initial values
 
     #endregion
@@ -744,9 +746,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Tried to display gauges after end of game.");
             return;
         }
-
-        reloadGauge.gameObject.SetActive(active);
-        powerUpGauge.gameObject.SetActive(active);
+        playerUI.gameObject.SetActive(active);
     } // Displays or hides gauges
 
     public void RebindGauges()
@@ -763,9 +763,10 @@ public class PlayerController : MonoBehaviour
     {
         if (canUsePowerUp) return;
         powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
-        powerUpGauge.value = powerUpScore;
+        Debug.Log(powerUpScore/powerUpMax);
+        powerUpGauge.fillAmount = powerUpScore/powerUpMax;
 
-        if (powerUpGauge.value >= powerUpMax) GetPowerUp();
+        if (powerUpGauge.fillAmount >= 1) GetPowerUp();
     } // Increases power up gauge value when the player hits an enemy
 
     private void GetPowerUp()
@@ -773,7 +774,7 @@ public class PlayerController : MonoBehaviour
         // Feedback get power up
         canUsePowerUp = true;
         currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
-        powerUpGauge.value = 0;
+        powerUpGauge.fillAmount = 0;
         // Get power up
     } // Gives the player a new power up
 
@@ -783,7 +784,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("C'est la fin du power up");
         powerUpScore = 0;
-        powerUpGauge.value = powerUpScore;
+        powerUpGauge.fillAmount = powerUpScore/powerUpMax;
         canUsePowerUp = false;
         powerUpIsActive = false;
         currentPowerUp = null;
@@ -814,7 +815,7 @@ public class PlayerController : MonoBehaviour
     public void SetVentingPlayer(bool goingIn)
     {
         isActiveVent = goingIn;
-        SetGaugesState(!goingIn);
+        //SetGaugesState(!goingIn);
         col.enabled = !goingIn;
         rb.velocity = Vector3.zero;
 
@@ -835,7 +836,7 @@ public class PlayerController : MonoBehaviour
     public void SetControllableTurretPlayer(bool goingIn)
     {
         isActiveControllableTurret = goingIn;
-        SetGaugesState(!goingIn);
+        //SetGaugesState(!goingIn);
         rb.velocity = Vector3.zero;
         col.enabled = !goingIn;
         if (goingIn == false) ResetShootCooldown();

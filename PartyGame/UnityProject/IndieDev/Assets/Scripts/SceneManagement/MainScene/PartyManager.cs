@@ -12,6 +12,7 @@ public class PartyManager : MonoBehaviour
     private EventSystem eventSystem;
 
     [SerializeField] private Transform[] allSpawningPoints;
+    [SerializeField] private Transform[] playerUIPositions;
     [SerializeField] private TextMeshProUGUI timerText;
 
     [Header("Instances")] public BaseManager baseManager;
@@ -143,6 +144,8 @@ public class PartyManager : MonoBehaviour
             player.initPos = allSpawningPoints[i].position;
             player.transform.position = player.initPos;
             player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
+            player.playerUI.parent = mainCanvas.transform;
+            player.playerUI.position = playerUIPositions[i].position;
             player.PartyBegins();
         }
 
