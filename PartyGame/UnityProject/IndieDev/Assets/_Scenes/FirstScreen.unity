@@ -856,6 +856,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3440054037391332376, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: powerUpImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 6ec43da254a2d0648b870db992330cb4, type: 3}
     - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
       propertyPath: powerUps.Array.size
       value: 3
@@ -968,9 +972,17 @@ PrefabInstance:
       propertyPath: takeDamageVibration
       value: 
       objectReference: {fileID: 11400000, guid: 50c744e21c1bd624f9c0d6bacd3f5782, type: 2}
+    - target: {fileID: 6002665978843510583, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: powerUpImage
+      value: 
+      objectReference: {fileID: 21300000, guid: a98cd39eacb92e940b67b25e3322a96e, type: 3}
     - target: {fileID: 8591720794918883700, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
       propertyPath: rumbleActivated
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8859914751961483725, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
+      propertyPath: powerUpImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 59bd6c0ebbf96144db42e42a9934ffe2, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}

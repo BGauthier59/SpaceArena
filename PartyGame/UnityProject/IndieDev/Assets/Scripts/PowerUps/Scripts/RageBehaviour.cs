@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class RageBehaviour : PowerUpManager
 {
     [SerializeField] private float duration;
+    private float elapsedTime;
     [SerializeField] private int damage;
     [SerializeField] private float speedMultiplier;
     [SerializeField] private bool isFinished;
@@ -11,17 +13,25 @@ public class RageBehaviour : PowerUpManager
     public override void OnActivate()
     {
         isFinished = false;
-        StartCoroutine(Duration());
+        elapsedTime = 0;
         user.ModifySpeed(speedMultiplier);
         user.rageCollider.user = user.GetComponent<Entity>();
         user.rageCollider.damage = damage;
         user.rageCollider.collider.enabled = true;
     }
+    
 
-    private IEnumerator Duration()
+    private void Update()
     {
-        yield return new WaitForSeconds(duration);
-        isFinished = true;
+        if (!isFinished)
+        {
+            elapsedTime += Time.deltaTime;
+            user.powerUpGauge.fillAmount = 1 - (elapsedTime / duration);
+            if (elapsedTime >= duration)
+            {
+                isFinished = true;
+            }
+        }
     }
 
     public override bool OnConditionCheck()

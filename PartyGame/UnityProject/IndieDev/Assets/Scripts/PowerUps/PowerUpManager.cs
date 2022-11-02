@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerUpManager : MonoBehaviour
 {
     public PlayerController user;
+    public Sprite powerUpImage;
     
     public virtual void OnActivate()
     {

@@ -23,11 +23,17 @@ public class PlayerController : MonoBehaviour
     public CapsuleCollider col;
     public Rigidbody rb;
     public GamepadData dataGamepad;
-    [SerializeField] private Slider reloadGauge;
-    [SerializeField] private Image powerUpGauge;
-    [SerializeField] private Slider lifeGauge;
-    public Transform playerUI;
     public RageScript rageCollider;
+    
+    [Space(3)] [Header("UI")]
+    [SerializeField] private Slider reloadGauge;
+    public Image powerUpGauge;
+    [SerializeField] private Image powerUpImage;
+    public Slider lifeGauge;
+    public Transform playerUI;
+    [SerializeField] private ParticleSystem powerUpSparks, powerUpFire, playerFire;
+    public Image UIcrown;
+
 
     [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
@@ -705,6 +711,8 @@ public class PlayerController : MonoBehaviour
 
     private void ResetGauges()
     {
+        lifeGauge.maxValue = manager.totalLife;
+        lifeGauge.value = manager.totalLife;
         bulletAmount = maxBulletAmount;
         reloadGauge.maxValue = maxBulletAmount;
         reloadGauge.value = reloadGauge.maxValue;
@@ -773,7 +781,11 @@ public class PlayerController : MonoBehaviour
     {
         // Feedback get power up
         canUsePowerUp = true;
+        powerUpFire.Play();
+        powerUpSparks.Play();
+        playerFire.Play();
         currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
+        powerUpImage.sprite = currentPowerUp.powerUpImage;
         powerUpGauge.fillAmount = 0;
         // Get power up
     } // Gives the player a new power up
@@ -785,7 +797,11 @@ public class PlayerController : MonoBehaviour
         Debug.Log("C'est la fin du power up");
         powerUpScore = 0;
         powerUpGauge.fillAmount = powerUpScore/powerUpMax;
+        powerUpImage.sprite = null;
         canUsePowerUp = false;
+        powerUpFire.Pause();
+        playerFire.Stop();
+        powerUpSparks.Pause();
         powerUpIsActive = false;
         currentPowerUp = null;
     } // Resets player variables when a power up ends

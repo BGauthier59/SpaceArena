@@ -382,9 +382,11 @@ public class PartyManager : MonoBehaviour
         foreach (var pc in GameManager.instance.allPlayers)
         {
             pc.crown.SetActive(false);
+            pc.UIcrown.enabled = false;
         }
 
         currentWinner.crown.SetActive(true);
+        currentWinner.UIcrown.enabled = true;
     }
 
     #endregion

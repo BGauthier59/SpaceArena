@@ -119,7 +119,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user: {fileID: 0}
+  powerUpImage: {fileID: 21300000, guid: 6ec43da254a2d0648b870db992330cb4, type: 3}
   grenadeAmount: 6
+  maxGrenadeAmount: 6
   grenadeSpeed: 700
   shootingRate: 0.3
 --- !u!1 &325993677407743795
@@ -292,6 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user: {fileID: 0}
+  powerUpImage: {fileID: 21300000, guid: 59bd6c0ebbf96144db42e42a9934ffe2, type: 3}
   turret: {fileID: 3394500840370587898, guid: a6263ad58b3ce824fab9b2c11984b3af, type: 3}
 --- !u!1 &4576669941368348805
 GameObject:
@@ -355,6 +358,10 @@ MonoBehaviour:
   - {fileID: 3440054037391332376}
   - {fileID: 8859914751961483725}
   - {fileID: 6002665978843510583}
+  powerUpImages:
+  - {fileID: 21300000, guid: 6ec43da254a2d0648b870db992330cb4, type: 3}
+  - {fileID: 21300000, guid: 59bd6c0ebbf96144db42e42a9934ffe2, type: 3}
+  - {fileID: 21300000, guid: a98cd39eacb92e940b67b25e3322a96e, type: 3}
   allTranslatableTexts: []
   currentPanel:
     arenas: []
@@ -416,7 +423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user: {fileID: 0}
+  powerUpImage: {fileID: 21300000, guid: a98cd39eacb92e940b67b25e3322a96e, type: 3}
   duration: 6
   damage: 50
   speedMultiplier: 2
-  isFinished: 0
+  isFinished: 1

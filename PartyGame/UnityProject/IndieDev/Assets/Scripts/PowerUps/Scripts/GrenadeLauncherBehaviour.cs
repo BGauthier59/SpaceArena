@@ -6,18 +6,20 @@ using UnityEngine;
 public class GrenadeLauncherBehaviour : PowerUpManager
 {
     [SerializeField] private float grenadeAmount;
+    [SerializeField] private float maxGrenadeAmount;
     [SerializeField] private float grenadeSpeed;
     [SerializeField] private float shootingRate;
 
     public override void OnActivate()
     {
         user.shootCooldownDuration = shootingRate;
-        grenadeAmount = 6;
+        grenadeAmount = maxGrenadeAmount;
     }
 
     public override void OnUse()
     {
         grenadeAmount--;
+        user.powerUpGauge.fillAmount = grenadeAmount / maxGrenadeAmount;
         var newGrenade =
             PoolOfObject.Instance.SpawnFromPool(PoolType.Grenade, user.transform.position, user.transform.rotation);
         newGrenade.GetComponent<Rigidbody>().AddForce(user.transform.forward * grenadeSpeed);
