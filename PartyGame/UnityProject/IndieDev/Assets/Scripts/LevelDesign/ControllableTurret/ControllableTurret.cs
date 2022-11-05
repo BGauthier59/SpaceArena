@@ -28,11 +28,15 @@ public class ControllableTurret : MonoBehaviour
     private static readonly int BlinkColor = Shader.PropertyToID("_BlinkColor");
     private static readonly int BlinkSpeed = Shader.PropertyToID("_BlinkSpeed");
     [SerializeField] private TextMeshPro indicator;
+    [SerializeField] private MeshRenderer[] colorMeshes;
+    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+    private static readonly int Color1 = Shader.PropertyToID("_Color");
 
     private void Start()
     {
         bulletAmount = maxBullet;
         SetText();
+        SetColor();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,6 +64,8 @@ public class ControllableTurret : MonoBehaviour
     {
         isPlayerInside = true;
         playerInside = player;
+        
+        playerInside.SetAccessibleTurret(null);
         playerInside.SetControllableTurretPlayer(true);
 
         playerInside.transform.position = seat.position;
@@ -69,6 +75,8 @@ public class ControllableTurret : MonoBehaviour
 
         playerInside.SetCurrentTurret(this);
         playerInside.shootCooldownDuration = shootCooldownDuration;
+        
+        SetColor();
     }
 
     public void OnPlayerExits()
@@ -79,6 +87,28 @@ public class ControllableTurret : MonoBehaviour
         playerInside.SetControllableTurretPlayer(false);
         playerInside = null;
         isPlayerInside = false;
+        
+        SetColor();
+    }
+
+    public void SetColor()
+    {
+        if (playerInside && !needToReload)
+        {
+            foreach (var rd in colorMeshes)
+            {
+                rd.material.SetColor(EmissionColor, GameManager.instance.colors[playerInside.playerIndex - 1] * 2);
+            }
+        }
+        else
+        {
+            foreach (var rd in colorMeshes)
+            {
+                rd.material.SetColor(Color1, Color.grey);
+                rd.material.SetColor(EmissionColor, Color.grey * 0);
+
+            }
+        }
     }
 
     public void Rotating(Vector2 rotation)
@@ -107,6 +137,7 @@ public class ControllableTurret : MonoBehaviour
             needToReload = true;
             blinkingMesh.material.SetColor(BlinkColor, disableColor * 1);
             blinkingMesh.material.SetFloat(BlinkSpeed, disableSpeed);
+            SetColor();
         }
     }
 
@@ -129,6 +160,7 @@ public class ControllableTurret : MonoBehaviour
             bulletAmount = maxBullet;
             blinkingMesh.material.SetColor(BlinkColor, enableColor * 1);
             blinkingMesh.material.SetFloat(BlinkSpeed, enableSpeed);
+            SetColor();
             SetText();
         }
         else reloadTimer += Time.deltaTime;

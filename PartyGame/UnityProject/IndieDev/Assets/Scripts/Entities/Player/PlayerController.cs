@@ -665,6 +665,11 @@ public class PlayerController : MonoBehaviour
         {
             reparationArea.OnTriggerExit(col);
         }
+
+        if (currentControllableTurret != null)
+        {
+            currentControllableTurret.OnPlayerExits();
+        }
         
         DeactivatePlayer();
         col.enabled = false;
@@ -759,8 +764,10 @@ public class PlayerController : MonoBehaviour
 
     public void RebindGauges()
     {
-        reloadGauge.transform.SetParent(transform);
-        powerUpGauge.transform.SetParent(transform);
+        playerUI.SetParent(transform);
+        
+        //reloadGauge.transform.SetParent(transform);
+        //powerUpGauge.transform.SetParent(transform);
     } // Rebinds gauges to the player before the game ends, to prevent them from being destroyed when a new arena loads
 
     #endregion
@@ -854,7 +861,7 @@ public class PlayerController : MonoBehaviour
         isActiveControllableTurret = goingIn;
         //SetGaugesState(!goingIn);
         rb.velocity = Vector3.zero;
-        col.enabled = !goingIn;
+        //col.enabled = !goingIn;
         if (goingIn == false) ResetShootCooldown();
     }
 

@@ -3806,49 +3806,53 @@ MonoBehaviour:
         frenchName: LD_03
         englishName: LD_04
       arenaSceneIndex: 6
-    panelName:
-      frenchName: LD 1 2 3
-      englishName: LD 1 2 3
-    panelImage: {fileID: 21300000, guid: 91c9343fddcdaad479348c2d9bf57a84, type: 3}
-    currentIndex: 0
-  - arenas:
-    - translatableName:
-        frenchName: LD_02
-        englishName: LD_02
-      arenaSceneIndex: 5
-    panelName:
-      frenchName: LD_02
-      englishName: LD_02
-    panelImage: {fileID: 21300000, guid: 14316e4f23273494d95fc229d9403f08, type: 3}
-    currentIndex: 0
-  - arenas:
     - translatableName:
         frenchName: LD_03
-        englishName: LD_03
-      arenaSceneIndex: 6
-    panelName:
-      frenchName: LD_03
-      englishName: LD_03
-    panelImage: {fileID: 21300000, guid: 5293e65ec7e6fb04ba590b4b3e1d44b6, type: 3}
-    currentIndex: 0
-  - arenas:
-    - translatableName:
-        frenchName: 01-1
-        englishName: 01-1
+        englishName: LD_04
       arenaSceneIndex: 7
     panelName:
-      frenchName: Apprentissage
-      englishName: Learning
+      frenchName: Prototype 13/11
+      englishName: Prototype 11/13
     panelImage: {fileID: 0}
     currentIndex: 0
   - arenas:
     - translatableName:
-        frenchName: 4
-        englishName: 4
-      arenaSceneIndex: 8
+        frenchName: X
+        englishName: X
+      arenaSceneIndex: 4
     panelName:
-      frenchName: Magnetic
-      englishName: Magnetic
+      frenchName: LD-01
+      englishName: LD-01
+    panelImage: {fileID: 0}
+    currentIndex: 0
+  - arenas:
+    - translatableName:
+        frenchName: X
+        englishName: X
+      arenaSceneIndex: 5
+    panelName:
+      frenchName: LD-02
+      englishName: LD-02
+    panelImage: {fileID: 0}
+    currentIndex: 0
+  - arenas:
+    - translatableName:
+        frenchName: X
+        englishName: X
+      arenaSceneIndex: 6
+    panelName:
+      frenchName: LD-03
+      englishName: LD-03
+    panelImage: {fileID: 0}
+    currentIndex: 0
+  - arenas:
+    - translatableName:
+        frenchName: X
+        englishName: X
+      arenaSceneIndex: 7
+    panelName:
+      frenchName: LD-04
+      englishName: LD-04
     panelImage: {fileID: 0}
     currentIndex: 0
 --- !u!4 &969052267

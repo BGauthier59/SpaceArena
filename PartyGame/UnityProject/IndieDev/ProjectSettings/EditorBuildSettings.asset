@@ -18,19 +18,16 @@ EditorBuildSettings:
     path: Assets/_Scenes/PauseMenu.unity
     guid: a2416637d92dfa5448a8f75472ecb076
   - enabled: 1
-    path: Assets/_Scenes/Arenas/LD_01.unity
+    path: Assets/_Scenes/Arenas/Prototype_13_Novembre/Prototype_LD_01.unity
+    guid: 998746878b126d2458c46f6bb59c9fb6
+  - enabled: 1
+    path: Assets/_Scenes/Arenas/Prototype_13_Novembre/Prototype_LD_02.unity
     guid: 953a1dc1e686969479deea00ac25f331
   - enabled: 1
-    path: Assets/_Scenes/Arenas/LD_02.unity
-    guid: 2a9568543ade37f4eaafd68c60b2002a
+    path: Assets/_Scenes/Arenas/Prototype_13_Novembre/Prototype_LD_03.unity
+    guid: a0b2dc8f9a314af49819e6caba19aa94
   - enabled: 1
-    path: Assets/_Scenes/Arenas/LD_03.unity
-    guid: 94bfe82945b4d4047ba3f411e7109be4
-  - enabled: 1
-    path: Assets/_Scenes/Arenas/LD_01-1.unity
-    guid: 529a26dd068a10a4da560f89a4e1423d
-  - enabled: 1
-    path: Assets/_Scenes/Arenas/LD_4.unity
-    guid: 2f328627332f8eb429e91447b87c1dc0
+    path: Assets/_Scenes/Arenas/Prototype_13_Novembre/Prototype_LD_04.unity
+    guid: a4297f241a080db4bac84117a8a2edbd
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9e57137e192b1154f891b60b93fc7c6d, type: 2}
