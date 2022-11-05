@@ -11,6 +11,8 @@ public class FeedbacksManager : MonoBehaviour
     public Vibrations reparationVibration;
     public Vibrations takeDamageVibration;
     public Vibrations shootVibrations;
+    public Vibrations controllableShootVibrations;
+    public Vibrations enterTurretVibrations;
     
     public Vibrations GetVibrations(VibrationsType type)
     {
@@ -26,6 +28,10 @@ public class FeedbacksManager : MonoBehaviour
                 return takeDamageVibration;
             case VibrationsType.Shoot:
                 return shootVibrations;
+            case VibrationsType.ControllableTurretShoot:
+                return controllableShootVibrations;
+            case VibrationsType.EnterTurret:
+                return enterTurretVibrations;
         }
 
         Debug.LogError("Hasn't found any vibrations");

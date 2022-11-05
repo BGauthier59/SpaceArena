@@ -474,7 +474,7 @@ public class PlayerController : MonoBehaviour
 
                     currentControllableTurret.Shoot();
                     partyManager.cameraShake.AddShakeEvent(shootingShake);
-                    GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
+                    GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.ControllableTurretShoot);
                     shootCooldownTimer = 0f;
                 }
                 else
@@ -861,6 +861,7 @@ public class PlayerController : MonoBehaviour
         isActiveControllableTurret = goingIn;
         //SetGaugesState(!goingIn);
         rb.velocity = Vector3.zero;
+        rb.isKinematic = goingIn;
         //col.enabled = !goingIn;
         if (goingIn == false) ResetShootCooldown();
     }

@@ -355,11 +355,15 @@ public class PartyManager : MonoBehaviour
 
     #region Score Management
 
+    private bool CanDisplayCrown()
+    {
+        return !(partyTimer >= partyDuration - durationBeforeCrownAppears);
+    }
+    
     public void OnScoresChange()
     {
-        if (partyTimer >= partyDuration - durationBeforeCrownAppears) return;
-
-
+        if (!CanDisplayCrown()) return;
+        
         PlayerController currentWinner = null;
         var bestScore = 0f;
         foreach (var pc in GameManager.instance.allPlayers)

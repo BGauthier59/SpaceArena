@@ -205,7 +205,7 @@ MonoBehaviour:
   reloadDuration: 1
   autoReloadDuration: 1
   ventingCooldownDuration: 0.7
-  turretCooldownDuration: 1
+  turretCooldownDuration: 0.5
   moveTolerance: 0.15
   speed: 500
   aimTolerance: 0.15

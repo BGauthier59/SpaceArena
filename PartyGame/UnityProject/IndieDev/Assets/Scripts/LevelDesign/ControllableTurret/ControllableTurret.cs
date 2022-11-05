@@ -31,6 +31,8 @@ public class ControllableTurret : MonoBehaviour
     [SerializeField] private MeshRenderer[] colorMeshes;
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
     private static readonly int Color1 = Shader.PropertyToID("_Color");
+    [SerializeField] private Animation enterTurretAnim;
+    [SerializeField] private ParticleSystem shootVFX;
 
     private void Start()
     {
@@ -77,6 +79,8 @@ public class ControllableTurret : MonoBehaviour
         playerInside.shootCooldownDuration = shootCooldownDuration;
         
         SetColor();
+        enterTurretAnim.Play(enterTurretAnim.clip.name);
+        GameManager.instance.feedbacks.RumblePulse(playerInside.dataGamepad, VibrationsType.EnterTurret);
     }
 
     public void OnPlayerExits()
@@ -129,6 +133,7 @@ public class ControllableTurret : MonoBehaviour
             .GetComponent<Rigidbody>();
 
         bullet.AddForce(transform.forward * bulletSpeed);
+        shootVFX.Play();
 
         if (bulletAmount <= 0)
         {

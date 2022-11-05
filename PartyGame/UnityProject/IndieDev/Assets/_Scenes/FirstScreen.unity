@@ -763,17 +763,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &1192709701 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6002665978843510583, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-  m_PrefabInstance: {fileID: 4576669940968088894}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87bb93e6e1ede3b47bd63c2558aff3a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1509819271
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,66 +845,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3440054037391332376, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: powerUpImage
-      value: 
-      objectReference: {fileID: 21300000, guid: 6ec43da254a2d0648b870db992330cb4, type: 3}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: powerUps.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[0].b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[0].g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[0].r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[1].b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[1].g
-      value: 0.14970064
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[1].r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[2].b
-      value: 0.83410144
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[2].g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[2].r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[3].b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[3].g
-      value: 0.7094972
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[3].r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: powerUps.Array.data[2]
-      value: 
-      objectReference: {fileID: 1192709701}
     - target: {fileID: 4576669941368348803, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -964,25 +893,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5419757356267785862, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: shootVibrations
-      value: 
-      objectReference: {fileID: 11400000, guid: c52158867398c284182e40f949a3a121, type: 2}
-    - target: {fileID: 5419757356267785862, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: takeDamageVibration
-      value: 
-      objectReference: {fileID: 11400000, guid: 50c744e21c1bd624f9c0d6bacd3f5782, type: 2}
-    - target: {fileID: 6002665978843510583, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: powerUpImage
-      value: 
-      objectReference: {fileID: 21300000, guid: a98cd39eacb92e940b67b25e3322a96e, type: 3}
-    - target: {fileID: 8591720794918883700, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: rumbleActivated
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8859914751961483725, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: powerUpImage
-      value: 
-      objectReference: {fileID: 21300000, guid: 59bd6c0ebbf96144db42e42a9934ffe2, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}

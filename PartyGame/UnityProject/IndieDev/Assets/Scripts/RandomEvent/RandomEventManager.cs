@@ -26,6 +26,14 @@ public class RandomEventManager : MonoBehaviour
 
     private PartyManager partyManager;
 
+    private void Start()
+    {
+        if (!GameManager.instance.settings.randomEventsOccur)
+        {
+            enabled = false;
+        }
+    }
+
     public void Initialization()
     {
         currentEvents = new List<RandomEvent>();
@@ -40,7 +48,7 @@ public class RandomEventManager : MonoBehaviour
     private void Update()
     {
         if (partyManager.gameState == PartyManager.GameState.End) return;
-        
+
         CheckFirstTimer();
         CheckTimer();
         CheckEventDuration();
@@ -118,7 +126,7 @@ public class RandomEventManager : MonoBehaviour
     {
         timerBeforeNextEvent = 0f;
         isStartingEvent = true;
-        
+
         currentEvents.Add(@event);
 
         partyManager.cameraManager.SetZoom(randomEventZoom);
@@ -145,6 +153,7 @@ public class RandomEventManager : MonoBehaviour
         {
             re.EndEvent();
         }
+
         currentEvents.Clear();
         StopAllCoroutines();
         partyManager.SetScreenRandomEvent(false);

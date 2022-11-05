@@ -15,6 +15,6 @@ public class Vibrations : ScriptableObject
 
 public enum VibrationsType
 {
-    MainConnection, Connection, Reparation, TakeDamage, Shoot
+    MainConnection, Connection, Reparation, TakeDamage, Shoot, ControllableTurretShoot, EnterTurret
 }
 
