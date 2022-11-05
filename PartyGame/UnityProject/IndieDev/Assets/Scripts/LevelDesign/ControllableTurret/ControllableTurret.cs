@@ -12,6 +12,7 @@ public class ControllableTurret : MonoBehaviour
     [SerializeField] private Transform seat;
     [SerializeField] private float rotatingSpeed;
     [SerializeField] private Transform rotatingPart;
+    [SerializeField] private Transform playerInsideParent;
     [SerializeField] private Transform cannonOrigin;
     [SerializeField] private float shootCooldownDuration;
     [SerializeField] private int maxBullet;
@@ -31,7 +32,11 @@ public class ControllableTurret : MonoBehaviour
     [SerializeField] private MeshRenderer[] colorMeshes;
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
     private static readonly int Color1 = Shader.PropertyToID("_Color");
-    [SerializeField] private Animation enterTurretAnim;
+    [SerializeField] private Light towerLight;
+
+    [SerializeField] private AnimationClip enterTurretClip;
+    [SerializeField] private AnimationClip shootTurretClip;
+    [SerializeField] private Animation turretAnim;
     [SerializeField] private ParticleSystem shootVFX;
 
     private void Start()
@@ -72,26 +77,29 @@ public class ControllableTurret : MonoBehaviour
 
         playerInside.transform.position = seat.position;
 
-        playerInside.transform.SetParent(rotatingPart);
+        playerInside.transform.SetParent(playerInsideParent);
         playerInside.transform.localRotation = Quaternion.identity;
 
         playerInside.SetCurrentTurret(this);
         playerInside.shootCooldownDuration = shootCooldownDuration;
+        towerLight.enabled = true;
         
         SetColor();
-        enterTurretAnim.Play(enterTurretAnim.clip.name);
+        PlayAnim(enterTurretClip);
         GameManager.instance.feedbacks.RumblePulse(playerInside.dataGamepad, VibrationsType.EnterTurret);
     }
 
     public void OnPlayerExits()
     {
+        playerInside.SetAccessibleTurret(null);
         playerInside.SetCurrentTurret(null);
         playerInside.transform.SetParent(null);
         DontDestroyOnLoad(playerInside.gameObject); // Il faut le refaire ?
         playerInside.SetControllableTurretPlayer(false);
         playerInside = null;
         isPlayerInside = false;
-        
+        towerLight.enabled = false;
+
         SetColor();
     }
 
@@ -129,10 +137,12 @@ public class ControllableTurret : MonoBehaviour
         bulletAmount--;
         SetText();
         var bullet = PoolOfObject.Instance
-            .SpawnFromPool(PoolType.ControllableTurretProjectile, cannonOrigin.position, Quaternion.identity)
+            .SpawnFromPool(PoolType.ControllableTurretProjectile, cannonOrigin.position, rotatingPart.rotation)
             .GetComponent<Rigidbody>();
 
         bullet.AddForce(transform.forward * bulletSpeed);
+        
+        PlayAnim(shootTurretClip);
         shootVFX.Play();
 
         if (bulletAmount <= 0)
@@ -144,6 +154,12 @@ public class ControllableTurret : MonoBehaviour
             blinkingMesh.material.SetFloat(BlinkSpeed, disableSpeed);
             SetColor();
         }
+    }
+
+    private void PlayAnim(AnimationClip clip)
+    {
+        turretAnim.clip = clip;
+        turretAnim.Play(turretAnim.clip.name);
     }
 
     private void SetText()

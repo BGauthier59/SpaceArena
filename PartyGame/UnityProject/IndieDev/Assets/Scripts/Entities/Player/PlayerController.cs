@@ -482,7 +482,7 @@ public class PlayerController : MonoBehaviour
                     bulletAmount--;
                     shootingParticles.Play();
                     var bullet = PoolOfObject.Instance
-                        .SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity)
+                        .SpawnFromPool(PoolType.Bullet, transform.position, transform.rotation)
                         .GetComponent<BulletScript>();
                     bullet.shooter = manager;
 
@@ -671,6 +671,9 @@ public class PlayerController : MonoBehaviour
             currentControllableTurret.OnPlayerExits();
         }
         
+        SetAccessibleTurret(null);
+        SetAccessibleNewVent(null);
+
         DeactivatePlayer();
         col.enabled = false;
         rd.gameObject.SetActive(false);
@@ -862,6 +865,7 @@ public class PlayerController : MonoBehaviour
         //SetGaugesState(!goingIn);
         rb.velocity = Vector3.zero;
         rb.isKinematic = goingIn;
+        playerLight.enabled = !goingIn;
         //col.enabled = !goingIn;
         if (goingIn == false) ResetShootCooldown();
     }
