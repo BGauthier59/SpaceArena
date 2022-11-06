@@ -2515,7 +2515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6223918651986429473, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: enemyData.Array.data[1].minRound
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6223918651986429473, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: enemyData.Array.data[2].maxCount
@@ -2531,7 +2531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6223918651986429473, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: enemyData.Array.data[3].minRound
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6223918651986429473, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: entrances.Array.data[1].minRound

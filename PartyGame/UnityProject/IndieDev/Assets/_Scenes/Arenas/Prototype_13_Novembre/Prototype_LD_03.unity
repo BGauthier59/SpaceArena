@@ -4908,7 +4908,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7624674067756515781, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: partyDuration
-      value: 20
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7624674067756515783, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_Name

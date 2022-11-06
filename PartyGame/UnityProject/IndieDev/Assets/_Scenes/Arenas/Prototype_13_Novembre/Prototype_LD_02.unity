@@ -10168,8 +10168,20 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6223918651986429473, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: enemyData.Array.data[1].minRound
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223918651986429473, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: enemyData.Array.data[2].maxCount
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223918651986429473, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: enemyData.Array.data[2].minRound
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223918651986429473, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
+      propertyPath: enemyData.Array.data[3].minRound
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6223918651986429473, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: entrances.Array.data[0].maxCount
@@ -11197,7 +11209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7624674067756515781, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: partyDuration
-      value: 130
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7624674067756515783, guid: 96835b81f3cc012489355a655e8662aa, type: 3}
       propertyPath: m_Name
