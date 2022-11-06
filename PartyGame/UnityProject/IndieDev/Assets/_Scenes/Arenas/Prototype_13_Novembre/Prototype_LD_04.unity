@@ -1676,6 +1676,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Electrical
       objectReference: {fileID: 0}
+    - target: {fileID: 1643710193594196255, guid: a3c371455df76cd429df2d812a67442f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2315998057470621208, guid: a3c371455df76cd429df2d812a67442f, type: 3}
       propertyPath: m_IsActive
       value: 0

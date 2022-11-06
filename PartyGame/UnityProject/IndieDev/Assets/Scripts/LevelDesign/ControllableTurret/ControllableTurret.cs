@@ -31,7 +31,6 @@ public class ControllableTurret : MonoBehaviour
     [SerializeField] private TextMeshPro indicator;
     [SerializeField] private MeshRenderer[] colorMeshes;
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
-    private static readonly int Color1 = Shader.PropertyToID("_Color");
     [SerializeField] private Light towerLight;
 
     [SerializeField] private AnimationClip enterTurretClip;
@@ -116,9 +115,8 @@ public class ControllableTurret : MonoBehaviour
         {
             foreach (var rd in colorMeshes)
             {
-                rd.material.SetColor(Color1, Color.grey);
+                rd.material.color = Color.grey;
                 rd.material.SetColor(EmissionColor, Color.grey * 0);
-
             }
         }
     }
