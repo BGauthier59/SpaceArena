@@ -87,6 +87,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void Initialization()
     {
+        GameManager.instance.EnableMainControllerOnly();
+
         eventSystem = GameManager.instance.eventSystem;
         eventSystem.SetSelectedGameObject(firstSelected);
 
@@ -223,7 +225,9 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnCancelParty()
     {
-        launchParty.interactable = false;
+        //launchParty.interactable = false;
+        Debug.LogWarning("Launch Party button shouldn't be interactable!");
+        
         lobby.SetActive(false);
         playerNumberSelection.SetActive(false);
         GameManager.instance.EnableMainControllerOnly();
@@ -383,6 +387,8 @@ public class MainMenuManager : MonoBehaviour
     {
         currentSelectedArenasPanel.currentIndex = 0;
         GameManager.instance.currentPanel = currentSelectedArenasPanel;
+        
+        GameManager.instance.DisableAllControllers();
         
         SceneManager.LoadScene(GameManager.instance.currentPanel.arenas
             [GameManager.instance.currentPanel.currentIndex].arenaSceneIndex);

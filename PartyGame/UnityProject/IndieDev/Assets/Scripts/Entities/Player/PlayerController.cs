@@ -882,4 +882,10 @@ public class PlayerController : MonoBehaviour
     public void SetCurrentTurret(ControllableTurret ct) => currentControllableTurret = ct;
 
     #endregion
+
+    private void OnDisable()
+    {
+        // Security
+        dataGamepad.gamepad.SetMotorSpeeds(0, 0);
+    }
 }
