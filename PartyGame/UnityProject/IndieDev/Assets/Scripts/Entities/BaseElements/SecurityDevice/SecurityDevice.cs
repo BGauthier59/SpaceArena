@@ -56,7 +56,7 @@ public class SecurityDevice : BaseElementManager
             {
                 rd.material = partyManager.baseManager.colorVariantMaterial;
                 rd.material.color = color;
-                rd.material.SetColor("_EmissionColor", color * 2);
+                rd.material.SetColor("_EmissionColor", color * 1);
             }
         }
     }

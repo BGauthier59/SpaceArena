@@ -165,11 +165,8 @@ MonoBehaviour:
   isWaitingForInput: 0
   currentPlayerOnArea: {fileID: 0}
   playersOnArea: []
-  reparationAreaRenderer: {fileID: 6828858397738915798}
   reparationAreaDevicesRenderer:
   - {fileID: 8215144370834875864}
-  reparationAreaDisabled: {fileID: 2100000, guid: ff83766546b51484cb3c3722a2995d8c, type: 2}
-  reparationAreaEnabled: {fileID: 2100000, guid: 33fcfee178ed7f0409bed5e3a1691f91, type: 2}
 --- !u!65 &7787337455100956778
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -242,7 +239,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4ad1992ac2c608f43ae5f2f579730340, type: 2}
+  - {fileID: 2100000, guid: 3da8735dfea233a4fb951106333194bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

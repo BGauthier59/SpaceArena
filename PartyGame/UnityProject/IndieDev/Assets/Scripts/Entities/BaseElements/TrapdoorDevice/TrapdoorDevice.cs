@@ -25,7 +25,7 @@ public class TrapdoorDevice : BaseElementManager
         {
             foreach (var rd in t.colorElements)
             {
-                rd.material.SetColor("_EmissionColor", color * 2);
+                rd.material.SetColor("_EmissionColor", color * 1);
             }
         }
     }

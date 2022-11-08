@@ -210,7 +210,7 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpFire.startColor = playerUI.powerUpSlider.color = playerUI.powerUpSparks.startColor = playerUI.lifeSliderColor.color = playerUI.reloadSliderColor.color = color ;
         
         material.color = color;
-        material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
+        material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 1);
         material.EnableKeyword("_EMISSION");
         particleSystem.material = directionArrow.material = rd.material = trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material = material;
         crown.SetActive(false);

@@ -49,7 +49,7 @@ public class ElectricalDevice : BaseElementManager
             foreach (var rd in light.colorElements)
             {
                 rd.material.color = color;
-                rd.material.SetColor("_EmissionColor", color * 2);
+                rd.material.SetColor("_EmissionColor", color * 1);
             }
         }
     }
