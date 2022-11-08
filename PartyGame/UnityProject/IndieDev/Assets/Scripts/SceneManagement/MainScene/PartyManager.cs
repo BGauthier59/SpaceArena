@@ -390,6 +390,7 @@ public class PartyManager : MonoBehaviour
 
         currentWinner.crown.SetActive(true);
         currentWinner.playerUI.crown.enabled = true;
+        
     }
 
     #endregion
