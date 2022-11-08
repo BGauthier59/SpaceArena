@@ -319,8 +319,8 @@ public class PartyManager : MonoBehaviour
     public void OnQuit()
     {
         StopAllCoroutines();
-        GameManager.instance.SetMainGamepad(Gamepad.all[0]);
-        GameManager.instance.EnableMainControllerOnly();
+        //GameManager.instance.SetMainGamepad(Gamepad.all[0]);
+        GameManager.instance.DisableAllControllers();
 
         for (int i = GameManager.instance.allPlayers.Count - 1; i >= 0; i--)
         {

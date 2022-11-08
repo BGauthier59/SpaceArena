@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Data")] public EventSystem eventSystem;
     private Gamepad _mainGamepad;
+    public string mainName;
 
     public Gamepad mainGamepad
     {
@@ -28,12 +29,16 @@ public class GameManager : MonoBehaviour
         set
         {
             _mainGamepad = value;
+            mainName = _mainGamepad.name;
+            /*
             mainGamepadInfo.linked = _mainGamepad != null;
             mainGamepadInfo.name = _mainGamepad == null ? "[Not linked]" : _mainGamepad.name;
+            */
         }
     }
 
-    public MainGamepadData mainGamepadInfo;
+    public List<GamepadSerializable> allGamepads;
+    public string gamepadSettings;
     public bool mainGamepadOnly;
     public int playersNumber;
     public PlayerInputManager playerInputManager;
@@ -167,11 +172,18 @@ public class GameManager : MonoBehaviour
     {
         mainGamepad = gamepad;
         Debug.Log($"{mainGamepad.name} is now the main!");
+
+        foreach (var gs in allGamepads)
+        {
+            gs.isMain = gs.g == mainGamepad;
+        }
     }
 
     public void EnableMainControllerOnly()
     {
+        gamepadSettings = "EnableMainControllerOnly";
         mainGamepadOnly = true;
+        allGamepads.Clear();
 
         foreach (var gamepad in Gamepad.all)
         {
@@ -179,37 +191,84 @@ public class GameManager : MonoBehaviour
             {
                 InputSystem.EnableDevice(gamepad);
                 Debug.Log($"Enabled {gamepad.name}!");
+                
+                allGamepads.Add(new GamepadSerializable()
+                {
+                    g = gamepad,
+                    enabled = gamepad.enabled,
+                    name = gamepad.name,
+                    isMain = true
+                });
                 continue;
             }
 
             InputSystem.DisableDevice(gamepad);
             Debug.Log($"Disabled {gamepad.name}!");
+            
+            allGamepads.Add(new GamepadSerializable()
+            {
+                g = gamepad,
+                enabled = gamepad.enabled,
+                name = gamepad.name,
+                isMain = false
+            });
         }
     }
 
     public void EnableAllControllers()
     {
+        gamepadSettings = "EnableAllControllers";
+
         mainGamepadOnly = false;
+        allGamepads.Clear();
 
         foreach (var gamepad in Gamepad.all)
         {
             InputSystem.EnableDevice(gamepad);
             Debug.Log($"Enabled {gamepad.name}!");
+            
+            allGamepads.Add(new GamepadSerializable()
+            {
+                g = gamepad,
+                enabled = gamepad.enabled,
+                name = gamepad.name,
+                isMain = gamepad == mainGamepad
+            });
         }
     }
 
     public void DisableAllControllers()
     {
+        gamepadSettings = "DisableAllControllers";
+
         mainGamepadOnly = false;
+        allGamepads.Clear();
 
         foreach (var gamepad in Gamepad.all)
         {
             InputSystem.DisableDevice(gamepad);
             Debug.Log($"Disabled {gamepad.name}!");
+            
+            allGamepads.Add(new GamepadSerializable()
+            {
+                g = gamepad,
+                enabled = gamepad.enabled,
+                name = gamepad.name,
+                isMain = gamepad == mainGamepad
+            });
         }
     }
 
     #endregion
+    
+    [Serializable]
+    public class GamepadSerializable
+    {
+        public Gamepad g;
+        public string name;
+        public bool enabled;
+        public bool isMain;
+    }
 }
 
 [Serializable]
@@ -227,9 +286,3 @@ public class GamepadData
     public bool isMotorActive;
 }
 
-[Serializable]
-public struct MainGamepadData
-{
-    public bool linked;
-    public string name;
-}

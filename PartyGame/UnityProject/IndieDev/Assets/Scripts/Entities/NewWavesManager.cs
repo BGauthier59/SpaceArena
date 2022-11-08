@@ -188,7 +188,6 @@ public class NewWavesManager : MonoBehaviour
                 continue;
             }
 
-            Debug.Log($"Couple added : {couple.Item1.entrance.name} / {couple.Item2.enemyData.enemy.ToString()}");
             currentWave.selectedEntrances.Add(couple);
         }
 

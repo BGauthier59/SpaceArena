@@ -226,6 +226,12 @@ public class MainMenuManager : MonoBehaviour
     public void OnCancelParty()
     {
         //launchParty.interactable = false;
+        if (Gamepad.current != GameManager.instance.mainGamepad)
+        {
+            Debug.LogWarning("This is not the main gamepad");
+            return;
+        }
+        
         Debug.LogWarning("Launch Party button shouldn't be interactable!");
         
         lobby.SetActive(false);
@@ -247,6 +253,7 @@ public class MainMenuManager : MonoBehaviour
     public void OnPlayerJoin(PlayerInput input)
     {
         var gamepad = input.GetDevice<Gamepad>();
+        Debug.Log($"CONNECTION : {gamepad.name} has been linked to a player !");
 
         int playerIndex = GameManager.instance.playerInputManager.playerCount;
         string message;
