@@ -19,7 +19,7 @@ public class GrenadeLauncherBehaviour : PowerUpManager
     public override void OnUse()
     {
         grenadeAmount--;
-        user.powerUpGauge.fillAmount = grenadeAmount / maxGrenadeAmount;
+        user.playerUI.powerUpSlider.fillAmount = grenadeAmount / maxGrenadeAmount;
         var newGrenade =
             PoolOfObject.Instance.SpawnFromPool(PoolType.Grenade, user.transform.position, user.transform.rotation);
         newGrenade.GetComponent<Rigidbody>().AddForce(user.transform.forward * grenadeSpeed);
