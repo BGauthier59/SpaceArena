@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GrenadeLauncherBehaviour : PowerUpManager
@@ -10,8 +7,10 @@ public class GrenadeLauncherBehaviour : PowerUpManager
     [SerializeField] private float grenadeSpeed;
     [SerializeField] private float shootingRate;
 
-    public override void OnActivate()
+    public override void OnActivate(PlayerController player)
     {
+        base.OnActivate(player);
+
         user.shootCooldownDuration = shootingRate;
         grenadeAmount = maxGrenadeAmount;
     }
@@ -29,15 +28,15 @@ public class GrenadeLauncherBehaviour : PowerUpManager
     {
         if (grenadeAmount <= 0)
         {
-            user.shootCooldownDuration = 0.1f;
-            user = null;
+            
             return true;
         }
         return false;
     }
-
-    private void Update()
+    
+    public override void OnDeactivate()
     {
-        
+        user.ResetShootCooldown();
+        base.OnDeactivate();
     }
 }

@@ -9,8 +9,9 @@ public class TeslaBehaviour : PowerUpManager
     [SerializeField] private float duration;
     private bool isFinished;
 
-    public override void OnActivate()
+    public override void OnActivate(PlayerController player)
     {
+        base.OnActivate(player);
         isFinished = false;
         StartCoroutine(Duration());
     }

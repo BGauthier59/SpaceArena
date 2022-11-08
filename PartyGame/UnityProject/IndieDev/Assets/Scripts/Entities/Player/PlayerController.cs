@@ -380,9 +380,7 @@ public class PlayerController : MonoBehaviour
         if (!canUsePowerUp || powerUpIsActive) return;
         if (currentPowerUp == null) return;
 
-        powerUpIsActive = true;
-        currentPowerUp.user = this;
-        currentPowerUp.OnActivate();
+        currentPowerUp.OnActivate(this);
     }
 
     #endregion
@@ -653,7 +651,7 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
     } // Resets player's speed
 
-    private void ResetShootCooldown()
+    public void ResetShootCooldown()
     {
         shootCooldownDuration = baseShootCooldown;
     }
@@ -703,8 +701,7 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         aiming = false;
         isAutoReloading = false;
-        powerUpIsActive = false;
-        // Désactiver pouvoirs
+        EndOfPowerUp();
     }
 
     private void ResetPlayerGraphsAndCollisions() // Resets the player's renderers and colliders
@@ -790,14 +787,25 @@ public class PlayerController : MonoBehaviour
         currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
         playerUI.powerUpImage.sprite = currentPowerUp.powerUpImage;
         playerUI.powerUpSlider.fillAmount = 0;
-        // Get power up
     } // Gives the player a new power up
+
+    public void CancelPowerUp()
+    {
+        if (!canUsePowerUp || powerUpIsActive) return;
+        
+        playerUI.powerUpFire.Stop();
+        playerUI.powerUpSparks.Stop();
+        playerFire.Stop();
+        playerUI.powerUpImage.sprite = defaultPowerUpImage;
+
+        currentPowerUp = null;
+    } // Prevents the player from bringing a power-up from a game to another
 
     public void EndOfPowerUp()
     {
-        // Faut-il call cette fonction quand on vent ou entre dans une tourelle ?
+        if (!powerUpIsActive) return;
 
-        Debug.Log("C'est la fin du power up");
+        currentPowerUp.OnDeactivate();
         powerUpScore = 0;
         playerUI.powerUpSlider.fillAmount = powerUpScore/powerUpMax;
         playerUI.powerUpImage.sprite = defaultPowerUpImage;
@@ -805,7 +813,6 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpFire.Stop();
         playerFire.Stop();
         playerUI.powerUpSparks.Stop();
-        powerUpIsActive = false;
         currentPowerUp = null;
     } // Resets player variables when a power up ends
 

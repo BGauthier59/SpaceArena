@@ -10,8 +10,10 @@ public class RageBehaviour : PowerUpManager
     [SerializeField] private float speedMultiplier;
     [SerializeField] private bool isFinished;
 
-    public override void OnActivate()
+    public override void OnActivate(PlayerController player)
     {
+        base.OnActivate(player);
+
         isFinished = false;
         elapsedTime = 0;
         user.ModifySpeed(speedMultiplier);
@@ -20,29 +22,30 @@ public class RageBehaviour : PowerUpManager
         user.rageCollider.collider.enabled = true;
     }
     
-
     private void Update()
     {
-        if (!isFinished)
+        if (isFinished) return;
+        
+        if (elapsedTime >= duration)
+        {
+            isFinished = true;
+        }
+        else
         {
             elapsedTime += Time.deltaTime;
             user.playerUI.powerUpSlider.fillAmount = 1 - (elapsedTime / duration);
-            if (elapsedTime >= duration)
-            {
-                isFinished = true;
-            }
         }
     }
 
     public override bool OnConditionCheck()
     {
-        if (isFinished)
-        {
-            Debug.Log("Rage is finished");
-            user.ResetSpeed();
-            user.rageCollider.collider.enabled = false;
-        }
-        
         return isFinished;
+    }
+
+    public override void OnDeactivate()
+    {
+        user.ResetSpeed();
+        user.rageCollider.collider.enabled = false;
+        base.OnDeactivate();
     }
 }

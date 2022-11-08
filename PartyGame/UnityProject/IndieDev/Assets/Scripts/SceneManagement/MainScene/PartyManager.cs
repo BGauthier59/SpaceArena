@@ -241,6 +241,8 @@ public class PartyManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
+            player.CancelPowerUp();
+            player.EndOfPowerUp();
             player.DeactivatePlayer();
             player.SetGaugesState(false);
             DontDestroyOnLoad(player.gameObject);

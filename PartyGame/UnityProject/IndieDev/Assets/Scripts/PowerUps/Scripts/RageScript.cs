@@ -7,8 +7,7 @@ public class RageScript : MonoBehaviour
     public CapsuleCollider collider;
     public int damage;
     [SerializeField] private float knockbackStrength;
-
-
+    
     private void Start()
     {
         collider = GetComponent<CapsuleCollider>();

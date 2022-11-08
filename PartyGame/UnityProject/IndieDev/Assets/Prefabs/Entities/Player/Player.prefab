@@ -213,8 +213,8 @@ MonoBehaviour:
   shootCooldownDuration: 0.1
   reloadDuration: 1
   autoReloadDuration: 1
-  ventingCooldownDuration: 0.7
-  turretCooldownDuration: 0.5
+  ventingCooldownDuration: 0.2
+  turretCooldownDuration: 0.4
   moveTolerance: 0.15
   speed: 500
   aimTolerance: 0.15
@@ -592,8 +592,8 @@ TrailRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 0
-    numCapVertices: 0
+    numCornerVertices: 5
+    numCapVertices: 3
     alignment: 0
     textureMode: 0
     shadowBias: 0.5
