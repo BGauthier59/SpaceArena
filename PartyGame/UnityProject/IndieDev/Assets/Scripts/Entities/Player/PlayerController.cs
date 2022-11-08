@@ -42,6 +42,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem shootingParticles;
     public GameObject crown;
     private PartyManager partyManager;
+    [SerializeField] private VentingPlayerMesh ventingPlayerMesh;
+
+    [Serializable]
+    public struct VentingPlayerMesh
+    {
+        public GameObject obj;
+        public TrailRenderer trailRd;
+        public MeshRenderer rd;
+    }
 
     [Space(3)] [Header("Feedbacks")] [SerializeField]
     private CameraShakeScriptable shootingShake;
@@ -202,8 +211,10 @@ public class PlayerController : MonoBehaviour
         material.color = GameManager.instance.colors[playerIndex - 1];
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
         material.EnableKeyword("_EMISSION");
-        particleSystem.material = directionArrow.material = rd.material = trail.material = material;
+        particleSystem.material = directionArrow.material = rd.material = trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material = material;
         crown.SetActive(false);
+        ventingPlayerMesh.rd.gameObject.SetActive(false);
+        ventingPlayerMesh.trailRd.enabled = false;
     }
 
     #endregion
@@ -720,6 +731,8 @@ public class PlayerController : MonoBehaviour
         directionArrow.enabled = true;
         playerLight.enabled = true;
         col.enabled = true;
+        ventingPlayerMesh.rd.gameObject.SetActive(false);
+        ventingPlayerMesh.trailRd.enabled = false;
     }
 
     private void ResetGauges()
@@ -846,13 +859,19 @@ public class PlayerController : MonoBehaviour
     {
         isActiveVent = goingIn;
         //SetGaugesState(!goingIn);
-        col.enabled = !goingIn;
         rb.velocity = Vector3.zero;
 
         if (goingIn)
         {
             // Feedbacks player goes in
             accessibleNewVent = null;
+            rd.gameObject.SetActive(false);
+            trail.enabled = false;
+            directionArrow.enabled = false;
+            playerLight.enabled = false;
+            col.enabled = false;
+            ventingPlayerMesh.rd.gameObject.SetActive(true);
+            ventingPlayerMesh.trailRd.enabled = true;
         }
         else
         {
@@ -860,6 +879,7 @@ public class PlayerController : MonoBehaviour
             currentConduit = null;
             isVentingOut = true;
             detectInputConduit = false;
+            ResetPlayerGraphsAndCollisions();
         }
     }
 
