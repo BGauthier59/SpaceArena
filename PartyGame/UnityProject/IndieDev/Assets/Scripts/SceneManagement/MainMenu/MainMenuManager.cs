@@ -253,7 +253,6 @@ public class MainMenuManager : MonoBehaviour
     public void OnPlayerJoin(PlayerInput input)
     {
         var gamepad = input.GetDevice<Gamepad>();
-        Debug.Log($"CONNECTION : {gamepad.name} has been linked to a player !");
 
         int playerIndex = GameManager.instance.playerInputManager.playerCount;
         string message;
