@@ -24,15 +24,13 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public GamepadData dataGamepad;
     public RageScript rageCollider;
+
+    [Space(3)] [Header("UI")] 
     
-    [Space(3)] [Header("UI")]
-    [SerializeField] private Slider reloadGauge;
-    public Image powerUpGauge;
-    [SerializeField] private Image powerUpImage;
-    public Slider lifeGauge;
-    public Transform playerUI;
-    [SerializeField] private ParticleSystem powerUpSparks, powerUpFire, playerFire;
-    public Image UIcrown;
+    public PartyManager.PlayerUI playerUI;
+
+    [SerializeField] private Sprite defaultPowerUpImage;
+    [SerializeField] private ParticleSystem playerFire;
 
 
     [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
@@ -199,7 +197,10 @@ public class PlayerController : MonoBehaviour
     public void GraphInitialization()
     {
         var material = rd.material;
-        material.color = GameManager.instance.colors[playerIndex - 1];
+        var color = GameManager.instance.colors[playerIndex - 1];
+        playerUI.powerUpFire.startColor = playerUI.powerUpSlider.color = playerUI.powerUpSparks.startColor = playerUI.lifeSliderColor.color = playerUI.reloadSliderColor.color = color ;
+        
+        material.color = color;
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
         material.EnableKeyword("_EMISSION");
         particleSystem.material = directionArrow.material = rd.material = trail.material = material;
@@ -500,7 +501,7 @@ public class PlayerController : MonoBehaviour
 
                     rb.AddForce(-transform.forward * recoil);
                     shootCooldownTimer = 0f;
-                    reloadGauge.value = bulletAmount;
+                    playerUI.reloadSlider.value = bulletAmount;
 
                     if (bulletAmount <= 0)
                     {
@@ -538,7 +539,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            reloadGauge.value = (reloadTimer / reloadDuration) * reloadGauge.maxValue;
+            playerUI.reloadSlider.value = (reloadTimer / reloadDuration) * playerUI.reloadSlider.maxValue;
             reloadTimer += Time.deltaTime;
         }
     }
@@ -618,24 +619,6 @@ public class PlayerController : MonoBehaviour
         }
         else turretCooldownTimer += Time.deltaTime;
     }
-
-    private void SettingPowerUpGauge()
-    {
-        var nextPos = Camera.main.WorldToScreenPoint(transform.position)
-                      + new Vector3(50, 0);
-        powerUpGauge.transform.position =
-            Vector3.Lerp(powerUpGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
-    }
-
-    private void SettingReloadGauge()
-    {
-        var nextPos = Camera.main.WorldToScreenPoint(transform.position)
-                      + new Vector3(0, -30);
-
-        reloadGauge.transform.position =
-            Vector3.Lerp(reloadGauge.transform.position, nextPos, Time.fixedDeltaTime * setGaugeSpeed);
-    }
-
     private void PowerCheck()
     {
         if (!powerUpIsActive) return;
@@ -711,16 +694,16 @@ public class PlayerController : MonoBehaviour
 
     private void ResetGauges()
     {
-        lifeGauge.maxValue = manager.totalLife;
-        lifeGauge.value = manager.totalLife;
+        playerUI.lifeSlider.maxValue = manager.totalLife;
+        playerUI.lifeSlider.value = manager.totalLife;
         bulletAmount = maxBulletAmount;
-        reloadGauge.maxValue = maxBulletAmount;
-        reloadGauge.value = reloadGauge.maxValue;
+        playerUI.reloadSlider.maxValue = maxBulletAmount;
+        playerUI.reloadSlider.value = playerUI.reloadSlider.maxValue;
         //reloadGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
         //                                 + new Vector3(0, -30);
         powerUpScore = 0;
         //powerUpGauge.fill = powerUpMax;
-        powerUpGauge.fillAmount = 0;
+        playerUI.powerUpSlider.fillAmount = 0;
         //powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
         //                                  + new Vector3(50, 0);
     } // Resets gauges to their initial values
@@ -754,14 +737,14 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Tried to display gauges after end of game.");
             return;
         }
-        playerUI.gameObject.SetActive(active);
+        playerUI.self.SetActive(active);
     } // Displays or hides gauges
 
-    public void RebindGauges()
+    /*public void RebindGauges()
     {
         reloadGauge.transform.SetParent(transform);
         powerUpGauge.transform.SetParent(transform);
-    } // Rebinds gauges to the player before the game ends, to prevent them from being destroyed when a new arena loads
+    } // Rebinds gauges to the player before the game ends, to prevent them from being destroyed when a new arena loads*/
 
     #endregion
 
@@ -772,21 +755,21 @@ public class PlayerController : MonoBehaviour
         if (canUsePowerUp) return;
         powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
         Debug.Log(powerUpScore/powerUpMax);
-        powerUpGauge.fillAmount = powerUpScore/powerUpMax;
+        playerUI.powerUpSlider.fillAmount = powerUpScore/powerUpMax;
 
-        if (powerUpGauge.fillAmount >= 1) GetPowerUp();
+        if (playerUI.powerUpSlider.fillAmount >= 1) GetPowerUp();
     } // Increases power up gauge value when the player hits an enemy
 
     private void GetPowerUp()
     {
         // Feedback get power up
         canUsePowerUp = true;
-        powerUpFire.Play();
-        powerUpSparks.Play();
+        playerUI.powerUpFire.Play();
+        playerUI.powerUpSparks.Play();
         playerFire.Play();
         currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
-        powerUpImage.sprite = currentPowerUp.powerUpImage;
-        powerUpGauge.fillAmount = 0;
+        playerUI.powerUpImage.sprite = currentPowerUp.powerUpImage;
+        playerUI.powerUpSlider.fillAmount = 0;
         // Get power up
     } // Gives the player a new power up
 
@@ -796,12 +779,12 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("C'est la fin du power up");
         powerUpScore = 0;
-        powerUpGauge.fillAmount = powerUpScore/powerUpMax;
-        powerUpImage.sprite = null;
+        playerUI.powerUpSlider.fillAmount = powerUpScore/powerUpMax;
+        playerUI.powerUpImage.sprite = defaultPowerUpImage;
         canUsePowerUp = false;
-        powerUpFire.Pause();
+        playerUI.powerUpFire.Stop();
         playerFire.Stop();
-        powerUpSparks.Pause();
+        playerUI.powerUpSparks.Stop();
         powerUpIsActive = false;
         currentPowerUp = null;
     } // Resets player variables when a power up ends

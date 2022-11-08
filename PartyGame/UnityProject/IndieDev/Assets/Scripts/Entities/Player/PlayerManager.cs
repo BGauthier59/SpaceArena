@@ -54,7 +54,7 @@ public class PlayerManager : Entity
     {
         base.TakeDamage(damage, attacker);
         GameManager.instance.feedbacks.RumbleConstant(controller.dataGamepad, VibrationsType.TakeDamage);
-        controller.lifeGauge.value = currentLife;
+        controller.playerUI.lifeSlider.value = currentLife;
         if (attacker)
         {
             Debug.Log(attacker.name +  " has attacked a player!");
