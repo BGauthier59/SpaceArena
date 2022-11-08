@@ -13,6 +13,7 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private Transform[] allSpawningPoints;
     [SerializeField] private Transform[] playerUIPositions;
+    public PlayerUI[] PlayerUis;
     [SerializeField] private TextMeshProUGUI timerText;
 
     [Header("Instances")] public BaseManager baseManager;
@@ -144,8 +145,7 @@ public class PartyManager : MonoBehaviour
             player.initPos = allSpawningPoints[i].position;
             player.transform.position = player.initPos;
             player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
-            player.playerUI.parent = mainCanvas.transform;
-            player.playerUI.position = playerUIPositions[i].position;
+            player.playerUI = PlayerUis[i];
             player.PartyBegins();
         }
 
@@ -242,7 +242,6 @@ public class PartyManager : MonoBehaviour
         {
             var player = GameManager.instance.allPlayers[i];
             player.DeactivatePlayer();
-            player.RebindGauges();
             player.SetGaugesState(false);
             DontDestroyOnLoad(player.gameObject);
         }
@@ -386,12 +385,27 @@ public class PartyManager : MonoBehaviour
         foreach (var pc in GameManager.instance.allPlayers)
         {
             pc.crown.SetActive(false);
-            pc.UIcrown.enabled = false;
+            pc.playerUI.crown.enabled = false;
         }
 
         currentWinner.crown.SetActive(true);
-        currentWinner.UIcrown.enabled = true;
+        currentWinner.playerUI.crown.enabled = true;
+        
     }
 
     #endregion
+    
+    [Serializable]
+    public class PlayerUI
+    {
+        public GameObject self;
+        public Slider lifeSlider;
+        public Slider reloadSlider;
+        public Image powerUpSlider;
+        public Image powerUpImage;
+        public ParticleSystem powerUpFire, powerUpSparks;
+        public Image reloadSliderColor, lifeSliderColor;
+        public Image crown;
+
+    }
 }

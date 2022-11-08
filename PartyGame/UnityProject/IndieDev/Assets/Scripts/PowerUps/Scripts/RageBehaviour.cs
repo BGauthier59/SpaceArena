@@ -26,7 +26,7 @@ public class RageBehaviour : PowerUpManager
         if (!isFinished)
         {
             elapsedTime += Time.deltaTime;
-            user.powerUpGauge.fillAmount = 1 - (elapsedTime / duration);
+            user.playerUI.powerUpSlider.fillAmount = 1 - (elapsedTime / duration);
             if (elapsedTime >= duration)
             {
                 isFinished = true;
