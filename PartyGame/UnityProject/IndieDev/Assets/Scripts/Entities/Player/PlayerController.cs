@@ -228,6 +228,7 @@ public class PlayerController : MonoBehaviour
         AutoReloading();
         Reloading();
         Firing();
+        FireReload();
         Dashing();
         PowerCheck();
     } // Calls methods when the player is on a classic state
@@ -237,6 +238,7 @@ public class PlayerController : MonoBehaviour
         if (!isActiveControllableTurret) return;
         MovingInTurret();
         Firing();
+        FireReload();
     } // Calls methods when the player is controlling a turret
 
     private void FixedUpdate()
@@ -520,10 +522,13 @@ public class PlayerController : MonoBehaviour
                 shootCooldownTimer = 0f;
             }
         }
-        else
-        {
-            shootCooldownTimer += Time.deltaTime;
-        }
+    }
+
+    private void FireReload()
+    {
+        // We need to increase shootCooldownTimer even when we're not pressing any attack input
+        if (shootCooldownTimer >= shootCooldownDuration) return;
+        shootCooldownTimer += Time.deltaTime;
     }
 
     private void Reloading()
@@ -654,7 +659,7 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
     } // Resets player's speed
 
-    public void ResetShootCooldown()
+    private void ResetShootCooldown()
     {
         shootCooldownDuration = baseShootCooldown;
     }
@@ -867,7 +872,7 @@ public class PlayerController : MonoBehaviour
         rb.isKinematic = goingIn;
         playerLight.enabled = !goingIn;
         //col.enabled = !goingIn;
-        if (goingIn == false) ResetShootCooldown();
+        if (!goingIn) ResetShootCooldown();
     }
 
     #endregion
