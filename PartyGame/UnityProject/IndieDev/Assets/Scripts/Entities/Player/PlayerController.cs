@@ -1,11 +1,8 @@
 using System;
-using System.Diagnostics;
-using System.Runtime.Remoting.Channels;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
@@ -31,8 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Sprite defaultPowerUpImage;
     [SerializeField] private ParticleSystem playerFire;
-
-
+    
     [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
     [SerializeField] private TrailRenderer trail;
@@ -127,6 +123,7 @@ public class PlayerController : MonoBehaviour
 
     public float bulletSpeed;
     [SerializeField] private float recoil;
+    public Transform bulletOrigin;
 
     [Space(3)] [Header("Gravity parameters")] [SerializeField]
     private float fallSpeed;
@@ -494,7 +491,7 @@ public class PlayerController : MonoBehaviour
                     bulletAmount--;
                     shootingParticles.Play();
                     var bullet = PoolOfObject.Instance
-                        .SpawnFromPool(PoolType.Bullet, transform.position, transform.rotation)
+                        .SpawnFromPool(PoolType.Bullet, bulletOrigin.position, transform.rotation)
                         .GetComponent<BulletScript>();
                     bullet.shooter = manager;
 
@@ -784,7 +781,8 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpFire.Play();
         playerUI.powerUpSparks.Play();
         playerFire.Play();
-        currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
+        currentPowerUp = GameManager.instance.powerUps[0];
+        //currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
         playerUI.powerUpImage.sprite = currentPowerUp.powerUpImage;
         playerUI.powerUpSlider.fillAmount = 0;
     } // Gives the player a new power up

@@ -20,18 +20,13 @@ public class GrenadeLauncherBehaviour : PowerUpManager
         grenadeAmount--;
         user.playerUI.powerUpSlider.fillAmount = grenadeAmount / maxGrenadeAmount;
         var newGrenade =
-            PoolOfObject.Instance.SpawnFromPool(PoolType.Grenade, user.transform.position, user.transform.rotation);
+            PoolOfObject.Instance.SpawnFromPool(PoolType.Grenade, user.bulletOrigin.position, user.transform.rotation);
         newGrenade.GetComponent<Rigidbody>().AddForce(user.transform.forward * grenadeSpeed);
     }
 
     public override bool OnConditionCheck()
     {
-        if (grenadeAmount <= 0)
-        {
-            
-            return true;
-        }
-        return false;
+        return grenadeAmount <= 0;
     }
     
     public override void OnDeactivate()
