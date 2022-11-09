@@ -293,7 +293,6 @@ GameObject:
   - component: {fileID: 913759558302176951}
   - component: {fileID: 7156216123899567874}
   - component: {fileID: 4122890632156477873}
-  - component: {fileID: 1166884311731921451}
   m_Layer: 7
   m_Name: Device
   m_TagString: BaseElement
@@ -392,19 +391,6 @@ MonoBehaviour:
     lightingOnDuration: 3
     colorElements:
     - {fileID: 1375623637858213137}
---- !u!135 &1166884311731921451
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686213781010172845}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 3
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4528784436243420929
 GameObject:
   m_ObjectHideFlags: 0

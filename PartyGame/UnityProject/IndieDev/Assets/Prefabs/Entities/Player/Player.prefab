@@ -221,9 +221,9 @@ MonoBehaviour:
   aimTolerance: 0.15
   rotateSpeed: 150
   helpingAimMaxDistance: 10
-  enemyLayer:
+  enemyTargetLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 16384
   dashFactor:
     serializedVersion: 2
     m_Curve:
@@ -505,7 +505,7 @@ TrailRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260229765792117757}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 0

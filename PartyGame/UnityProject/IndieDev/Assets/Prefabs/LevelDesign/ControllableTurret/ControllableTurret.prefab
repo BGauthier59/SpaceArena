@@ -1007,6 +1007,7 @@ MonoBehaviour:
   - {fileID: 6080892142163431719}
   - {fileID: 994921987786912416}
   towerLight: {fileID: 5207657213349223168}
+  aimMaxDistance: 20
   enterTurretClip: {fileID: 7400000, guid: be5fb4b915812cc458c6290571b2a8c4, type: 2}
   shootTurretClip: {fileID: 7400000, guid: 880f46de17099804ea7b85e45b367b72, type: 2}
   turretAnim: {fileID: 7984403736828652674}

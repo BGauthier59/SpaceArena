@@ -92,7 +92,6 @@ GameObject:
   - component: {fileID: 7657267462596785996}
   - component: {fileID: 4138404899465712747}
   - component: {fileID: 6047526565768416098}
-  - component: {fileID: 4499719867280447185}
   m_Layer: 7
   m_Name: Device
   m_TagString: BaseElement
@@ -150,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912f84eb7b13c1642813c536a922a30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalLife: 75
+  totalLife: 200
   currentLife: 0
   animator: {fileID: 0}
   rb: {fileID: 0}
@@ -176,19 +175,6 @@ MonoBehaviour:
   baseElementName:
     frenchName: Coeur de la Base
     englishName: Base Heart
---- !u!135 &4499719867280447185
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3501306684766199168}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 3
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7093468802488531139
 GameObject:
   m_ObjectHideFlags: 0

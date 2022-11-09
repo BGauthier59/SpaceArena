@@ -32,6 +32,7 @@ public class ControllableTurret : MonoBehaviour
     [SerializeField] private MeshRenderer[] colorMeshes;
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
     [SerializeField] private Light towerLight;
+    public float aimMaxDistance;
 
     [SerializeField] private AnimationClip enterTurretClip;
     [SerializeField] private AnimationClip shootTurretClip;
@@ -138,7 +139,8 @@ public class ControllableTurret : MonoBehaviour
             .SpawnFromPool(PoolType.ControllableTurretProjectile, cannonOrigin.position, rotatingPart.rotation)
             .GetComponent<Rigidbody>();
 
-        bullet.AddForce(transform.forward * bulletSpeed);
+        if (playerInside.helpingAimSet) bullet.AddForce(playerInside.helpingAimDirection.normalized * bulletSpeed);
+        else bullet.AddForce(transform.forward * bulletSpeed);
         
         PlayAnim(shootTurretClip);
         shootVFX.Play();
