@@ -177,3 +177,5 @@ MonoBehaviour:
   mainCamera: {fileID: 8744282902909847573}
   defaultZoom: {fileID: 11400000, guid: 227cca5df692f8c4fb8cf333b7ac631c, type: 2}
   currentZoom: {fileID: 0}
+  securityOffsetMinDistanceBetweenPlayers: 30
+  securityYOffsetPerMeterAboveMinDistance: 0.5

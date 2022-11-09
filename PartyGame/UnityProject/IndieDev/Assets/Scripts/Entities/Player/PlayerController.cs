@@ -22,13 +22,11 @@ public class PlayerController : MonoBehaviour
     public GamepadData dataGamepad;
     public RageScript rageCollider;
 
-    [Space(3)] [Header("UI")] 
-    
-    public PartyManager.PlayerUI playerUI;
+    [Space(3)] [Header("UI")] public PartyManager.PlayerUI playerUI;
 
     [SerializeField] private Sprite defaultPowerUpImage;
     [SerializeField] private ParticleSystem playerFire;
-    
+
     [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
     [SerializeField] private TrailRenderer trail;
@@ -65,7 +63,7 @@ public class PlayerController : MonoBehaviour
     private bool grounded;
     private bool reloading;
     private bool isAutoReloading;
-    private bool helpingAimSet;
+    public bool helpingAimSet;
     private bool isVentingOut;
     public bool detectInputConduit;
     private bool leavingTurret;
@@ -78,7 +76,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 rightJoystickInput;
 
     [Space(3)] [Header("References")] public Vector3 initPos;
-    private Vector3 helpingAimDirection;
+    public Vector3 helpingAimDirection;
     private PowerUpManager currentPowerUp;
     private ReparationArea reparationArea;
     private NewVent lastTakenNewVent;
@@ -113,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float helpingAimMaxDistance;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask enemyTargetLayer;
 
     [Space(3)] [Header("Dash parameters")] [SerializeField]
     private AnimationCurve dashFactor;
@@ -204,12 +202,14 @@ public class PlayerController : MonoBehaviour
     {
         var material = rd.material;
         var color = GameManager.instance.colors[playerIndex - 1];
-        playerUI.powerUpFire.startColor = playerUI.powerUpSlider.color = playerUI.powerUpSparks.startColor = playerUI.lifeSliderColor.color = playerUI.reloadSliderColor.color = color ;
-        
+        playerUI.powerUpFire.startColor = playerUI.powerUpSlider.color = playerUI.powerUpSparks.startColor =
+            playerUI.lifeSliderColor.color = playerUI.reloadSliderColor.color = color;
+
         material.color = color;
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 1);
         material.EnableKeyword("_EMISSION");
-        particleSystem.material = directionArrow.material = rd.material = trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material = material;
+        particleSystem.material = directionArrow.material = rd.material =
+            trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material = material;
         crown.SetActive(false);
         ventingPlayerMesh.rd.gameObject.SetActive(false);
         ventingPlayerMesh.trailRd.enabled = false;
@@ -414,6 +414,7 @@ public class PlayerController : MonoBehaviour
         if (currentControllableTurret == null) return;
         var moveVector = new Vector2(leftJoystickInput.x, leftJoystickInput.y);
         currentControllableTurret.Rotating(moveVector);
+        HelpingAim();
     }
 
     private void Grounding()
@@ -452,7 +453,8 @@ public class PlayerController : MonoBehaviour
     private void HelpingAim()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, helpingAimMaxDistance, enemyLayer))
+        var aimDistance = isActiveControllableTurret ? currentControllableTurret.aimMaxDistance : helpingAimMaxDistance;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, aimDistance, enemyTargetLayer))
         {
             helpingAimDirection = hit.transform.position - transform.position;
             helpingAimSet = true;
@@ -495,14 +497,8 @@ public class PlayerController : MonoBehaviour
                         .GetComponent<BulletScript>();
                     bullet.shooter = manager;
 
-                    if (helpingAimSet)
-                    {
-                        bullet.rb.AddForce(helpingAimDirection.normalized * bulletSpeed);
-                    }
-                    else
-                    {
-                        bullet.rb.AddForce(transform.forward * bulletSpeed);
-                    }
+                    if (helpingAimSet) bullet.rb.AddForce(helpingAimDirection.normalized * bulletSpeed);
+                    else bullet.rb.AddForce(transform.forward * bulletSpeed);
 
                     partyManager.cameraShake.AddShakeEvent(shootingShake);
                     GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Shoot);
@@ -630,6 +626,7 @@ public class PlayerController : MonoBehaviour
         }
         else turretCooldownTimer += Time.deltaTime;
     }
+
     private void PowerCheck()
     {
         if (!powerUpIsActive) return;
@@ -664,7 +661,7 @@ public class PlayerController : MonoBehaviour
         {
             currentControllableTurret.OnPlayerExits();
         }
-        
+
         SetAccessibleTurret(null);
         SetAccessibleNewVent(null);
 
@@ -689,8 +686,8 @@ public class PlayerController : MonoBehaviour
 
     private void ResetPlayer() // Resets the player's main variables when the game begins or when dying
     {
-        if(isActiveVent) SetVentingPlayer(false);
-        if(isActiveControllableTurret) SetControllableTurretPlayer(false);
+        if (isActiveVent) SetVentingPlayer(false);
+        if (isActiveControllableTurret) SetControllableTurretPlayer(false);
         ResetSpeed();
         ResetShootCooldown();
         isAttacking = false;
@@ -757,6 +754,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Tried to display gauges after end of game.");
             return;
         }
+
         playerUI.self.SetActive(active);
     } // Displays or hides gauges
 
@@ -768,7 +766,7 @@ public class PlayerController : MonoBehaviour
     {
         if (canUsePowerUp) return;
         powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
-        playerUI.powerUpSlider.fillAmount = powerUpScore/powerUpMax;
+        playerUI.powerUpSlider.fillAmount = powerUpScore / powerUpMax;
 
         if (playerUI.powerUpSlider.fillAmount >= 1) GetPowerUp();
     } // Increases power up gauge value when the player hits an enemy
@@ -788,7 +786,7 @@ public class PlayerController : MonoBehaviour
     public void CancelPowerUp()
     {
         if (!canUsePowerUp || powerUpIsActive) return;
-        
+
         playerUI.powerUpFire.Stop();
         playerUI.powerUpSparks.Stop();
         playerFire.Stop();
@@ -803,7 +801,7 @@ public class PlayerController : MonoBehaviour
 
         currentPowerUp.OnDeactivate();
         powerUpScore = 0;
-        playerUI.powerUpSlider.fillAmount = powerUpScore/powerUpMax;
+        playerUI.powerUpSlider.fillAmount = powerUpScore / powerUpMax;
         playerUI.powerUpImage.sprite = defaultPowerUpImage;
         canUsePowerUp = false;
         playerUI.powerUpFire.Stop();

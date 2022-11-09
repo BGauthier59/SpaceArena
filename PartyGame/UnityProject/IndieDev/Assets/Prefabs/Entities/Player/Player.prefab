@@ -148,7 +148,7 @@ MonoBehaviour:
   controller: {fileID: 7167191028575041455}
   respawnDuration: 3
   score: 0
-  deathMalusPoint: -20
+  deathMalusPoint: -10
 --- !u!114 &7167191028575041455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,11 +205,13 @@ MonoBehaviour:
   isActive: 0
   isActiveVent: 0
   isActiveControllableTurret: 0
+  helpingAimSet: 0
   detectInputConduit: 0
   powerUpIsActive: 0
   leftJoystickInput: {x: 0, y: 0}
   rightJoystickInput: {x: 0, y: 0}
   initPos: {x: 0, y: 0, z: 0}
+  helpingAimDirection: {x: 0, y: 0, z: 0}
   dashDuration: 0.1
   shootCooldownDuration: 0.1
   reloadDuration: 1
@@ -221,9 +223,9 @@ MonoBehaviour:
   aimTolerance: 0.15
   rotateSpeed: 150
   helpingAimMaxDistance: 10
-  enemyLayer:
+  enemyTargetLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 16384
   dashFactor:
     serializedVersion: 2
     m_Curve:
@@ -265,8 +267,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
-  powerUpMax: 20
-  powerUpScore: 19
+  powerUpMax: 15
+  powerUpScore: 0
   setGaugeSpeed: 10
 --- !u!114 &1905726322714944486
 MonoBehaviour:
@@ -505,7 +507,7 @@ TrailRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260229765792117757}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 0
