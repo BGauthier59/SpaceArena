@@ -17,11 +17,7 @@ public class ReparationArea : MonoBehaviour
     public PlayerController currentPlayerOnArea;
     public List<PlayerController> playersOnArea;
 
-    [Header("Renderers")] public Renderer reparationAreaRenderer;
-    public Renderer[] reparationAreaDevicesRenderer;
-
-    public Material reparationAreaDisabled;
-    public Material reparationAreaEnabled;
+    [Header("Renderers")] public Renderer[] reparationAreaDevicesRenderer;
 
     private PartyManager partyManager;
 
@@ -33,11 +29,12 @@ public class ReparationArea : MonoBehaviour
         foreach (var rd in reparationAreaDevicesRenderer)
         {
             rd.material = partyManager.baseManager.colorVariantMaterial;
+            rd.material.color = Color.black;
         }
 
         DeactivateArea();
     }
-    
+
     private void Update()
     {
         if (isActivated) SetColor();
@@ -72,9 +69,7 @@ public class ReparationArea : MonoBehaviour
     public void ActivateArea()
     {
         if (!gameObject.activeSelf) return;
-
-        reparationAreaRenderer.material = reparationAreaEnabled;
-
+        
         isActivated = true;
         areaCollider.enabled = true;
     }
@@ -82,12 +77,10 @@ public class ReparationArea : MonoBehaviour
     public void DeactivateArea()
     {
         if (!gameObject.activeSelf) return;
-
-        reparationAreaRenderer.material = reparationAreaDisabled;
-
+        
         foreach (var rd in reparationAreaDevicesRenderer)
         {
-            rd.material.SetColor("_EmissionColor", partyManager.baseManager.disabledColor * 1);
+            rd.material.SetColor("_EmissionColor", partyManager.baseManager.disabledColor * 0);
         }
 
         areaCollider.enabled = false;

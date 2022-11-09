@@ -58,6 +58,8 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private GameObject randomEventArea;
 
+    [SerializeField] private float rotatingSkyboxSpeed;
+
     [Serializable]
     public struct TextOnDisplay
     {
@@ -117,6 +119,7 @@ public class PartyManager : MonoBehaviour
             case GameState.End:
                 break;
         }
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time * rotatingSkyboxSpeed);
     }
 
     private void InitializationAwake()
@@ -241,6 +244,8 @@ public class PartyManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
+            player.CancelPowerUp();
+            player.EndOfPowerUp();
             player.DeactivatePlayer();
             player.SetGaugesState(false);
             DontDestroyOnLoad(player.gameObject);

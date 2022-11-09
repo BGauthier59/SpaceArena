@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
         set
         {
             _mainGamepad = value;
+            if (_mainGamepad == null) return;
             mainName = _mainGamepad.name;
             /*
             mainGamepadInfo.linked = _mainGamepad != null;
@@ -190,7 +191,6 @@ public class GameManager : MonoBehaviour
             if (gamepad == mainGamepad)
             {
                 InputSystem.EnableDevice(gamepad);
-                Debug.Log($"Enabled {gamepad.name}!");
                 
                 allGamepads.Add(new GamepadSerializable()
                 {
@@ -203,7 +203,6 @@ public class GameManager : MonoBehaviour
             }
 
             InputSystem.DisableDevice(gamepad);
-            Debug.Log($"Disabled {gamepad.name}!");
             
             allGamepads.Add(new GamepadSerializable()
             {
@@ -225,7 +224,6 @@ public class GameManager : MonoBehaviour
         foreach (var gamepad in Gamepad.all)
         {
             InputSystem.EnableDevice(gamepad);
-            Debug.Log($"Enabled {gamepad.name}!");
             
             allGamepads.Add(new GamepadSerializable()
             {
@@ -247,7 +245,6 @@ public class GameManager : MonoBehaviour
         foreach (var gamepad in Gamepad.all)
         {
             InputSystem.DisableDevice(gamepad);
-            Debug.Log($"Disabled {gamepad.name}!");
             
             allGamepads.Add(new GamepadSerializable()
             {

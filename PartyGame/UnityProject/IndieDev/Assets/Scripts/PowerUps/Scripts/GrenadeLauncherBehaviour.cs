@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GrenadeLauncherBehaviour : PowerUpManager
@@ -10,8 +7,10 @@ public class GrenadeLauncherBehaviour : PowerUpManager
     [SerializeField] private float grenadeSpeed;
     [SerializeField] private float shootingRate;
 
-    public override void OnActivate()
+    public override void OnActivate(PlayerController player)
     {
+        base.OnActivate(player);
+
         user.shootCooldownDuration = shootingRate;
         grenadeAmount = maxGrenadeAmount;
     }
@@ -21,23 +20,18 @@ public class GrenadeLauncherBehaviour : PowerUpManager
         grenadeAmount--;
         user.playerUI.powerUpSlider.fillAmount = grenadeAmount / maxGrenadeAmount;
         var newGrenade =
-            PoolOfObject.Instance.SpawnFromPool(PoolType.Grenade, user.transform.position, user.transform.rotation);
+            PoolOfObject.Instance.SpawnFromPool(PoolType.Grenade, user.bulletOrigin.position, user.transform.rotation);
         newGrenade.GetComponent<Rigidbody>().AddForce(user.transform.forward * grenadeSpeed);
     }
 
     public override bool OnConditionCheck()
     {
-        if (grenadeAmount <= 0)
-        {
-            user.shootCooldownDuration = 0.1f;
-            user = null;
-            return true;
-        }
-        return false;
+        return grenadeAmount <= 0;
     }
-
-    private void Update()
+    
+    public override void OnDeactivate()
     {
-        
+        user.ResetShootCooldown();
+        base.OnDeactivate();
     }
 }

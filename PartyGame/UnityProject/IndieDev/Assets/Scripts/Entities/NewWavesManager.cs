@@ -218,20 +218,6 @@ public class NewWavesManager : MonoBehaviour
 
         allLengths.Clear();
         for (int i = 0; i < currentWave.selectableEntrancesIndex.Length; i++) allLengths.Add(i);
-
-        return;
-        
-        // Vérification
-        foreach (var kv in indexSortedIndexReal)
-        {
-            Debug.Log($"Dictionary : {kv.Key} ; {kv.Value}");
-        }
-
-        // Vérification
-        foreach (var l in allLengths)
-        {
-            Debug.Log($"Lengths : {l}");
-        }
     }
 
     private Entrance SetEntrance()

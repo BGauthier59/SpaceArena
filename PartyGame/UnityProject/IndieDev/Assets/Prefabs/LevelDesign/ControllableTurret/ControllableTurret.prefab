@@ -310,7 +310,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
-  m_Intensity: 150
+  m_Intensity: 15
   m_Range: 10
   m_SpotAngle: 75
   m_InnerSpotAngle: 25
@@ -992,7 +992,7 @@ MonoBehaviour:
   playerInsideParent: {fileID: 8813156649223680610}
   cannonOrigin: {fileID: 4647959788724945196}
   shootCooldownDuration: 0.5
-  maxBullet: 7
+  maxBullet: 10
   bulletSpeed: 2500
   needToReload: 0
   reloadDuration: 10

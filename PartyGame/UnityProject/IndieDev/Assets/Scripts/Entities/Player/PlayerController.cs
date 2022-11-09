@@ -1,11 +1,8 @@
 using System;
-using System.Diagnostics;
-using System.Runtime.Remoting.Channels;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
@@ -31,8 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Sprite defaultPowerUpImage;
     [SerializeField] private ParticleSystem playerFire;
-
-
+    
     [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
     [SerializeField] private TrailRenderer trail;
@@ -40,6 +36,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem shootingParticles;
     public GameObject crown;
     private PartyManager partyManager;
+    [SerializeField] private VentingPlayerMesh ventingPlayerMesh;
+
+    [Serializable]
+    public struct VentingPlayerMesh
+    {
+        public GameObject obj;
+        public TrailRenderer trailRd;
+        public MeshRenderer rd;
+    }
 
     [Space(3)] [Header("Feedbacks")] [SerializeField]
     private CameraShakeScriptable shootingShake;
@@ -118,6 +123,7 @@ public class PlayerController : MonoBehaviour
 
     public float bulletSpeed;
     [SerializeField] private float recoil;
+    public Transform bulletOrigin;
 
     [Space(3)] [Header("Gravity parameters")] [SerializeField]
     private float fallSpeed;
@@ -201,10 +207,12 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpFire.startColor = playerUI.powerUpSlider.color = playerUI.powerUpSparks.startColor = playerUI.lifeSliderColor.color = playerUI.reloadSliderColor.color = color ;
         
         material.color = color;
-        material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 2);
+        material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 1);
         material.EnableKeyword("_EMISSION");
-        particleSystem.material = directionArrow.material = rd.material = trail.material = material;
+        particleSystem.material = directionArrow.material = rd.material = trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material = material;
         crown.SetActive(false);
+        ventingPlayerMesh.rd.gameObject.SetActive(false);
+        ventingPlayerMesh.trailRd.enabled = false;
     }
 
     #endregion
@@ -369,9 +377,7 @@ public class PlayerController : MonoBehaviour
         if (!canUsePowerUp || powerUpIsActive) return;
         if (currentPowerUp == null) return;
 
-        powerUpIsActive = true;
-        currentPowerUp.user = this;
-        currentPowerUp.OnActivate();
+        currentPowerUp.OnActivate(this);
     }
 
     #endregion
@@ -485,7 +491,7 @@ public class PlayerController : MonoBehaviour
                     bulletAmount--;
                     shootingParticles.Play();
                     var bullet = PoolOfObject.Instance
-                        .SpawnFromPool(PoolType.Bullet, transform.position, transform.rotation)
+                        .SpawnFromPool(PoolType.Bullet, bulletOrigin.position, transform.rotation)
                         .GetComponent<BulletScript>();
                     bullet.shooter = manager;
 
@@ -642,7 +648,7 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed;
     } // Resets player's speed
 
-    private void ResetShootCooldown()
+    public void ResetShootCooldown()
     {
         shootCooldownDuration = baseShootCooldown;
     }
@@ -692,8 +698,7 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         aiming = false;
         isAutoReloading = false;
-        powerUpIsActive = false;
-        // Désactiver pouvoirs
+        EndOfPowerUp();
     }
 
     private void ResetPlayerGraphsAndCollisions() // Resets the player's renderers and colliders
@@ -703,6 +708,8 @@ public class PlayerController : MonoBehaviour
         directionArrow.enabled = true;
         playerLight.enabled = true;
         col.enabled = true;
+        ventingPlayerMesh.rd.gameObject.SetActive(false);
+        ventingPlayerMesh.trailRd.enabled = false;
     }
 
     private void ResetGauges()
@@ -761,7 +768,6 @@ public class PlayerController : MonoBehaviour
     {
         if (canUsePowerUp) return;
         powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
-        Debug.Log(powerUpScore/powerUpMax);
         playerUI.powerUpSlider.fillAmount = powerUpScore/powerUpMax;
 
         if (playerUI.powerUpSlider.fillAmount >= 1) GetPowerUp();
@@ -777,14 +783,25 @@ public class PlayerController : MonoBehaviour
         currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
         playerUI.powerUpImage.sprite = currentPowerUp.powerUpImage;
         playerUI.powerUpSlider.fillAmount = 0;
-        // Get power up
     } // Gives the player a new power up
+
+    public void CancelPowerUp()
+    {
+        if (!canUsePowerUp || powerUpIsActive) return;
+        
+        playerUI.powerUpFire.Stop();
+        playerUI.powerUpSparks.Stop();
+        playerFire.Stop();
+        playerUI.powerUpImage.sprite = defaultPowerUpImage;
+
+        currentPowerUp = null;
+    } // Prevents the player from bringing a power-up from a game to another
 
     public void EndOfPowerUp()
     {
-        // Faut-il call cette fonction quand on vent ou entre dans une tourelle ?
+        if (!powerUpIsActive) return;
 
-        Debug.Log("C'est la fin du power up");
+        currentPowerUp.OnDeactivate();
         powerUpScore = 0;
         playerUI.powerUpSlider.fillAmount = powerUpScore/powerUpMax;
         playerUI.powerUpImage.sprite = defaultPowerUpImage;
@@ -792,7 +809,6 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpFire.Stop();
         playerFire.Stop();
         playerUI.powerUpSparks.Stop();
-        powerUpIsActive = false;
         currentPowerUp = null;
     } // Resets player variables when a power up ends
 
@@ -822,13 +838,19 @@ public class PlayerController : MonoBehaviour
     {
         isActiveVent = goingIn;
         //SetGaugesState(!goingIn);
-        col.enabled = !goingIn;
         rb.velocity = Vector3.zero;
 
         if (goingIn)
         {
             // Feedbacks player goes in
             accessibleNewVent = null;
+            rd.gameObject.SetActive(false);
+            trail.enabled = false;
+            directionArrow.enabled = false;
+            playerLight.enabled = false;
+            col.enabled = false;
+            ventingPlayerMesh.rd.gameObject.SetActive(true);
+            ventingPlayerMesh.trailRd.enabled = true;
         }
         else
         {
@@ -836,6 +858,7 @@ public class PlayerController : MonoBehaviour
             currentConduit = null;
             isVentingOut = true;
             detectInputConduit = false;
+            ResetPlayerGraphsAndCollisions();
         }
     }
 
