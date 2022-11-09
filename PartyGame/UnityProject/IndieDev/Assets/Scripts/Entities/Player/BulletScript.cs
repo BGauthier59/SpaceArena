@@ -26,7 +26,7 @@ public class BulletScript : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         //if (collision.CompareTag("Player")) return;
-
+        PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
         var interactable = collision.GetComponent<IInteractable>();
         interactable?.OnHitByProjectile();
         

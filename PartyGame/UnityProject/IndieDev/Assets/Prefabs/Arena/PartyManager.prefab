@@ -1019,8 +1019,8 @@ MonoBehaviour:
     prefab: {fileID: 6393692887041716744, guid: 9061718f3d3384645adc263d51f31739, type: 3}
     size: 50
   - type: 1
-    prefab: {fileID: 2168510512892706134, guid: bd94b150838481143a5e53f9c18b497a, type: 3}
-    size: 50
+    prefab: {fileID: 1980691193338803946, guid: fb5785f165d9e1e4197376c6ce81b92a, type: 3}
+    size: 100
   - type: 4
     prefab: {fileID: 2396810920112995019, guid: 1422e4bb0d2d055488366a4967cd8fa5, type: 3}
     size: 50
