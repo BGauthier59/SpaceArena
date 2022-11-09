@@ -992,7 +992,7 @@ MonoBehaviour:
   playerInsideParent: {fileID: 8813156649223680610}
   cannonOrigin: {fileID: 4647959788724945196}
   shootCooldownDuration: 0.5
-  maxBullet: 7
+  maxBullet: 10
   bulletSpeed: 2500
   needToReload: 0
   reloadDuration: 10
