@@ -58,6 +58,8 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private GameObject randomEventArea;
 
+    [SerializeField] private float rotatingSkyboxSpeed;
+
     [Serializable]
     public struct TextOnDisplay
     {
@@ -117,7 +119,7 @@ public class PartyManager : MonoBehaviour
             case GameState.End:
                 break;
         }
-        RenderSettings.skybox.SetFloat("_Rotation", Time.time * .5f);
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time * rotatingSkyboxSpeed);
     }
 
     private void InitializationAwake()

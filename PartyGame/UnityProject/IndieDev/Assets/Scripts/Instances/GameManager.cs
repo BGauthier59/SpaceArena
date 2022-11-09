@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
         set
         {
             _mainGamepad = value;
+            if (_mainGamepad == null) return;
             mainName = _mainGamepad.name;
             /*
             mainGamepadInfo.linked = _mainGamepad != null;
