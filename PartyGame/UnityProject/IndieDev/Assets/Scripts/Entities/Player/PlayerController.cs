@@ -166,6 +166,7 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         rb.isKinematic = true;
         defaultConstraints = rb.constraints;
+        trail.enabled = false;
 
         DeactivatePlayer();
     }
