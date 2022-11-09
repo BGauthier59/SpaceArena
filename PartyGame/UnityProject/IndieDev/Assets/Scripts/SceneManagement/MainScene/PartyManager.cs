@@ -117,6 +117,7 @@ public class PartyManager : MonoBehaviour
             case GameState.End:
                 break;
         }
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time * .5f);
     }
 
     private void InitializationAwake()
