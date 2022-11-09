@@ -768,7 +768,6 @@ public class PlayerController : MonoBehaviour
     {
         if (canUsePowerUp) return;
         powerUpScore = Mathf.Min(powerUpMax, powerUpScore += value);
-        Debug.Log(powerUpScore/powerUpMax);
         playerUI.powerUpSlider.fillAmount = powerUpScore/powerUpMax;
 
         if (playerUI.powerUpSlider.fillAmount >= 1) GetPowerUp();
