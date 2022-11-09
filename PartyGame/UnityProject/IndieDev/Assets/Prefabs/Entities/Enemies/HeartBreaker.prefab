@@ -312,7 +312,7 @@ MonoBehaviour:
   isDead: 0
   isStunned: 0
   behaviour: {fileID: 1111618003144136869}
-  powerUpScore: 3
+  powerUpScore: 5
   mesh: {fileID: 2892445904583706136}
   hitPoint: 1
   deathPoint: 10

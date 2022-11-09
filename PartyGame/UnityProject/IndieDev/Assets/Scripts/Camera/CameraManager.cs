@@ -6,10 +6,20 @@ public class CameraManager : MonoBehaviour
     public Camera mainCamera;
     [SerializeField] private CameraZoom defaultZoom;
     [SerializeField] private CameraZoom currentZoom;
-    
+
     private float zoomTimer;
     private Vector3 nextPos;
-    
+
+    [SerializeField] private float securityOffsetMinDistanceBetweenPlayers;
+    private float _securityDistance;
+    [SerializeField] private float securityYOffsetPerMeterAboveMinDistance;
+    private Vector3 _securityOffset;
+
+    private void Start()
+    {
+        _securityDistance = Mathf.Pow(securityOffsetMinDistanceBetweenPlayers, 2);
+    }
+
     void FixedUpdate()
     {
         if (GameManager.instance.allPlayers.Count == 0) return;
@@ -18,11 +28,29 @@ public class CameraManager : MonoBehaviour
     }
 
     public void SetZoom(CameraZoom zoom) => currentZoom = zoom;
-    
+
     public void ResetZoom() => currentZoom = defaultZoom;
-    
+
     private void SetCamera()
     {
+        var maxDistance = 0f;
+        foreach (var p1 in GameManager.instance.allPlayers)
+        {
+            foreach (var p2 in GameManager.instance.allPlayers)
+            {
+                if (p1 == p2) continue;
+                var distance = Vector3.SqrMagnitude(p1.transform.position - p2.transform.position);
+                if (distance > maxDistance) maxDistance = distance;
+            }
+        }
+
+        if (maxDistance > _securityDistance)
+        {
+            _securityOffset = Vector3.up * (Mathf.Sqrt(maxDistance) - securityOffsetMinDistanceBetweenPlayers) *
+                              securityYOffsetPerMeterAboveMinDistance;
+        }
+        else _securityOffset = Vector3.zero;
+
         // Set position
         switch (currentZoom.target)
         {
@@ -42,7 +70,7 @@ public class CameraManager : MonoBehaviour
 
                 nextPos = new Vector3(posX, 0, posZ);
                 break;
-            
+
             case PossibleTarget.Center:
                 nextPos = Vector3.zero;
                 break;
@@ -52,20 +80,22 @@ public class CameraManager : MonoBehaviour
                 Debug.LogError("Target is not valid.");
                 break;
         }
-        
+
         // Set offset
-        nextPos += currentZoom.offset;
+        nextPos += currentZoom.offset + _securityOffset;
         if (transform.position != nextPos)
         {
-            transform.position = Vector3.Lerp(transform.position, nextPos, Time.fixedDeltaTime * currentZoom.offsetSpeed);
+            transform.position =
+                Vector3.Lerp(transform.position, nextPos, Time.fixedDeltaTime * currentZoom.offsetSpeed);
         }
-        
+
         // Set rotation
         if (transform.eulerAngles != currentZoom.eulerAngles)
         {
-            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, currentZoom.eulerAngles, Time.fixedDeltaTime * currentZoom.eulerAnglesSpeed);
+            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, currentZoom.eulerAngles,
+                Time.fixedDeltaTime * currentZoom.eulerAnglesSpeed);
         }
-        
+
         // Set field of view
         if (Math.Abs(mainCamera.fieldOfView - currentZoom.fieldOfView) < .01f)
         {
