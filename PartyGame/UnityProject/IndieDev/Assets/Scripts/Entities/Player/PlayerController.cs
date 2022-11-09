@@ -780,8 +780,7 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpFire.Play();
         playerUI.powerUpSparks.Play();
         playerFire.Play();
-        currentPowerUp = GameManager.instance.powerUps[0];
-        //currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
+        currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
         playerUI.powerUpImage.sprite = currentPowerUp.powerUpImage;
         playerUI.powerUpSlider.fillAmount = 0;
     } // Gives the player a new power up
