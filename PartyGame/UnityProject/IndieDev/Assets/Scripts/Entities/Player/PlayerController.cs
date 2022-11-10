@@ -678,6 +678,7 @@ public class PlayerController : MonoBehaviour
         SetAccessibleTurret(null);
         SetAccessibleNewVent(null);
 
+        CancelDash();
         DeactivatePlayer();
         col.enabled = false;
         rd.gameObject.SetActive(false);
