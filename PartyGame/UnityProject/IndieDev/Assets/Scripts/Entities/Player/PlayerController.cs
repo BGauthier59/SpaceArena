@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour
         var material = rd.material;
         var color = GameManager.instance.colors[playerIndex - 1];
         playerUI.powerUpFire.startColor = playerUI.powerUpSlider.color = playerUI.powerUpSparks.startColor =
-            playerUI.lifeSliderColor.color = playerUI.reloadSliderColor.color = color;
+            playerUI.lifeSliderColor.color = playerUI.reloadSliderColor.color = playerUI.powerUpBurst.startColor = color;
 
         material.color = color;
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 1);
@@ -778,6 +778,7 @@ public class PlayerController : MonoBehaviour
         canUsePowerUp = true;
         playerUI.powerUpFire.Play();
         playerUI.powerUpSparks.Play();
+        playerUI.powerUpUI.Play("GetPowerUpUI");
         playerFire.Play();
         currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
         playerUI.powerUpImage.sprite = currentPowerUp.powerUpImage;
