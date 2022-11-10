@@ -413,10 +413,11 @@ public class PartyManager : MonoBehaviour
         public Slider reloadSlider;
         public Image powerUpSlider;
         public Image powerUpImage;
-        public ParticleSystem powerUpFire, powerUpSparks, powerUpBurst;
-        public Image reloadSliderColor, lifeSliderColor;
+        public ParticleSystem powerUpFire, powerUpSparks, powerUpBurst, usingPowerUpFire;
+        public Image reloadSliderColor, lifeSliderColor, inputImage;
         public Image crown;
         public Animator powerUpUI;
+        public TextMeshProUGUI deathTimerUI;
 
     }
 }

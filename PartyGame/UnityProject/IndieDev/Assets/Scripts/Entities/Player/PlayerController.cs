@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Sprite defaultPowerUpImage;
     [SerializeField] private ParticleSystem playerFire;
-    [SerializeField] private GameObject deathFX;
-    [SerializeField] private TextMeshProUGUI deathTimer;
+    [SerializeField] private SpriteRenderer deathFX, deathFXCircle;
+    public TextMeshProUGUI deathTimerText;
 
     [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 1);
         material.EnableKeyword("_EMISSION");
         particleSystem.material = directionArrow.material = rd.material =
-            trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material = material;
+            trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material = deathFX.material = deathFXCircle.material = material;
         crown.SetActive(false);
         ventingPlayerMesh.rd.gameObject.SetActive(false);
         ventingPlayerMesh.trailRd.enabled = false;
@@ -387,6 +387,9 @@ public class PlayerController : MonoBehaviour
 
         // Feedbacks activation
         currentPowerUp.OnActivate(this);
+        playerUI.inputImage.enabled = false;
+        playerUI.powerUpFire.Stop();
+        playerUI.usingPowerUpFire.Play();
     }
 
     #endregion
@@ -671,6 +674,7 @@ public class PlayerController : MonoBehaviour
             currentControllableTurret.OnPlayerExits();
         }
 
+        playerUI.deathTimerUI.enabled = true;
         SetAccessibleTurret(null);
         SetAccessibleNewVent(null);
 
@@ -681,8 +685,9 @@ public class PlayerController : MonoBehaviour
         playerLight.enabled = false;
         trail.enabled = false;
         transform.position = initPos;
+        deathFX.gameObject.SetActive(true);
         ResetPlayer();
-        SetGaugesState(false);
+        //SetGaugesState(false);
     }
 
     public void ResetRespawn() // Called when the player respawns
@@ -786,7 +791,10 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpFire.Play();
         playerUI.powerUpSparks.Play();
         playerUI.powerUpUI.Play("GetPowerUpUI");
+        GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
+        playerUI.inputImage.enabled = true;
         playerFire.Play();
+        
         int index;
         if (GameManager.instance.powerUps.Count < 2)
         {
@@ -829,7 +837,7 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpSlider.fillAmount = powerUpScore / powerUpMax;
         playerUI.powerUpImage.sprite = defaultPowerUpImage;
         canUsePowerUp = false;
-        playerUI.powerUpFire.Stop();
+        playerUI.usingPowerUpFire.Stop();
         playerFire.Stop();
         playerUI.powerUpSparks.Stop();
         currentPowerUp = null;
@@ -846,7 +854,8 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Tried to active player after the end of game.");
             return;
         }
-
+        deathFX.gameObject.SetActive(false);
+        playerUI.deathTimerUI.enabled = false;
         isActive = true;
     }
 

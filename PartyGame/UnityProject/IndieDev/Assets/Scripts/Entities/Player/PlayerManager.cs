@@ -24,11 +24,16 @@ public class PlayerManager : Entity
         {
             respawnTimer = 0f;
             isRespawning = false;
+            
             isDead = false;
             Heal(totalLife);
+            
             controller.ResetRespawn();
         }
         else respawnTimer += Time.deltaTime;
+
+        int time = (int)respawnTimer;
+        controller.deathTimerText.text = controller.playerUI.deathTimerUI.text = (respawnDuration - time).ToString();
     }
 
     public void GetPoint(int point)
