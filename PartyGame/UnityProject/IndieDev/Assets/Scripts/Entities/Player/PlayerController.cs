@@ -806,6 +806,7 @@ public class PlayerController : MonoBehaviour
             do
             {
                 index = UnityEngine.Random.Range(0, 3);
+                index = 1;
             } while (index == lastPowerUpIndex);
         }
 
