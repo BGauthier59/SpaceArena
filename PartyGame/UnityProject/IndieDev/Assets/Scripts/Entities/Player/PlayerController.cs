@@ -672,7 +672,7 @@ public class PlayerController : MonoBehaviour
         directionArrow.enabled = false;
         playerLight.enabled = false;
         trail.enabled = false;
-
+        transform.position = initPos;
         ResetPlayer();
         SetGaugesState(false);
     }
@@ -680,7 +680,6 @@ public class PlayerController : MonoBehaviour
     public void ResetRespawn() // Called when the player respawns
     {
         SetGaugesState(true);
-        transform.position = initPos;
         ResetPlayerGraphsAndCollisions();
         ActivatePlayer();
     }
