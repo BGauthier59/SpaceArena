@@ -36,6 +36,7 @@ public class BulletScript : MonoBehaviour
             if (script == shooter) return;
             var damage = Range(minDamage, maxDamage);
             script.TakeDamage(damage, shooter);
+            PoolOfObject.Instance.SpawnFromPool(PoolType.splashVFX, transform.position, transform.rotation);
         }
         lifeTimer = lifeDuration;
         PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
