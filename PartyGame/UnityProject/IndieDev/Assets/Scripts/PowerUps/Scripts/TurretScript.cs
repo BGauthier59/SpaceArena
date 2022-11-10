@@ -14,14 +14,18 @@ public class TurretScript : MonoBehaviour
     private float lastShoot;
     private Vector3 shootingDirection;
     public PlayerController user;
-    public MeshRenderer meshRenderer;
+    public MeshRenderer[] meshRenderers;
     [SerializeField] private List<Transform> enemiesInRange;
+    [SerializeField] private Transform shootOrigin;
+    [SerializeField] private Transform rotatingPart;
 
     private void Start()
     {
         StartCoroutine(Lifespan());
-        meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer.material = user.rd.material;
+        foreach (var rd in meshRenderers)
+        {
+            rd.material = user.rd.material;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,10 +50,11 @@ public class TurretScript : MonoBehaviour
             shootingDirection = (target.position - transform.position ).normalized;
             lastShoot = Time.time;
             
-            var newBullet = PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, transform.position, Quaternion.identity);
+            rotatingPart.rotation = Quaternion.LookRotation(shootingDirection);
+            var newBullet = PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, shootOrigin.position, rotatingPart.rotation);
             var bullet = newBullet.GetComponent<BulletScript>();
             bullet.shooter = user.manager;
-            bullet.rb.AddForce(shootingDirection * bulletSpeed);
+            bullet.rb.AddForce(rotatingPart.forward * bulletSpeed);
         }
     }
 
