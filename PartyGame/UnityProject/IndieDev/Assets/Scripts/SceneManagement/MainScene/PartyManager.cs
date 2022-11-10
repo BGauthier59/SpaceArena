@@ -399,7 +399,12 @@ public class PartyManager : MonoBehaviour
     }
 
     #endregion
-    
+
+    private void OnDisable()
+    {
+        RenderSettings.skybox.SetFloat("_Rotation", 0);
+    }
+
     [Serializable]
     public class PlayerUI
     {
