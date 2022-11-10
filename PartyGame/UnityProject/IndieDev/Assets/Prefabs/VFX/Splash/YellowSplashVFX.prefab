@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6297876059223773831}
   - component: {fileID: 2947227204376522024}
   m_Layer: 0
-  m_Name: SplashVFX
+  m_Name: YellowSplashVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

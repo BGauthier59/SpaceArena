@@ -9,6 +9,7 @@ public class Entity : MonoBehaviour
     public int currentLife;
     public Animator animator;
     public Rigidbody rb;
+    public Quaternion attackDirection;
 
     public bool isDead;
     public bool isStunned;
