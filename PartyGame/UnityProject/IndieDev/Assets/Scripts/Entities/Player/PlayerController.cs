@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Sprite defaultPowerUpImage;
     [SerializeField] private ParticleSystem playerFire;
+    [SerializeField] private GameObject deathFX;
+    [SerializeField] private TextMeshProUGUI deathTimer;
 
     [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
