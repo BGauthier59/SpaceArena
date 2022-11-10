@@ -19,8 +19,8 @@ public class RageScript : MonoBehaviour
         {
             Entity entity = other.GetComponent<Entity>();
             Rigidbody rb = other.GetComponent<Rigidbody>();
+            entity.attackDirection = transform.rotation;
             entity.TakeDamage(damage, user);
-            PoolOfObject.Instance.SpawnFromPool(PoolType.splashVFX, transform.position, transform.rotation);
             rb.AddForce((other.transform.position - transform.position).normalized * knockbackStrength);
         }
     }

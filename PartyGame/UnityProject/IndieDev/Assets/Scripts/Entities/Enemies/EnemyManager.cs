@@ -7,37 +7,50 @@ public class EnemyManager : Entity
     [SerializeField] private Animator mesh;
     public int hitPoint;
     public int deathPoint;
+    public EnemyType enemyType;
+    
+    public enum EnemyType
+    {
+        Breaker, Hunter, Base, HeartBreaker 
+    }
 
     #region Entity
 
     public override void TakeDamage(int damage, Entity attacker = null)
     {
-        /* Pour l'instant : non
-        var damageIndicator = PoolOfObject.Instance.SpawnFromPool(PoolType.Damage, transform.position, Quaternion.identity)
-            .GetComponent<TextMeshProUGUI>();
-        damageIndicator.rectTransform.SetParent(GameManager.instance.mainCanvas.transform);
-        damageIndicator.transform.position = Camera.main.WorldToScreenPoint(transform.position);
-        damageIndicator.text = damage.ToString();
-        animator.Play("EnemyHit");
-        */
-
         if (mesh != null)
         {
             mesh.Play("OnHit");
         }
 
         base.TakeDamage(damage, attacker);
+        switch (enemyType)
+        {
+            case EnemyType.Base :
+                PoolOfObject.Instance.SpawnFromPool(PoolType.YellowSplash, transform.position, attackDirection);
+                break;
+            
+            case EnemyType.Breaker :
+                PoolOfObject.Instance.SpawnFromPool(PoolType.CyanSplash, transform.position, attackDirection);
+                break;
+            
+            case EnemyType.HeartBreaker :
+                PoolOfObject.Instance.SpawnFromPool(PoolType.PinkSplash, transform.position, attackDirection);
+                break;
+            
+            case EnemyType.Hunter :
+                PoolOfObject.Instance.SpawnFromPool(PoolType.PurpleSplash, transform.position, attackDirection);
+                break;
+        }
 
         if (!attacker) return;
         if (!isDead) return;
-        
         var player = (PlayerManager)attacker;
         if (player == null)
         {
             Debug.LogWarning("Cast did not work?");
             return;
         }
-
         player.controller.IncreasePowerUpGauge(powerUpScore);
         player.GetPoint(deathPoint);
     }

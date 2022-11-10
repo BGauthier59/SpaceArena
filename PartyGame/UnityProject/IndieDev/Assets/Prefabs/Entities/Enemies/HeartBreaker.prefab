@@ -309,6 +309,7 @@ MonoBehaviour:
   currentLife: 350
   animator: {fileID: 0}
   rb: {fileID: 2396810920112995022}
+  attackDirection: {x: 0, y: 0, z: 0, w: 0}
   isDead: 0
   isStunned: 0
   behaviour: {fileID: 1111618003144136869}
@@ -316,6 +317,7 @@ MonoBehaviour:
   mesh: {fileID: 2892445904583706136}
   hitPoint: 1
   deathPoint: 10
+  enemyType: 3
 --- !u!1 &8679425561981174972
 GameObject:
   m_ObjectHideFlags: 0
