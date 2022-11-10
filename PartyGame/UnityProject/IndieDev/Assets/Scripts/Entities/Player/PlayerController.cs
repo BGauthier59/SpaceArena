@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Sprite defaultPowerUpImage;
     [SerializeField] private ParticleSystem playerFire;
+    [SerializeField] private GameObject deathFX;
+    [SerializeField] private TextMeshProUGUI deathTimer;
 
     [Space(3)] [Header("Renderer")] public SpriteRenderer directionArrow;
     [SerializeField] private ParticleSystemRenderer particleSystem;
@@ -677,7 +680,7 @@ public class PlayerController : MonoBehaviour
         directionArrow.enabled = false;
         playerLight.enabled = false;
         trail.enabled = false;
-
+        transform.position = initPos;
         ResetPlayer();
         SetGaugesState(false);
     }
@@ -685,7 +688,6 @@ public class PlayerController : MonoBehaviour
     public void ResetRespawn() // Called when the player respawns
     {
         SetGaugesState(true);
-        transform.position = initPos;
         ResetPlayerGraphsAndCollisions();
         ActivatePlayer();
     }
