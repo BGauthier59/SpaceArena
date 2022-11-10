@@ -30,7 +30,7 @@ public class GrenadeScript : MonoBehaviour
         }
         enemiesInRange.Clear();
 
-        PoolOfObject.Instance.SpawnFromPool(PoolType.Explosion, transform.position, Quaternion.identity);
+        PoolOfObject.Instance.SpawnFromPool(PoolType.Explosion, new Vector3(transform.position.x, 0.1f, transform.position.z), Quaternion.identity);
         GameManager.instance.partyManager.cameraShake.AddShakeEvent(explosionShake);
         gameObject.SetActive(false);
     }
