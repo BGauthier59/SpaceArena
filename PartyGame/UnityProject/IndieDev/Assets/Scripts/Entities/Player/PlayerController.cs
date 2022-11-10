@@ -131,6 +131,8 @@ public class PlayerController : MonoBehaviour
     [Space(3)] [Header("Power-up parameters")] [SerializeField]
     private float powerUpMax;
 
+    private int lastPowerUpIndex;
+
     public float powerUpScore;
 
     [Space(3)] [Header("GUI parameters")] [SerializeField]
@@ -167,6 +169,7 @@ public class PlayerController : MonoBehaviour
         rb.isKinematic = true;
         defaultConstraints = rb.constraints;
         trail.enabled = false;
+        lastPowerUpIndex = -1;
 
         DeactivatePlayer();
     }
@@ -204,7 +207,8 @@ public class PlayerController : MonoBehaviour
         var material = rd.material;
         var color = GameManager.instance.colors[playerIndex - 1];
         playerUI.powerUpFire.startColor = playerUI.powerUpSlider.color = playerUI.powerUpSparks.startColor =
-            playerUI.lifeSliderColor.color = playerUI.reloadSliderColor.color = playerUI.powerUpBurst.startColor = color;
+            playerUI.lifeSliderColor.color =
+                playerUI.reloadSliderColor.color = playerUI.powerUpBurst.startColor = color;
 
         material.color = color;
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 1);
@@ -378,6 +382,7 @@ public class PlayerController : MonoBehaviour
         if (!canUsePowerUp || powerUpIsActive) return;
         if (currentPowerUp == null) return;
 
+        // Feedbacks activation
         currentPowerUp.OnActivate(this);
     }
 
@@ -560,7 +565,7 @@ public class PlayerController : MonoBehaviour
         {
             autoReloadTimer = 0f;
             reloading = true;
-            reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
+            reloadTimer = (bulletAmount / (float)maxBulletAmount) * reloadDuration;
             isAutoReloading = false;
         }
         else
@@ -780,7 +785,23 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpSparks.Play();
         playerUI.powerUpUI.Play("GetPowerUpUI");
         playerFire.Play();
-        currentPowerUp = GameManager.instance.powerUps[UnityEngine.Random.Range(0, 3)];
+        int index;
+        if (GameManager.instance.powerUps.Count < 2)
+        {
+            Debug.LogWarning("Not enough power ups!");
+            index = 0;
+        }
+        else
+        {
+            do
+            {
+                index = UnityEngine.Random.Range(0, 3);
+            } while (index == lastPowerUpIndex);
+        }
+
+        lastPowerUpIndex = index;
+        
+        currentPowerUp = GameManager.instance.powerUps[index];
         playerUI.powerUpImage.sprite = currentPowerUp.powerUpImage;
         playerUI.powerUpSlider.fillAmount = 0;
     } // Gives the player a new power up
