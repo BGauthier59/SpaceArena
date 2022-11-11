@@ -180,11 +180,8 @@ public class EnemyGenericBehaviour : MonoBehaviour
 
     public void UnstopAgent()
     {
-        if (!agent.enabled)
-        {
-            Debug.LogWarning("agent was disabled");
-            return;
-        }
+        if (!agent.enabled) return;
+        
         agent.isStopped = false;
         manager.rb.isKinematic = false;
     }
