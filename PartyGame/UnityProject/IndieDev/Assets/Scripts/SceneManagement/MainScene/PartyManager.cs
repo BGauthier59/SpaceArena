@@ -119,6 +119,7 @@ public class PartyManager : MonoBehaviour
             case GameState.End:
                 break;
         }
+
         RenderSettings.skybox.SetFloat("_Rotation", Time.time * rotatingSkyboxSpeed);
     }
 
@@ -147,7 +148,7 @@ public class PartyManager : MonoBehaviour
             var player = GameManager.instance.allPlayers[i];
             player.initPos = allSpawningPoints[i].position;
             player.transform.position = player.initPos;
-            player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
+            //player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
             player.playerUI = PlayerUis[i];
             player.PartyBegins();
         }
@@ -225,7 +226,7 @@ public class PartyManager : MonoBehaviour
         }
         else partyTimer -= Time.deltaTime;
 
-        timerText.text = ((int) partyTimer).ToString();
+        timerText.text = ((int)partyTimer).ToString();
     }
 
     #endregion
@@ -244,10 +245,7 @@ public class PartyManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
-            player.CancelPowerUp();
-            player.EndOfPowerUp();
-            player.DeactivatePlayer();
-            player.SetGaugesState(false);
+            player.SetPlayerWhenPartyEnds();
             DontDestroyOnLoad(player.gameObject);
         }
 
@@ -363,11 +361,11 @@ public class PartyManager : MonoBehaviour
     {
         return !(partyTimer >= partyDuration - durationBeforeCrownAppears);
     }
-    
+
     public void OnScoresChange()
     {
         if (!CanDisplayCrown()) return;
-        
+
         PlayerController currentWinner = null;
         var bestScore = 0f;
         foreach (var pc in GameManager.instance.allPlayers)
@@ -395,7 +393,6 @@ public class PartyManager : MonoBehaviour
 
         currentWinner.crown.SetActive(true);
         currentWinner.playerUI.crown.enabled = true;
-        
     }
 
     #endregion
@@ -418,6 +415,5 @@ public class PartyManager : MonoBehaviour
         public Image crown;
         public Animator powerUpUI;
         public TextMeshProUGUI deathTimerUI;
-
     }
 }

@@ -64,7 +64,7 @@ public class MainMenuManager : MonoBehaviour
         public Sprite panelImage;
         [HideInInspector] public int currentIndex;
     }
-    
+
     [Serializable]
     public struct ArenaArea
     {
@@ -98,7 +98,7 @@ public class MainMenuManager : MonoBehaviour
 
         arenaInfoInitPos = arenaInfo.anchoredPosition;
         arenaInfoInitPosLocked = arenaInfoInitPos;
-        
+
         GameManager.instance.playerInputManager = playerInputManager;
         GameManager.instance.playerInputManager.DisableJoining();
     }
@@ -166,7 +166,30 @@ public class MainMenuManager : MonoBehaviour
             }
             else playerLobbyAreas[i].area.SetActive(false);
         }
-        //launchParty.interactable = false;
+
+        if (GameManager.instance.settings.multiplayerVersion)
+        {
+            launchParty.interactable = false;
+        }
+        else
+        {
+            Debug.LogWarning("Launch Party button shouldn't be interactable!");
+            var launchPartyNavigation = new Navigation
+            {
+                mode = Navigation.Mode.Explicit,
+                selectOnRight = returnFromLobby,
+                selectOnLeft = returnFromLobby
+            };
+            launchParty.navigation = launchPartyNavigation;
+
+            var returnFromLobbyNavigation = new Navigation
+            {
+                mode = Navigation.Mode.Explicit,
+                selectOnRight = launchParty,
+                selectOnLeft = launchParty
+            };
+            returnFromLobby.navigation = returnFromLobbyNavigation;
+        }
 
         GameManager.instance.EnableAllControllers();
         GameManager.instance.playerInputManager.EnableJoining();
@@ -226,15 +249,12 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnCancelParty()
     {
-        //launchParty.interactable = false;
         if (Gamepad.current != GameManager.instance.mainGamepad)
         {
             Debug.LogWarning("This is not the main gamepad");
             return;
         }
-        
-        Debug.LogWarning("Launch Party button shouldn't be interactable!");
-        
+
         lobby.SetActive(false);
         playerNumberSelection.SetActive(false);
         GameManager.instance.EnableMainControllerOnly();
@@ -248,6 +268,27 @@ public class MainMenuManager : MonoBehaviour
 
         GameManager.instance.allPlayers.Clear();
 
+        if (GameManager.instance.settings.multiplayerVersion)
+        {
+            launchParty.interactable = false;
+
+            var launchPartyNavigation = new Navigation
+            {
+                mode = Navigation.Mode.None
+            };
+            launchParty.navigation = launchPartyNavigation;
+
+            var returnFromLobbyNavigation = new Navigation
+            {
+                mode = Navigation.Mode.None
+            };
+            returnFromLobby.navigation = returnFromLobbyNavigation;
+        }
+        else
+        {
+            Debug.LogWarning("Launch Party button shouldn't be interactable!");
+        }
+
         eventSystem.SetSelectedGameObject(startButton.gameObject);
     } // Button Cancel on lobby
 
@@ -255,7 +296,7 @@ public class MainMenuManager : MonoBehaviour
     {
         var gamepad = input.GetDevice<Gamepad>();
 
-        int playerIndex = GameManager.instance.playerInputManager.playerCount;
+        var playerIndex = GameManager.instance.playerInputManager.playerCount;
         input.transform.position = playerInstancesPos[playerIndex - 1].position;
         input.transform.rotation = Quaternion.Euler(Vector3.up * 180);
         string message;
@@ -283,6 +324,13 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnBeginParty()
     {
+        foreach (var pc in GameManager.instance.allPlayers)
+        {
+            pc.rd.gameObject.SetActive(false);
+        }
+
+        if (!GameManager.instance.settings.multiplayerVersion) GameManager.instance.playerInputManager.DisableJoining();
+
         OpenSelectionCanvas();
     } // Button Play on lobby
 
@@ -306,16 +354,17 @@ public class MainMenuManager : MonoBehaviour
     public void MoveArena()
     {
         var joystick = Gamepad.current.leftStick.ReadValue();
-        if(joystick.x > .5f) SelectOnLeft();
-        else if(joystick.x < -.5f) SelectOnRight();
+        if (joystick.x > .5f) SelectOnLeft();
+        else if (joystick.x < -.5f) SelectOnRight();
     }
 
     public void SelectOnRight()
     {
         if (isArenaInfoMoving) return;
-        
+
         cancelButtonSelection.interactable = false;
-        arenaInfoPosXToReach = arenaInfo.anchoredPosition.x + (Screen.width * .5f) + (arenaInfo.sizeDelta.x / 2) + SecurityGap;
+        arenaInfoPosXToReach = arenaInfo.anchoredPosition.x + (Screen.width * .5f) + (arenaInfo.sizeDelta.x / 2) +
+                               SecurityGap;
         isArenaInfoMoving = true;
         isGoingOtherSize = false;
         arenaIndex = Array.IndexOf(allArenasPanels, currentSelectedArenasPanel);
@@ -329,7 +378,8 @@ public class MainMenuManager : MonoBehaviour
         if (isArenaInfoMoving) return;
 
         cancelButtonSelection.interactable = false;
-        arenaInfoPosXToReach = arenaInfo.anchoredPosition.x - ((Screen.width * .5f) + (arenaInfo.sizeDelta.x / 2) + SecurityGap);
+        arenaInfoPosXToReach = arenaInfo.anchoredPosition.x -
+                               ((Screen.width * .5f) + (arenaInfo.sizeDelta.x / 2) + SecurityGap);
         isArenaInfoMoving = true;
         isGoingOtherSize = false;
         arenaIndex = Array.IndexOf(allArenasPanels, currentSelectedArenasPanel);
@@ -355,10 +405,12 @@ public class MainMenuManager : MonoBehaviour
                 return;
             }
 
-            arenaInfo.anchoredPosition = arenaInfo.anchoredPosition.x < 0 ? 
-                new Vector2(Screen.width * .5f + arenaInfo.sizeDelta.x * .5f + SecurityGap, arenaInfo.anchoredPosition.y) : 
-                new Vector2(-(Screen.width * .5f + arenaInfo.sizeDelta.x * .5f + SecurityGap), arenaInfo.anchoredPosition.y);
-            
+            arenaInfo.anchoredPosition = arenaInfo.anchoredPosition.x < 0
+                ? new Vector2(Screen.width * .5f + arenaInfo.sizeDelta.x * .5f + SecurityGap,
+                    arenaInfo.anchoredPosition.y)
+                : new Vector2(-(Screen.width * .5f + arenaInfo.sizeDelta.x * .5f + SecurityGap),
+                    arenaInfo.anchoredPosition.y);
+
             arenaInfoPosXToReach = arenaInfoInitPosLocked.x;
             arenaInfoInitPos = arenaInfo.anchoredPosition;
             arenaMovingTimer = 0f;
@@ -396,9 +448,9 @@ public class MainMenuManager : MonoBehaviour
     {
         currentSelectedArenasPanel.currentIndex = 0;
         GameManager.instance.currentPanel = currentSelectedArenasPanel;
-        
+
         GameManager.instance.DisableAllControllers();
-        
+
         SceneManager.LoadScene(GameManager.instance.currentPanel.arenas
             [GameManager.instance.currentPanel.currentIndex].arenaSceneIndex);
     }

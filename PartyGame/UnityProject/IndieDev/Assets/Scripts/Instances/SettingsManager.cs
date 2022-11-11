@@ -8,6 +8,8 @@ public class SettingsManager : MonoBehaviour
     public Language currentLanguage;
     public bool rumbleActivated;
     [Tooltip("Set to false for a prototype version of the game without any random event")] public bool randomEventsOccur;
+    [Tooltip("Set to false for a prototype version of the game allowing to play solo")]
+    public bool multiplayerVersion;
 }
 
 public enum Language

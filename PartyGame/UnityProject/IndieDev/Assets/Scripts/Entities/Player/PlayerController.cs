@@ -175,6 +175,7 @@ public class PlayerController : MonoBehaviour
         lastPowerUpIndex = -1;
 
         GraphInitialization();
+        
         DeactivatePlayer();
     }
 
@@ -190,6 +191,7 @@ public class PlayerController : MonoBehaviour
 
     public void PartyBegins()
     {
+        rd.gameObject.SetActive(true);
         LinkReferences();
 
         rb.isKinematic = false;
@@ -706,6 +708,7 @@ public class PlayerController : MonoBehaviour
 
     private void ResetPlayer() // Resets the player's main variables when the game begins or when dying
     {
+        transform.rotation = Quaternion.identity;
         if (isActiveVent) SetVentingPlayer(false);
         if (isActiveControllableTurret) SetControllableTurretPlayer(false);
         ResetSpeed();
@@ -744,6 +747,16 @@ public class PlayerController : MonoBehaviour
         //powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
         //                                  + new Vector3(50, 0);
     } // Resets gauges to their initial values
+
+    public void SetPlayerWhenPartyEnds()
+    {
+        ResetSpeed();
+        CancelPowerUp();
+        EndOfPowerUp();
+        DeactivatePlayer();
+        SetGaugesState(false);
+        trail.enabled = false;
+    } // Set player when game ends
 
     #endregion
 
