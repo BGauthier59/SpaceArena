@@ -689,6 +689,7 @@ public class PlayerController : MonoBehaviour
         CancelDash();
         DeactivatePlayer();
         col.enabled = false;
+        rb.isKinematic = true;
         rd.gameObject.SetActive(false);
         directionArrow.enabled = false;
         playerLight.enabled = false;
@@ -704,6 +705,7 @@ public class PlayerController : MonoBehaviour
         SetGaugesState(true);
         ResetPlayerGraphsAndCollisions();
         ActivatePlayer();
+        rb.isKinematic = false;
     }
 
     private void ResetPlayer() // Resets the player's main variables when the game begins or when dying

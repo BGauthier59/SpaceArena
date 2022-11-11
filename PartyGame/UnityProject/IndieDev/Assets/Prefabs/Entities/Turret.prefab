@@ -184,12 +184,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 557449458045095887}
-  - component: {fileID: 3603403644799658625}
   - component: {fileID: 3394500840370587898}
   - component: {fileID: 1394719734624893962}
   - component: {fileID: 2647890313048283769}
   - component: {fileID: -7218325363059964181}
   - component: {fileID: 6589030629787602837}
+  - component: {fileID: 8952819051174577318}
   m_Layer: 10
   m_Name: Turret
   m_TagString: Untagged
@@ -212,19 +212,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3603403644799658625
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7952185433038346993}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3394500840370587898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +264,7 @@ MonoBehaviour:
   currentLife: 0
   animator: {fileID: 0}
   rb: {fileID: 0}
+  attackDirection: {x: 0, y: 0, z: 0, w: 0}
   isDead: 0
   isStunned: 0
 --- !u!208 &-7218325363059964181
@@ -311,6 +299,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &8952819051174577318
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7952185433038346993}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8171860564947062778
 GameObject:
   m_ObjectHideFlags: 0
