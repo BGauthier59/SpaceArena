@@ -17,6 +17,11 @@ public class FirstScreenManager : MonoBehaviour
         Initialization();
     }
 
+    private void Update()
+    {
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time * 4f);
+    }
+
     private void Initialization()
     {
         eventSystem = GameManager.instance.eventSystem;
@@ -53,5 +58,6 @@ public class FirstScreenManager : MonoBehaviour
     {
         if (GameManager.instance.mainGamepad == null) return;
         GameManager.instance.mainGamepad.SetMotorSpeeds(0, 0);
+        RenderSettings.skybox.SetFloat("_Rotation", 0);
     }
 }

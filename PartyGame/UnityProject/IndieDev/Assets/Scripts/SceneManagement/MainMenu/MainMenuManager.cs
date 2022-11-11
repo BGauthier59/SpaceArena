@@ -23,6 +23,7 @@ public class MainMenuManager : MonoBehaviour
     private bool arePlayersReady;
     [SerializeField] private Button launchParty;
     [SerializeField] private Button returnFromLobby;
+    [SerializeField] private Transform[] playerInstancesPos;
 
     [Serializable]
     public struct LobbyArea
@@ -255,6 +256,8 @@ public class MainMenuManager : MonoBehaviour
         var gamepad = input.GetDevice<Gamepad>();
 
         int playerIndex = GameManager.instance.playerInputManager.playerCount;
+        input.transform.position = playerInstancesPos[playerIndex - 1].position;
+        input.transform.rotation = Quaternion.Euler(Vector3.up * 180);
         string message;
 
         switch (GameManager.instance.settings.currentLanguage)

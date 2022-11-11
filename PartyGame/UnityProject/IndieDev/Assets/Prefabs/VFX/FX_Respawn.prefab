@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 7487209567518036348}
   - component: {fileID: 7487209567518036355}
   m_Layer: 0
-  m_Name: RespawnFX
+  m_Name: FX_Respawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

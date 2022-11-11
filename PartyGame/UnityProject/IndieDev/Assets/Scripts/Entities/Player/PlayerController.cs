@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour
         trail.enabled = false;
         lastPowerUpIndex = -1;
 
+        GraphInitialization();
         DeactivatePlayer();
     }
 
@@ -209,15 +210,20 @@ public class PlayerController : MonoBehaviour
     {
         var material = rd.material;
         var color = GameManager.instance.colors[playerIndex - 1];
-        playerUI.powerUpFire.startColor = playerUI.powerUpSlider.color = playerUI.powerUpSparks.startColor =
-            playerUI.lifeSliderColor.color =
-                playerUI.reloadSliderColor.color = playerUI.powerUpBurst.startColor = color;
+
+        if (partyManager)
+        {
+            playerUI.powerUpFire.startColor = playerUI.powerUpSlider.color = playerUI.powerUpSparks.startColor =
+                playerUI.lifeSliderColor.color =
+                    playerUI.reloadSliderColor.color = playerUI.powerUpBurst.startColor = color;
+        }
 
         material.color = color;
         material.SetColor("_EmissionColor", GameManager.instance.colors[playerIndex - 1] * 1);
         material.EnableKeyword("_EMISSION");
         particleSystem.material = directionArrow.material = rd.material =
-            trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material = deathFX.material = deathFXCircle.material = material;
+            trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material =
+                deathFX.material = deathFXCircle.material = material;
         crown.SetActive(false);
         ventingPlayerMesh.rd.gameObject.SetActive(false);
         ventingPlayerMesh.trailRd.enabled = false;
@@ -795,7 +801,7 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Connection);
         playerUI.inputImage.enabled = true;
         playerFire.Play();
-        
+
         int index;
         if (GameManager.instance.powerUps.Count < 2)
         {
@@ -811,7 +817,7 @@ public class PlayerController : MonoBehaviour
         }
 
         lastPowerUpIndex = index;
-        
+
         currentPowerUp = GameManager.instance.powerUps[index];
         playerUI.powerUpImage.sprite = currentPowerUp.powerUpImage;
         playerUI.powerUpSlider.fillAmount = 0;
@@ -855,6 +861,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Tried to active player after the end of game.");
             return;
         }
+
         deathFX.gameObject.SetActive(false);
         playerUI.deathTimerUI.enabled = false;
         isActive = true;

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6297876059223773831}
   - component: {fileID: 2947227204376522024}
   m_Layer: 0
-  m_Name: YellowSplashVFX
+  m_Name: FX_Splash_HeartBreaker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ VisualEffect:
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 3.9999995, y: 3.497382, z: 0, w: 0}
+      - m_Value: {x: 5.3403134, y: 0.27709177, z: 4.5070553, w: 0}
         m_Name: Emissive
         m_Overridden: 1
     m_Uint:
