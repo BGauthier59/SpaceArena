@@ -7079,7 +7079,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Version 1.0
+  m_text: Version 2.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe75730ba71d5ef4c88127098a7d491f, type: 2}
   m_sharedMaterial: {fileID: -4802747256558643061, guid: fe75730ba71d5ef4c88127098a7d491f, type: 2}
