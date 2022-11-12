@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
         lastPowerUpIndex = -1;
 
         GraphInitialization();
-        
+
         DeactivatePlayer();
     }
 
@@ -262,6 +262,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isActiveControllableTurret) return;
         MovingInTurret();
+        Reloading();
         Firing();
         FireReload();
     } // Calls methods when the player is controlling a turret
@@ -579,7 +580,7 @@ public class PlayerController : MonoBehaviour
         {
             autoReloadTimer = 0f;
             reloading = true;
-            reloadTimer = (bulletAmount / (float)maxBulletAmount) * reloadDuration;
+            reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
             isAutoReloading = false;
         }
         else
