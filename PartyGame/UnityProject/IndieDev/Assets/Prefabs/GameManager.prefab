@@ -203,6 +203,7 @@ MonoBehaviour:
   currentLanguage: 0
   rumbleActivated: 1
   randomEventsOccur: 0
+  multiplayerVersion: 0
 --- !u!1 &2901952424801644936
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,9 +351,9 @@ MonoBehaviour:
   feedbacks: {fileID: 5419757356267785862}
   partyManager: {fileID: 0}
   eventSystem: {fileID: 1344524508}
-  mainGamepadInfo:
-    linked: 0
-    name: 
+  mainName: 
+  allGamepads: []
+  gamepadSettings: 
   mainGamepadOnly: 0
   playersNumber: 0
   playerInputManager: {fileID: 0}
@@ -378,6 +379,7 @@ MonoBehaviour:
   mainMenuIndex: 1
   pauseMenuIndex: 3
   optionMenuIndex: 2
+  finaleSceneIndex: 4
 --- !u!1 &7543529591412086983
 GameObject:
   m_ObjectHideFlags: 0

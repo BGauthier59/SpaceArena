@@ -141,6 +141,10 @@ public class PlayerController : MonoBehaviour
     [Space(3)] [Header("GUI parameters")] [SerializeField]
     private float setGaugeSpeed;
 
+    [Space(3)] [Header("Bonus points")] public uint friendlyFireHit;
+    public (uint, uint, float) precisionRatio; // Item1 is shot count, Item2 is hit count, Item3 is ratio
+    public float crownTimer;
+
     #endregion
 
     #region Connection
@@ -581,7 +585,7 @@ public class PlayerController : MonoBehaviour
         {
             autoReloadTimer = 0f;
             reloading = true;
-            reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
+            reloadTimer = (bulletAmount / (float)maxBulletAmount) * reloadDuration;
             isAutoReloading = false;
         }
         else
@@ -940,6 +944,29 @@ public class PlayerController : MonoBehaviour
     public void SetCurrentConduit(NewConduit c) => currentConduit = c;
     public void SetAccessibleTurret(ControllableTurret ct) => accessibleControllableTurret = ct;
     public void SetCurrentTurret(ControllableTurret ct) => currentControllableTurret = ct;
+
+    #endregion
+
+    #region Achievements
+
+    public void GetShotByFriendlyFire()
+    {
+        friendlyFireHit++;
+    }
+
+    public void UpdatePrecisionRatio(bool hit)
+    {
+        precisionRatio.Item1++;
+        if (hit) precisionRatio.Item2++;
+
+        precisionRatio.Item3 = (float)((double)precisionRatio.Item2 / precisionRatio.Item1);
+        Debug.Log(precisionRatio.Item1 + " | " + precisionRatio.Item2 + " | " + precisionRatio.Item3);
+    }
+
+    public void UpdateCrownTimer()
+    {
+        if (crown.activeSelf) crownTimer += Time.deltaTime;
+    }
 
     #endregion
 

@@ -227,6 +227,11 @@ public class PartyManager : MonoBehaviour
         else partyTimer -= Time.deltaTime;
 
         timerText.text = ((int)partyTimer).ToString();
+
+        foreach (var pc in GameManager.instance.allPlayers)
+        {
+            pc.UpdateCrownTimer();
+        }
     }
 
     #endregion
@@ -305,7 +310,8 @@ public class PartyManager : MonoBehaviour
 
         if (GameManager.instance.currentPanel.currentIndex == GameManager.instance.currentPanel.arenas.Length)
         {
-            OnQuit();
+            SceneManager.LoadScene(GameManager.instance.finaleSceneIndex);
+            //OnQuit();
         }
         else
         {

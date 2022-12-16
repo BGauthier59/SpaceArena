@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/_Scenes/PauseMenu.unity
     guid: a2416637d92dfa5448a8f75472ecb076
   - enabled: 1
+    path: Assets/_Scenes/Arenas/Prototype_13_Novembre/Prototype_LD_FinaleScene.unity
+    guid: e6a2bdc109e6569438facc5e5c2e7b0f
+  - enabled: 1
     path: Assets/_Scenes/Arenas/Prototype_13_Novembre/Prototype_LD_01.unity
     guid: 998746878b126d2458c46f6bb59c9fb6
   - enabled: 1

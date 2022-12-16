@@ -63,6 +63,9 @@ public class PlayerManager : Entity
         if (attacker)
         {
             Debug.Log(attacker.name +  " has attacked a player!");
+
+            var attackingPlayer = (PlayerManager)attacker;
+            if(attackingPlayer) controller.GetShotByFriendlyFire();
         }
     }
 

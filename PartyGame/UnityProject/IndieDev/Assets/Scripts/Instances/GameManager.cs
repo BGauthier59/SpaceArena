@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     [Header("Scenes Indexes")] public int mainMenuIndex;
     public int pauseMenuIndex;
     public int optionMenuIndex;
+    public int finaleSceneIndex;
 
     #endregion
     

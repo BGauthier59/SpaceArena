@@ -3957,19 +3957,19 @@ MonoBehaviour:
     - translatableName:
         frenchName: LD_01
         englishName: LD_01
-      arenaSceneIndex: 4
+      arenaSceneIndex: 5
     - translatableName:
         frenchName: LD_02
         englishName: LD_02
-      arenaSceneIndex: 5
-    - translatableName:
-        frenchName: LD_03
-        englishName: LD_04
       arenaSceneIndex: 6
     - translatableName:
         frenchName: LD_03
         englishName: LD_04
       arenaSceneIndex: 7
+    - translatableName:
+        frenchName: LD_03
+        englishName: LD_04
+      arenaSceneIndex: 8
     panelName:
       frenchName: Prototype 13/11
       englishName: Prototype 11/13
@@ -3979,7 +3979,7 @@ MonoBehaviour:
     - translatableName:
         frenchName: X
         englishName: X
-      arenaSceneIndex: 4
+      arenaSceneIndex: 5
     panelName:
       frenchName: LD-01
       englishName: LD-01
@@ -3989,7 +3989,7 @@ MonoBehaviour:
     - translatableName:
         frenchName: X
         englishName: X
-      arenaSceneIndex: 5
+      arenaSceneIndex: 6
     panelName:
       frenchName: LD-02
       englishName: LD-02
@@ -3999,7 +3999,7 @@ MonoBehaviour:
     - translatableName:
         frenchName: X
         englishName: X
-      arenaSceneIndex: 6
+      arenaSceneIndex: 7
     panelName:
       frenchName: LD-03
       englishName: LD-03
@@ -4009,7 +4009,7 @@ MonoBehaviour:
     - translatableName:
         frenchName: X
         englishName: X
-      arenaSceneIndex: 7
+      arenaSceneIndex: 8
     panelName:
       frenchName: LD-04
       englishName: LD-04

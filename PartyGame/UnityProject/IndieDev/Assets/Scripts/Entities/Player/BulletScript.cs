@@ -16,6 +16,8 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private TrailRenderer bulletLine;
     [SerializeField] private MeshRenderer bulletRenderer;
 
+    public bool isAutoTurret;
+    
     private void Update()
     {
         if (lifeTimer >= lifeDuration)
@@ -28,7 +30,8 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        //if (collision.CompareTag("Player")) return;
+        var hit = false;
+        
         PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
         var interactable = collision.GetComponent<IInteractable>();
         interactable?.OnHitByProjectile();
@@ -39,10 +42,12 @@ public class BulletScript : MonoBehaviour
             if (script == shooter) return;
             var damage = Range(minDamage, maxDamage);
             script.attackDirection = transform.rotation;
+            hit = true;
             script.TakeDamage(damage, shooter);
         }
 
         lifeTimer = lifeDuration;
+        if(!isAutoTurret) shooter.controller.UpdatePrecisionRatio(hit);
         PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
     }
 
