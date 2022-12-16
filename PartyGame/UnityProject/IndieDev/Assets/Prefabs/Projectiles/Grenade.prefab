@@ -116,6 +116,10 @@ MonoBehaviour:
   enemiesInRange: []
   damage: 70
   explosionShake: {fileID: 11400000, guid: 50835ce3d31ac0e46aa462c6e2134b63, type: 2}
+  rb: {fileID: 4883645082060142432}
+  shooter: {fileID: 0}
+  bulletLine: {fileID: 6779256309227778496}
+  bulletRenderer: {fileID: 8254180777724197728}
 --- !u!135 &-4614857351767604097
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -264,7 +268,7 @@ GameObject:
   - component: {fileID: 4433200090614643913}
   - component: {fileID: 8254180777724197728}
   m_Layer: 3
-  m_Name: Sphere
+  m_Name: GrenadeMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

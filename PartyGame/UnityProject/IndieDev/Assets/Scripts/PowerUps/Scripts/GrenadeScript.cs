@@ -11,6 +11,10 @@ public class GrenadeScript : MonoBehaviour
     [SerializeField] private List<EnemyManager> enemiesInRange;
     [SerializeField] private int damage;
     [SerializeField] private CameraShakeScriptable explosionShake;
+    public Rigidbody rb;
+    public PlayerController shooter;
+    [SerializeField] private TrailRenderer bulletLine;
+    [SerializeField] private MeshRenderer bulletRenderer;
 
     private void Update()
     {
@@ -20,6 +24,14 @@ public class GrenadeScript : MonoBehaviour
             Explode();
         }
         else timer += Time.deltaTime;
+    }
+    
+    public void SetBulletColor()
+    {
+        bulletLine.material.SetColor("_EmissionColor",
+            GameManager.instance.colors[shooter.playerIndex - 1] * 2);
+        bulletRenderer.material.SetColor("_EmissionColor",
+            GameManager.instance.colors[shooter.playerIndex - 1] * 2);
     }
 
     private void Explode()

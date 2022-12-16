@@ -53,7 +53,6 @@ public class BulletScript : MonoBehaviour
 
     public void SetBulletColor()
     {
-        Debug.Log("Set color !");
         bulletLine.material.SetColor("_EmissionColor",
             GameManager.instance.colors[shooter.controller.playerIndex - 1] * 2);
         bulletRenderer.material.SetColor("_EmissionColor",
