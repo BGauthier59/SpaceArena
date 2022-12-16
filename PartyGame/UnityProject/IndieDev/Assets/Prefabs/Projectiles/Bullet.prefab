@@ -4870,6 +4870,8 @@ MonoBehaviour:
   maxDamage: 15
   minDamage: 10
   lifeDuration: 3
+  bulletLine: {fileID: 6393692887041716747}
+  bulletRenderer: {fileID: 1912984717715658561}
 --- !u!96 &6393692887041716747
 TrailRenderer:
   serializedVersion: 2
@@ -4978,7 +4980,7 @@ TrailRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 5
     alignment: 0
     textureMode: 0
     shadowBias: 0.5

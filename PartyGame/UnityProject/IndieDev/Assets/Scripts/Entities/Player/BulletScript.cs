@@ -9,9 +9,12 @@ public class BulletScript : MonoBehaviour
     public Rigidbody rb;
     [SerializeField] private int maxDamage;
     [SerializeField] private int minDamage;
-    
+
     [SerializeField] private float lifeDuration;
     private float lifeTimer;
+
+    [SerializeField] private TrailRenderer bulletLine;
+    [SerializeField] private MeshRenderer bulletRenderer;
 
     private void Update()
     {
@@ -22,14 +25,14 @@ public class BulletScript : MonoBehaviour
         }
         else lifeTimer += Time.deltaTime;
     }
-    
+
     private void OnTriggerEnter(Collider collision)
     {
         //if (collision.CompareTag("Player")) return;
         PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
         var interactable = collision.GetComponent<IInteractable>();
         interactable?.OnHitByProjectile();
-        
+
         if (collision.CompareTag("Enemy") || collision.CompareTag("Player"))
         {
             var script = collision.GetComponent<Entity>();
@@ -38,6 +41,7 @@ public class BulletScript : MonoBehaviour
             script.attackDirection = transform.rotation;
             script.TakeDamage(damage, shooter);
         }
+
         lifeTimer = lifeDuration;
         PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
     }
@@ -46,7 +50,16 @@ public class BulletScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-    
+
+    public void SetBulletColor()
+    {
+        Debug.Log("Set color !");
+        bulletLine.material.SetColor("_EmissionColor",
+            GameManager.instance.colors[shooter.controller.playerIndex - 1] * 2);
+        bulletRenderer.material.SetColor("_EmissionColor",
+            GameManager.instance.colors[shooter.controller.playerIndex - 1] * 2);
+    }
+
     private void OnDisable()
     {
         if (rb != null)

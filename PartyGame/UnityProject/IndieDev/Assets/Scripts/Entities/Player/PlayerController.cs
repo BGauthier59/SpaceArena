@@ -517,6 +517,7 @@ public class PlayerController : MonoBehaviour
                         .SpawnFromPool(PoolType.Bullet, bulletOrigin.position, transform.rotation)
                         .GetComponent<BulletScript>();
                     bullet.shooter = manager;
+                    bullet.SetBulletColor();
 
                     if (helpingAimSet) bullet.rb.AddForce(helpingAimDirection.normalized * bulletSpeed);
                     else bullet.rb.AddForce(transform.forward * bulletSpeed);

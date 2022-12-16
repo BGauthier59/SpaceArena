@@ -54,6 +54,7 @@ public class TurretScript : MonoBehaviour
             var newBullet = PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet, shootOrigin.position, rotatingPart.rotation);
             var bullet = newBullet.GetComponent<BulletScript>();
             bullet.shooter = user.manager;
+            bullet.SetBulletColor();
             bullet.rb.AddForce(rotatingPart.forward * bulletSpeed);
         }
     }

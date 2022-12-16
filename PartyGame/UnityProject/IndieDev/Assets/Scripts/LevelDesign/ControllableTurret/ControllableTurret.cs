@@ -137,10 +137,11 @@ public class ControllableTurret : MonoBehaviour
         SetText();
         var bullet = PoolOfObject.Instance
             .SpawnFromPool(PoolType.ControllableTurretProjectile, cannonOrigin.position, rotatingPart.rotation)
-            .GetComponent<Rigidbody>();
-
-        if (playerInside.helpingAimSet) bullet.AddForce(playerInside.helpingAimDirection.normalized * bulletSpeed);
-        else bullet.AddForce(transform.forward * bulletSpeed);
+            .GetComponent<BulletScript>();
+        bullet.shooter = playerInside.manager;
+        bullet.SetBulletColor();
+        if (playerInside.helpingAimSet) bullet.rb.AddForce(playerInside.helpingAimDirection.normalized * bulletSpeed);
+        else bullet.rb.AddForce(transform.forward * bulletSpeed);
         
         PlayAnim(shootTurretClip);
         shootVFX.Play();

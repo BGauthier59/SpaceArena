@@ -65,6 +65,8 @@ MonoBehaviour:
   maxDamage: 100
   minDamage: 80
   lifeDuration: 3
+  bulletLine: {fileID: 6393692887041716747}
+  bulletRenderer: {fileID: 1912984717715658561}
 --- !u!96 &6393692887041716747
 TrailRenderer:
   serializedVersion: 2
@@ -85,7 +87,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 14ab0a9b14a9d65468a5c831e959725f, type: 2}
+  - {fileID: 2100000, guid: cf5ee3763a488f042a963b08e5520a8e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -173,7 +175,7 @@ TrailRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 5
     alignment: 0
     textureMode: 0
     shadowBias: 0.5
@@ -256,7 +258,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 14ab0a9b14a9d65468a5c831e959725f, type: 2}
+  - {fileID: 2100000, guid: cf5ee3763a488f042a963b08e5520a8e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
