@@ -4640,7 +4640,7 @@ GameObject:
   - component: {fileID: 308001816}
   - component: {fileID: 308001815}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: BonusNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26125,6 +26125,7 @@ MonoBehaviour:
   playerInitialPos: {fileID: 274552976}
   distanceBetweenPlayers: 3
   bonusPart: {fileID: 1605682996}
+  bonusName: {fileID: 308001815}
   allPlayerData:
   - bonusDataObj: {fileID: 1153577364}
     bonusDataText: {fileID: 1840026449}
@@ -26134,6 +26135,13 @@ MonoBehaviour:
     bonusDataText: {fileID: 1383985096}
   - bonusDataObj: {fileID: 1418451305}
     bonusDataText: {fileID: 986238242}
+  allBonusNames:
+  - frenchName: Friendly fire
+    englishName: Friendly fire
+  - frenchName: Precision
+    englishName: Precision
+  - frenchName: Crown timer
+    englishName: Crown timer
 --- !u!1001 &1605576622
 PrefabInstance:
   m_ObjectHideFlags: 0

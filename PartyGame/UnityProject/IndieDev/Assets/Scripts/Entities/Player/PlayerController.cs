@@ -960,7 +960,6 @@ public class PlayerController : MonoBehaviour
         if (hit) precisionRatio.Item2++;
 
         precisionRatio.Item3 = (float)((double)precisionRatio.Item2 / precisionRatio.Item1);
-        Debug.Log(precisionRatio.Item1 + " | " + precisionRatio.Item2 + " | " + precisionRatio.Item3);
     }
 
     public void UpdateCrownTimer()

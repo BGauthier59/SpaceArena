@@ -11,7 +11,18 @@ public class FinaleSceneManager : MonoBehaviour
     [SerializeField] private float distanceBetweenPlayers;
 
     [SerializeField] private GameObject bonusPart;
+    [SerializeField] private TextMeshPro bonusName;
     [SerializeField] private PlayerData[] allPlayerData;
+
+    [Tooltip("In right order")] [SerializeField]
+    private BonusName[] allBonusNames;
+
+    [Serializable]
+    private struct BonusName
+    {
+        public string frenchName;
+        public string englishName;
+    }
 
     [Serializable]
     private struct PlayerData
@@ -66,51 +77,69 @@ public class FinaleSceneManager : MonoBehaviour
         }
 
         foreach (var data in allPlayerData) data.bonusDataObj.SetActive(false);
+        foreach (var kvp in dict)
+        {
+            kvp.Value.bonusDataObj.SetActive(true);
+        }
 
-        
         //
-        
+
         yield return new WaitForSeconds(2f);
 
+        // Friendly fire
+        ResetBonusDataText();
         bonusPart.SetActive(true);
-        var friendlyFireWinner = GetFriendlyFireHitWinner();
-        dict[friendlyFireWinner[0]].bonusDataText.text = friendlyFireWinner[0].friendlyFireHit.ToString();
+        bonusName.text = DisplayBonusName(allBonusNames[0]);
         yield return new WaitForSeconds(2f);
-        for (var i = 0; i < GameManager.instance.allPlayers.Count; i++)
+        var friendlyFirePlayerData = GetFriendlyFireHitWinner();
+        dict[friendlyFirePlayerData[0]].bonusDataText.text = friendlyFirePlayerData[0].friendlyFireHit.ToString();
+        yield return new WaitForSeconds(2f);
+        for (var i = 1; i < friendlyFirePlayerData.Length; i++)
         {
-            var player = GameManager.instance.allPlayers[i];
-            if (player == friendlyFireWinner[0]) continue;
-            allPlayerData[i].bonusDataObj.SetActive(true);
-            allPlayerData[i].bonusDataText.text = player.friendlyFireHit.ToString();
+            var player = friendlyFirePlayerData[i];
+            dict[player].bonusDataText.text = player.friendlyFireHit.ToString();
         }
+        yield return new WaitForSeconds(2f);
+
         bonusPart.SetActive(false);
 
         yield return new WaitForSeconds(3f);
 
+        // Ratio precision
+        ResetBonusDataText();
         bonusPart.SetActive(true);
-        var precisionRatioWinner = GetPrecisionRatioWinner();
-        dict[precisionRatioWinner[0]].bonusDataText.text = precisionRatioWinner[0].precisionRatio.Item3.ToString("F1");
+        bonusName.text = DisplayBonusName(allBonusNames[1]);
         yield return new WaitForSeconds(2f);
-        for (var i = 0; i < GameManager.instance.allPlayers.Count; i++)
+        var precisionRatioPlayerData = GetPrecisionRatioWinner();
+        dict[precisionRatioPlayerData[0]].bonusDataText.text =
+            precisionRatioPlayerData[0].precisionRatio.Item3.ToString("F2");
+        yield return new WaitForSeconds(2f);
+        for (var i = 1; i < precisionRatioPlayerData.Length; i++)
         {
-            var player = GameManager.instance.allPlayers[i];
-            if (player == precisionRatioWinner[0]) continue;
-            allPlayerData[i].bonusDataText.text = player.precisionRatio.Item3.ToString("F1");
+            var player = precisionRatioPlayerData[i];
+            dict[player].bonusDataText.text = player.precisionRatio.Item3.ToString("F2");
         }
+        yield return new WaitForSeconds(2f);
+
         bonusPart.SetActive(false);
 
         yield return new WaitForSeconds(3f);
 
+        // Crown
+        ResetBonusDataText();
         bonusPart.SetActive(true);
+        bonusName.text = DisplayBonusName(allBonusNames[2]);
+        yield return new WaitForSeconds(2f);
         var crownTimerWinner = GetCrownDurationWinner();
         dict[crownTimerWinner[0]].bonusDataText.text = crownTimerWinner[0].crownTimer.ToString("F1");
         yield return new WaitForSeconds(2f);
-        for (var i = 0; i < GameManager.instance.allPlayers.Count; i++)
+        for (var i = 1; i < crownTimerWinner.Length; i++)
         {
-            var player = GameManager.instance.allPlayers[i];
-            if (player == crownTimerWinner[0]) continue;
-            allPlayerData[i].bonusDataText.text = player.crownTimer.ToString("F1");
+            var player = crownTimerWinner[i];
+            dict[player].bonusDataText.text = player.crownTimer.ToString("F1");
         }
+        yield return new WaitForSeconds(2f);
+
         bonusPart.SetActive(false);
 
         // Caméra s'approche du présentateur
@@ -130,6 +159,33 @@ public class FinaleSceneManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
     }
 
+    private string DisplayBonusName(BonusName bonusName)
+    {
+        string name;
+        switch (GameManager.instance.settings.currentLanguage)
+        {
+            case Language.French:
+                name = bonusName.frenchName;
+                break;
+            case Language.English:
+                name = bonusName.englishName;
+                break;
+            default:
+                Debug.LogError("Language not valid.");
+                return null;
+        }
+
+        return name;
+    }
+
+    private void ResetBonusDataText()
+    {
+        foreach (var data in allPlayerData)
+        {
+            data.bonusDataText.text = "";
+        }
+    }
+
     private PlayerController[] GetFriendlyFireHitWinner()
     {
         var data = new List<PlayerController>();
@@ -139,10 +195,10 @@ public class FinaleSceneManager : MonoBehaviour
         {
             if (pc.friendlyFireHit <= top) continue;
             winner = pc;
-            data.Add(winner);
             top = (int)pc.friendlyFireHit;
         }
 
+        data.Add(winner);
         foreach (var pc in GameManager.instance.allPlayers)
         {
             if (pc == winner) continue;
@@ -161,10 +217,10 @@ public class FinaleSceneManager : MonoBehaviour
         {
             if (pc.precisionRatio.Item3 <= top) continue;
             winner = pc;
-            data.Add(winner);
             top = pc.precisionRatio.Item3;
         }
 
+        data.Add(winner);
         foreach (var pc in GameManager.instance.allPlayers)
         {
             if (pc == winner) continue;
@@ -183,10 +239,10 @@ public class FinaleSceneManager : MonoBehaviour
         {
             if (pc.crownTimer <= top) continue;
             winner = pc;
-            data.Add(winner);
             top = pc.crownTimer;
         }
 
+        data.Add(winner);
         foreach (var pc in GameManager.instance.allPlayers)
         {
             if (pc == winner) continue;
