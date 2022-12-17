@@ -202,14 +202,19 @@ public class PlayerController : MonoBehaviour
         baseSpeed = speed;
         baseShootCooldown = shootCooldownDuration;
 
-        //reloadGauge.transform.SetParent(partyManager.mainCanvas.transform);
-        //powerUpGauge.transform.SetParent(partyManager.mainCanvas.transform);
-
         ResetGauges();
         SetGaugesState(false);
         GraphInitialization();
         ResetPlayer();
         ResetPlayerGraphsAndCollisions();
+    }
+
+    public void FinaleSceneInitialization()
+    {
+        GraphInitialization();
+        ResetPlayer();
+        ResetPlayerGraphsAndCollisions();
+        playerLight.enabled = false;
     }
 
     public void GraphInitialization()
