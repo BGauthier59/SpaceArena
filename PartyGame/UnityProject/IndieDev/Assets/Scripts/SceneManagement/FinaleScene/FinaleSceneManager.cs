@@ -121,23 +121,29 @@ public class FinaleSceneManager : MonoBehaviour
         cam.SetZoom(showFinaleScreenZoom);
         yield return new WaitForSeconds(5f);
 
+        const float displayNameDuration = 3f;
+        const float displayBonusDataDuration = 2f;
+        const float displayWinnerDuration = 3f;
+        const float displayAllResultsDuration = 2f;
+        const float transitionDuration = 2.5f;
+
         #region First bonus
 
         ResetBonusDataText();
         mainText.text = DisplayBonusName(allBonus[0]);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(displayNameDuration);
         mainText.text = "";
 
         bonusPart.SetActive(true);
         bonusName.text = DisplayBonusName(allBonus[0]);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(displayBonusDataDuration);
         var friendlyFirePlayerData = GetFriendlyFireHitWinner();
         friendlyFirePlayerData[0].manager.score += (int) allBonus[0].points;
         bonusDictionary[friendlyFirePlayerData[0]].bonusDataText.text =
             friendlyFirePlayerData[0].friendlyFireHit.ToString();
 
         SetLight(friendlyFirePlayerData[0]);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(displayWinnerDuration);
 
         foreach (var kvp in bonusDictionary)
         {
@@ -145,10 +151,10 @@ public class FinaleSceneManager : MonoBehaviour
             kvp.Value.bonusDataText.text = kvp.Key.friendlyFireHit.ToString();
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(displayAllResultsDuration);
         spotLight.gameObject.SetActive(false);
         bonusPart.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(transitionDuration);
 
         #endregion
 
@@ -157,12 +163,12 @@ public class FinaleSceneManager : MonoBehaviour
         ResetBonusDataText();
 
         mainText.text = DisplayBonusName(allBonus[1]);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(displayNameDuration);
         mainText.text = "";
 
         bonusPart.SetActive(true);
         bonusName.text = DisplayBonusName(allBonus[1]);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(displayBonusDataDuration);
         var precisionRatioPlayerData = GetPrecisionRatioWinner();
         precisionRatioPlayerData[0].manager.score += (int) allBonus[1].points;
 
@@ -171,7 +177,7 @@ public class FinaleSceneManager : MonoBehaviour
 
         SetLight(precisionRatioPlayerData[0]);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(displayWinnerDuration);
 
         foreach (var kvp in bonusDictionary)
         {
@@ -179,10 +185,10 @@ public class FinaleSceneManager : MonoBehaviour
             kvp.Value.bonusDataText.text = kvp.Key.precisionRatio.Item3.ToString("F2");
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(displayAllResultsDuration);
         spotLight.gameObject.SetActive(false);
         bonusPart.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(transitionDuration);
 
         #endregion
 
@@ -191,12 +197,12 @@ public class FinaleSceneManager : MonoBehaviour
         ResetBonusDataText();
 
         mainText.text = DisplayBonusName(allBonus[2]);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(displayNameDuration);
         mainText.text = "";
 
         bonusPart.SetActive(true);
         bonusName.text = DisplayBonusName(allBonus[2]);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(displayBonusDataDuration);
         var crownTimerWinner = GetCrownDurationWinner();
         crownTimerWinner[0].manager.score += (int) allBonus[2].points;
 
@@ -204,7 +210,7 @@ public class FinaleSceneManager : MonoBehaviour
 
         SetLight(crownTimerWinner[0]);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(displayWinnerDuration);
 
         foreach (var kvp in bonusDictionary)
         {
@@ -212,24 +218,26 @@ public class FinaleSceneManager : MonoBehaviour
             kvp.Value.bonusDataText.text = kvp.Key.crownTimer.ToString("F1");
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(displayAllResultsDuration);
         spotLight.gameObject.SetActive(false);
         bonusPart.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(transitionDuration);
 
         #endregion
 
         #region Finale results
 
         cam.SetZoom(finaleViewZoom);
-        yield return new WaitForSeconds(2f);
+        
+        
+        yield return new WaitForSeconds(1f);
 
         centerPointScorePart.localPosition =
             Vector3.right * 3.5f * (Mathf.Abs(GameManager.instance.allPlayers.Count - 4));
         ResetScoreDataText();
         scorePart.SetActive(true);
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(5f);
 
         foreach (var kvp in scoreDictionary)
         {

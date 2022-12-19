@@ -1247,11 +1247,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9167fac3de15d4d44b9833dcf3cbbff2, type: 3}
---- !u!20 &5274706629526481288 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 8744282902909847573, guid: 9167fac3de15d4d44b9833dcf3cbbff2, type: 3}
+--- !u!114 &5274706629526481293 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8744282902909847568, guid: 9167fac3de15d4d44b9833dcf3cbbff2, type: 3}
   m_PrefabInstance: {fileID: 3488718797666541981}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae99d525e0fed443a6ef55c647e3a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5274706629730034120 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8744282903108681813, guid: 9167fac3de15d4d44b9833dcf3cbbff2, type: 3}
@@ -1268,17 +1274,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8744282903108681812, guid: 9167fac3de15d4d44b9833dcf3cbbff2, type: 3}
   m_PrefabInstance: {fileID: 3488718797666541981}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5274706629526481293 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8744282902909847568, guid: 9167fac3de15d4d44b9833dcf3cbbff2, type: 3}
+--- !u!20 &7097711820979182869 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5974667057267637384, guid: 9167fac3de15d4d44b9833dcf3cbbff2, type: 3}
   m_PrefabInstance: {fileID: 3488718797666541981}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae99d525e0fed443a6ef55c647e3a4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5263539134517676365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1301,7 +1301,7 @@ PrefabInstance:
     - target: {fileID: 7970876194791286952, guid: 4765020cbadef8d4fb984fb30058ac97, type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 5274706629526481288}
+      objectReference: {fileID: 7097711820979182869}
     - target: {fileID: 7970876194791286953, guid: 4765020cbadef8d4fb984fb30058ac97, type: 3}
       propertyPath: m_Pivot.x
       value: 0

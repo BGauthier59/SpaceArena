@@ -62,8 +62,6 @@ public class PlayerManager : Entity
         controller.playerUI.lifeSlider.value = currentLife;
         if (attacker)
         {
-            Debug.Log(attacker.name +  " has attacked a player!");
-
             var attackingPlayer = (PlayerManager)attacker;
             if(attackingPlayer) controller.GetShotByFriendlyFire();
         }
