@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -55,6 +56,8 @@ public class MainMenuManager : MonoBehaviour
 
     private ArenasPanel currentSelectedArenasPanel;
     [SerializeField] private ArenasPanel[] allArenasPanels;
+
+    [SerializeField] private Animation loadingAnim;
 
     [Serializable]
     public struct ArenasPanel
@@ -131,7 +134,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnPlay()
     {
-        GameManager.instance.playersNumber = (int)playerSlider.value;
+        GameManager.instance.playersNumber = (int) playerSlider.value;
         lobby.SetActive(true);
         for (int i = 0; i < playerLobbyAreas.Length; i++)
         {
@@ -450,6 +453,15 @@ public class MainMenuManager : MonoBehaviour
         GameManager.instance.currentPanel = currentSelectedArenasPanel;
 
         GameManager.instance.DisableAllControllers();
+
+        StartCoroutine(LoadingSelectedMap());
+    }
+
+    private IEnumerator LoadingSelectedMap()
+    {
+        loadingAnim.Play(loadingAnim.clip.name);
+
+        yield return new WaitForSeconds(.5f);
 
         SceneManager.LoadScene(GameManager.instance.currentPanel.arenas
             [GameManager.instance.currentPanel.currentIndex].arenaSceneIndex);

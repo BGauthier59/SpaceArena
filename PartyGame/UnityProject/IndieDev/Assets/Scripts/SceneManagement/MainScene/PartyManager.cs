@@ -52,6 +52,8 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private NewScoreArea[] newScoreAreas;
     [SerializeField] private Button backToMainMenu;
     public CameraShake cameraShake;
+    [SerializeField] private GameObject loadingPart;
+    [SerializeField] private Animation loadingAnim;
 
     [SerializeField] private TextOnDisplay tutorialText;
     [SerializeField] private TextMeshProUGUI goText;
@@ -143,6 +145,8 @@ public class PartyManager : MonoBehaviour
 
     private IEnumerator BeginningGameCinematic()
     {
+        loadingPart.SetActive(true);
+        
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
@@ -152,6 +156,14 @@ public class PartyManager : MonoBehaviour
             player.playerUI = PlayerUis[i];
             player.PartyBegins();
         }
+        
+        yield return new WaitForSeconds(1f);
+
+        loadingAnim.Play(loadingAnim.clip.name);
+        
+        yield return new WaitForSeconds(1f);
+
+        loadingPart.SetActive(false);
 
         yield return new WaitForSeconds(1f);
 
