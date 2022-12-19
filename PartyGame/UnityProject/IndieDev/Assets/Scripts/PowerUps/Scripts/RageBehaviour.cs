@@ -44,6 +44,7 @@ public class RageBehaviour : PowerUpManager
 
     public override void OnDeactivate()
     {
+        isFinished = true;
         user.ResetSpeed();
         user.rageCollider.collider.enabled = false;
         base.OnDeactivate();

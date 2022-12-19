@@ -708,7 +708,6 @@ public class PlayerController : MonoBehaviour
         transform.position = initPos;
         deathFX.gameObject.SetActive(true);
         ResetPlayer();
-        //SetGaugesState(false);
     }
 
     public void ResetRespawn() // Called when the player respawns
@@ -752,13 +751,8 @@ public class PlayerController : MonoBehaviour
         bulletAmount = maxBulletAmount;
         playerUI.reloadSlider.maxValue = maxBulletAmount;
         playerUI.reloadSlider.value = playerUI.reloadSlider.maxValue;
-        //reloadGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
-        //                                 + new Vector3(0, -30);
         powerUpScore = 0;
-        //powerUpGauge.fill = powerUpMax;
         playerUI.powerUpSlider.fillAmount = 0;
-        //powerUpGauge.transform.position = Camera.main.WorldToScreenPoint(transform.position)
-        //                                  + new Vector3(50, 0);
     } // Resets gauges to their initial values
 
     public void SetPlayerWhenPartyEnds()

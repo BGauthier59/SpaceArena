@@ -2,12 +2,14 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class BaseElementManager : Entity
 {
     [Header("Destroy")] 
     [SerializeField] private GameObject onDestroyText;
+    [SerializeField] private VisualEffect smokeVFX;
     
     [Header("Reparation")] 
     [SerializeField] private int reparationInputs;
@@ -68,6 +70,8 @@ public class BaseElementManager : Entity
     public override void Start()
     {
         base.Start();
+        
+        smokeVFX.Stop();
 
         InitializeBaseElementInfo();
         
@@ -115,6 +119,7 @@ public class BaseElementManager : Entity
     protected virtual void OnDestroyed()
     {
         onDestroyText.SetActive(true);
+        smokeVFX.Play();
         foreach (var area in allReparationAreas)
         {
             area.ActivateArea();
@@ -129,7 +134,8 @@ public class BaseElementManager : Entity
     protected virtual void OnFixed()
     {
         onDestroyText.SetActive(false);
-        
+        smokeVFX.Stop();
+
         foreach (var area in allReparationAreas)
         {
             if (!area.gameObject.activeSelf) continue;
