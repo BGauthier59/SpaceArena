@@ -1880,7 +1880,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.21698111295700074,"g":0.1609581857919693,"b":0.1318262666463852,"a":1.0},"time":0.0},{"color":{"r":0.45490196347236636,"g":0.14901961386203767,"b":0.0,"a":1.0},"time":0.20094606280326844},{"color":{"r":0.18039216101169587,"g":0.03112037107348442,"b":0.0,"a":1.0},"time":0.34131380915641787},{"color":{"r":0.019607843831181527,"g":0.0,"b":0.0,"a":1.0},"time":0.5499961972236633}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":1.8196078538894654,"g":0.5960784554481506,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":0.5849056243896484,"g":0.06534114480018616,"b":0.0,"a":1.0},"time":0.08274967223405838},{"color":{"r":0.17924529314041139,"g":0.17924529314041139,"b":0.17924529314041139,"a":1.0},"time":0.23936827480793},{"color":{"r":0.007843137718737126,"g":0.0,"b":0.0,"a":1.0},"time":0.45000380277633669}],"alphaKeys":[{"alpha":1.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: gradient
