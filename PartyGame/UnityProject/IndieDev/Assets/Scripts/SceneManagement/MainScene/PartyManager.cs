@@ -154,7 +154,6 @@ public class PartyManager : MonoBehaviour
             var player = GameManager.instance.allPlayers[i];
             player.initPos = allSpawningPoints[i].position;
             player.transform.position = player.initPos;
-            //player.rd.material.color = GameManager.instance.colors[player.playerIndex - 1];
             player.playerUI = PlayerUis[i];
             player.PartyBegins();
         }
@@ -166,12 +165,9 @@ public class PartyManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         loadingPart.SetActive(false);
-
-        yield return new WaitForSeconds(1f);
-
         cameraManager.SetZoom(showScreenZoom);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.5f);
 
         cameraManager.SetZoom(screenLargeZoom);
 

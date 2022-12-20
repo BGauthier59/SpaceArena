@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: 1
   offset: {x: 0, y: 25, z: -5}
-  offsetSpeed: 2
+  offsetSpeed: 1
   eulerAngles: {x: 40, y: 0, z: 0}
-  eulerAnglesSpeed: 3
+  eulerAnglesSpeed: 2
   fieldOfView: 65
   fovSpeed: 2
   hasDuration: 0
