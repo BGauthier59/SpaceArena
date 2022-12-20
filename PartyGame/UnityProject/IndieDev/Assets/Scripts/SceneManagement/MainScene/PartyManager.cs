@@ -146,7 +146,7 @@ public class PartyManager : MonoBehaviour
     private IEnumerator BeginningGameCinematic()
     {
         loadingPart.SetActive(true);
-        
+
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
             var player = GameManager.instance.allPlayers[i];
@@ -156,11 +156,11 @@ public class PartyManager : MonoBehaviour
             player.playerUI = PlayerUis[i];
             player.PartyBegins();
         }
-        
+
         yield return new WaitForSeconds(1f);
 
         loadingAnim.Play(loadingAnim.clip.name);
-        
+
         yield return new WaitForSeconds(1f);
 
         loadingPart.SetActive(false);
@@ -238,7 +238,7 @@ public class PartyManager : MonoBehaviour
         }
         else partyTimer -= Time.deltaTime;
 
-        timerText.text = ((int)partyTimer).ToString();
+        timerText.text = ((int) partyTimer).ToString();
 
         foreach (var pc in GameManager.instance.allPlayers)
         {
@@ -369,6 +369,15 @@ public class PartyManager : MonoBehaviour
     {
         timerArea.SetActive(!active);
         randomEventArea.SetActive(active);
+    }
+
+    public void DisplayScoreFeedback(int point, PlayerController pc)
+    {
+        var scorePoint = PoolOfObject.Instance.SpawnFromPool(PoolType.ScorePoint, Vector3.zero, Quaternion.identity);
+        scorePoint.transform.SetParent(mainCanvas.transform);
+        var scorePointBehaviour = scorePoint.GetComponent<ScorePointBehaviour>();
+        scorePointBehaviour.SetText(point, GameManager.instance.colors[pc.playerIndex - 1]);
+        scorePointBehaviour.SetPosition(pc.transform);
     }
 
     #endregion

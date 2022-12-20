@@ -119,7 +119,7 @@ MonoBehaviour:
   rb: {fileID: 4883645082060142432}
   shooter: {fileID: 0}
   bulletLine: {fileID: 6779256309227778496}
-  bulletRenderer: {fileID: 8254180777724197728}
+  bulletRenderer: {fileID: 8776700467382149601}
 --- !u!135 &-4614857351767604097
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -273,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4199744887783470515
 Transform:
   m_ObjectHideFlags: 0

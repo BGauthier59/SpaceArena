@@ -39,6 +39,8 @@ public class PlayerManager : Entity
     public void GetPoint(int point)
     {
         score += point;
+        if (point > 0) partyManager.DisplayScoreFeedback(point, controller);
+
         if (score <= 0) score = 0;
         partyManager.OnScoresChange();
     }
