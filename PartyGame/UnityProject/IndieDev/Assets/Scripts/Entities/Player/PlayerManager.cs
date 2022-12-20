@@ -36,10 +36,10 @@ public class PlayerManager : Entity
         controller.deathTimerText.text = controller.playerUI.deathTimerUI.text = (respawnDuration - time).ToString();
     }
 
-    public void GetPoint(int point)
+    public void GetPoint(int point, Vector3 pos)
     {
         score += point;
-        if (point > 0) partyManager.DisplayScoreFeedback(point, controller);
+        if (point > 0) partyManager.DisplayScoreFeedback(point, controller.playerIndex - 1, pos);
 
         if (score <= 0) score = 0;
         partyManager.OnScoresChange();
@@ -74,7 +74,7 @@ public class PlayerManager : Entity
         base.Death();
         
         controller.ResetDeath();
-        GetPoint(deathMalusPoint);
+        GetPoint(deathMalusPoint, Vector3.zero);
         isRespawning = true;
         
     }

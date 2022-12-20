@@ -52,7 +52,7 @@ public class EnemyManager : Entity
             return;
         }
         player.controller.IncreasePowerUpGauge(powerUpScore);
-        player.GetPoint(deathPoint);
+        player.GetPoint(deathPoint, transform.position);
     }
 
     protected override void Death()

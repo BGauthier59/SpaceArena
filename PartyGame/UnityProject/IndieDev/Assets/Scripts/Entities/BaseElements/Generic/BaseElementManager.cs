@@ -5,10 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
-public class BaseElementManager : Entity
+public abstract class BaseElementManager : Entity
 {
     [Header("Destroy")] 
-    [SerializeField] private GameObject onDestroyText;
     [SerializeField] private VisualEffect smokeVFX;
     
     [Header("Reparation")] 
@@ -118,7 +117,6 @@ public class BaseElementManager : Entity
 
     protected virtual void OnDestroyed()
     {
-        onDestroyText.SetActive(true);
         smokeVFX.Play();
         foreach (var area in allReparationAreas)
         {
@@ -133,13 +131,12 @@ public class BaseElementManager : Entity
 
     protected virtual void OnFixed()
     {
-        onDestroyText.SetActive(false);
         smokeVFX.Stop();
 
         foreach (var area in allReparationAreas)
         {
             if (!area.gameObject.activeSelf) continue;
-            area.currentPlayerOnArea.manager.GetPoint(partyManager.baseManager.reparationPoint);
+            area.currentPlayerOnArea.manager.GetPoint(partyManager.baseManager.reparationPoint, transform.position);
         }
         
         CancelReparation();

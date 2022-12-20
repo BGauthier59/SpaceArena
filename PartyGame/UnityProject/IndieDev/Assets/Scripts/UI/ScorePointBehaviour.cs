@@ -28,14 +28,16 @@ public class ScorePointBehaviour : MonoBehaviour
         {
             timer += Time.deltaTime;
             rect.position += Vector3.forward * (speedOverLifetime.Evaluate(timer) * Time.deltaTime);
+            var alpha = Mathf.Lerp(1, 0, timer / lifeTime) + .1f;
+            scoreText.color = new Color(scoreText.color.r, scoreText.color.g, scoreText.color.b, alpha);
         }
     }
 
-    public void SetPosition(Transform tr)
+    public void SetPosition(Vector3 pos)
     {
         rect.localScale = Vector3.one;
-        var pos = tr.position + Vector3.forward;
-        rect.position = pos;
+        var finalePos = pos + Vector3.forward;
+        rect.position = finalePos;
         rect.localRotation = Quaternion.identity;
         onScreen = true;
     }

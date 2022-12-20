@@ -359,11 +359,14 @@ public class MainMenuManager : MonoBehaviour
         var joystick = Gamepad.current.leftStick.ReadValue();
         if (joystick.x > .5f) SelectOnLeft();
         else if (joystick.x < -.5f) SelectOnRight();
+        else return;
+        eventSystem.SetSelectedGameObject(null);
     }
 
-    public void SelectOnRight()
+    private void SelectOnRight()
     {
         if (isArenaInfoMoving) return;
+        //GameManager.instance.mainGamepad.
 
         cancelButtonSelection.interactable = false;
         arenaInfoPosXToReach = arenaInfo.anchoredPosition.x + (Screen.width * .5f) + (arenaInfo.sizeDelta.x / 2) +
@@ -376,7 +379,7 @@ public class MainMenuManager : MonoBehaviour
         if (arenaIndex == -1) arenaIndex = allArenasPanels.Length - 1;
     }
 
-    public void SelectOnLeft()
+    private void SelectOnLeft()
     {
         if (isArenaInfoMoving) return;
 
@@ -404,6 +407,8 @@ public class MainMenuManager : MonoBehaviour
                 arenaMovingTimer = 0f;
 
                 cancelButtonSelection.interactable = true;
+                eventSystem.SetSelectedGameObject(firstSelectedSelection);
+
                 isArenaInfoMoving = false;
                 return;
             }

@@ -38,7 +38,7 @@ public class GrenadeScript : MonoBehaviour
     {
         foreach (var enemy in enemiesInRange)
         {
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(damage, shooter.manager);
         }
         enemiesInRange.Clear();
 

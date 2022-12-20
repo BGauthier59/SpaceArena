@@ -62,6 +62,8 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private float rotatingSkyboxSpeed;
 
+    [Header("VFX")] [SerializeField] private ParticleSystem[] flashEffects;
+
     [Serializable]
     public struct TextOnDisplay
     {
@@ -221,6 +223,9 @@ public class PartyManager : MonoBehaviour
         wavesManager.StartNewWave();
         randomEventManager.StartRandomEventManager();
         cameraManager.ResetZoom();
+        
+        // Feedbacks
+        StartFlashEffect();
     }
 
     #endregion
@@ -237,13 +242,30 @@ public class PartyManager : MonoBehaviour
             EndingGame(true);
         }
         else partyTimer -= Time.deltaTime;
-
-        timerText.text = ((int) partyTimer).ToString();
+        
+        timerText.text = ConvertSecondsInMinutes((int) partyTimer);
 
         foreach (var pc in GameManager.instance.allPlayers)
         {
             pc.UpdateCrownTimer();
         }
+    }
+
+    private static string ConvertSecondsInMinutes(int seconds)
+    {
+        var minutes = 0;
+        while (seconds >= 60)
+        {
+            minutes++;
+            seconds -= 60;
+        }
+
+        var secondsText = "";
+        if (seconds < 10) secondsText = "0";
+
+        secondsText += seconds.ToString();
+
+        return $"{minutes}:{secondsText}";
     }
 
     #endregion
@@ -308,6 +330,7 @@ public class PartyManager : MonoBehaviour
             }
             else newScoreAreas[i].area.SetActive(false);
         }
+        StartFlashEffect();
     }
 
     public void OnFinishGame()
@@ -371,13 +394,13 @@ public class PartyManager : MonoBehaviour
         randomEventArea.SetActive(active);
     }
 
-    public void DisplayScoreFeedback(int point, PlayerController pc)
+    public void DisplayScoreFeedback(int point, int colorIndex, Vector3 pos)
     {
         var scorePoint = PoolOfObject.Instance.SpawnFromPool(PoolType.ScorePoint, Vector3.zero, Quaternion.identity);
         scorePoint.transform.SetParent(mainCanvas.transform);
         var scorePointBehaviour = scorePoint.GetComponent<ScorePointBehaviour>();
-        scorePointBehaviour.SetText(point, GameManager.instance.colors[pc.playerIndex - 1]);
-        scorePointBehaviour.SetPosition(pc.transform);
+        scorePointBehaviour.SetText(point, GameManager.instance.colors[colorIndex]);
+        scorePointBehaviour.SetPosition(pos);
     }
 
     #endregion
@@ -420,9 +443,18 @@ public class PartyManager : MonoBehaviour
 
         currentWinner.crown.SetActive(true);
         currentWinner.playerUI.crown.enabled = true;
+        StartFlashEffect();
     }
 
     #endregion
+
+    private void StartFlashEffect()
+    {
+        foreach (var ps in flashEffects)
+        {
+            if (!ps.isPlaying) ps.Play();
+        }
+    }
 
     private void OnDisable()
     {
