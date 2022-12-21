@@ -95,9 +95,9 @@ public class CameraManager : MonoBehaviour
             transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, currentZoom.eulerAngles,
                 Time.fixedDeltaTime * currentZoom.eulerAnglesSpeed);
         }
-
+        
         // Set field of view
-        if (Math.Abs(mainCamera.fieldOfView - currentZoom.fieldOfView) < .01f)
+        if (Math.Abs(mainCamera.fieldOfView - currentZoom.fieldOfView) > .01f)
         {
             mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, currentZoom.fieldOfView,
                 Time.fixedDeltaTime * currentZoom.fovSpeed);

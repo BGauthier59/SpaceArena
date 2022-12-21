@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DefaultZoom
   m_EditorClassIdentifier: 
   target: 0
-  offset: {x: 0, y: 25, z: -5}
+  offset: {x: 0, y: 26, z: -5}
   offsetSpeed: 5
   eulerAngles: {x: 77.5, y: 0, z: 0}
   eulerAnglesSpeed: 3

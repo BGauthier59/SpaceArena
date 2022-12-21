@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: ScreenLargeZoom
   m_EditorClassIdentifier: 
   target: 1
-  offset: {x: 0, y: 20, z: 0}
+  offset: {x: 0, y: 21, z: -5}
   offsetSpeed: 2
   eulerAngles: {x: 30, y: 0, z: 0}
   eulerAnglesSpeed: 3
-  fieldOfView: 65
+  fieldOfView: 70
   fovSpeed: 2
   hasDuration: 0
   zoomDuration: 0.1
