@@ -10,6 +10,7 @@ public abstract class PowerUpManager : MonoBehaviour
     {
         user = player;
         user.powerUpIsActive = true;
+        GameManager.instance.partyManager.arenaFeedbackManager.OnExcitementGrows?.Invoke(1);
     } // When player presses power-up activation input
 
     public virtual void OnUse()

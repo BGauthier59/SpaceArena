@@ -21,6 +21,7 @@ public class PartyManager : MonoBehaviour
     public NewWavesManager wavesManager;
     public RandomEventManager randomEventManager;
     public CameraManager cameraManager;
+    public ArenaFeedbackManager arenaFeedbackManager;
     public Light mainLight;
 
     [Header("Cinematic camera zooms")] public CameraZoom showScreenZoom;
@@ -61,9 +62,7 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private GameObject randomEventArea;
 
     [SerializeField] private float rotatingSkyboxSpeed;
-
-    [Header("VFX")] [SerializeField] private ParticleSystem[] flashEffects;
-
+    
     [Serializable]
     public struct TextOnDisplay
     {
@@ -141,6 +140,7 @@ public class PartyManager : MonoBehaviour
         GameManager.instance.partyManager = this;
         randomEventManager.Initialization();
         wavesManager.Initialization();
+        arenaFeedbackManager.Initialization();
     }
 
     #region Before Game Starts
@@ -221,7 +221,8 @@ public class PartyManager : MonoBehaviour
         cameraManager.ResetZoom();
         
         // Feedbacks
-        StartFlashEffect();
+        arenaFeedbackManager.OnExcitementGrows?.Invoke(arenaFeedbackManager.highestExcitementScore);
+        arenaFeedbackManager.ForceExcitementToValue(5);
     }
 
     #endregion
@@ -245,6 +246,8 @@ public class PartyManager : MonoBehaviour
         {
             pc.UpdateCrownTimer();
         }
+        
+        arenaFeedbackManager.CheckTimer(Time.deltaTime);
     }
 
     private static string ConvertSecondsInMinutes(int seconds)
@@ -326,7 +329,7 @@ public class PartyManager : MonoBehaviour
             }
             else newScoreAreas[i].area.SetActive(false);
         }
-        StartFlashEffect();
+        arenaFeedbackManager.OnExcitementGrows?.Invoke(arenaFeedbackManager.highestExcitementScore);
     }
 
     public void OnFinishGame()
@@ -439,19 +442,12 @@ public class PartyManager : MonoBehaviour
 
         currentWinner.crown.SetActive(true);
         currentWinner.playerUI.crown.enabled = true;
-        StartFlashEffect();
+        arenaFeedbackManager.OnExcitementGrows?.Invoke(arenaFeedbackManager.highestExcitementScore);
     }
 
     #endregion
 
-    private void StartFlashEffect()
-    {
-        foreach (var ps in flashEffects)
-        {
-            if (!ps.isPlaying) ps.Play();
-        }
-    }
-
+    
     private void OnDisable()
     {
         RenderSettings.skybox.SetFloat("_Rotation", 0);

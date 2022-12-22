@@ -58,10 +58,8 @@ public class EnemyManager : Entity
     protected override void Death()
     {
         base.Death();
+        partyManager.arenaFeedbackManager.OnExcitementGrows?.Invoke(1);
         gameObject.SetActive(false);
-
-        // Pour l'instant : non
-        //PoolOfObject.Instance.SpawnFromPool(PoolType.EnemyDeath, transform.position, Quaternion.identity);
     }
 
     private void ResetEnemy()

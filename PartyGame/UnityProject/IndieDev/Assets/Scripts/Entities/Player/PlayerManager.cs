@@ -72,7 +72,7 @@ public class PlayerManager : Entity
     protected override void Death()
     {
         base.Death();
-        
+        partyManager.arenaFeedbackManager.OnExcitementGrows?.Invoke(1);
         controller.ResetDeath();
         GetPoint(deathMalusPoint, Vector3.zero);
         isRespawning = true;

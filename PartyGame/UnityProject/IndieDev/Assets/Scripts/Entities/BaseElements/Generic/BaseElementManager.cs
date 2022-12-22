@@ -131,6 +131,8 @@ public abstract class BaseElementManager : Entity
 
     protected virtual void OnFixed()
     {
+        partyManager.arenaFeedbackManager.OnExcitementGrows?.Invoke(1);
+
         smokeVFX.Stop();
 
         foreach (var area in allReparationAreas)
