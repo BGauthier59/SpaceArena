@@ -87,7 +87,7 @@ public class NewVent : MonoBehaviour
         if (isVenting) Venting();
     }
 
-    public void Venting()
+    private void Venting()
     {
         if (ventingTimer > (conduit.moveDurationUnit * distanceBetweenPoints))
         {

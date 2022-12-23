@@ -171,7 +171,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 0.078431375, g: 0.078431375, b: 0.078431375, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.06594872, g: 0.077702604, b: 0.14150941, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5562,7 +5562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.06594872, g: 0.077702604, b: 0.14150941, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -25104,7 +25104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.06594872, g: 0.077702604, b: 0.14150941, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -25203,6 +25203,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4377727407184844354}
     m_Modifications:
+    - target: {fileID: 2007420191019446048, guid: d0cd82c5fd58fe74c8ff1aad9221fb83, type: 3}
+      propertyPath: m_Color.b
+      value: 0.14150941
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007420191019446048, guid: d0cd82c5fd58fe74c8ff1aad9221fb83, type: 3}
+      propertyPath: m_Color.g
+      value: 0.077702604
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007420191019446048, guid: d0cd82c5fd58fe74c8ff1aad9221fb83, type: 3}
+      propertyPath: m_Color.r
+      value: 0.06594872
+      objectReference: {fileID: 0}
     - target: {fileID: 2007420191200567702, guid: d0cd82c5fd58fe74c8ff1aad9221fb83, type: 3}
       propertyPath: m_IsActive
       value: 0

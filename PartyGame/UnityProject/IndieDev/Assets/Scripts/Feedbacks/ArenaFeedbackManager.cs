@@ -52,7 +52,6 @@ public class ArenaFeedbackManager : MonoBehaviour
 
     private void ExcitementGrows(uint excitement)
     {
-        Debug.Log("Excitement grows!");
         excitementTimer = 0f;
         excitementScore += excitement;
         excitementTextDebug.text = $"DEBUG Excitement : {excitementScore}";

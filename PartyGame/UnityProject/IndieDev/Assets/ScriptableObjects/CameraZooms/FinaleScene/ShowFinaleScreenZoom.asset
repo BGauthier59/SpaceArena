@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ShowFinaleScreenZoom
   m_EditorClassIdentifier: 
   target: 1
-  offset: {x: 0, y: 0, z: -31}
+  offset: {x: 0, y: 20, z: -25}
   offsetSpeed: 2
-  eulerAngles: {x: 5, y: 0, z: 0}
+  eulerAngles: {x: 25, y: 0, z: 0}
   eulerAnglesSpeed: 3
   fieldOfView: 60
   fovSpeed: 2

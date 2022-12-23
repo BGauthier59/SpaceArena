@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ShowPlayersZoom
   m_EditorClassIdentifier: 
   target: 1
-  offset: {x: 0, y: 0, z: -20}
+  offset: {x: 0, y: 8, z: -1}
   offsetSpeed: 2
-  eulerAngles: {x: 30, y: 0, z: 0}
+  eulerAngles: {x: 35, y: 0, z: 0}
   eulerAnglesSpeed: 3
   fieldOfView: 60
   fovSpeed: 2

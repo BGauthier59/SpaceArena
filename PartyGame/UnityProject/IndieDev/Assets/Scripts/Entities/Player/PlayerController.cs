@@ -215,6 +215,7 @@ public class PlayerController : MonoBehaviour
         ResetPlayer();
         ResetPlayerGraphsAndCollisions();
         playerLight.enabled = false;
+        trail.enabled = false;
     }
 
     public void GraphInitialization()
@@ -235,6 +236,7 @@ public class PlayerController : MonoBehaviour
         particleSystem.material = directionArrow.material = rd.material =
             trail.material = ventingPlayerMesh.rd.material = ventingPlayerMesh.trailRd.material =
                 deathFX.material = deathFXCircle.material = material;
+        deathFX.gameObject.SetActive(false);
         crown.SetActive(false);
         ventingPlayerMesh.rd.gameObject.SetActive(false);
         ventingPlayerMesh.trailRd.enabled = false;
@@ -614,8 +616,12 @@ public class PlayerController : MonoBehaviour
         // Tries to enter a turret
         if (!leavingTurret && accessibleControllableTurret)
         {
-            Debug.Log("Entering turret");
             CancelDash();
+            if (powerUpIsActive)
+            {
+                Debug.LogWarning("Entering a turret with a power up cancels this one!");
+                EndOfPowerUp();
+            }
             accessibleControllableTurret.OnPlayerEnters(this);
             return;
         }

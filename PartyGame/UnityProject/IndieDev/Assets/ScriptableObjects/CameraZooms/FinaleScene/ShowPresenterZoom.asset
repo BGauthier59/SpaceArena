@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ShowPresenterZoom
   m_EditorClassIdentifier: 
   target: 1
-  offset: {x: 0, y: -3, z: -15}
+  offset: {x: 0, y: 12, z: 0}
   offsetSpeed: 0.5
-  eulerAngles: {x: 10, y: 0, z: 0}
+  eulerAngles: {x: 25, y: 0, z: 0}
   eulerAnglesSpeed: 0.3
   fieldOfView: 60
   fovSpeed: 2

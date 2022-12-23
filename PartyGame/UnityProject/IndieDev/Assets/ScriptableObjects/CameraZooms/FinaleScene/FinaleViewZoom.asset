@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FinaleViewZoom
   m_EditorClassIdentifier: 
   target: 1
-  offset: {x: 0, y: 10, z: -44}
+  offset: {x: 0, y: 25, z: -30}
   offsetSpeed: 0.5
   eulerAngles: {x: 30, y: 0, z: 0}
   eulerAnglesSpeed: 0.2
