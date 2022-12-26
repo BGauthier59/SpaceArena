@@ -92,7 +92,7 @@ MonoBehaviour:
     frenchName: "Dispositif de S\xE9curit\xE9"
     englishName: Security Device
   associatedDoors:
-  - tr: {fileID: 6287531850356629400}
+  - tr: {fileID: 3932496793417529821}
     yPosOpened: 0
     yPosClosed: -4
     movingDuration: 3
@@ -1061,14 +1061,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
+--- !u!23 &1742861532872134520 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5002058060192867179, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
+  m_PrefabInstance: {fileID: 6720780328541465619}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6287531850356629400 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 721929432588333963, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
   m_PrefabInstance: {fileID: 6720780328541465619}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &1742861532872134520 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5002058060192867179, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
+--- !u!4 &3932496793417529821 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7770410191444907470, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
   m_PrefabInstance: {fileID: 6720780328541465619}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7105334119257517339

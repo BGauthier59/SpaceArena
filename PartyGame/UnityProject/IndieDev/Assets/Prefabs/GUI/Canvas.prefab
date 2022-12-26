@@ -1555,6 +1555,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4134489137987069665, guid: f740e0e896363c8428ff95e3c17754d3, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4134489137987069665, guid: f740e0e896363c8428ff95e3c17754d3, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4134489137987069665, guid: f740e0e896363c8428ff95e3c17754d3, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4377727407184844354, guid: f740e0e896363c8428ff95e3c17754d3, type: 3}
       propertyPath: m_RootOrder
       value: 0

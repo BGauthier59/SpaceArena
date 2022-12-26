@@ -257,8 +257,8 @@ Canvas:
   m_GameObject: {fileID: 178329034}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 916294844}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -845,34 +845,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[0].b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[0].g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[0].r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[1].g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[2].b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[2].g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4576669941368348802, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: colors.Array.data[3].g
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4576669941368348803, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -920,10 +892,6 @@ PrefabInstance:
     - target: {fileID: 4576669941368348805, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
       propertyPath: m_Name
       value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8591720794918883700, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}
-      propertyPath: randomEventsOccur
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74b35deb5f587ce4ba5dfa9bd9090eec, type: 3}

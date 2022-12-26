@@ -252,6 +252,7 @@ MonoBehaviour:
   reparationVibration: {fileID: 11400000, guid: 1f14fe8e0ac26e442a81d94211288dfa, type: 2}
   takeDamageVibration: {fileID: 11400000, guid: 50c744e21c1bd624f9c0d6bacd3f5782, type: 2}
   shootVibrations: {fileID: 11400000, guid: c52158867398c284182e40f949a3a121, type: 2}
+  cantShootVibrations: {fileID: 11400000, guid: dcbb37120ed1b2f409aeeae2eae3d229, type: 2}
   controllableShootVibrations: {fileID: 11400000, guid: b777fe3580877ef4eb048ad50c17d449, type: 2}
   enterTurretVibrations: {fileID: 11400000, guid: 149a001fc901fd54891d1fa762435c40, type: 2}
 --- !u!1 &3176966467083152872
@@ -373,9 +374,9 @@ MonoBehaviour:
   isPaused: 0
   colors:
   - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0.14970064, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0.83410144, a: 1}
-  - {r: 1, g: 0.7094972, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
   mainMenuIndex: 1
   pauseMenuIndex: 3
   optionMenuIndex: 2

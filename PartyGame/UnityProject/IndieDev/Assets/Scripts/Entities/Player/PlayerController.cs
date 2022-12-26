@@ -352,6 +352,12 @@ public class PlayerController : MonoBehaviour
         // Can't be used if is not active, or if player is venting
         if (!isActive) return;
         if (isActiveVent) return;
+        if (reloading && ctx.started)
+        {
+            Debug.Log("Can't shoot!");
+            GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.CantShoot);
+            return;
+        }
 
         isAttacking = ctx.performed;
     }
@@ -592,7 +598,7 @@ public class PlayerController : MonoBehaviour
         {
             autoReloadTimer = 0f;
             reloading = true;
-            reloadTimer = (bulletAmount / (float)maxBulletAmount) * reloadDuration;
+            reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
             isAutoReloading = false;
         }
         else
@@ -622,6 +628,7 @@ public class PlayerController : MonoBehaviour
                 Debug.LogWarning("Entering a turret with a power up cancels this one!");
                 EndOfPowerUp();
             }
+
             accessibleControllableTurret.OnPlayerEnters(this);
             return;
         }
@@ -845,11 +852,12 @@ public class PlayerController : MonoBehaviour
         lastPowerUpIndex = index;
 
         currentPowerUp = GameManager.instance.powerUps[index];
+        playerUI.powerUpImage.color = Color.white;
         playerUI.powerUpImage.sprite = currentPowerUp.powerUpImage;
         playerUI.powerUpSlider.fillAmount = 0;
     } // Gives the player a new power up
 
-    public void CancelPowerUp()
+    private void CancelPowerUp()
     {
         if (!canUsePowerUp || powerUpIsActive) return;
 
@@ -857,11 +865,12 @@ public class PlayerController : MonoBehaviour
         playerUI.powerUpSparks.Stop();
         playerFire.Stop();
         playerUI.powerUpImage.sprite = defaultPowerUpImage;
+        playerUI.powerUpImage.color = Color.black;
 
         currentPowerUp = null;
     } // Prevents the player from bringing a power-up from a game to another
 
-    public void EndOfPowerUp()
+    private void EndOfPowerUp()
     {
         if (!powerUpIsActive) return;
 
@@ -869,6 +878,7 @@ public class PlayerController : MonoBehaviour
         powerUpScore = 0;
         playerUI.powerUpSlider.fillAmount = powerUpScore / powerUpMax;
         playerUI.powerUpImage.sprite = defaultPowerUpImage;
+        playerUI.powerUpImage.color = Color.black;
         canUsePowerUp = false;
         playerUI.usingPowerUpFire.Stop();
         playerFire.Stop();
@@ -964,7 +974,7 @@ public class PlayerController : MonoBehaviour
         precisionRatio.Item1++;
         if (hit) precisionRatio.Item2++;
 
-        precisionRatio.Item3 = (float)((double)precisionRatio.Item2 / precisionRatio.Item1);
+        precisionRatio.Item3 = (float) ((double) precisionRatio.Item2 / precisionRatio.Item1);
     }
 
     public void UpdateCrownTimer()

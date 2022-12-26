@@ -11,10 +11,11 @@ public class FeedbacksManager : MonoBehaviour
     public Vibrations reparationVibration;
     public Vibrations takeDamageVibration;
     public Vibrations shootVibrations;
+    public Vibrations cantShootVibrations;
     public Vibrations controllableShootVibrations;
     public Vibrations enterTurretVibrations;
     
-    public Vibrations GetVibrations(VibrationsType type)
+    private Vibrations GetVibrations(VibrationsType type)
     {
         switch (type)
         {
@@ -28,6 +29,8 @@ public class FeedbacksManager : MonoBehaviour
                 return takeDamageVibration;
             case VibrationsType.Shoot:
                 return shootVibrations;
+            case VibrationsType.CantShoot:
+                return cantShootVibrations;
             case VibrationsType.ControllableTurretShoot:
                 return controllableShootVibrations;
             case VibrationsType.EnterTurret:
@@ -68,7 +71,7 @@ public class FeedbacksManager : MonoBehaviour
         g.highA = data.high;
 
         g.rumbleStep = data.rumbleStep;
-        g.pulseDuration = Time.time + data.rumbleStep;
+        g.pulseDuration = Time.time + data.pulseDuration;
         g.rumbleDuration = Time.time + data.rumbleDuration;
 
         g.isMotorActive = true;
