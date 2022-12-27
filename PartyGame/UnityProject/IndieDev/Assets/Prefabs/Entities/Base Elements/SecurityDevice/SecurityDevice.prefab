@@ -93,6 +93,7 @@ MonoBehaviour:
     englishName: Security Device
   associatedDoors:
   - tr: {fileID: 3932496793417529821}
+    obstacle: {fileID: 5907767827959479873}
     yPosOpened: 0
     yPosClosed: -4
     movingDuration: 3
@@ -658,9 +659,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
---- !u!114 &7590131090020983226 stripped
+--- !u!114 &5015632942854814085 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5139788985162839561, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7753713448178576950, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
   m_PrefabInstance: {fileID: 3315109860898625459}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -691,9 +692,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5015632942854814085 stripped
+--- !u!114 &7590131090020983226 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7753713448178576950, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5139788985162839561, guid: 4ab3abb04dcac124b98afba1b0d49afc, type: 3}
   m_PrefabInstance: {fileID: 3315109860898625459}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -1064,6 +1065,11 @@ PrefabInstance:
 --- !u!23 &1742861532872134520 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5002058060192867179, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
+  m_PrefabInstance: {fileID: 6720780328541465619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &5907767827959479873 stripped
+NavMeshObstacle:
+  m_CorrespondingSourceObject: {fileID: 916932843725443666, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
   m_PrefabInstance: {fileID: 6720780328541465619}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6287531850356629400 stripped

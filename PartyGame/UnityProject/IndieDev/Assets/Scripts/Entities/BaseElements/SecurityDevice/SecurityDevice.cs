@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SecurityDevice : BaseElementManager
 {
@@ -16,6 +17,7 @@ public class SecurityDevice : BaseElementManager
     public class AssociatedDoor
     {
         public Transform tr;
+        public NavMeshObstacle obstacle;
         public float yPosOpened;
         public float yPosClosed;
 
@@ -31,6 +33,7 @@ public class SecurityDevice : BaseElementManager
         {
             var pos = tr.position;
             var yPos = closing ? yPosClosed : yPosOpened;
+            obstacle.enabled = !closing;
             nextPosY = new Vector3(pos.x, yPos, pos.z);
         }
 
