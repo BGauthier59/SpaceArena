@@ -244,7 +244,7 @@ public abstract class BaseElementManager : Entity
 
     #region GUI
 
-    public void InitializeBaseElementInfo()
+    private void InitializeBaseElementInfo()
     {
         switch (GameManager.instance.settings.currentLanguage)
         {
@@ -260,6 +260,8 @@ public abstract class BaseElementManager : Entity
         lifeSlider.maxValue = totalLife;
 
         baseElementInfo.transform.SetParent(partyManager.mainCanvas.transform);
+        baseElementInfo.transform.localRotation = Quaternion.identity;
+        baseElementInfo.transform.localScale = Vector3.one;
         SetLifeSlider();
         SetBaseElementInfo(false);
     }
@@ -267,10 +269,10 @@ public abstract class BaseElementManager : Entity
     public void SetBaseElementInfo(bool active)
     {
         baseElementInfo.SetActive(active);
-        baseElementInfo.transform.position = Camera.main.WorldToScreenPoint(transform.position + partyManager.baseManager.baseElementInfoOffset);
+        baseElementInfo.transform.position = transform.position + Vector3.forward * 2;
     }
     
-    public void SetLifeSlider()
+    private void SetLifeSlider()
     {
         lifeSlider.value = currentLife;
         lifeSliderFill.color = partyManager.baseManager.baseLifeGradient.Evaluate((float) currentLife / totalLife);
