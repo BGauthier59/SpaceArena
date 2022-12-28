@@ -62,7 +62,7 @@ public class DistortionEvent : RandomEvent
     {
         Debug.Log("Distortion Event ends!");
 
-        lensDistortion.intensity.Override(0f);
+        lensDistortion.intensity.value = 0f;
         
         isRunning = false;
     }
