@@ -303,6 +303,16 @@ public class PartyManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         cameraManager.SetZoom(screenLargeZoom);
+
+        if (!gameWon)
+        {
+            Debug.Log("You lost the game, meaning every player's score will be cut by half!");
+            foreach (var pc in GameManager.instance.allPlayers)
+            {
+                pc.manager.score = (int) (pc.manager.score * .5f);
+            }
+        }
+        
         DisplayScore();
 
         yield return new WaitForSeconds(1f); // Pour l'instant, sinon on attent que le winner a eu ses pts
@@ -446,7 +456,6 @@ public class PartyManager : MonoBehaviour
     }
 
     #endregion
-
     
     private void OnDisable()
     {
