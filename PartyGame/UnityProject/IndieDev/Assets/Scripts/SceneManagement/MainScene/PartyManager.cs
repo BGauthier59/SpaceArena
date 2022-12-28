@@ -3,7 +3,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -47,6 +46,7 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private bool hasPartyBegun;
 
     [Header("Interface")] public GameObject mainCanvas;
+    [SerializeField] private Image guiBackground;
     [SerializeField] private GameObject timerArea;
     [SerializeField] private GameObject endOfParty;
     [SerializeField] private GameObject newEndOfParty;
@@ -452,6 +452,12 @@ public class PartyManager : MonoBehaviour
 
         currentWinner.crown.SetActive(true);
         currentWinner.playerUI.crown.enabled = true;
+        var color = GameManager.instance.colors[currentWinner.playerIndex - 1];
+        color.a = guiBackground.color.a;
+        color.r = Mathf.Max(color.r - .5f, 0);
+        color.g = Mathf.Max(color.g - .5f, 0);
+        color.b = Mathf.Max(color.b - .5f, 0);
+        guiBackground.color = color;
         arenaFeedbackManager.OnExcitementGrows?.Invoke(arenaFeedbackManager.highestExcitementScore);
     }
 
