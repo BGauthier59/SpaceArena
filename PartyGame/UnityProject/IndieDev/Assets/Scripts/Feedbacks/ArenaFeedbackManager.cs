@@ -28,7 +28,6 @@ public class ArenaFeedbackManager : MonoBehaviour
                 if (feedback.excitementNeeded < highest) continue;
                 highest = feedback.excitementNeeded;
             }
-            Debug.Log("Cast highest feedbacks!");
             return highest;
         }
     }
@@ -88,7 +87,6 @@ public class ArenaFeedbackManager : MonoBehaviour
 
     public void ForceExcitementToValue(uint value)
     {
-        Debug.LogWarning($"You forces excitement to {value}");
         excitementScore = value;
         excitementTextDebug.text = $"DEBUG Excitement : {excitementScore}";
     }

@@ -142,10 +142,12 @@ public class MainMenuManager : MonoBehaviour
             {
                 playerLobbyAreas[i].area.SetActive(true);
 
+                /*
                 foreach (var image in playerLobbyAreas[i].coloredImages)
                 {
                     image.color = GameManager.instance.colors[i];
                 }
+                */
 
                 string message;
 
