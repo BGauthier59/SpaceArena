@@ -77,7 +77,8 @@ MonoBehaviour:
   - {fileID: 8669692047253818993}
   - {fileID: 8714095208210646252}
   - {fileID: 4760652123018647140}
-  reparationIcon: {fileID: 2666536412172399646}
+  reparationIconData: {fileID: 9044569869860675420}
+  securityCollider: {fileID: 0}
   iconMoveDuration: 0.7
   elementColorRenderers:
   - {fileID: 6089115174099056018}
@@ -512,6 +513,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1767761100699595727, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3193953207751973921, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295749819932307113, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5351851641266612814, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6824285559483989079, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_Name
       value: ReparationArea
@@ -849,16 +866,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e4974f93d243cb4aa06b2048b277e39, type: 3}
---- !u!1 &2666536412172399646 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8584239406313024346, guid: 2e4974f93d243cb4aa06b2048b277e39, type: 3}
-  m_PrefabInstance: {fileID: 5917774987860418372}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1663783136169003943 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4987412287531717859, guid: 2e4974f93d243cb4aa06b2048b277e39, type: 3}
   m_PrefabInstance: {fileID: 5917774987860418372}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9044569869860675420 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3433128984465080344, guid: 2e4974f93d243cb4aa06b2048b277e39, type: 3}
+  m_PrefabInstance: {fileID: 5917774987860418372}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1d77b9e3475a548bb1ec9fef9604b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6369395210017226643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -909,6 +932,22 @@ PrefabInstance:
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767761100699595727, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3193953207751973921, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295749819932307113, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5351851641266612814, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6824285559483989079, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_Name
@@ -982,6 +1021,22 @@ PrefabInstance:
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767761100699595727, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3193953207751973921, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295749819932307113, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5351851641266612814, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6824285559483989079, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_Name
@@ -1060,6 +1115,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SecurityDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 4624479239525161828, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6458495397285613961, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b4d09564dc464b479ecd51f16c05b45, type: 3}
 --- !u!23 &1742861532872134520 stripped
@@ -1132,6 +1195,22 @@ PrefabInstance:
     - target: {fileID: 1054349734119144631, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1767761100699595727, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3193953207751973921, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295749819932307113, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5351851641266612814, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6824285559483989079, guid: 4bff4dda2c271ee4888a2cc4b2805bb2, type: 3}
       propertyPath: m_Name

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,15 +8,18 @@ using Random = UnityEngine.Random;
 
 public abstract class BaseElementManager : Entity
 {
-    [Header("Destroy")] 
-    [SerializeField] private VisualEffect smokeVFX;
-    
-    [Header("Reparation")] 
-    [SerializeField] private int reparationInputs;
+    [Header("Destroy")] [SerializeField] private VisualEffect smokeVFX;
+
+    [Header("Reparation")] [SerializeField]
+    private int reparationInputs;
 
     private int reparationInputsCounter;
     [SerializeField] private ReparationArea[] allReparationAreas;
-    [SerializeField] private GameObject reparationIcon;
+    [SerializeField] private ReparationIconData reparationIconData;
+
+    [Tooltip("A security collider that enables when repairing this base element, killing every entity inside")]
+    [SerializeField]
+    private Collider securityCollider;
 
     private ReparationArea lastCheckingArea;
     private ReparationArea currentCheckingArea;
@@ -23,26 +27,25 @@ public abstract class BaseElementManager : Entity
     private bool isIconMoving;
     [SerializeField] private float iconMoveDuration;
     private float iconMoveTimer;
-    
+
     public Renderer[] elementColorRenderers;
     public Color color;
 
-    [Header("GUI")] 
-    [SerializeField] private GameObject baseElementInfo;
+    [Header("GUI")] [SerializeField] private GameObject baseElementInfo;
     [SerializeField] private Slider lifeSlider;
     [SerializeField] private Image lifeSliderFill;
     [SerializeField] private TextMeshProUGUI baseElementNameText;
     [SerializeField] private TextMeshProUGUI baseElementLifeText;
     [SerializeField] private BaseElementName baseElementName;
 
-    
+
     [Serializable]
     private struct BaseElementName
     {
         public string frenchName;
         public string englishName;
     }
-    
+
     #region Entity
 
     public override void TakeDamage(int damage, Entity attacker = null)
@@ -69,14 +72,14 @@ public abstract class BaseElementManager : Entity
     public override void Start()
     {
         base.Start();
-        
+
         smokeVFX.Stop();
 
         InitializeBaseElementInfo();
-        
+
         // Choix de couleur automatisé
         partyManager.baseManager.allBaseElements.Add(this);
-        
+
         SetBaseElementColor();
 
         SetReparationsAreaNumber();
@@ -102,7 +105,7 @@ public abstract class BaseElementManager : Entity
     {
         int counter = 1;
         int number = Random.Range(2, GameManager.instance.playersNumber + 1);
-        
+
         foreach (var ra in allReparationAreas)
         {
             if (counter > number)
@@ -110,6 +113,7 @@ public abstract class BaseElementManager : Entity
                 ra.gameObject.SetActive(false);
                 continue;
             }
+
             ra.gameObject.SetActive(true);
             counter++;
         }
@@ -140,7 +144,7 @@ public abstract class BaseElementManager : Entity
             if (!area.gameObject.activeSelf) continue;
             area.currentPlayerOnArea.manager.GetPoint(partyManager.baseManager.reparationPoint, transform.position);
         }
-        
+
         CancelReparation();
         foreach (var area in allReparationAreas)
         {
@@ -149,6 +153,14 @@ public abstract class BaseElementManager : Entity
 
         isDead = false;
         Heal(totalLife);
+        if(securityCollider) StartCoroutine(EnablingSecurityCollider());
+    }
+
+    private IEnumerator EnablingSecurityCollider()
+    {
+        securityCollider.enabled = true;
+        yield return new WaitForFixedUpdate();
+        securityCollider.enabled = false;
     }
 
     public void CheckPlayersOnReparationAreas()
@@ -165,17 +177,20 @@ public abstract class BaseElementManager : Entity
             if (!area.gameObject.activeSelf) continue;
             area.isEveryPlayerOn = true;
         }
+
         BeginsReparation();
         return;
     }
-    
+
     public void BeginsReparation()
     {
         // Faire apparaître l'icône de l'input   
 
-        reparationIcon.SetActive(true);
+        reparationIconData.iconObject.SetActive(true);
+        reparationIconData.iconBottom.SetActive(true);
+
         currentCheckingArea = allReparationAreas[0];
-        reparationIcon.transform.position = allReparationAreas[0].iconPosition.position;
+        reparationIconData.iconObject.transform.position = allReparationAreas[0].iconPosition.position;
         allReparationAreas[0].isWaitingForInput = true;
     }
 
@@ -188,8 +203,8 @@ public abstract class BaseElementManager : Entity
             if (!area.gameObject.activeSelf) continue;
             area.isEveryPlayerOn = false;
         }
-        
-        reparationIcon.SetActive(false);
+
+        reparationIconData.iconObject.SetActive(false);
         isIconMoving = false;
         currentCheckingArea = null;
         reparationInputsCounter = 0;
@@ -214,6 +229,7 @@ public abstract class BaseElementManager : Entity
             currentCheckingArea = nextArea;
             iconMoveTimer = 0f;
             isIconMoving = true;
+            reparationIconData.iconBottom.SetActive(false);
         }
     }
 
@@ -223,13 +239,14 @@ public abstract class BaseElementManager : Entity
         {
             if (iconMoveTimer >= iconMoveDuration)
             {
-                reparationIcon.transform.position = currentCheckingArea.iconPosition.position;
+                reparationIconData.iconObject.transform.position = currentCheckingArea.iconPosition.position;
                 currentCheckingArea.isWaitingForInput = true;
+                reparationIconData.iconBottom.SetActive(true);
                 isIconMoving = false;
             }
             else
             {
-                reparationIcon.transform.position = Vector3.Lerp(lastCheckingArea.iconPosition.position,
+                reparationIconData.iconObject.transform.position = Vector3.Lerp(lastCheckingArea.iconPosition.position,
                     currentCheckingArea.iconPosition.position, iconMoveTimer / iconMoveDuration);
 
                 iconMoveTimer += Time.deltaTime;
@@ -238,7 +255,6 @@ public abstract class BaseElementManager : Entity
     }
 
     #region Trigger & Collision
-    
 
     #endregion
 
@@ -251,7 +267,7 @@ public abstract class BaseElementManager : Entity
             case Language.French:
                 baseElementNameText.text = baseElementName.frenchName;
                 break;
-            
+
             case Language.English:
                 baseElementNameText.text = baseElementName.englishName;
                 break;
@@ -271,11 +287,11 @@ public abstract class BaseElementManager : Entity
         baseElementInfo.SetActive(active);
         baseElementInfo.transform.position = transform.position + Vector3.forward * 2;
     }
-    
+
     private void SetLifeSlider()
     {
         lifeSlider.value = currentLife;
-        lifeSliderFill.color = partyManager.baseManager.baseLifeGradient.Evaluate((float) currentLife / totalLife);
+        lifeSliderFill.color = partyManager.baseManager.baseLifeGradient.Evaluate((float)currentLife / totalLife);
         baseElementLifeText.text = $"{currentLife}/{totalLife}";
     }
 
