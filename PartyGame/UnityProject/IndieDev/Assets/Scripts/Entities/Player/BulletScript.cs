@@ -10,23 +10,11 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private int maxDamage;
     [SerializeField] private int minDamage;
 
-    [SerializeField] private float lifeDuration;
-    private float lifeTimer;
-
     [SerializeField] private TrailRenderer bulletLine;
     [SerializeField] private MeshRenderer bulletRenderer;
 
     public bool isAutoTurret;
     
-    private void Update()
-    {
-        if (lifeTimer >= lifeDuration)
-        {
-            lifeTimer = 0f;
-            gameObject.SetActive(false);
-        }
-        else lifeTimer += Time.deltaTime;
-    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -45,10 +33,9 @@ public class BulletScript : MonoBehaviour
             hit = true;
             script.TakeDamage(damage, shooter);
         }
-
-        lifeTimer = lifeDuration;
+        
         if(!isAutoTurret) shooter.controller.UpdatePrecisionRatio(hit);
-        PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
+        gameObject.SetActive(false);
     }
 
     private void Awake()

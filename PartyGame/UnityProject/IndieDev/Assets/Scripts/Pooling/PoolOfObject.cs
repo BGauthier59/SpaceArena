@@ -66,5 +66,6 @@ public enum PoolType
 {
     Bullet, Bullet_Impact, Damage, EnemyDeath, Alien, Hunter, Breaker, HeartBreaker, 
     HunterProjectile, Grenade, Explosion, ControllableTurretProjectile, YellowSplash, PurpleSplash, CyanSplash, PinkSplash,
-    ScorePoint
+    ScorePoint, ShotgunBullet
+    
 }

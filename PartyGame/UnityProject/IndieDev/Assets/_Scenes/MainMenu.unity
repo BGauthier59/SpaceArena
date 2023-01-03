@@ -3554,6 +3554,16 @@ MonoBehaviour:
       englishName: LD-04
     panelImage: {fileID: 0}
     currentIndex: 0
+  - arenas:
+    - translatableName:
+        frenchName: X
+        englishName: X
+      arenaSceneIndex: 9
+    panelName:
+      frenchName: GOTGOT
+      englishName: GOTGOT
+    panelImage: {fileID: 0}
+    currentIndex: 0
   loadingAnim: {fileID: 499483166}
 --- !u!4 &969052267
 Transform:

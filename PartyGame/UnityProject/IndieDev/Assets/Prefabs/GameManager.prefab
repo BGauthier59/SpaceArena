@@ -154,6 +154,7 @@ Transform:
   - {fileID: 4143479492357009238}
   - {fileID: 6788539835768825756}
   - {fileID: 4899788196504159048}
+  - {fileID: 5194236727303343058}
   m_Father: {fileID: 4576669941368348803}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -363,6 +364,7 @@ MonoBehaviour:
   - {fileID: 3440054037391332376}
   - {fileID: 8859914751961483725}
   - {fileID: 6002665978843510583}
+  - {fileID: 5835166977696418642}
   allTranslatableTexts: []
   currentPanel:
     arenas: []
@@ -381,6 +383,56 @@ MonoBehaviour:
   pauseMenuIndex: 3
   optionMenuIndex: 2
   finaleSceneIndex: 4
+--- !u!1 &6066758847647631348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5194236727303343058}
+  - component: {fileID: 5835166977696418642}
+  m_Layer: 0
+  m_Name: Shotgun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5194236727303343058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6066758847647631348}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1947379686137986270}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5835166977696418642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6066758847647631348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cd4d6d5da05954db158151c28e001e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  powerUpImage: {fileID: 0}
+  maxBullets: 6
+  shootingRate: 1
+  bulletSpeed: 1600
+  bulletAmount: 6
+  baseAngle: 60
 --- !u!1 &7543529591412086983
 GameObject:
   m_ObjectHideFlags: 0

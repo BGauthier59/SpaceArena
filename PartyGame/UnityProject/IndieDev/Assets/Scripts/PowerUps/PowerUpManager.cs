@@ -55,19 +55,6 @@ public static class PowerUpList
     }
 }
 
-public class ShotgunBehaviour : PowerUpManager
-{
-    public override void OnUse()
-    {
-        base.OnUse();
-    }
-
-    public override bool OnConditionCheck()
-    {
-        return true; // Must be modified
-    }
-}
-
 public class LaserBehaviour : PowerUpManager
 {
     public override bool OnConditionCheck()

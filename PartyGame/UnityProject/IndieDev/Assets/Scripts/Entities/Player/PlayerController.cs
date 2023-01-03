@@ -720,6 +720,7 @@ public class PlayerController : MonoBehaviour
         trail.enabled = false;
         transform.position = initPos;
         deathFX.gameObject.SetActive(true);
+        transform.SetParent(null);
         ResetPlayer();
     }
 
@@ -845,7 +846,7 @@ public class PlayerController : MonoBehaviour
         {
             do
             {
-                index = UnityEngine.Random.Range(0, 3);
+                index = 3; //UnityEngine.Random.Range(0, GameManager.instance.powerUps.Count);
             } while (index == lastPowerUpIndex);
         }
 
