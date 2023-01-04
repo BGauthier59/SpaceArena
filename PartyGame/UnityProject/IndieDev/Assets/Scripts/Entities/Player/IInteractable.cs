@@ -5,6 +5,6 @@ using UnityEngine;
 // An interface for every behaviours that interact with players' projectiles
 public interface IInteractable
 {
-    public void OnHitByProjectile();
+    public void OnHitByProjectile(Vector3 forward);
 
 }

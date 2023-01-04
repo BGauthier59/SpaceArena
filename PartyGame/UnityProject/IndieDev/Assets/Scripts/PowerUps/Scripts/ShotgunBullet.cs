@@ -15,7 +15,7 @@ public class ShotgunBullet : MonoBehaviour
         Debug.Log(collision.name);
         PoolOfObject.Instance.SpawnFromPool(PoolType.Bullet_Impact, transform.position, Quaternion.identity);
         var interactable = collision.GetComponent<IInteractable>();
-        interactable?.OnHitByProjectile();
+        interactable?.OnHitByProjectile(transform.forward);
 
         if (collision.CompareTag("Enemy") || collision.CompareTag("Player"))
         {

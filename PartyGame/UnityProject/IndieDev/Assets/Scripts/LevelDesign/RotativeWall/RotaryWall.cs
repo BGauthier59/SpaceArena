@@ -18,8 +18,11 @@ public class RotaryWall : MonoBehaviour, IInteractable
         nextRotation = Quaternion.Euler(currentRotation.eulerAngles + Vector3.up * 180);
     }
 
-    public void OnHitByProjectile()
+    public void OnHitByProjectile(Vector3 forward)
     {
+        var factor = Vector3.Dot(forward, rotaryBase.forward);
+        if (factor < 0) return;
+        
         isRotating = true;
         
         // Feedbacks

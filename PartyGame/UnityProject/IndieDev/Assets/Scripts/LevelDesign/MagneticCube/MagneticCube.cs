@@ -72,7 +72,7 @@ public class MagneticCube : MonoBehaviour, IInteractable
         currentMagnetizedCube.rb.velocity = forceDir * forceValue;
     }
 
-    public void OnHitByProjectile()
+    public void OnHitByProjectile(Vector3 forward)
     {
         Debug.Log("Hit!");
         if (rotating) return;
