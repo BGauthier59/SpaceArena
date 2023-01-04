@@ -17,6 +17,7 @@ public class RotaryWallArea : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("exited");
             other.transform.SetParent(null);
         }
     }

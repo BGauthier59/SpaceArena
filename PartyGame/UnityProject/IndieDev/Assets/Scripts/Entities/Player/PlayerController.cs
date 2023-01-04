@@ -846,7 +846,7 @@ public class PlayerController : MonoBehaviour
         {
             do
             {
-                index = 3; //UnityEngine.Random.Range(0, GameManager.instance.powerUps.Count);
+                index = UnityEngine.Random.Range(0, GameManager.instance.powerUps.Count);
             } while (index == lastPowerUpIndex);
         }
 
