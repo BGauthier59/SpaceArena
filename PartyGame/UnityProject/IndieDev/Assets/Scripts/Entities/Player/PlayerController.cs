@@ -727,6 +727,7 @@ public class PlayerController : MonoBehaviour
     public void ResetRespawn() // Called when the player respawns
     {
         SetGaugesState(true);
+        playerUI.lifeSlider.value = manager.currentLife;
         ResetPlayerGraphsAndCollisions();
         ActivatePlayer();
         rb.isKinematic = false;

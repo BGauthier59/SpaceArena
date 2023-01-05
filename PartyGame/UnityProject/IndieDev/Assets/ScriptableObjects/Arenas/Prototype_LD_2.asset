@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f4c8ab1386e3049a311d0a789eaf77, type: 3}
   m_Name: Prototype_LD_2
   m_EditorClassIdentifier: 
+  codeName: 01-02
   translatableName:
-    frenchName: 2
-    englishName: 2
+    frenchName: Conflit dans les Conduits
+    englishName: Duct Conflicts
   arenaSceneIndex: 6

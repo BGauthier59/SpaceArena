@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f4c8ab1386e3049a311d0a789eaf77, type: 3}
   m_Name: Prototype_LD_4
   m_EditorClassIdentifier: 
+  codeName: 01-04
   translatableName:
-    frenchName: 4
-    englishName: 4
+    frenchName: "Face-\xE0-face"
+    englishName: Face-Off
   arenaSceneIndex: 8

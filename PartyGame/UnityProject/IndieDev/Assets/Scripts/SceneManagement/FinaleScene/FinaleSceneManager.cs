@@ -44,6 +44,7 @@ public class FinaleSceneManager : MonoBehaviour
     {
         public GameObject bonusDataObj;
         public TextMeshPro bonusDataText;
+        public TextMeshPro bonusPointText;
     }
 
     [Serializable]
@@ -138,11 +139,12 @@ public class FinaleSceneManager : MonoBehaviour
         bonusName.text = DisplayBonusName(allBonus[0]);
         yield return new WaitForSeconds(displayBonusDataDuration);
         var friendlyFirePlayerData = GetFriendlyFireHitWinner();
-        friendlyFirePlayerData[0].manager.score += (int) allBonus[0].points;
+        friendlyFirePlayerData[0].manager.score += (int)allBonus[0].points;
         bonusDictionary[friendlyFirePlayerData[0]].bonusDataText.text =
             friendlyFirePlayerData[0].friendlyFireHit.ToString();
 
         SetLight(friendlyFirePlayerData[0]);
+
         yield return new WaitForSeconds(displayWinnerDuration);
 
         foreach (var kvp in bonusDictionary)
@@ -150,6 +152,8 @@ public class FinaleSceneManager : MonoBehaviour
             if (kvp.Key == friendlyFirePlayerData[0]) continue;
             kvp.Value.bonusDataText.text = kvp.Key.friendlyFireHit.ToString();
         }
+
+        bonusDictionary[friendlyFirePlayerData[0]].bonusPointText.text = $"+{allBonus[0].points}";
 
         yield return new WaitForSeconds(displayAllResultsDuration);
         spotLight.gameObject.SetActive(false);
@@ -170,7 +174,7 @@ public class FinaleSceneManager : MonoBehaviour
         bonusName.text = DisplayBonusName(allBonus[1]);
         yield return new WaitForSeconds(displayBonusDataDuration);
         var precisionRatioPlayerData = GetPrecisionRatioWinner();
-        precisionRatioPlayerData[0].manager.score += (int) allBonus[1].points;
+        precisionRatioPlayerData[0].manager.score += (int)allBonus[1].points;
 
         bonusDictionary[precisionRatioPlayerData[0]].bonusDataText.text =
             precisionRatioPlayerData[0].precisionRatio.Item3.ToString("F2");
@@ -184,6 +188,8 @@ public class FinaleSceneManager : MonoBehaviour
             if (kvp.Key == precisionRatioPlayerData[0]) continue;
             kvp.Value.bonusDataText.text = kvp.Key.precisionRatio.Item3.ToString("F2");
         }
+
+        bonusDictionary[precisionRatioPlayerData[0]].bonusPointText.text = $"+{allBonus[1].points}";
 
         yield return new WaitForSeconds(displayAllResultsDuration);
         spotLight.gameObject.SetActive(false);
@@ -204,7 +210,7 @@ public class FinaleSceneManager : MonoBehaviour
         bonusName.text = DisplayBonusName(allBonus[2]);
         yield return new WaitForSeconds(displayBonusDataDuration);
         var crownTimerWinner = GetCrownDurationWinner();
-        crownTimerWinner[0].manager.score += (int) allBonus[2].points;
+        crownTimerWinner[0].manager.score += (int)allBonus[2].points;
 
         bonusDictionary[crownTimerWinner[0]].bonusDataText.text = crownTimerWinner[0].crownTimer.ToString("F1");
 
@@ -218,6 +224,8 @@ public class FinaleSceneManager : MonoBehaviour
             kvp.Value.bonusDataText.text = kvp.Key.crownTimer.ToString("F1");
         }
 
+        bonusDictionary[crownTimerWinner[0]].bonusPointText.text = $"+{allBonus[2].points}";
+
         yield return new WaitForSeconds(displayAllResultsDuration);
         spotLight.gameObject.SetActive(false);
         bonusPart.SetActive(false);
@@ -228,8 +236,8 @@ public class FinaleSceneManager : MonoBehaviour
         #region Finale results
 
         cam.SetZoom(finaleViewZoom);
-        
-        
+
+
         yield return new WaitForSeconds(1f);
 
         centerPointScorePart.localPosition =
@@ -291,6 +299,7 @@ public class FinaleSceneManager : MonoBehaviour
         foreach (var data in allPlayerBonusData)
         {
             data.bonusDataText.text = "";
+            data.bonusPointText.text = "";
         }
     }
 
@@ -303,7 +312,7 @@ public class FinaleSceneManager : MonoBehaviour
         {
             if (pc.friendlyFireHit <= top) continue;
             winner = pc;
-            top = (int) pc.friendlyFireHit;
+            top = (int)pc.friendlyFireHit;
         }
 
         data.Add(winner);

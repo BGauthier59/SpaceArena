@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f4c8ab1386e3049a311d0a789eaf77, type: 3}
   m_Name: Prototype_LD_3
   m_EditorClassIdentifier: 
+  codeName: 01-03
   translatableName:
-    frenchName: 3
-    englishName: 3
+    frenchName: Dans le Mille !
+    englishName: Bang On!
   arenaSceneIndex: 7

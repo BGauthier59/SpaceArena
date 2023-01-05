@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f4c8ab1386e3049a311d0a789eaf77, type: 3}
   m_Name: Prototype_LD_5
   m_EditorClassIdentifier: 
+  codeName: 01-05
   translatableName:
-    frenchName: 5
-    englishName: 5
+    frenchName: "Ar\xE8ne \xE0 Sens Unique"
+    englishName: One-way Arena
   arenaSceneIndex: 9

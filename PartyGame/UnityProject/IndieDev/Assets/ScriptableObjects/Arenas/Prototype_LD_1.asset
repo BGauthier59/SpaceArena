@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f4c8ab1386e3049a311d0a789eaf77, type: 3}
   m_Name: Prototype_LD_1
   m_EditorClassIdentifier: 
+  codeName: 01-01
   translatableName:
-    frenchName: 1
-    englishName: 1
+    frenchName: Premiers Pas dans Space Arena
+    englishName: First Steps in Space Arena
   arenaSceneIndex: 5

@@ -56,7 +56,8 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private GameObject loadingPart;
     [SerializeField] private Animation loadingAnim;
     [SerializeField] private Animation displayNameAnim;
-    [SerializeField] private TextMeshProUGUI arenaPanelText;
+    [SerializeField] private TextMeshProUGUI arenaNameText;
+    [SerializeField] private TextMeshProUGUI arenaCodeText;
 
     [SerializeField] private TextOnDisplay tutorialText;
     [SerializeField] private TextMeshProUGUI goText;
@@ -163,17 +164,20 @@ public class PartyManager : MonoBehaviour
         switch (GameManager.instance.settings.currentLanguage)
         {
             case Language.French:
-                arenaPanelText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
+                arenaNameText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
                     .translatableName.frenchName;
                 break;
             case Language.English:
-                arenaPanelText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
+                arenaNameText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
                     .translatableName.englishName;
                 break;
             default:
                 Debug.LogError("Language is not valid.");
                 break;
         }
+
+        arenaCodeText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
+            .codeName;
 
         yield return new WaitForSeconds(1f);
 
@@ -183,17 +187,18 @@ public class PartyManager : MonoBehaviour
 
         loadingPart.SetActive(false);
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.25f);
 
+        displayNameAnim.gameObject.SetActive(true);
         displayNameAnim.Play(displayNameAnim.clip.name);
         
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.75f);
         
         cameraManager.SetZoom(showScreenZoom);
         
-        
         yield return new WaitForSeconds(2.5f);
 
+        displayNameAnim.gameObject.SetActive(false);
         cameraManager.SetZoom(screenLargeZoom);
 
         yield return new WaitForSeconds(1f);
