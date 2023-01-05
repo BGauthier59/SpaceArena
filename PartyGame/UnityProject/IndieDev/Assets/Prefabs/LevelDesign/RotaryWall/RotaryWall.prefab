@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 4175376097204304820}
   - component: {fileID: 4175376097204304823}
   - component: {fileID: 5862886970808350196}
+  - component: {fileID: 5624953043427607522}
   m_Layer: 0
   m_Name: RotaryWall
   m_TagString: Untagged
@@ -435,6 +436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotaryBase: {fileID: 4175376097204304820}
+  obstacle: {fileID: 5624953043427607522}
   rotationDuration: 0.35
 --- !u!65 &5862886970808350196
 BoxCollider:
@@ -449,6 +451,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.25, y: 3, z: 0.25}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!208 &5624953043427607522
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175376097204304821}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.125, y: 1.5, z: 0.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4175376097356373707
 GameObject:
   m_ObjectHideFlags: 0

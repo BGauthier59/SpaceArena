@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RotaryWall : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform rotaryBase;
+    [SerializeField] private NavMeshObstacle obstacle;
     private bool isRotating;
     [SerializeField] private float rotationDuration;
     private float rotationTimer;
@@ -24,7 +26,8 @@ public class RotaryWall : MonoBehaviour, IInteractable
         if (factor < 0) return;
         
         isRotating = true;
-        
+        obstacle.enabled = false;
+
         // Feedbacks
     }
 
@@ -42,6 +45,7 @@ public class RotaryWall : MonoBehaviour, IInteractable
             nextRotation = Quaternion.Euler(currentRotation.eulerAngles + Vector3.up * 180);
             rotationTimer = 0f;
             isRotating = false;
+            obstacle.enabled = true;
         }
         else
         {
@@ -50,7 +54,7 @@ public class RotaryWall : MonoBehaviour, IInteractable
         }
     }
 
-    public void AddPlayerToArea(Transform tr)
+    public void AddEntityToArea(Transform tr)
     {
         tr.SetParent(rotaryBase);
     }

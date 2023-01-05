@@ -6,18 +6,16 @@ public class RotaryWallArea : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
-            Debug.Log("entered");
-            linkedWall.AddPlayerToArea(other.transform);
+            linkedWall.AddEntityToArea(other.transform);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
-            Debug.Log("exited");
             other.transform.SetParent(null);
         }
     }
