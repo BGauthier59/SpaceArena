@@ -62,17 +62,10 @@ public class MainMenuManager : MonoBehaviour
     [Serializable]
     public struct ArenasPanel
     {
-        public ArenaArea[] arenas;
+        public ArenaScriptable[] arenas;
         public TranslatableName panelName;
         public Sprite panelImage;
         [HideInInspector] public int currentIndex;
-    }
-
-    [Serializable]
-    public struct ArenaArea
-    {
-        public TranslatableName translatableName;
-        public int arenaSceneIndex;
     }
 
     [Serializable]

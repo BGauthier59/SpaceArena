@@ -55,6 +55,8 @@ public class PartyManager : MonoBehaviour
     public CameraShake cameraShake;
     [SerializeField] private GameObject loadingPart;
     [SerializeField] private Animation loadingAnim;
+    [SerializeField] private Animation displayNameAnim;
+    [SerializeField] private TextMeshProUGUI arenaPanelText;
 
     [SerializeField] private TextOnDisplay tutorialText;
     [SerializeField] private TextMeshProUGUI goText;
@@ -158,6 +160,21 @@ public class PartyManager : MonoBehaviour
             player.PartyBegins();
         }
 
+        switch (GameManager.instance.settings.currentLanguage)
+        {
+            case Language.French:
+                arenaPanelText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
+                    .translatableName.frenchName;
+                break;
+            case Language.English:
+                arenaPanelText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
+                    .translatableName.englishName;
+                break;
+            default:
+                Debug.LogError("Language is not valid.");
+                break;
+        }
+
         yield return new WaitForSeconds(1f);
 
         loadingAnim.Play(loadingAnim.clip.name);
@@ -165,8 +182,16 @@ public class PartyManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         loadingPart.SetActive(false);
-        cameraManager.SetZoom(showScreenZoom);
 
+        yield return new WaitForSeconds(.5f);
+
+        displayNameAnim.Play(displayNameAnim.clip.name);
+        
+        yield return new WaitForSeconds(.5f);
+        
+        cameraManager.SetZoom(showScreenZoom);
+        
+        
         yield return new WaitForSeconds(2.5f);
 
         cameraManager.SetZoom(screenLargeZoom);

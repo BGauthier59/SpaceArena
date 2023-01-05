@@ -3493,75 +3493,48 @@ MonoBehaviour:
   arenaInfoPosXToReach: 0
   allArenasPanels:
   - arenas:
-    - translatableName:
-        frenchName: LD_01
-        englishName: LD_01
-      arenaSceneIndex: 5
-    - translatableName:
-        frenchName: LD_02
-        englishName: LD_02
-      arenaSceneIndex: 6
-    - translatableName:
-        frenchName: LD_03
-        englishName: LD_04
-      arenaSceneIndex: 7
-    - translatableName:
-        frenchName: LD_03
-        englishName: LD_04
-      arenaSceneIndex: 8
+    - {fileID: 11400000, guid: e8464b5291697ad45aee285a91d29832, type: 2}
+    - {fileID: 11400000, guid: cde8757d51779e448beccf99d6e3ad95, type: 2}
+    - {fileID: 11400000, guid: 69b4e7409ea63074a88fff420cbb84e0, type: 2}
+    - {fileID: 11400000, guid: 2a42d9bb93f2a0141ada70eb95477bf0, type: 2}
     panelName:
       frenchName: Prototype 13/11
       englishName: Prototype 11/13
     panelImage: {fileID: 21300000, guid: 26bd8801fa226234ca2bba50ad97ec41, type: 3}
     currentIndex: 0
   - arenas:
-    - translatableName:
-        frenchName: X
-        englishName: X
-      arenaSceneIndex: 5
+    - {fileID: 11400000, guid: e8464b5291697ad45aee285a91d29832, type: 2}
     panelName:
       frenchName: LD-01
       englishName: LD-01
     panelImage: {fileID: 0}
     currentIndex: 0
   - arenas:
-    - translatableName:
-        frenchName: X
-        englishName: X
-      arenaSceneIndex: 6
+    - {fileID: 11400000, guid: cde8757d51779e448beccf99d6e3ad95, type: 2}
     panelName:
       frenchName: LD-02
       englishName: LD-02
     panelImage: {fileID: 0}
     currentIndex: 0
   - arenas:
-    - translatableName:
-        frenchName: X
-        englishName: X
-      arenaSceneIndex: 7
+    - {fileID: 11400000, guid: 69b4e7409ea63074a88fff420cbb84e0, type: 2}
     panelName:
       frenchName: LD-03
       englishName: LD-03
     panelImage: {fileID: 0}
     currentIndex: 0
   - arenas:
-    - translatableName:
-        frenchName: X
-        englishName: X
-      arenaSceneIndex: 8
+    - {fileID: 11400000, guid: 897184527927ae64c8309c2f510490ed, type: 2}
     panelName:
       frenchName: LD-04
       englishName: LD-04
     panelImage: {fileID: 0}
     currentIndex: 0
   - arenas:
-    - translatableName:
-        frenchName: X
-        englishName: X
-      arenaSceneIndex: 9
+    - {fileID: 11400000, guid: 2a42d9bb93f2a0141ada70eb95477bf0, type: 2}
     panelName:
-      frenchName: GOTGOT
-      englishName: GOTGOT
+      frenchName: LD-05
+      englishName: LD-05
     panelImage: {fileID: 0}
     currentIndex: 0
   loadingAnim: {fileID: 499483166}
