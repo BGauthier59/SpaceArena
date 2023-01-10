@@ -62,7 +62,7 @@ public class PlayerManager : Entity
         if (attacker && (PlayerManager)attacker)
         {
             controller.GetShotByFriendlyFire();
-            damage = (int)(damage * .5f);
+            damage = Mathf.Max((int)(damage * .5f), 1);
         }
         
         base.TakeDamage(damage, attacker);
