@@ -110,6 +110,8 @@ public class PartyManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.instance.TranslateTexts();
+
         StartCoroutine(BeginningGameCinematic());
     }
 

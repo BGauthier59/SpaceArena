@@ -59,6 +59,8 @@ public class MainMenuManager : MonoBehaviour
 
     [SerializeField] private Animation loadingAnim;
 
+    [SerializeField] private TextMeshProUGUI timePlayedText;
+
     [Serializable]
     public struct ArenasPanel
     {
@@ -84,6 +86,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void Initialization()
     {
+        GameManager.instance.TranslateTexts();
+
         GameManager.instance.EnableMainControllerOnly();
 
         eventSystem = GameManager.instance.eventSystem;
@@ -468,4 +472,18 @@ public class MainMenuManager : MonoBehaviour
     }
 
     #endregion
+
+    public void SaveGame()
+    {
+        SaveManager.SaveData(GameManager.instance.playingWholeTime);
+        timePlayedText.text = GameManager.instance.playingWholeTime.ToString();
+        Debug.Log(Application.persistentDataPath);
+    }
+
+    public void LoadSave()
+    {
+        var data = SaveManager.LoadData();
+        GameManager.instance.playingWholeTime = data.saveTimePlayed;
+        timePlayedText.text = GameManager.instance.playingWholeTime.ToString();
+    }
 }

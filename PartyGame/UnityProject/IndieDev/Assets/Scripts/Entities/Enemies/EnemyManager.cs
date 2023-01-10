@@ -70,7 +70,7 @@ public class EnemyManager : Entity
         isDead = false;
     }
 
-    public override void Heal(int heal)
+    protected override void Heal(int heal)
     {
         base.Heal(heal);
     }
@@ -88,14 +88,14 @@ public class EnemyManager : Entity
         base.Update();
     }
 
-    public override void StunEnable()
+    protected override void StunEnable()
     {
         base.StunEnable();
         behaviour.agent.enabled = false;
         behaviour.enabled = false;
     }
 
-    public override void StunDisable()
+    protected override void StunDisable()
     {
         base.StunDisable();
         behaviour.agent.enabled = true;

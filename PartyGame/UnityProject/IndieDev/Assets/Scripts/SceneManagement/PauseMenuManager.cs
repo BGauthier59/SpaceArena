@@ -12,6 +12,8 @@ public class PauseMenuManager : MonoBehaviour
 
     void Start()
     {
+        GameManager.instance.TranslateTexts();
+
         eventSystem = GameManager.instance.eventSystem;
         partyManager = GameManager.instance.partyManager;
 

@@ -12,7 +12,9 @@ public class MenuOptionsManager : MonoBehaviour
     private EventSystem eventSystem;
     [SerializeField] private SliderGUI[] sliders;
     private GameObject lastSelected;
-
+    [SerializeField] private TMP_Dropdown languageDropdown;
+    [SerializeField] private Toggle rumbleToggle;
+    
     [Serializable]
     public struct SliderGUI
     {
@@ -28,6 +30,48 @@ public class MenuOptionsManager : MonoBehaviour
 
     private void Start()
     {
+        Initialization();
+    }
+
+    private void Initialization()
+    {
+        if (!GameManager.instance)
+        {
+            Debug.LogWarning("Game Manager hasn't been found!");
+            return;
+        }
+        
+        GameManager.instance.TranslateTexts();
+
+        var settings = GameManager.instance.settings;
+        foreach (var sliderGui in sliders)
+        {
+            switch (sliderGui.type)
+            {
+                case SliderType.Main:
+                    sliderGui.slider.value = settings.mainVolumeValue;
+                    break;
+                case SliderType.Music:
+                    sliderGui.slider.value = settings.musicVolumeValue;
+                    break;
+                case SliderType.Sfx:
+                    sliderGui.slider.value = settings.sfxVolumeValue;
+                    break;
+                default:
+                    Debug.LogError("This type is invalid!");
+                    return;
+            }
+        }
+
+        languageDropdown.value = settings.currentLanguage switch
+        {
+            Language.French => (int)Language.French,
+            Language.English => (int)Language.English,
+            _ => (int)Language.English // English by default
+        };
+
+        rumbleToggle.isOn = GameManager.instance.settings.rumbleActivated;
+        
         eventSystem = EventSystem.current;
         lastSelected = eventSystem.currentSelectedGameObject;
         eventSystem.SetSelectedGameObject(sliders[0].slider.gameObject);
@@ -44,8 +88,27 @@ public class MenuOptionsManager : MonoBehaviour
             sliderGUI = slider;
             break;
         }
-        
-        sliderGUI.value.text = sliderGUI.slider.value.ToString();
+                
+        var value = (int)sliderGUI.slider.value;
+        sliderGUI.value.text = value.ToString();
+
+        var settings = GameManager.instance.settings;
+
+        switch (sliderGUI.type)
+        {
+            case SliderType.Main:
+                settings.mainVolumeValue = value;
+                break;
+            case SliderType.Music:
+                settings.musicVolumeValue = value;
+                break;
+            case SliderType.Sfx:
+                settings.sfxVolumeValue = value;
+                break;
+            default:
+                Debug.LogError("This type is invalid!");
+                return;
+        }
     }
 
     public void OnQuit()
@@ -77,5 +140,14 @@ public class MenuOptionsManager : MonoBehaviour
         GameManager.instance.settings.currentLanguage = language;
         GameManager.instance.TranslateTexts();
     }
-    
+
+    public void OnRumbleToggle(bool active)
+    {
+        if (!GameManager.instance)
+        {
+            Debug.LogWarning("Game Manager hasn't been found!");
+            return;
+        }
+        GameManager.instance.settings.rumbleActivated = active;
+    }
 }

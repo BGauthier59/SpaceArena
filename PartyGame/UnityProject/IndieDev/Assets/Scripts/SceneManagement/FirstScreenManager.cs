@@ -25,6 +25,8 @@ public class FirstScreenManager : MonoBehaviour
     private void Initialization()
     {
         eventSystem = GameManager.instance.eventSystem;
+        GameManager.instance.TranslateTexts();
+
         eventSystem.SetSelectedGameObject(firstSelected);
     }
     

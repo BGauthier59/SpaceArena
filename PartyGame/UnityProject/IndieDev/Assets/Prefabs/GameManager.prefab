@@ -201,10 +201,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812f21b6b50547b45980e1cd7663a9ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLanguage: 0
+  currentLanguage: 1
   rumbleActivated: 1
   randomEventsOccur: 0
   multiplayerVersion: 0
+  mainVolumeValue: 5
+  musicVolumeValue: 5
+  sfxVolumeValue: 5
 --- !u!1 &2901952424801644936
 GameObject:
   m_ObjectHideFlags: 0

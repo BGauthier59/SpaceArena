@@ -28,7 +28,7 @@ public class Entity : MonoBehaviour
         Stunning();
     }
 
-    public void Initialization()
+    private void Initialization()
     {
         partyManager = GameManager.instance.partyManager;
         currentLife = totalLife;
@@ -50,7 +50,7 @@ public class Entity : MonoBehaviour
         isDead = true;
     }
 
-    public virtual void Heal(int heal)
+    protected virtual void Heal(int heal)
     {
         currentLife = Mathf.Min(currentLife + heal, totalLife);
     }
@@ -65,7 +65,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public void Stunning()
+    private void Stunning()
     {
         if (!isStunned) return;
 
@@ -76,17 +76,17 @@ public class Entity : MonoBehaviour
         else currentStunTimer += Time.deltaTime;
     }
 
-    public virtual void Fall()
+    protected virtual void Fall()
     {
         TakeDamage(totalLife);
     }
 
-    public virtual void StunEnable()
+    protected virtual void StunEnable()
     {
         isStunned = true;
     }
 
-    public virtual void StunDisable()
+    protected virtual void StunDisable()
     {
         isStunned = false;
     }

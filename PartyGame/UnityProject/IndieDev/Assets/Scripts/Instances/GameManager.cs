@@ -60,6 +60,9 @@ public class GameManager : MonoBehaviour
     public int optionMenuIndex;
     public int finaleSceneIndex;
 
+    public int playingWholeTime;
+    private float playingTimer;
+
     #endregion
     
     private void Awake()
@@ -75,6 +78,11 @@ public class GameManager : MonoBehaviour
 
         EnableAllControllers();
         InputSystem.onDeviceChange += OnDeviceChange;
+    }
+
+    private void Update()
+    {
+        RefreshTimePlayed();
     }
 
     private void OnDisable()
@@ -255,6 +263,20 @@ public class GameManager : MonoBehaviour
                 isMain = gamepad == mainGamepad
             });
         }
+    }
+
+    #endregion
+
+    #region Save Management
+
+    private void RefreshTimePlayed()
+    {
+        if (playingTimer >= 1.0f)
+        {
+            playingWholeTime++;
+            playingTimer -= 1.0f;
+        }
+        else playingTimer += Time.deltaTime;
     }
 
     #endregion

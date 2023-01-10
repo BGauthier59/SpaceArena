@@ -61,7 +61,7 @@ public abstract class BaseElementManager : Entity
         base.Death();
     }
 
-    public override void Heal(int heal)
+    protected override void Heal(int heal)
     {
         base.Heal(heal);
         SetLifeSlider();

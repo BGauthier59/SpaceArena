@@ -59,14 +59,16 @@ public class PlayerManager : Entity
 
     public override void TakeDamage(int damage, Entity attacker = null)
     {
+        if (attacker && (PlayerManager)attacker)
+        {
+            controller.GetShotByFriendlyFire();
+            damage = (int)(damage * .5f);
+        }
+        
         base.TakeDamage(damage, attacker);
         GameManager.instance.feedbacks.RumbleConstant(controller.dataGamepad, VibrationsType.TakeDamage);
         controller.playerUI.lifeSlider.value = currentLife;
-        if (attacker)
-        {
-            var attackingPlayer = (PlayerManager)attacker;
-            if(attackingPlayer) controller.GetShotByFriendlyFire();
-        }
+        
     }
 
     protected override void Death()
@@ -79,24 +81,24 @@ public class PlayerManager : Entity
         
     }
 
-    public override void Heal(int heal)
+    protected override void Heal(int heal)
     {
         base.Heal(heal);
     }
 
-    public override void Fall()
+    protected override void Fall()
     {
         controller.CancelDash();
         base.Fall();
     }
 
-    public override void StunEnable()
+    protected override void StunEnable()
     {
         base.StunEnable();
         controller.DeactivatePlayer();
     }
 
-    public override void StunDisable()
+    protected override void StunDisable()
     {
         base.StunDisable();
         controller.ActivatePlayer();

@@ -10,6 +10,10 @@ public class SettingsManager : MonoBehaviour
     [Tooltip("Set to false for a prototype version of the game without any random event")] public bool randomEventsOccur;
     [Tooltip("Set to false for a prototype version of the game allowing to play solo")]
     public bool multiplayerVersion;
+
+    public int mainVolumeValue;
+    public int musicVolumeValue;
+    public int sfxVolumeValue;
 }
 
 public enum Language
