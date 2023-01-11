@@ -28,14 +28,14 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
         CallForHelp
     }
 
-    public override void Initialization()
+    protected override void Initialization()
     {
         base.Initialization();
         lastAttacker = null;
         hasCalledForHelp = false;
     }
 
-    public override void Target()
+    protected override void Target()
     {
         foreach (var element in partyManager.baseManager.allBaseElements)
         {
@@ -54,7 +54,7 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
         }
     }
 
-    public override void SetAvailableTargets()
+    protected override void SetAvailableTargets()
     {
         var entities = new List<Entity>();
         foreach (var baseElement in partyManager.baseManager.allBaseElements)
@@ -65,13 +65,13 @@ public class HeartBreakerBehaviour : EnemyGenericBehaviour
         availableTargets = entities.ToArray();
     }
 
-    public override void Attack()
+    protected override void Attack()
     {
         target.TakeDamage(damage);
         // Inflige directement des dégâts au coeur
     }
 
-    public override void CheckState()
+    protected override void CheckState()
     {
         if (!IsTargetAvailable() && currentState != HeartBreakerState.Cooldown && currentState != HeartBreakerState.Idle)
         {

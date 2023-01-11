@@ -33,18 +33,18 @@ public class HunterBehaviour : EnemyGenericBehaviour
         Idle
     }
 
-    public override void Target()
+    protected override void Target()
     {
         base.Target();
     }
 
-    public override void Initialization()
+    protected override void Initialization()
     {
         base.Initialization();
         SwitchState(HunterState.Idle);
     }
 
-    public override void SetAvailableTargets()
+    protected override void SetAvailableTargets()
     {
         var entities = new List<Entity>();
         foreach (var player in GameManager.instance.allPlayers)
@@ -55,7 +55,7 @@ public class HunterBehaviour : EnemyGenericBehaviour
         availableTargets = entities.ToArray();
     }
 
-    public override void Attack()
+    protected override void Attack()
     {
         Debug.DrawLine(transform.position, targetPos, Color.magenta, .5f);
 
@@ -66,7 +66,7 @@ public class HunterBehaviour : EnemyGenericBehaviour
         hunterProjectile.rb.AddForce(transform.forward * projectileSpeed);
     }
 
-    public override void CheckState()
+    protected override void CheckState()
     {
         if (!IsTargetAvailable() && currentState != HunterState.Cooldown && currentState != HunterState.Idle)
         {

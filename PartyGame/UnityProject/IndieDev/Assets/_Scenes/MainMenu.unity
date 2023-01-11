@@ -4026,6 +4026,13 @@ MonoBehaviour:
       englishName: LD-05
     panelImage: {fileID: 0}
     currentIndex: 0
+  - arenas:
+    - {fileID: 11400000, guid: ab8891b5d0449ae44a2ff05f7784a692, type: 2}
+    panelName:
+      frenchName: Prototype
+      englishName: Prototype
+    panelImage: {fileID: 0}
+    currentIndex: 0
   loadingAnim: {fileID: 499483166}
   timePlayedText: {fileID: 1013763687}
 --- !u!4 &969052267

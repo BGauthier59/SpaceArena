@@ -28,19 +28,19 @@ public class BreakerBehaviour : EnemyGenericBehaviour
         ChangeTarget
     }
 
-    public override void Target()
+    protected override void Target()
     {
         base.Target();
     }
 
-    public override void Initialization()
+    protected override void Initialization()
     {
         base.Initialization();
         isRetargeting = false;
         SwitchState(BreakerState.Idle);
     }
 
-    public override void SetAvailableTargets()
+    protected override void SetAvailableTargets()
     {
         var entities = new List<Entity>();
         foreach (var baseElement in partyManager.baseManager.allBaseElements)
@@ -51,7 +51,7 @@ public class BreakerBehaviour : EnemyGenericBehaviour
         availableTargets = entities.ToArray();
     }
 
-    public override void Attack()
+    protected override void Attack()
     {
         target.TakeDamage(damage);
         // Inflige directement des dégâts au base element
@@ -71,7 +71,7 @@ public class BreakerBehaviour : EnemyGenericBehaviour
         else timerBetweenRetarget += Time.deltaTime;
     }
 
-    public override void CheckState()
+    protected override void CheckState()
     {
         if (!IsTargetAvailable() && currentState != BreakerState.Cooldown && currentState != BreakerState.Idle)
         {

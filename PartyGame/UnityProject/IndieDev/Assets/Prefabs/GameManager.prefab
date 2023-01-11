@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLanguage: 1
   rumbleActivated: 1
-  randomEventsOccur: 0
+  randomEventsOccur: 1
   multiplayerVersion: 0
   mainVolumeValue: 5
   musicVolumeValue: 5
@@ -386,6 +386,7 @@ MonoBehaviour:
   pauseMenuIndex: 3
   optionMenuIndex: 2
   finaleSceneIndex: 4
+  playingWholeTime: 0
 --- !u!1 &6066758847647631348
 GameObject:
   m_ObjectHideFlags: 0

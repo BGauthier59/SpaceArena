@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class EnemyGenericBehaviour : MonoBehaviour
+public abstract class EnemyGenericBehaviour : MonoBehaviour
 {
     #region Variables
 
@@ -51,7 +51,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
     protected PartyManager partyManager;
 
     #endregion
-    
+
     private void Start()
     {
         Initialization();
@@ -63,7 +63,7 @@ public class EnemyGenericBehaviour : MonoBehaviour
         AttackDuration();
     }
 
-    public virtual void Initialization()
+    protected virtual void Initialization()
     {
         partyManager = GameManager.instance.partyManager;
         agent.enabled = true;
@@ -72,29 +72,29 @@ public class EnemyGenericBehaviour : MonoBehaviour
         targetPos = Vector3.zero;
     }
 
-    public virtual void Target()
+    protected virtual void Target()
     {
         SetAvailableTargets();
         target = DetectedEntity(availableTargets);
     }
-    
-    public bool IsTargetAvailable()
+
+    protected bool IsTargetAvailable()
     {
         if (!target || target.isDead) return false;
 
         var path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, targetPos, NavMesh.AllAreas, path);
-        
+
         return path.status == NavMeshPathStatus.PathComplete || path.status == NavMeshPathStatus.PathPartial;
     }
 
-    public Entity DetectedEntity(Entity[] targets, Entity exception = null)
+    protected Entity DetectedEntity(Entity[] targets, Entity exception = null)
     {
         var reachableEntities = new List<Entity>();
-        
+
         foreach (var t in targets)
         {
-            if(t == exception) continue;
+            if (t == exception) continue;
             if (t && !t.isDead) reachableEntities.Add(t);
         }
 
@@ -109,35 +109,29 @@ public class EnemyGenericBehaviour : MonoBehaviour
             var path = new NavMeshPath();
             NavMesh.CalculatePath(transform.position, reachable.transform.position, NavMesh.AllAreas, path);
             if (path.status != NavMeshPathStatus.PathComplete) continue;
-            
+
             // Est-ce que l'entité est plus proche que la précédente sélectionnée ?
             var distance = Vector3.Distance(reachable.transform.position, transform.position);
             if (distance > nearestDistance) continue;
-            
+
             nearestDistance = distance;
             nearest = reachable;
         }
-        
+
         return nearest;
     }
 
-    public virtual void SetAvailableTargets()
-    {
-        
-    }
-    
-    public virtual void CheckState()
-    {
-        
-    }
-    
-    public virtual void Attack()
+    protected abstract void SetAvailableTargets();
+
+    protected abstract void CheckState();
+
+    protected virtual void Attack()
     {
         attackArea.gameObject.SetActive(true);
         isAttacking = true;
     }
 
-    public void AttackDuration()
+    private void AttackDuration()
     {
         if (!isAttacking) return;
         if (attackTimer > attackDuration)
@@ -149,45 +143,50 @@ public class EnemyGenericBehaviour : MonoBehaviour
         else attackTimer += Time.deltaTime;
     }
 
-    public (bool, Vector3) RandomPointOnPath()
+    protected (bool, Vector3) RandomPointOnPath()
     {
         // Set un point aléatoire dans le radius d'idle
         var randomPoint = transform.position + Random.insideUnitSphere * idleRandomPointMaxDistance;
-        
+
         // Check si on navmesh
         NavMeshHit hit;
-        if (!NavMesh.SamplePosition(randomPoint, out hit, idleRandomPointMaxDistance, NavMesh.AllAreas)) return (false, Vector3.zero);
-        
+        if (!NavMesh.SamplePosition(randomPoint, out hit, idleRandomPointMaxDistance, NavMesh.AllAreas))
+            return (false, Vector3.zero);
+
         var nextPos = hit.position;
         if (Vector3.Distance(transform.position, nextPos) < idleRandomPointMinDistance) return (false, Vector3.zero);
 
         var path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, nextPos, NavMesh.AllAreas, path);
-        if (path.status == NavMeshPathStatus.PathInvalid || path.status == NavMeshPathStatus.PathPartial) return (false, Vector3.zero);
+        if (path.status == NavMeshPathStatus.PathInvalid || path.status == NavMeshPathStatus.PathPartial)
+            return (false, Vector3.zero);
 
         return (true, nextPos);
     }
-    
-    public void StopAgent()
+
+    protected void StopAgent()
     {
         if (!agent.enabled) return;
-        
+
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
         manager.rb.velocity = Vector3.zero;
         manager.rb.isKinematic = true;
     }
 
-    public void UnstopAgent()
+    protected void UnstopAgent()
     {
         if (!agent.enabled) return;
-        
+
         agent.isStopped = false;
         manager.rb.isKinematic = false;
     }
 
-    public void SetTarget(Entity t) => target = t;
-    
+    public void SetTarget(Entity t)
+    {
+        target = t;
+    }
+
     private void OnEnable()
     {
         Initialization();

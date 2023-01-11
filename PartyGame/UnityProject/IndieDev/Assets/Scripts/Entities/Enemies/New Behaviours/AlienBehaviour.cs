@@ -26,7 +26,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
         Idle
     }
 
-    public override void Initialization()
+    protected override void Initialization()
     {
         base.Initialization();
         if(initSpeed != 0) speed = initSpeed;
@@ -35,12 +35,12 @@ public class AlienBehaviour : EnemyGenericBehaviour
         SwitchState(AlienState.Idle);
     }
 
-    public override void Target()
+    protected override void Target()
     {
         base.Target();
     }
 
-    public override void SetAvailableTargets()
+    protected override void SetAvailableTargets()
     {
         var entities = new List<Entity>();
         foreach (var player in GameManager.instance.allPlayers)
@@ -56,7 +56,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
         availableTargets = entities.ToArray();
     }
 
-    public override void Attack()
+    protected override void Attack()
     {
         base.Attack();
     }
@@ -74,7 +74,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
         else timerBetweenRetreats += Time.deltaTime;
     }
 
-    public override void CheckState()
+    protected override void CheckState()
     {
         if (!IsTargetAvailable() && currentState != AlienState.Cooldown && currentState != AlienState.Idle)
         {

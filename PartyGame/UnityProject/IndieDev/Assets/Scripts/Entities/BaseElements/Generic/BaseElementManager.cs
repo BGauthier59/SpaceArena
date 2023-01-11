@@ -54,11 +54,11 @@ public abstract class BaseElementManager : Entity
         SetLifeSlider();
     }
 
-    protected override void Death()
+    protected override void Death(Entity killer)
     {
         if (isDead) return;
         OnDestroyed();
-        base.Death();
+        base.Death(killer);
     }
 
     protected override void Heal(int heal)

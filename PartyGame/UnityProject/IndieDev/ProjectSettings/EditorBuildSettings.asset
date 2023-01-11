@@ -35,5 +35,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Arenas/Prototype_13_Novembre/Prototype_LD_05.unity
     guid: 8ab74a8941a4c4640b67090e1e2190bd
+  - enabled: 1
+    path: Assets/_Scenes/Arenas/Prototype_13_Novembre/Prototype_Gotgot.unity
+    guid: a103609289497dc4fac7c6fcb9d4e128
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9e57137e192b1154f891b60b93fc7c6d, type: 2}

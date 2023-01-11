@@ -41,11 +41,11 @@ public class Entity : MonoBehaviour
         if (currentLife <= 0)
         {
             currentLife = 0;
-            Death();
+            Death(attacker);
         }
     }
 
-    protected virtual void Death()
+    protected virtual void Death(Entity killer)
     {
         isDead = true;
     }

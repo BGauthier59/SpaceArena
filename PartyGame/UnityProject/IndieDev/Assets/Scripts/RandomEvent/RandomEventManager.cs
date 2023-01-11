@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,10 +9,13 @@ public class RandomEventManager : MonoBehaviour
 {
     public List<RandomEvent> events;
     public List<RandomEvent> currentEvents;
+    private RandomEvent lastStartedEvent;
     public CameraZoom randomEventZoom;
     private NewWavesManager wavesManager;
 
     public bool isStartingEvent;
+    [SerializeField] private GameObject randomEventTimerArea;
+    [SerializeField] private TextMeshProUGUI randomEventTimerText;
 
     private bool begun;
     [SerializeField] private float durationBeforeFirstEvent;
@@ -43,7 +47,10 @@ public class RandomEventManager : MonoBehaviour
         begun = true;
     }
 
-    public void StartRandomEventManager() => begun = false;
+    public void StartRandomEventManager()
+    {
+        begun = false;
+    }
 
     private void Update()
     {
@@ -52,6 +59,14 @@ public class RandomEventManager : MonoBehaviour
         CheckFirstTimer();
         CheckTimer();
         CheckEventDuration();
+        UpdateTimer();
+    }
+
+    private void UpdateTimer()
+    {
+        if (currentEvents.Count == 0) return;
+        var ev = currentEvents[0];
+        randomEventTimerText.text = ((int)(ev.eventDuration - ev.eventTimer)).ToString();
     }
 
     private void CheckFirstTimer()
@@ -93,8 +108,7 @@ public class RandomEventManager : MonoBehaviour
             if (re.eventTimer >= re.eventDuration)
             {
                 re.eventTimer = 0f;
-                re.EndEvent();
-                currentEvents.Remove(re);
+                RemoveEvent(re);
             }
             else re.eventTimer += Time.deltaTime;
         }
@@ -102,7 +116,14 @@ public class RandomEventManager : MonoBehaviour
         if (currentEvents.Count == 0) isEventRunning = false;
     }
 
-    public void StartNewRandomEvent()
+    public void RemoveEvent(RandomEvent @event)
+    {
+        @event.EndEvent();
+        currentEvents.Remove(@event);
+        if (currentEvents.Count == 0) randomEventTimerArea.SetActive(false);
+    }
+
+    private void StartNewRandomEvent()
     {
         // Set Random Event
         RandomEvent newEvent;
@@ -117,8 +138,9 @@ public class RandomEventManager : MonoBehaviour
                 Debug.LogWarning("No Event found. Choosing same event");
                 break;
             }
-        } while (currentEvents.Contains(newEvent));
+        } while (currentEvents.Contains(newEvent) || lastStartedEvent == newEvent);
 
+        lastStartedEvent = newEvent;
         StartCoroutine(StartingNewEvent(newEvent));
     }
 
@@ -139,10 +161,13 @@ public class RandomEventManager : MonoBehaviour
         isStartingEvent = false;
         isEventRunning = true;
         @event.StartEvent();
+        randomEventTimerArea.SetActive(true);
     }
 
     public void CancelRandomEventManager()
     {
+        randomEventTimerArea.SetActive(false);
+
         if (currentEvents.Count == 0)
         {
             Debug.Log("No event to cancel");

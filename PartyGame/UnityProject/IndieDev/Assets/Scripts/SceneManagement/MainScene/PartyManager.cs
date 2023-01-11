@@ -65,7 +65,7 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private GameObject randomEventArea;
 
     [SerializeField] private float rotatingSkyboxSpeed;
-    
+
     [Serializable]
     public struct TextOnDisplay
     {
@@ -93,7 +93,10 @@ public class PartyManager : MonoBehaviour
             tmp.gameObject.SetActive(true);
         }
 
-        public void DisableText() => tmp.gameObject.SetActive(false);
+        public void DisableText()
+        {
+            tmp.gameObject.SetActive(false);
+        }
     }
 
     [Serializable]
@@ -166,11 +169,13 @@ public class PartyManager : MonoBehaviour
         switch (GameManager.instance.settings.currentLanguage)
         {
             case Language.French:
-                arenaNameText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
+                arenaNameText.text = GameManager.instance.currentPanel
+                    .arenas[GameManager.instance.currentPanel.currentIndex]
                     .translatableName.frenchName;
                 break;
             case Language.English:
-                arenaNameText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
+                arenaNameText.text = GameManager.instance.currentPanel
+                    .arenas[GameManager.instance.currentPanel.currentIndex]
                     .translatableName.englishName;
                 break;
             default:
@@ -193,11 +198,11 @@ public class PartyManager : MonoBehaviour
 
         displayNameAnim.gameObject.SetActive(true);
         displayNameAnim.Play(displayNameAnim.clip.name);
-        
+
         yield return new WaitForSeconds(.75f);
-        
+
         cameraManager.SetZoom(showScreenZoom);
-        
+
         yield return new WaitForSeconds(2.5f);
 
         displayNameAnim.gameObject.SetActive(false);
@@ -251,7 +256,7 @@ public class PartyManager : MonoBehaviour
         wavesManager.StartNewWave();
         randomEventManager.StartRandomEventManager();
         cameraManager.ResetZoom();
-        
+
         // Feedbacks
         arenaFeedbackManager.OnExcitementGrows?.Invoke(arenaFeedbackManager.highestExcitementScore);
         arenaFeedbackManager.ForceExcitementToValue(5);
@@ -271,14 +276,14 @@ public class PartyManager : MonoBehaviour
             EndingGame(true);
         }
         else partyTimer -= Time.deltaTime;
-        
-        timerText.text = ConvertSecondsInMinutes((int) partyTimer);
+
+        timerText.text = ConvertSecondsInMinutes((int)partyTimer);
 
         foreach (var pc in GameManager.instance.allPlayers)
         {
             pc.UpdateCrownTimer();
         }
-        
+
         arenaFeedbackManager.CheckTimer(Time.deltaTime);
     }
 
@@ -341,10 +346,10 @@ public class PartyManager : MonoBehaviour
             Debug.Log("You lost the game, meaning every player's score will be cut by half!");
             foreach (var pc in GameManager.instance.allPlayers)
             {
-                pc.manager.score = (int) (pc.manager.score * .5f);
+                pc.manager.score = (int)(pc.manager.score * .5f);
             }
         }
-        
+
         DisplayScore();
 
         yield return new WaitForSeconds(1f); // Pour l'instant, sinon on attent que le winner a eu ses pts
@@ -371,6 +376,7 @@ public class PartyManager : MonoBehaviour
             }
             else newScoreAreas[i].area.SetActive(false);
         }
+
         arenaFeedbackManager.OnExcitementGrows?.Invoke(arenaFeedbackManager.highestExcitementScore);
     }
 
@@ -424,7 +430,10 @@ public class PartyManager : MonoBehaviour
     {
         SetScreenRandomEvent(true);
         ev.randomEventText.SetText();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2.5f);
+        ev.SetAdditionalInfo();
+        yield return new WaitForSeconds(2.5f);
+        ev.DisableAdditionalInfo();
         ev.randomEventText.DisableText();
         SetScreenRandomEvent(false);
     }
@@ -494,7 +503,7 @@ public class PartyManager : MonoBehaviour
     }
 
     #endregion
-    
+
     private void OnDisable()
     {
         RenderSettings.skybox.SetFloat("_Rotation", 0);

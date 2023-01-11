@@ -55,9 +55,9 @@ public class EnemyManager : Entity
         player.GetPoint(deathPoint, transform.position);
     }
 
-    protected override void Death()
+    protected override void Death(Entity killer)
     {
-        base.Death();
+        base.Death(killer);
         partyManager.arenaFeedbackManager.OnExcitementGrows?.Invoke(1);
         gameObject.SetActive(false);
     }

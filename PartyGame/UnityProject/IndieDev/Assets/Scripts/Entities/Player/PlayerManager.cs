@@ -24,10 +24,10 @@ public class PlayerManager : Entity
         {
             respawnTimer = 0f;
             isRespawning = false;
-            
+
             isDead = false;
             Heal(totalLife);
-            
+
             controller.ResetRespawn();
         }
         else respawnTimer += Time.deltaTime;
@@ -64,21 +64,36 @@ public class PlayerManager : Entity
             controller.GetShotByFriendlyFire();
             damage = Mathf.Max((int)(damage * .5f), 1);
         }
-        
+
         base.TakeDamage(damage, attacker);
         GameManager.instance.feedbacks.RumbleConstant(controller.dataGamepad, VibrationsType.TakeDamage);
         controller.playerUI.lifeSlider.value = currentLife;
-        
     }
 
-    protected override void Death()
+    protected override void Death(Entity killer)
     {
-        base.Death();
+        base.Death(killer);
         partyManager.arenaFeedbackManager.OnExcitementGrows?.Invoke(1);
         controller.ResetDeath();
         GetPoint(deathMalusPoint, Vector3.zero);
         isRespawning = true;
-        
+
+        OnPlayerKilled(killer);
+    }
+
+    private void OnPlayerKilled(Entity killer)
+    {
+        if (!killer) return;
+        var killerPc = ((PlayerManager)killer).controller;
+        if (!killerPc) return;
+        if (WantedNoticeEvent.OnPlayerKilledPredicate?.Invoke((controller, killerPc)) != true) return;
+
+        for (int i = GameManager.instance.partyManager.randomEventManager.currentEvents.Count - 1; i >= 0; i--)
+        {
+            var wantedEvent = (WantedNoticeEvent)GameManager.instance.partyManager.randomEventManager.currentEvents[i];
+            if (!wantedEvent) continue;
+            partyManager.randomEventManager.RemoveEvent(wantedEvent);
+        }
     }
 
     protected override void Heal(int heal)
