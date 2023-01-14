@@ -37,8 +37,7 @@ public abstract class BaseElementManager : Entity
     [SerializeField] private TextMeshProUGUI baseElementNameText;
     [SerializeField] private TextMeshProUGUI baseElementLifeText;
     [SerializeField] private BaseElementName baseElementName;
-
-
+    
     [Serializable]
     private struct BaseElementName
     {
@@ -262,16 +261,12 @@ public abstract class BaseElementManager : Entity
 
     private void InitializeBaseElementInfo()
     {
-        switch (GameManager.instance.settings.currentLanguage)
+        baseElementNameText.text = GameManager.instance.settings.currentLanguage switch
         {
-            case Language.French:
-                baseElementNameText.text = baseElementName.frenchName;
-                break;
-
-            case Language.English:
-                baseElementNameText.text = baseElementName.englishName;
-                break;
-        }
+            Language.French => baseElementName.frenchName,
+            Language.English => baseElementName.englishName,
+            _ => baseElementNameText.text
+        };
 
         lifeSlider.maxValue = totalLife;
 

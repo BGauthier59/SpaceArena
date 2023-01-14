@@ -208,6 +208,7 @@ MonoBehaviour:
   attackArea: {fileID: 8109762214770479914}
   damage: 10
   agent: {fileID: 2396810920112995011}
+  maxDistanceToTarget: 15
   minDistanceToAttack: 2
   durationBeforeTarget: 0.5
   durationBeforeFollow: 0.3

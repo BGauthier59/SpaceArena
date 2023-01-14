@@ -20,7 +20,7 @@ public class CameraManager : MonoBehaviour
         _securityDistance = Mathf.Pow(securityOffsetMinDistanceBetweenPlayers, 2);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (GameManager.instance.allPlayers.Count == 0) return;
         if (!currentZoom) return;

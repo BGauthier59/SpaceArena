@@ -23,6 +23,7 @@ public class WantedNoticeEvent : RandomEvent
     {
         if (couple.killed != wantedPlayer) return false;
         couple.killer.manager.GetPoint(points, couple.killer.transform.position);
+        partyManager.arenaFeedbackManager.OnExcitementGrows?.Invoke(5);
         return true;
     }
 

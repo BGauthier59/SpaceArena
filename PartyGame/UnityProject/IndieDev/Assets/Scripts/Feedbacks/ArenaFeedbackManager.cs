@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -92,7 +93,10 @@ public class ArenaFeedbackManager : MonoBehaviour
     }
 
     #region Excitement Feedbacks
+    
+    // To link with Unity Events
 
+    [UsedImplicitly]
     public void StartFlashEffect()
     {
         foreach (var ps in flashEffects)

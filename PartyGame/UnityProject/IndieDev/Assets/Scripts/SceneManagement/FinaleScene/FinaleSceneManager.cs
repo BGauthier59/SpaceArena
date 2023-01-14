@@ -264,6 +264,7 @@ public class FinaleSceneManager : MonoBehaviour
         finaleMenu.SetActive(true);
         GameManager.instance.eventSystem.SetSelectedGameObject(finaleMenuFirstSelected);
     }
+    
 
     private void SetLight(PlayerController winner)
     {

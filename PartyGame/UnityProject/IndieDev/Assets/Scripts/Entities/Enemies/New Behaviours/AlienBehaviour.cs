@@ -45,11 +45,17 @@ public class AlienBehaviour : EnemyGenericBehaviour
         var entities = new List<Entity>();
         foreach (var player in GameManager.instance.allPlayers)
         {
+            var distance = Vector3.SqrMagnitude(player.transform.position - transform.position);
+            if (distance > sqrMaxDistanceToTarget) continue;
+            
             entities.Add(player.manager);
         }
 
         foreach (var baseElement in partyManager.baseManager.allBaseElements)
         {
+            var distance = Vector3.SqrMagnitude(baseElement.transform.position - transform.position);
+            if (distance > sqrMaxDistanceToTarget) continue;
+            
             entities.Add(baseElement);
         }
 
@@ -65,6 +71,11 @@ public class AlienBehaviour : EnemyGenericBehaviour
     {
         base.Update();
 
+        CheckRetreatTimer();
+    }
+
+    private void CheckRetreatTimer()
+    {
         if (!isRetreating) return;
         if (timerBetweenRetreats > durationBetweenRetreats)
         {
@@ -134,7 +145,7 @@ public class AlienBehaviour : EnemyGenericBehaviour
                         Quaternion.LookRotation(-(transform.position - targetPos)),
                         Time.deltaTime * rotateSpeed);
                         */
-                    
+
                     timerBeforeAttack += Time.deltaTime;
                 }
 

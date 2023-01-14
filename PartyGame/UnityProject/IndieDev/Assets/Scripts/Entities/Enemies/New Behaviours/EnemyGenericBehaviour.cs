@@ -21,6 +21,9 @@ public abstract class EnemyGenericBehaviour : MonoBehaviour
 
     public NavMeshAgent agent;
 
+    [SerializeField] private float maxDistanceToTarget;
+    protected float sqrMaxDistanceToTarget;
+    
     public float minDistanceToAttack;
 
     [Header("Timers")] [SerializeField] protected float durationBeforeTarget;
@@ -70,6 +73,7 @@ public abstract class EnemyGenericBehaviour : MonoBehaviour
         agent.speed = speed;
         target = null;
         targetPos = Vector3.zero;
+        sqrMaxDistanceToTarget = Mathf.Pow(maxDistanceToTarget, 2);
     }
 
     protected virtual void Target()
@@ -169,6 +173,7 @@ public abstract class EnemyGenericBehaviour : MonoBehaviour
         if (!agent.enabled) return;
 
         agent.isStopped = true;
+        agent.updateRotation = false;
         agent.velocity = Vector3.zero;
         manager.rb.velocity = Vector3.zero;
         manager.rb.isKinematic = true;
@@ -179,6 +184,7 @@ public abstract class EnemyGenericBehaviour : MonoBehaviour
         if (!agent.enabled) return;
 
         agent.isStopped = false;
+        agent.updateRotation = true;
         manager.rb.isKinematic = false;
     }
 

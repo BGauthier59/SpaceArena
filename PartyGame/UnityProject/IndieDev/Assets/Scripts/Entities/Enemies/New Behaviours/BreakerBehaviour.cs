@@ -45,6 +45,8 @@ public class BreakerBehaviour : EnemyGenericBehaviour
         var entities = new List<Entity>();
         foreach (var baseElement in partyManager.baseManager.allBaseElements)
         {
+            var distance = Vector3.SqrMagnitude(baseElement.transform.position - transform.position);
+            if (distance > sqrMaxDistanceToTarget) continue;
             entities.Add(baseElement);
         }
 
