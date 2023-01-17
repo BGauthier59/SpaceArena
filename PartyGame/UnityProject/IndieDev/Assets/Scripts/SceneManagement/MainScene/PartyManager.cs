@@ -56,6 +56,7 @@ public class PartyManager : MonoBehaviour
     [SerializeField] private GameObject loadingPart;
     [SerializeField] private Animation loadingAnim;
     [SerializeField] private Animation displayNameAnim;
+    [SerializeField] private Animation displayMessageAnim;
     [SerializeField] private TextMeshProUGUI arenaNameText;
     [SerializeField] private TextMeshProUGUI arenaCodeText;
 
@@ -327,8 +328,13 @@ public class PartyManager : MonoBehaviour
         enemiesManager.DeactivateAllEnemies();
         wavesManager.enabled = false;
         randomEventManager.CancelRandomEventManager();
+        
+        yield return new WaitForSeconds(.5f);
 
-        yield return new WaitForSeconds(1f);
+        displayMessageAnim.Play(displayMessageAnim.clip.name);
+        displayMessageAnim.gameObject.SetActive(true);
+        
+        yield return new WaitForSeconds(.5f);
 
         cameraManager.SetZoom(lightDezoom);
 
