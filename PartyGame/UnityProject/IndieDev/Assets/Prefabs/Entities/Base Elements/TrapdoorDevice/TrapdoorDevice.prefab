@@ -898,7 +898,7 @@ MonoBehaviour:
   baseElementNameText: {fileID: 2491738140230996703}
   baseElementLifeText: {fileID: 1034391086404995808}
   baseElementName:
-    frenchName: Gestionnaire de trappes
+    frenchName: Porte de trappes
     englishName: Trapdoor device
   baseElementNameAnim: {fileID: 5158167799709891256}
   baseElementNameAnimText: {fileID: 4143443744304539455}

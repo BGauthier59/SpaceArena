@@ -292,8 +292,8 @@ MonoBehaviour:
   baseElementNameText: {fileID: 5108413196848700221}
   baseElementLifeText: {fileID: 7649980972927501058}
   baseElementName:
-    frenchName: "G\xE9n\xE9rateur Electrique"
-    englishName: Electric Generator
+    frenchName: Batterie
+    englishName: Electrical Cell
   baseElementNameAnim: {fileID: 1342084191669388148}
   baseElementNameAnimText: {fileID: 7833180454711320307}
   allLights:

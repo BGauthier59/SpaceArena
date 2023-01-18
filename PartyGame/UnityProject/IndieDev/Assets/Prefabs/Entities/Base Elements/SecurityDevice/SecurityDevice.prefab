@@ -91,7 +91,7 @@ MonoBehaviour:
   baseElementNameText: {fileID: 7590131090020983226}
   baseElementLifeText: {fileID: 5015632942854814085}
   baseElementName:
-    frenchName: "Dispositif de S\xE9curit\xE9"
+    frenchName: "Bloc de Contr\xF4le"
     englishName: Security Device
   baseElementNameAnim: {fileID: 7992202212447990149}
   baseElementNameAnimText: {fileID: 1224706386903657474}
