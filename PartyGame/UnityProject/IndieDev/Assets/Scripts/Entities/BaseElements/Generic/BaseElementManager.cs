@@ -37,7 +37,10 @@ public abstract class BaseElementManager : Entity
     [SerializeField] private TextMeshProUGUI baseElementNameText;
     [SerializeField] private TextMeshProUGUI baseElementLifeText;
     [SerializeField] private BaseElementName baseElementName;
-    
+
+    [SerializeField] private Animation baseElementNameAnim;
+    [SerializeField] private TextMeshProUGUI baseElementNameAnimText;
+
     [Serializable]
     private struct BaseElementName
     {
@@ -152,7 +155,7 @@ public abstract class BaseElementManager : Entity
 
         isDead = false;
         Heal(totalLife);
-        if(securityCollider) StartCoroutine(EnablingSecurityCollider());
+        if (securityCollider) StartCoroutine(EnablingSecurityCollider());
     }
 
     private IEnumerator EnablingSecurityCollider()
@@ -270,9 +273,19 @@ public abstract class BaseElementManager : Entity
 
         lifeSlider.maxValue = totalLife;
 
-        baseElementInfo.transform.SetParent(partyManager.mainCanvas.transform);
-        baseElementInfo.transform.localRotation = Quaternion.identity;
-        baseElementInfo.transform.localScale = Vector3.one;
+        // Base Element Info
+        var tr1 = baseElementInfo.transform;
+        tr1.SetParent(partyManager.mainCanvas.transform);
+        tr1.localRotation = Quaternion.identity;
+        tr1.localScale = Vector3.one;
+
+        // Base Element Name
+        var tr2 = baseElementNameAnim.transform;
+        tr2.SetParent(partyManager.mainCanvas.transform);
+        tr2.localRotation = Quaternion.identity;
+        tr2.localScale = Vector3.one;
+        baseElementNameAnim.gameObject.SetActive(false);
+
         SetLifeSlider();
         SetBaseElementInfo(false);
     }
@@ -289,6 +302,20 @@ public abstract class BaseElementManager : Entity
         lifeSliderFill.color = partyManager.baseManager.baseLifeGradient.Evaluate((float)currentLife / totalLife);
         baseElementLifeText.text = $"{currentLife}/{totalLife}";
     }
+
+    public void PlayBaseElementNameAnim()
+    {
+        baseElementNameAnimText.text = GameManager.instance.settings.currentLanguage switch
+        {
+            Language.French => baseElementName.frenchName,
+            Language.English => baseElementName.englishName,
+            _ => "No name found!"
+        };
+
+        baseElementNameAnim.gameObject.SetActive(true);
+        baseElementNameAnim.transform.position = transform.position + Vector3.forward + Vector3.right * 4;
+        baseElementNameAnim.Play(baseElementNameAnim.clip.name);
+    } // Happens once when game starts
 
     #endregion
 }

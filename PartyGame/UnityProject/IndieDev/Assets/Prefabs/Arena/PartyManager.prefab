@@ -1079,6 +1079,7 @@ MonoBehaviour:
   showScreenZoom: {fileID: 11400000, guid: 0ca2c322c68a7bc41833227a067a9cd5, type: 2}
   lightDezoom: {fileID: 11400000, guid: 4d5eaa540e83bc643a3c00ef1abaa49d, type: 2}
   screenLargeZoom: {fileID: 11400000, guid: 5446a5f1022020543bf6896eefaeba2a, type: 2}
+  showArenaZoom: {fileID: 11400000, guid: 1fc1861fcf909f64c880be09ca787c8a, type: 2}
   partyDuration: 240
   durationBeforeCrownAppears: 15
   gameState: 0

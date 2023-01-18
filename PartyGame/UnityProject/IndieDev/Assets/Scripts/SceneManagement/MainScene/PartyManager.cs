@@ -26,6 +26,7 @@ public class PartyManager : MonoBehaviour
     [Header("Cinematic camera zooms")] public CameraZoom showScreenZoom;
     public CameraZoom lightDezoom;
     public CameraZoom screenLargeZoom;
+    public CameraZoom showArenaZoom;
 
     [Header("Game Parameters")] [Tooltip("Duration in seconds")] [SerializeField]
     private float partyDuration;
@@ -213,12 +214,23 @@ public class PartyManager : MonoBehaviour
 
         tutorialText.SetText();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         tutorialText.DisableText();
-        cameraManager.SetZoom(lightDezoom);
+        cameraManager.SetZoom(showArenaZoom);
+
+        yield return new WaitForSeconds(1.5f);
+
+        // Show base elements names
+
+        foreach (var baseElement in baseManager.allBaseElements)
+        {
+            baseElement.PlayBaseElementNameAnim();
+        }
 
         yield return new WaitForSeconds(3f);
+        cameraManager.SetZoom(lightDezoom);
+        yield return new WaitForSeconds(1f);
 
         goText.gameObject.SetActive(true);
         goText.text = "3";

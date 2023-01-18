@@ -5355,7 +5355,7 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1435404026}
     m_SelectOnRight: {fileID: 1435404026}
   m_Transition: 1
   m_Colors:
@@ -6009,6 +6009,10 @@ PrefabInstance:
       objectReference: {fileID: 841106180}
     - target: {fileID: 3286445773191676210, guid: 9c9b505a3620452439d8a4895130e0c1, type: 3}
       propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 1244699653}
+    - target: {fileID: 3286445773191676210, guid: 9c9b505a3620452439d8a4895130e0c1, type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
       value: 
       objectReference: {fileID: 1244699653}
     - target: {fileID: 3286445773191676210, guid: 9c9b505a3620452439d8a4895130e0c1, type: 3}
