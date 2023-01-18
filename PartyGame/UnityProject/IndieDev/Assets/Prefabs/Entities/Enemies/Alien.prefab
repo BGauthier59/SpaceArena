@@ -218,8 +218,8 @@ MonoBehaviour:
   durationBeforeRandomPoint: 5
   durationBeforeRandomPointGap: 2
   durationBeforeRandomPointReal: 0
-  idleRandomPointMaxDistance: 7
-  idleRandomPointMinDistance: 2
+  idleRandomPointMaxDistance: 15
+  idleRandomPointMinDistance: 3
   currentState: 0
   retreatRate: 50
   rotateSpeed: 5

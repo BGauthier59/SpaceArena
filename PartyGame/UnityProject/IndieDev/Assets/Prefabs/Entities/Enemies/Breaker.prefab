@@ -155,8 +155,8 @@ MonoBehaviour:
   durationBeforeRandomPoint: 2
   durationBeforeRandomPointGap: 0.5
   durationBeforeRandomPointReal: 0
-  idleRandomPointMaxDistance: 4
-  idleRandomPointMinDistance: 1
+  idleRandomPointMaxDistance: 10
+  idleRandomPointMinDistance: 5
   currentState: 0
   changeTargetRate: 75
   durationBetweenRetarget: 2

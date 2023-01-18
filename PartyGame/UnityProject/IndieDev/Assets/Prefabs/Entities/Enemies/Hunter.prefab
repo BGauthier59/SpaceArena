@@ -196,6 +196,7 @@ MonoBehaviour:
   attackArea: {fileID: 0}
   damage: 12
   agent: {fileID: 2396810920112995011}
+  maxDistanceToTarget: 0
   minDistanceToAttack: 0
   durationBeforeTarget: 0.25
   durationBeforeFollow: 0.4
@@ -205,8 +206,8 @@ MonoBehaviour:
   durationBeforeRandomPoint: 4
   durationBeforeRandomPointGap: 1
   durationBeforeRandomPointReal: 0
-  idleRandomPointMaxDistance: 8
-  idleRandomPointMinDistance: 2
+  idleRandomPointMaxDistance: 25
+  idleRandomPointMinDistance: 10
   currentState: 0
   distancesFromPlayer:
     x: 4
