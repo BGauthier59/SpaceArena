@@ -228,7 +228,7 @@ public class PartyManager : MonoBehaviour
             baseElement.PlayBaseElementNameAnim();
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         cameraManager.SetZoom(lightDezoom);
         yield return new WaitForSeconds(1f);
 
