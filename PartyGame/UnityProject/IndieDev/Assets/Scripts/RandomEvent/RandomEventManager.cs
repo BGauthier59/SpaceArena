@@ -21,6 +21,9 @@ public class RandomEventManager : MonoBehaviour
     [SerializeField] private float durationBeforeFirstEvent;
     private float timerBeforeFirstEvent;
 
+    [SerializeField] private float cancellationTime;
+    private bool canHappen;
+
     [SerializeField] private float durationBeforeNextEvent;
     private float timerBeforeNextEvent;
 
@@ -50,16 +53,24 @@ public class RandomEventManager : MonoBehaviour
     public void StartRandomEventManager()
     {
         begun = false;
+        canHappen = true;
     }
 
     private void Update()
     {
-        if (partyManager.gameState == PartyManager.GameState.End) return;
+        if (!canHappen) return;
 
         CheckFirstTimer();
         CheckTimer();
         CheckEventDuration();
         UpdateTimer();
+    }
+
+    public void CheckPartyTimer(float remainingTime)
+    {
+        if (!canHappen || remainingTime > cancellationTime) return;
+        canHappen = false;
+        Debug.Log($"Cancels Random Event Manager at {remainingTime} seconds!");
     }
 
     private void UpdateTimer()

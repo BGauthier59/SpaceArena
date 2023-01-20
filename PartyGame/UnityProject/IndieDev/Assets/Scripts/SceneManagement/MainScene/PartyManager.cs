@@ -289,14 +289,11 @@ public class PartyManager : MonoBehaviour
             EndingGame(true);
         }
         else partyTimer -= Time.deltaTime;
-
         timerText.text = ConvertSecondsInMinutes((int)partyTimer);
 
-        foreach (var pc in GameManager.instance.allPlayers)
-        {
-            pc.UpdateCrownTimer();
-        }
-
+        foreach (var pc in GameManager.instance.allPlayers) pc.UpdateCrownTimer();
+        
+        randomEventManager.CheckPartyTimer(partyTimer);
         arenaFeedbackManager.CheckTimer(Time.deltaTime);
     }
 
