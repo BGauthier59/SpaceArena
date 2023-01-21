@@ -623,7 +623,7 @@ MonoBehaviour:
   isStartingEvent: 0
   randomEventTimerArea: {fileID: 1110024920753937760}
   randomEventTimerText: {fileID: 828568438311141847}
-  durationBeforeFirstEvent: 5
+  durationBeforeFirstEvent: 20
   cancellationTime: 15
   durationBeforeNextEvent: 40
   isEventRunning: 0

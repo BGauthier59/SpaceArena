@@ -58,7 +58,7 @@ public class RandomEventManager : MonoBehaviour
 
     private void Update()
     {
-        if (!canHappen) return;
+        if (!canHappen || partyManager.gameState == PartyManager.GameState.End) return;
 
         CheckFirstTimer();
         CheckTimer();
@@ -77,7 +77,7 @@ public class RandomEventManager : MonoBehaviour
     {
         if (currentEvents.Count == 0) return;
         var ev = currentEvents[0];
-        randomEventTimerText.text = ((int)(ev.eventDuration - ev.eventTimer)).ToString();
+        randomEventTimerText.text = ((int) (ev.eventDuration - ev.eventTimer)).ToString();
     }
 
     private void CheckFirstTimer()
@@ -168,6 +168,12 @@ public class RandomEventManager : MonoBehaviour
         // Afficher l'event sur le main screen
 
         yield return new WaitForSeconds(startingEventDuration);
+
+        if (partyManager.gameState == PartyManager.GameState.End)
+        {
+            Debug.Log("Security cancellation");
+            yield break;
+        }
 
         isStartingEvent = false;
         isEventRunning = true;

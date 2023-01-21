@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ShowArenaZoom
   m_EditorClassIdentifier: 
   target: 1
-  offset: {x: 0, y: 30, z: -15}
+  offset: {x: 0, y: 30, z: -9}
   offsetSpeed: 3
-  eulerAngles: {x: 65, y: 0, z: 0}
+  eulerAngles: {x: 75, y: 0, z: 0}
   eulerAnglesSpeed: 2.5
   fieldOfView: 60
   fovSpeed: 5

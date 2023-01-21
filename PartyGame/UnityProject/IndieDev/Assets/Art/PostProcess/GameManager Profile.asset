@@ -141,3 +141,43 @@ MonoBehaviour:
   - {fileID: -3930747085040346458}
   - {fileID: -4199923719979818934}
   - {fileID: -3314479504497993285}
+  - {fileID: 359038248407086596}
+--- !u!114 &359038248407086596
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
+  m_Name: ShadowsMidtonesHighlights
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  shadows:
+    m_OverrideState: 1
+    m_Value: {x: 0.8691626, y: 0.85489964, z: 1, w: 0.04765687}
+  midtones:
+    m_OverrideState: 1
+    m_Value: {x: 0.97382224, y: 0.96103024, z: 1, w: 0.011119767}
+  highlights:
+    m_OverrideState: 1
+    m_Value: {x: 0.8709881, y: 0.91739327, z: 1, w: 0}
+  shadowsStart:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
+  shadowsEnd:
+    m_OverrideState: 0
+    m_Value: 0.3
+    min: 0
+  highlightsStart:
+    m_OverrideState: 0
+    m_Value: 0.55
+    min: 0
+  highlightsEnd:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0

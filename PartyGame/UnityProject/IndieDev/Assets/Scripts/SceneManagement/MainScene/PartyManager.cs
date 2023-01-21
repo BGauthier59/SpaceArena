@@ -219,7 +219,7 @@ public class PartyManager : MonoBehaviour
         tutorialText.DisableText();
         cameraManager.SetZoom(showArenaZoom);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
 
         // Show base elements names
 

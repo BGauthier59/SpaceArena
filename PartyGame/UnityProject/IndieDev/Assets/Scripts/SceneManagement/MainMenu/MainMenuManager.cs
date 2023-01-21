@@ -151,11 +151,11 @@ public class MainMenuManager : MonoBehaviour
                 switch (GameManager.instance.settings.currentLanguage)
                 {
                     case Language.French:
-                        message = "En attente...";
+                        message = "Presse une touche pour te connecter...";
                         break;
 
                     case Language.English:
-                        message = "Waiting...";
+                        message = "Press any touch to connect...";
                         break;
 
                     default:
