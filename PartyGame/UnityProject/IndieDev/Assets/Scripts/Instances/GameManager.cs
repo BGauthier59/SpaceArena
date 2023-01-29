@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     public List<PowerUpManager> powerUps;
     public List<TranslatableText> allTranslatableTexts;
     public MainMenuManager.ArenasPanel currentPanel;
+    public LoadingTextScriptable[] allLoadingTexts;
     public bool isPaused;
 
     #endregion
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour
     private float playingTimer;
 
     #endregion
-    
+
     private void Awake()
     {
         if (instance != null && instance != this)

@@ -3987,8 +3987,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 69b4e7409ea63074a88fff420cbb84e0, type: 2}
     - {fileID: 11400000, guid: 2a42d9bb93f2a0141ada70eb95477bf0, type: 2}
     panelName:
-      frenchName: Prototype 13/11
-      englishName: Prototype 11/13
+      frenchName: Playtest Panel
+      englishName: Playtest Panel
     panelImage: {fileID: 21300000, guid: 26bd8801fa226234ca2bba50ad97ec41, type: 3}
     currentIndex: 0
   - arenas:

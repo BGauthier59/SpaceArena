@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLanguage: 1
   rumbleActivated: 1
-  randomEventsOccur: 1
+  randomEventsOccur: 0
   multiplayerVersion: 0
   mainVolumeValue: 5
   musicVolumeValue: 5
@@ -376,6 +376,12 @@ MonoBehaviour:
       englishName: 
     panelImage: {fileID: 0}
     currentIndex: 0
+  allLoadingTexts:
+  - {fileID: 11400000, guid: 0c704684d3a783b48b1cbd44ba86fa6a, type: 2}
+  - {fileID: 11400000, guid: 66648d8366231f641b73586bbfafd850, type: 2}
+  - {fileID: 11400000, guid: 1fa310a0c1fd1d84e82cd894e6c23454, type: 2}
+  - {fileID: 11400000, guid: a435de548c7791e42a8961874b8410aa, type: 2}
+  - {fileID: 11400000, guid: 54f24a3ae307e9d42811b4dba1200844, type: 2}
   isPaused: 0
   colors:
   - {r: 1, g: 0, b: 0, a: 1}

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98472becdab3f349950261059acf87a, type: 3}
+  m_Name: LoadingText_4
+  m_EditorClassIdentifier: 
+  frenchText: "A la fin de la partie, des points bonus sont offerts \xE0 certains
+    joueurs ! Rien n'est jou\xE9 d'avance."
+  englishText: By the end of the game, bonus points are given to some players! It's
+    never a foregone conclusion.

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98472becdab3f349950261059acf87a, type: 3}
+  m_Name: LoadingText_1
+  m_EditorClassIdentifier: 
+  frenchText: "Coop\xE9rez avec les autres joueurs pour prot\xE9ger votre base !
+    Mais assurez-vous d'avoir plus de points qu'eux..."
+  englishText: Cooperate with other players to protect your base! But make sure you
+    get more points than they do...

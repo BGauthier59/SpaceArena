@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class PartyManager : MonoBehaviour
 {
@@ -63,6 +64,7 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private TextOnDisplay tutorialText;
     [SerializeField] private TextMeshProUGUI goText;
+    [SerializeField] private TextMeshProUGUI loadingText;
 
     [SerializeField] private GameObject randomEventArea;
 
@@ -188,8 +190,20 @@ public class PartyManager : MonoBehaviour
         arenaCodeText.text = GameManager.instance.currentPanel.arenas[GameManager.instance.currentPanel.currentIndex]
             .codeName;
 
-        yield return new WaitForSeconds(1f);
+        loadingText.gameObject.SetActive(true);
+        var randomText =
+            GameManager.instance.allLoadingTexts[Random.Range(0, GameManager.instance.allLoadingTexts.Length)];
 
+        loadingText.text = GameManager.instance.settings.currentLanguage switch
+        {
+            Language.French => randomText.frenchText,
+            Language.English => randomText.englishText,
+            _ => "Error!"
+        };
+
+        yield return new WaitForSeconds(5f);
+
+        loadingText.gameObject.SetActive(false);
         loadingAnim.Play(loadingAnim.clip.name);
 
         yield return new WaitForSeconds(1f);
