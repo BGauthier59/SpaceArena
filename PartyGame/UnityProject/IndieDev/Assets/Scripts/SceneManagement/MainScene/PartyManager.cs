@@ -64,6 +64,7 @@ public class PartyManager : MonoBehaviour
 
     [SerializeField] private TextOnDisplay tutorialText;
     [SerializeField] private TextMeshProUGUI goText;
+    private int loadingTextCurrentIndex = -1;
     [SerializeField] private TextMeshProUGUI loadingText;
 
     [SerializeField] private GameObject randomEventArea;
@@ -191,19 +192,14 @@ public class PartyManager : MonoBehaviour
             .codeName;
 
         loadingText.gameObject.SetActive(true);
-        var randomText =
-            GameManager.instance.allLoadingTexts[Random.Range(0, GameManager.instance.allLoadingTexts.Length)];
-
-        loadingText.text = GameManager.instance.settings.currentLanguage switch
-        {
-            Language.French => randomText.frenchText,
-            Language.English => randomText.englishText,
-            _ => "Error!"
-        };
-
+        ChangeLoadingText();
+        GameManager.instance.eventSystem.SetSelectedGameObject(loadingText.gameObject);
+        GameManager.instance.EnableAllControllers();
         yield return new WaitForSeconds(5f);
 
+        GameManager.instance.DisableAllControllers();
         loadingText.gameObject.SetActive(false);
+        GameManager.instance.eventSystem.SetSelectedGameObject(null);
         loadingAnim.Play(loadingAnim.clip.name);
 
         yield return new WaitForSeconds(1f);
@@ -303,10 +299,11 @@ public class PartyManager : MonoBehaviour
             EndingGame(true);
         }
         else partyTimer -= Time.deltaTime;
+
         timerText.text = ConvertSecondsInMinutes((int)partyTimer);
 
         foreach (var pc in GameManager.instance.allPlayers) pc.UpdateCrownTimer();
-        
+
         randomEventManager.CheckPartyTimer(partyTimer);
         arenaFeedbackManager.CheckTimer(Time.deltaTime);
     }
@@ -351,12 +348,12 @@ public class PartyManager : MonoBehaviour
         enemiesManager.DeactivateAllEnemies();
         wavesManager.enabled = false;
         randomEventManager.CancelRandomEventManager();
-        
+
         yield return new WaitForSeconds(.5f);
 
         displayMessageAnim.Play(displayMessageAnim.clip.name);
         displayMessageAnim.gameObject.SetActive(true);
-        
+
         yield return new WaitForSeconds(.5f);
 
         cameraManager.SetZoom(lightDezoom);
@@ -454,6 +451,26 @@ public class PartyManager : MonoBehaviour
     }
 
     #region Display
+
+    public void ChangeLoadingText()
+    {
+        int randomValue = 0;
+        do
+        {
+            if (GameManager.instance.allLoadingTexts.Length < 2) break;
+            
+            randomValue = Random.Range(0, GameManager.instance.allLoadingTexts.Length);
+        } while (loadingTextCurrentIndex == randomValue);
+
+        loadingTextCurrentIndex = randomValue;
+        var randomText = GameManager.instance.allLoadingTexts[randomValue];
+        loadingText.text = GameManager.instance.settings.currentLanguage switch
+        {
+            Language.French => randomText.frenchText,
+            Language.English => randomText.englishText,
+            _ => "Error!"
+        };
+    }
 
     public IEnumerator RandomEventSetDisplay(RandomEvent ev)
     {
