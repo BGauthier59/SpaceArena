@@ -55,7 +55,7 @@ public class TurretScript : MonoBehaviour
             var bullet = newBullet.GetComponent<BulletScript>();
             bullet.isAutoTurret = true;
             bullet.shooter = user.manager;
-            bullet.SetBulletColor();
+            bullet.InitializeBullet();
             bullet.rb.AddForce(rotatingPart.forward * bulletSpeed);
         }
     }

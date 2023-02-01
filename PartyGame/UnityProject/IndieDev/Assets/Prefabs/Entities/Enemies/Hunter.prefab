@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 552ff10b626f7e743a71267658410fea, type: 2}
+  - {fileID: 2100000, guid: 3df2720689ecfaa4e984de5bb8c21c48, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 2396810920112995018}
   - component: {fileID: 2396810920112995011}
   - component: {fileID: 2396810920112995020}
-  - component: {fileID: 2396810920112995021}
+  - component: {fileID: 4648827806959314487}
   - component: {fileID: 2396810920112995022}
   m_Layer: 6
   m_Name: Hunter
@@ -190,7 +190,7 @@ MonoBehaviour:
   availableTargets: []
   target: {fileID: 0}
   speed: 8
-  manager: {fileID: 2396810920112995021}
+  manager: {fileID: 4648827806959314487}
   isMoving: 0
   isAttacking: 0
   attackArea: {fileID: 0}
@@ -220,7 +220,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 320
   col: {fileID: 2396810920112995018}
---- !u!114 &2396810920112995021
+--- !u!114 &4648827806959314487
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2396810920112995019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1e2ecdaa39fd2b4db67c672b41a3f12, type: 3}
+  m_Script: {fileID: 11500000, guid: 553f9020dd0857a42a8db33109a500be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   totalLife: 60
@@ -240,7 +240,7 @@ MonoBehaviour:
   isDead: 0
   isStunned: 0
   behaviour: {fileID: 2396810920112995020}
-  powerUpScore: 2
+  powerUpScore: 3
   mesh: {fileID: 5798334160371906306}
   hitPoint: 2
   deathPoint: 5
@@ -414,7 +414,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 552ff10b626f7e743a71267658410fea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -13,6 +13,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float securityOffsetMinDistanceBetweenPlayers;
     private float _securityDistance;
     [SerializeField] private float securityYOffsetPerMeterAboveMinDistance;
+    [SerializeField] private float securityZOffsetPerMeterAboveMinDistance;
     private Vector3 _securityOffset;
 
     private void Start()
@@ -46,8 +47,11 @@ public class CameraManager : MonoBehaviour
 
         if (maxDistance > _securityDistance)
         {
-            _securityOffset = Vector3.up * (Mathf.Sqrt(maxDistance) - securityOffsetMinDistanceBetweenPlayers) *
-                              securityYOffsetPerMeterAboveMinDistance;
+            var dist = Mathf.Sqrt(maxDistance);
+            _securityOffset = Vector3.up * ((dist - securityOffsetMinDistanceBetweenPlayers) *
+                                            securityYOffsetPerMeterAboveMinDistance)
+                              + Vector3.back * ((dist - securityOffsetMinDistanceBetweenPlayers) *
+                                                securityZOffsetPerMeterAboveMinDistance);
         }
         else _securityOffset = Vector3.zero;
 
@@ -95,7 +99,7 @@ public class CameraManager : MonoBehaviour
             transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, currentZoom.eulerAngles,
                 Time.fixedDeltaTime * currentZoom.eulerAnglesSpeed);
         }
-        
+
         // Set field of view
         if (Math.Abs(mainCamera.fieldOfView - currentZoom.fieldOfView) > .01f)
         {

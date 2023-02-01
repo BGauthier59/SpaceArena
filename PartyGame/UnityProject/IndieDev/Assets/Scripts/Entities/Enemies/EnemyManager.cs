@@ -7,12 +7,6 @@ public class EnemyManager : Entity
     [SerializeField] private Animator mesh;
     public int hitPoint;
     public int deathPoint;
-    public EnemyType enemyType;
-    
-    public enum EnemyType
-    {
-        Breaker, Hunter, Base, HeartBreaker 
-    }
 
     #region Entity
 
@@ -24,24 +18,7 @@ public class EnemyManager : Entity
         }
 
         base.TakeDamage(damage, attacker);
-        switch (enemyType)
-        {
-            case EnemyType.Base :
-                PoolOfObject.Instance.SpawnFromPool(PoolType.YellowSplash, transform.position, attackDirection);
-                break;
-            
-            case EnemyType.Breaker :
-                PoolOfObject.Instance.SpawnFromPool(PoolType.CyanSplash, transform.position, attackDirection);
-                break;
-            
-            case EnemyType.HeartBreaker :
-                PoolOfObject.Instance.SpawnFromPool(PoolType.PinkSplash, transform.position, attackDirection);
-                break;
-            
-            case EnemyType.Hunter :
-                PoolOfObject.Instance.SpawnFromPool(PoolType.PurpleSplash, transform.position, attackDirection);
-                break;
-        }
+        
 
         if (!attacker) return;
         if (!isDead) return;
@@ -65,6 +42,7 @@ public class EnemyManager : Entity
     private void ResetEnemy()
     {
         // Reset enemy after death
+       
 
         Heal(totalLife);
         isDead = false;

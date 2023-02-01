@@ -139,7 +139,7 @@ public class ControllableTurret : MonoBehaviour
             .SpawnFromPool(PoolType.ControllableTurretProjectile, cannonOrigin.position, rotatingPart.rotation)
             .GetComponent<BulletScript>();
         bullet.shooter = playerInside.manager;
-        bullet.SetBulletColor();
+        bullet.InitializeBullet();
         if (playerInside.helpingAimSet) bullet.rb.AddForce(playerInside.helpingAimDirection.normalized * bulletSpeed);
         else bullet.rb.AddForce(transform.forward * bulletSpeed);
         

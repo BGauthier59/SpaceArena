@@ -426,7 +426,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!grounded) return;
 
-        var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y);
+        var moveVector = new Vector3(leftJoystickInput.x, 0, leftJoystickInput.y).normalized;
         rb.velocity = moveVector * (speed * Time.fixedDeltaTime);
     }
 
@@ -534,7 +534,7 @@ public class PlayerController : MonoBehaviour
                         .SpawnFromPool(PoolType.Bullet, bulletOrigin.position, transform.rotation)
                         .GetComponent<BulletScript>();
                     bullet.shooter = manager;
-                    bullet.SetBulletColor();
+                    bullet.InitializeBullet();
 
                     if (helpingAimSet) bullet.rb.AddForce(helpingAimDirection.normalized * bulletSpeed);
                     else bullet.rb.AddForce(transform.forward * bulletSpeed);
@@ -902,6 +902,11 @@ public class PlayerController : MonoBehaviour
 
         deathFX.gameObject.SetActive(false);
         playerUI.deathTimerUI.enabled = false;
+        if (partyManager.gameState == PartyManager.GameState.End)
+        {
+            Debug.LogWarning("Tried to activate player when game was ended!");
+            return;
+        }
         isActive = true;
     }
 

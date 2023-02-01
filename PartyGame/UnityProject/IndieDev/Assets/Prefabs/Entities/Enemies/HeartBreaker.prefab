@@ -122,7 +122,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 886f4b0be20ab164e9b8c3ae5979819d, type: 2}
+  - {fileID: 2100000, guid: 3df2720689ecfaa4e984de5bb8c21c48, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -275,6 +275,7 @@ MonoBehaviour:
   attackArea: {fileID: 0}
   damage: 20
   agent: {fileID: 2396810920112995011}
+  maxDistanceToTarget: 0
   minDistanceToAttack: 2
   durationBeforeTarget: 0.5
   durationBeforeFollow: 0.5
@@ -304,8 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bcc2f1217645a44a07df6162ace584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalLife: 350
-  currentLife: 350
+  totalLife: 200
+  currentLife: 200
   animator: {fileID: 0}
   rb: {fileID: 2396810920112995022}
   attackDirection: {x: 0, y: 0, z: 0, w: 0}
@@ -408,7 +409,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 886f4b0be20ab164e9b8c3ae5979819d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -546,6 +547,10 @@ PrefabInstance:
     - target: {fileID: 9187764086538261639, guid: 246541f02830d8549a8b23d3f9ac963c, type: 3}
       propertyPath: m_Name
       value: CallingHelp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9187764086538261639, guid: 246541f02830d8549a8b23d3f9ac963c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 246541f02830d8549a8b23d3f9ac963c, type: 3}

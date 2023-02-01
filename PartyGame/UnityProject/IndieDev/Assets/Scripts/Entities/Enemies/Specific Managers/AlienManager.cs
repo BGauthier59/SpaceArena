@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AlienManager : EnemyManager
@@ -17,5 +15,11 @@ public class AlienManager : EnemyManager
             var entity = other.GetComponent<Entity>();
             entity.TakeDamage(behaviour.damage);
         }
+    }
+    
+    protected override void Death(Entity killer)
+    {
+        base.Death(killer);
+        PoolOfObject.Instance.SpawnFromPool(PoolType.YellowSplash, transform.position, attackDirection);
     }
 }

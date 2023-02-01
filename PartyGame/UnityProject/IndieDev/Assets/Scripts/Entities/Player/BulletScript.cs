@@ -12,6 +12,7 @@ public class BulletScript : MonoBehaviour
 
     [SerializeField] private TrailRenderer bulletLine;
     [SerializeField] private MeshRenderer bulletRenderer;
+    [SerializeField] private ParticleSystem sparkVfx;
 
     public bool isAutoTurret;
     
@@ -43,12 +44,14 @@ public class BulletScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void SetBulletColor()
+    public void InitializeBullet()
     {
         bulletLine.material.SetColor("_EmissionColor",
             GameManager.instance.colors[shooter.controller.playerIndex - 1] * 2);
         bulletRenderer.material.SetColor("_EmissionColor",
             GameManager.instance.colors[shooter.controller.playerIndex - 1] * 2);
+        
+        sparkVfx.Play();
     }
 
     private void OnDisable()

@@ -289,3 +289,4 @@ MonoBehaviour:
   currentZoom: {fileID: 0}
   securityOffsetMinDistanceBetweenPlayers: 30
   securityYOffsetPerMeterAboveMinDistance: 0.5
+  securityZOffsetPerMeterAboveMinDistance: 0.2

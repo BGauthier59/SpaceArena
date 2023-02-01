@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class HeartBreakerManager : EnemyManager
 {
     public override void TakeDamage(int damage, Entity attacker = null)
@@ -10,5 +6,11 @@ public class HeartBreakerManager : EnemyManager
         var hb = (HeartBreakerBehaviour)behaviour;
         hb.lastAttacker = attacker;
         hb.SwitchState(HeartBreakerBehaviour.HeartBreakerState.CallForHelp);
+    }
+    
+    protected override void Death(Entity killer)
+    {
+        base.Death(killer);
+        PoolOfObject.Instance.SpawnFromPool(PoolType.PinkSplash, transform.position, attackDirection);
     }
 }

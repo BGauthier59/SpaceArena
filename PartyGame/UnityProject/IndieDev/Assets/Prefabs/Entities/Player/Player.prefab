@@ -226,12 +226,12 @@ MonoBehaviour:
   helpingAimDirection: {x: 0, y: 0, z: 0}
   dashDuration: 0.1
   shootCooldownDuration: 0.1
-  reloadDuration: 1
+  reloadDuration: 0.5
   autoReloadDuration: 1
   ventingCooldownDuration: 0.2
   turretCooldownDuration: 0.4
   moveTolerance: 0.15
-  speed: 500
+  speed: 400
   aimTolerance: 0.15
   rotateSpeed: 150
   helpingAimMaxDistance: 10
