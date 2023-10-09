@@ -17,6 +17,8 @@ public class ReparationArea : MonoBehaviour
     public PlayerController currentPlayerOnArea;
     public List<PlayerController> playersOnArea;
 
+    public bool isCompleted;
+
     [Header("Renderers")] public Renderer[] reparationAreaDevicesRenderer;
 
     private PartyManager partyManager;
@@ -69,7 +71,7 @@ public class ReparationArea : MonoBehaviour
     public void ActivateArea()
     {
         if (!gameObject.activeSelf) return;
-        
+
         isActivated = true;
         areaCollider.enabled = true;
     }
@@ -77,7 +79,7 @@ public class ReparationArea : MonoBehaviour
     public void DeactivateArea()
     {
         if (!gameObject.activeSelf) return;
-        
+
         foreach (var rd in reparationAreaDevicesRenderer)
         {
             rd.material.SetColor("_EmissionColor", partyManager.baseManager.disabledColor * 0);
@@ -86,9 +88,7 @@ public class ReparationArea : MonoBehaviour
         areaCollider.enabled = false;
         isActivated = false;
 
-        playersOnArea.Clear();
-        currentPlayerOnArea = null;
-        isPlayerOn = false;
+        Clear();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,9 +101,10 @@ public class ReparationArea : MonoBehaviour
             if (playersOnArea.Count == 1)
             {
                 player.SetCurrentReparationArea(this);
-                isPlayerOn = true;
-                currentPlayerOnArea = playersOnArea[0];
-                associatedElement.CheckPlayersOnReparationAreas();
+                Fill();
+
+                // Check other areas
+                if(associatedElement.IsEveryPlayerReady()) associatedElement.EveryPlayerIsReady();
             }
         }
     }
@@ -118,9 +119,9 @@ public class ReparationArea : MonoBehaviour
 
             if (playersOnArea.Count == 0)
             {
-                currentPlayerOnArea = null;
-                isPlayerOn = false;
-                isWaitingForInput = false;
+                Clear();
+                
+                // Cancels Reparation
                 associatedElement.CancelReparation();
             }
             else
@@ -129,5 +130,31 @@ public class ReparationArea : MonoBehaviour
                 currentPlayerOnArea.SetCurrentReparationArea(this);
             }
         }
+    }
+
+    public void Fill()
+    {
+        isPlayerOn = true;
+        currentPlayerOnArea = playersOnArea[0];
+    }
+
+    private void Clear()
+    {
+        playersOnArea.Clear();
+        currentPlayerOnArea = null;
+        isPlayerOn = false;
+        isWaitingForInput = false;
+        isCompleted = false;
+    }
+
+    public void Complete()
+    {
+        isCompleted = true;
+        associatedElement.TryRepair();
+    }
+
+    public void UnComplete()
+    {
+        isCompleted = false;
     }
 }

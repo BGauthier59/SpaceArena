@@ -6,11 +6,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
     #region Variables: Instances
 
-    [Header("Instances")] public static GameManager instance;
+    [Header("Instances")] 
     public SettingsManager settings;
     public FeedbacksManager feedbacks;
     public PartyManager partyManager;
@@ -66,15 +66,9 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    private void Awake()
+    public override void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            DestroyImmediate(gameObject);
-            return;
-        }
-
-        instance = this;
+        base.Awake();
         DontDestroyOnLoad(gameObject);
 
         EnableAllControllers();

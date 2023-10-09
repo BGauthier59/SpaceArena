@@ -368,7 +368,7 @@ public class PlayerController : MonoBehaviour
         if (!isActive) return;
         if (isActiveVent || isActiveControllableTurret) return;
 
-        if (!ctx.performed) return;
+        if (ctx.started) return;
         if (reparationArea == null) return;
         if (!reparationArea.isWaitingForInput)
         {
@@ -377,9 +377,15 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Reparation);
-
-        reparationArea.associatedElement.SetCheckingArea();
+        if (ctx.performed)
+        {
+            GameManager.instance.feedbacks.RumbleConstant(dataGamepad, VibrationsType.Reparation);
+            reparationArea.Complete();
+        }
+        else
+        {
+            reparationArea.UnComplete();
+        }
     }
 
     public void OnDash(InputAction.CallbackContext ctx)
@@ -598,7 +604,7 @@ public class PlayerController : MonoBehaviour
         {
             autoReloadTimer = 0f;
             reloading = true;
-            reloadTimer = (bulletAmount / (float) maxBulletAmount) * reloadDuration;
+            reloadTimer = (bulletAmount / (float)maxBulletAmount) * reloadDuration;
             isAutoReloading = false;
         }
         else
@@ -907,6 +913,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Tried to activate player when game was ended!");
             return;
         }
+
         isActive = true;
     }
 
@@ -981,7 +988,7 @@ public class PlayerController : MonoBehaviour
         precisionRatio.Item1++;
         if (hit) precisionRatio.Item2++;
 
-        precisionRatio.Item3 = (float) ((double) precisionRatio.Item2 / precisionRatio.Item1);
+        precisionRatio.Item3 = (float)((double)precisionRatio.Item2 / precisionRatio.Item1);
     }
 
     public void UpdateCrownTimer()

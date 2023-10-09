@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -120,7 +121,7 @@ public class PartyManager : MonoBehaviour
     {
         GameManager.instance.TranslateTexts();
 
-        StartCoroutine(BeginningGameCinematic());
+        BeginningGameCinematic();
     }
 
     private void Update()
@@ -158,7 +159,7 @@ public class PartyManager : MonoBehaviour
 
     #region Before Game Starts
 
-    private IEnumerator BeginningGameCinematic()
+    private async void BeginningGameCinematic()
     {
         loadingPart.SetActive(true);
 
@@ -195,41 +196,42 @@ public class PartyManager : MonoBehaviour
         ChangeLoadingText();
         GameManager.instance.eventSystem.SetSelectedGameObject(loadingText.gameObject);
         GameManager.instance.EnableAllControllers();
-        yield return new WaitForSeconds(5f);
+
+        await Task.Delay(5000);
 
         GameManager.instance.DisableAllControllers();
         loadingText.gameObject.SetActive(false);
         GameManager.instance.eventSystem.SetSelectedGameObject(null);
         loadingAnim.Play(loadingAnim.clip.name);
 
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
 
         loadingPart.SetActive(false);
 
-        yield return new WaitForSeconds(.25f);
+        await Task.Delay(250);
 
         displayNameAnim.gameObject.SetActive(true);
         displayNameAnim.Play(displayNameAnim.clip.name);
 
-        yield return new WaitForSeconds(.75f);
+        await Task.Delay(750);
 
         cameraManager.SetZoom(showScreenZoom);
 
-        yield return new WaitForSeconds(2.5f);
+        await Task.Delay(2500);
 
         displayNameAnim.gameObject.SetActive(false);
         cameraManager.SetZoom(screenLargeZoom);
 
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
 
         tutorialText.SetText();
 
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
 
         tutorialText.DisableText();
         cameraManager.SetZoom(showArenaZoom);
 
-        yield return new WaitForSeconds(2.5f);
+        await Task.Delay(2500);
 
         // Show base elements names
 
@@ -238,22 +240,22 @@ public class PartyManager : MonoBehaviour
             baseElement.PlayBaseElementNameAnim();
         }
 
-        yield return new WaitForSeconds(4f);
+        await Task.Delay(400);
         cameraManager.SetZoom(lightDezoom);
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
 
         goText.gameObject.SetActive(true);
         goText.text = "3";
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
         goText.text = "2";
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
         goText.text = "1";
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
         goText.text = "GO!";
 
         StartingGame();
 
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
         goText.gameObject.SetActive(false);
     }
 
@@ -300,7 +302,7 @@ public class PartyManager : MonoBehaviour
         }
         else partyTimer -= Time.deltaTime;
 
-        timerText.text = ConvertSecondsInMinutes((int)partyTimer);
+        timerText.text = Ex.ConvertSecondsInMinutes((int)partyTimer);
 
         foreach (var pc in GameManager.instance.allPlayers) pc.UpdateCrownTimer();
 
@@ -308,22 +310,7 @@ public class PartyManager : MonoBehaviour
         arenaFeedbackManager.CheckTimer(Time.deltaTime);
     }
 
-    private static string ConvertSecondsInMinutes(int seconds)
-    {
-        var minutes = 0;
-        while (seconds >= 60)
-        {
-            minutes++;
-            seconds -= 60;
-        }
-
-        var secondsText = "";
-        if (seconds < 10) secondsText = "0";
-
-        secondsText += seconds.ToString();
-
-        return $"{minutes}:{secondsText}";
-    }
+    
 
     #endregion
 
@@ -333,10 +320,10 @@ public class PartyManager : MonoBehaviour
     {
         gameWon = won;
         gameState = GameState.End;
-        StartCoroutine(EndingGameCinematic());
+        EndingGameCinematic();
     }
 
-    private IEnumerator EndingGameCinematic()
+    private async void EndingGameCinematic()
     {
         for (int i = 0; i < GameManager.instance.allPlayers.Count; i++)
         {
@@ -349,21 +336,21 @@ public class PartyManager : MonoBehaviour
         wavesManager.enabled = false;
         randomEventManager.CancelRandomEventManager();
 
-        yield return new WaitForSeconds(.5f);
+        await Task.Delay(500);
 
         displayMessageAnim.Play(displayMessageAnim.clip.name);
         displayMessageAnim.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(.5f);
+        await Task.Delay(500);
 
         cameraManager.SetZoom(lightDezoom);
 
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
 
         timerArea.SetActive(false);
         cameraManager.SetZoom(showScreenZoom);
 
-        yield return new WaitForSeconds(1f);
+        await Task.Delay(1000);
 
         cameraManager.SetZoom(screenLargeZoom);
 
@@ -378,7 +365,7 @@ public class PartyManager : MonoBehaviour
 
         DisplayScore();
 
-        yield return new WaitForSeconds(1f); // Pour l'instant, sinon on attent que le winner a eu ses pts
+        await Task.Delay(1000); // Pour l'instant, sinon on attend que le winner a eu ses pts
 
         endOfParty.SetActive(true);
         eventSystem.SetSelectedGameObject(backToMainMenu.gameObject);
@@ -472,13 +459,13 @@ public class PartyManager : MonoBehaviour
         };
     }
 
-    public IEnumerator RandomEventSetDisplay(RandomEvent ev)
+    public async void RandomEventSetDisplay(RandomEvent ev)
     {
         SetScreenRandomEvent(true);
         ev.randomEventText.SetText();
-        yield return new WaitForSeconds(2.5f);
+        await Task.Delay(2500);
         ev.SetAdditionalInfo();
-        yield return new WaitForSeconds(2.5f);
+        await Task.Delay(2500);
         ev.DisableAdditionalInfo();
         ev.randomEventText.DisableText();
         SetScreenRandomEvent(false);

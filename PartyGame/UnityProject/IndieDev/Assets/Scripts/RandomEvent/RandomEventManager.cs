@@ -164,7 +164,7 @@ public class RandomEventManager : MonoBehaviour
 
         partyManager.cameraManager.SetZoom(randomEventZoom);
 
-        StartCoroutine(partyManager.RandomEventSetDisplay(@event));
+        partyManager.RandomEventSetDisplay(@event);
         // Afficher l'event sur le main screen
 
         yield return new WaitForSeconds(startingEventDuration);

@@ -10,23 +10,13 @@ public abstract class BaseElementManager : Entity
 {
     [Header("Destroy")] [SerializeField] private VisualEffect smokeVFX;
 
-    [Header("Reparation")] [SerializeField]
-    private int reparationInputs;
-
-    private int reparationInputsCounter;
+    [Header("Reparation")] private int areaCount;
     [SerializeField] private ReparationArea[] allReparationAreas;
     [SerializeField] private ReparationIconData reparationIconData;
 
     [Tooltip("A security collider that enables when repairing this base element, killing every entity inside")]
     [SerializeField]
     private Collider securityCollider;
-
-    private ReparationArea lastCheckingArea;
-    private ReparationArea currentCheckingArea;
-
-    private bool isIconMoving;
-    [SerializeField] private float iconMoveDuration;
-    private float iconMoveTimer;
 
     public Renderer[] elementColorRenderers;
     public Color color;
@@ -70,6 +60,8 @@ public abstract class BaseElementManager : Entity
     }
 
     #endregion
+
+    #region Initialization
 
     public override void Start()
     {
@@ -119,42 +111,40 @@ public abstract class BaseElementManager : Entity
             ra.gameObject.SetActive(true);
             counter++;
         }
+
+        areaCount = number;
     }
 
+    #endregion
+    
     protected virtual void OnDestroyed()
     {
         smokeVFX.Play();
-        foreach (var area in allReparationAreas)
-        {
-            area.ActivateArea();
-        }
+        EnableReparation();
+        
     }
-
-    private bool TryToRepair()
-    {
-        return reparationInputsCounter >= reparationInputs;
-    }
-
+    
     protected virtual void OnFixed()
     {
+        // Feedbacks
         partyManager.arenaFeedbackManager.OnExcitementGrows?.Invoke(1);
-
         smokeVFX.Stop();
 
+        // Players get points
         foreach (var area in allReparationAreas)
         {
             if (!area.gameObject.activeSelf) continue;
             area.currentPlayerOnArea.manager.GetPoint(partyManager.baseManager.reparationPoint, transform.position);
         }
-
+        
+        // Deactivate reparation
         CancelReparation();
-        foreach (var area in allReparationAreas)
-        {
-            area.DeactivateArea();
-        }
-
+        
+        // Reborn
         isDead = false;
         Heal(totalLife);
+        
+        // Security colliders if needed
         if (securityCollider) StartCoroutine(EnablingSecurityCollider());
     }
 
@@ -165,98 +155,50 @@ public abstract class BaseElementManager : Entity
         securityCollider.enabled = false;
     }
 
-    public void CheckPlayersOnReparationAreas()
+    #region Reparation
+
+    public void EnableReparation()
     {
         foreach (var area in allReparationAreas)
         {
-            if (!area.gameObject.activeSelf) continue;
-            if (!area.isPlayerOn) return;
+            area.ActivateArea();
         }
-
-        // Tous les joueurs sont là et prêts pour la réparation !
-        foreach (var area in allReparationAreas)
-        {
-            if (!area.gameObject.activeSelf) continue;
-            area.isEveryPlayerOn = true;
-        }
-
-        BeginsReparation();
-        return;
     }
 
-    public void BeginsReparation()
+    public bool IsEveryPlayerReady()
     {
-        // Faire apparaître l'icône de l'input   
+        for (int i = 0; i < areaCount; i++)
+        {
+            if (!allReparationAreas[i].isPlayerOn) return false;
+        }
 
-        reparationIconData.iconObject.SetActive(true);
-        reparationIconData.iconBottom.SetActive(true);
+        return true;
+    }
 
-        currentCheckingArea = allReparationAreas[0];
-        reparationIconData.iconObject.transform.position = allReparationAreas[0].iconPosition.position;
-        allReparationAreas[0].isWaitingForInput = true;
+    public void EveryPlayerIsReady()
+    {
+        // Feedbacks
+    }
+
+    public void TryRepair()
+    {
+        // Check is everyone is completed
+        for (int i = 0; i < areaCount; i++)
+        {
+            if (!allReparationAreas[areaCount].isCompleted) return;
+        }
+        
+        OnFixed();
     }
 
     public void CancelReparation()
     {
-        // A tout moment si un joueur quitte la zone de réparation
-
+        reparationIconData.DisableReparationIcon();
         foreach (var area in allReparationAreas)
         {
-            if (!area.gameObject.activeSelf) continue;
-            area.isEveryPlayerOn = false;
-        }
-
-        reparationIconData.iconObject.SetActive(false);
-        isIconMoving = false;
-        currentCheckingArea = null;
-        reparationInputsCounter = 0;
-    }
-
-    public void SetCheckingArea()
-    {
-        reparationInputsCounter++;
-        currentCheckingArea.isWaitingForInput = false;
-
-        if (TryToRepair()) OnFixed();
-        else
-        {
-            if (allReparationAreas.Length <= 1) Debug.LogError("Only one reparation area!");
-            ReparationArea nextArea;
-            do
-            {
-                nextArea = allReparationAreas[Random.Range(0, allReparationAreas.Length)];
-            } while (nextArea == currentCheckingArea || !nextArea.gameObject.activeSelf);
-
-            lastCheckingArea = currentCheckingArea;
-            currentCheckingArea = nextArea;
-            iconMoveTimer = 0f;
-            isIconMoving = true;
-            reparationIconData.iconBottom.SetActive(false);
+            area.DeactivateArea();
         }
     }
-
-    public new virtual void Update()
-    {
-        if (isIconMoving)
-        {
-            if (iconMoveTimer >= iconMoveDuration)
-            {
-                reparationIconData.iconObject.transform.position = currentCheckingArea.iconPosition.position;
-                currentCheckingArea.isWaitingForInput = true;
-                reparationIconData.iconBottom.SetActive(true);
-                isIconMoving = false;
-            }
-            else
-            {
-                reparationIconData.iconObject.transform.position = Vector3.Lerp(lastCheckingArea.iconPosition.position,
-                    currentCheckingArea.iconPosition.position, iconMoveTimer / iconMoveDuration);
-
-                iconMoveTimer += Time.deltaTime;
-            }
-        }
-    }
-
-    #region Trigger & Collision
 
     #endregion
 
